@@ -29,6 +29,7 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.navbar);
 
         initialiseView();
+        setupFragments();
     }
 
     /**
@@ -50,7 +51,21 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * Setup fragments by calling SectionPagerAdapter
+     * sets up bottom navigation bar with viewpager to move to each fragment.
+     */
+    private void setupFragments() {
 
+        SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        ViewPager viewPager = findViewById(R.id.container);
+        viewPager.setAdapter(adapter);
+        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_NavBar);
+        bottomNavigationView.setupWithViewPager(viewPager);
+
+
+    }
 
 
     /**

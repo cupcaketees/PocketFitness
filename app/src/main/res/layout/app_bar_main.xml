@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".HomeActivity">
 
+    <!-- Top bar (Toolbar) -->
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,8 +17,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!-- Center area (fragments) -->
     <include layout="@layout/home_center_viewpager" />
 
+    <!-- Bottom area (bottom navigation bar) -->
     <RelativeLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"

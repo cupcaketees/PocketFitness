@@ -3,6 +3,7 @@ package uk.ac.tees.cupcake.Utils;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,13 +23,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     /**
-     * @param position
+     * @param position of the selected item in navigation bar
      * @return selected fragment
      */
     @Override
     public Fragment getItem(int position) {
-
-
+        Log.d(TAG, "getItem: getting fragment at position: " + position);
         return fragments.get(position);
     }
 
@@ -41,11 +41,4 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         return fragments.size();
     }
 
-
-    /**
-     * add Fragments manually (TBD if necessary)
-     */
-    public void addFragment(Fragment fragment) {
-        fragments.add(fragment);
-    }
 }

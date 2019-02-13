@@ -8,12 +8,12 @@ import android.util.Log;
 import java.util.Arrays;
 import java.util.List;
 
-import uk.ac.tees.cupcake.HomeFragment;
-import uk.ac.tees.cupcake.NewsFeedFragment;
+import uk.ac.tees.cupcake.Home.HomeFragment;
+import uk.ac.tees.cupcake.Home.NewsFeedFragment;
 
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-    public static final String TAG = "SectionPagerAdapter";
+    private static final String TAG = "SectionPagerAdapter";
 
     private final List<Fragment> fragments = Arrays.asList(new HomeFragment(), new NewsFeedFragment());
 

@@ -1,8 +1,7 @@
-package uk.ac.tees.cupcake;
+package uk.ac.tees.cupcake.Home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,11 +14,12 @@ import android.view.MenuItem;
 
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.Utils.SectionsPagerAdapter;
 
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "HomeActivity";
 
@@ -27,11 +27,13 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
         layout = findViewById(R.id.drawerLayout);
         initialiseView();
         setupFragments();
+        Log.d(TAG, "onCreate: onEnd");
     }
 
     /**

@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "634048568529",
+    "firebase_url": "https://cupcaketees-26df6.firebaseio.com",
+    "project_id": "cupcaketees-26df6",
+    "storage_bucket": "cupcaketees-26df6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:634048568529:android:05e2fe7136fa6229",
+        "android_client_info": {
+          "package_name": "uk.ac.tees.cupcake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "634048568529-140k1c7dbe7kbggor7tu86j3hnr9l19g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.tees.cupcake",
+            "certificate_hash": "6a56a8e0ff4f75fc0ce96cb2dfe072bdbc374f94"
+          }
+        },
+        {
+          "client_id": "634048568529-h8hipmc6t6jdutv163q8cfe9kq2upeds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.tees.cupcake",
+            "certificate_hash": "4c94116183e0d3ea0b1c905e6bb2ce26102f2947"
+          }
+        },
+        {
+          "client_id": "634048568529-qvvkhb0co0cn9d7llji646v8jcen0mfi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfDQ9_ybE6b4MSguo5K7TK8jfpXiv6WdY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "634048568529-qvvkhb0co0cn9d7llji646v8jcen0mfi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

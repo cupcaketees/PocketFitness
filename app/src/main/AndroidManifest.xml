@@ -3,8 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.ac.tees.cupcake">
 
-    <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <!--Auth requires internet access-->
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:allowBackup="true"

@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.Home;
+package uk.ac.tees.cupcake.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,21 +15,21 @@ import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.Utils.SectionsPagerAdapter;
-
+import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "HomeActivity";
 
-    DrawerLayout layout;
+    private DrawerLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
+        
         layout = findViewById(R.id.drawerLayout);
         initialiseView();
         setupFragments();
@@ -37,8 +37,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     /**
-     * Initialises Toolbar  and Drawer
-     * Sets the Toolbar for the View
+     * Initialises Toolbar and Drawer sets the Toolbar for the View
      */
     public void initialiseView() {
         Log.d(TAG, "initialiseView: onStart");
@@ -49,6 +48,7 @@ public class HomeActivity extends AppCompatActivity
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         layout.addDrawerListener(toggle);
+        
         toggle.syncState();
         Log.d(TAG, "initialiseView: Navigation Bar and Toolbar added");
 
@@ -68,12 +68,13 @@ public class HomeActivity extends AppCompatActivity
 
         ViewPager viewPager = findViewById(R.id.container);
         viewPager.setAdapter(adapter);
+        
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_NavBar);
         bottomNavigationView.setupWithViewPager(viewPager);
+        
         Log.d(TAG, "setupFragments: onEnd");
     }
-
-
+    
     /**
      * @param item - that was selected (NavigationView)
      * @return - true if successful and takes to new view.
@@ -97,7 +98,9 @@ public class HomeActivity extends AppCompatActivity
                 break;
             default:
                 Log.d(TAG, "onNavigationItemSelected: Error no item Selected");
+                return false;
         }
+        
         layout.closeDrawer(GravityCompat.START);
         return true;
     }

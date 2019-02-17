@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,12 +21,11 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by User on 12/02/2019.
  */
-
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
-    private List<Post> posts;
+    private final List<Post> posts;
 
-    public FeedAdapter(List<Post> posts){
+    public FeedAdapter(List<Post> posts) {
         this.posts = posts;
         setHasStableIds(true);
     }
@@ -45,9 +43,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
         Post post = posts.get(position);
+        
         holder.descriptionTextView.setText(post.getDescription());
         holder.usernameTextView.setText(post.getUsername());
+        
         Picasso.with(holder.itemView.getContext()).load(post.getImage()).resize(100,100).centerCrop().into(holder.mImageView);
+        
         Log.d("Positiontag", "position: "+position);
     }
 
@@ -56,7 +57,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         return posts.size();
     }
 
-    public static class FeedViewHolder extends RecyclerView.ViewHolder{
+    static class FeedViewHolder extends RecyclerView.ViewHolder{
 
         private TextView descriptionTextView;
 
@@ -64,19 +65,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private TextView usernameTextView;
 
-
-
-        public FeedViewHolder(View postView){
+        FeedViewHolder(View postView) {
 
             super(postView);
             descriptionTextView = postView.findViewById(R.id.post_description);
             mImageView = postView.findViewById(R.id.post_image);
             usernameTextView = postView.findViewById(R.id.post_username);
 
-
-            PhotoViewAttacher photoAttacher;
-            photoAttacher = new PhotoViewAttacher(mImageView);
-            photoAttacher.update();
+            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(mImageView);
+            photoViewAttacher.update();
         }
     }
     @Override

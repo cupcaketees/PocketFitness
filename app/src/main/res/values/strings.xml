@@ -3,7 +3,5 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
                 
     <string name="app_name">CupCake</string>
-    <string name="title_activity_scrolling">ScrollingActivity</string>
-    
-    <string name="action_settings">Settings</string>
+
 </resources>

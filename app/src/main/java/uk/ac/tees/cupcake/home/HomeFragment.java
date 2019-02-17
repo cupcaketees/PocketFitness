@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.Home;
+package uk.ac.tees.cupcake.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import uk.ac.tees.cupcake.R;
 
 public class HomeFragment extends Fragment {
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

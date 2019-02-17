@@ -16,8 +16,7 @@ public class FeedActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
+        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed);
         mRecyclerView = findViewById(R.id.my_recycler_view);

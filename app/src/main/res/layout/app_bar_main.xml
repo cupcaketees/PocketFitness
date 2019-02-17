@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.HomeActivity">
+    tools:context=".home.HomeActivity">
 
     <!-- Top bar (Toolbar) -->
 
@@ -17,7 +17,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <!-- Center area (fragments) -->
-    <include layout="@layout/home_center_viewpager" />
+    <include layout="@layout/home_center_view_pager" />
 
     <!-- Bottom area (bottom navigation bar) -->
     <RelativeLayout
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/bottomnavigationview"/>
+        <include layout="@layout/bottom_navigation_view"/>
     </RelativeLayout>
 
 

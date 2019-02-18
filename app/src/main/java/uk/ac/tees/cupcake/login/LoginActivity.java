@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
         /*
-         * Configures google sign in to request email.
+         * Configures google sign in.
          */
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                                          .requestIdToken(getString(R.string.default_web_client_id))
@@ -104,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
                                               .build();
 
         // Initialise on click listeners.
-
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,14 +114,14 @@ public class LoginActivity extends AppCompatActivity {
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
+                //TODO: Add intent for sign up activity when created.
             }
         });
 
         mForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo
+                //TODO: Add intent for forgot password activity when created.
             }
         });
 
@@ -160,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*
-     * Uses google account to authenticate with FireBase.
+     * Uses google account to authenticate with Firebase.
      */
     private void fireBaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
@@ -185,7 +184,6 @@ public class LoginActivity extends AppCompatActivity {
     private void signInUserEmailAndPassword(){
         String userInputEmail = mEmailEditText.getText().toString().trim();
         String userInputPassword = mPasswordEditText.getText().toString().trim();
-
         // Check user input values are not empty.
         if(TextUtils.isEmpty(userInputEmail)){
             Toast.makeText(LoginActivity.this, "You must enter your email address", Toast.LENGTH_SHORT).show();
@@ -216,6 +214,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(homeIntent);
         finish();
     }
+
     /*
      * Starts background animation for login screen.
      */

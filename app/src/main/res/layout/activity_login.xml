@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/login_email_edit_text"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
@@ -29,7 +29,7 @@
 
     <EditText
         android:id="@+id/login_password_edit_text"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:text="@string/login_forgot_password_button_text"
+        android:drawableStart="@drawable/ic_login_open_lock"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"

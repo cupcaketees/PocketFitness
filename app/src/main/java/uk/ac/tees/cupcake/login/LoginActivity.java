@@ -67,7 +67,6 @@ public class LoginActivity extends AppCompatActivity {
         mSignInGoogleButton = findViewById(R.id.sign_in_google_button);
         mSignUpButton = findViewById(R.id.login_sign_up_button);
         mForgotPasswordButton = findViewById(R.id.login_forgot_password_button);
-        // Call method start background animation.
         initBackground();
 
         /*
@@ -159,7 +158,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*
-     * Uses google account to authenticate with Firebase.
+     * Uses google account to authenticate with FireBase.
      */
     private void fireBaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
@@ -216,7 +215,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /*
-     * Starts background animation for login screen.
+     * Starts background animation for login activity.
      */
     private void initBackground(){
         // Initialise values

@@ -32,11 +32,11 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
-            <!-- Sorry Hugo adding this temp for testing-->
+            <!-- TODO Add better icon for sign out option-->
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="Sign out"/>
+                android:title="Log Out"/>
         </menu>
     </item>
 

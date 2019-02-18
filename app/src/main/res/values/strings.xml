@@ -1,7 +1,7 @@
 <resources>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-                
+
     <string name="app_name">CupCake</string>
 
     <string name="title_activity_scrolling">ScrollingActivity</string>
@@ -10,5 +10,10 @@
     <string name="finger_on_sensor_message">Now monitoring heart rate</string>
     <string name="heart_rate_text">%1$d bpm</string>
     <string name="heart_rate_current_text">Current heart rate: %1$d bpm</string>
+    <string name="login_email_text_view_hint">Email Address</string>
+    <string name="login_password_text_view_hint">Password</string>
+    <string name="login_forgot_password_button_text">Forgot Password?</string>
+    <string name="login_sign_in_button_text">Sign In</string>
+    <string name="login_sign_up_button_text">Not a member? Sign up!</string>
 
 </resources>

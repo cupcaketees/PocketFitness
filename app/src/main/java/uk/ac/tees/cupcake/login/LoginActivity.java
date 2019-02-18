@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         initBackground();
 
         /*
-         * Checks if user is logged in and updates UI accordingly
+         * Checks if user is logged in and updates UI accordingly.
          */
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                                          .requestEmail()
                                                          .build();
         /*
-         * Build Api client with options specified by gso
+         * Build Api client with options specified by gso.
          */
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                                               .enableAutoManage(LoginActivity.this, new GoogleApiClient.OnConnectionFailedListener() {
@@ -103,19 +103,35 @@ public class LoginActivity extends AppCompatActivity {
                                               .build();
 
         // Initialise on click listeners.
+
+        /*
+         * Calls method to sign in with email and password.
+         */
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signInUserEmailAndPassword();
             }
         });
-
+        /*
+         * Calls method to sign in with Google account.
+         */
+        mSignInGoogleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInGoogle();
+            }
+        });
+        /*
+         * Send user to register activity.
+         */
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Add intent for sign up activity when created.
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
 
         mForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,17 +139,10 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO: Add intent for forgot password activity when created.
             }
         });
-
-        mSignInGoogleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInGoogle();
-            }
-        });
     }
 
     /*
-     * Sign in with Google account
+     * Sign in with Google account.
      */
     private void signInGoogle(){
         Intent googleSignInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -143,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Result returned from launching the intent from GoogleSignInApi
+        //Result returned from launching the intent from GoogleSignInApi.
         if(requestCode == RC_SIGN_IN){
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if(result.isSuccess()){
@@ -189,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
         }else if(TextUtils.isEmpty(userInputPassword)){
             Toast.makeText(LoginActivity.this, "You must enter your password", Toast.LENGTH_SHORT).show();
         }else{
-            // Attempt to sign in with email and password input
+            // Attempt to sign in with email and password input.
             mAuth.signInWithEmailAndPassword(userInputEmail,userInputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -218,13 +227,13 @@ public class LoginActivity extends AppCompatActivity {
      * Starts background animation for login activity.
      */
     private void initBackground(){
-        // Initialise values
+        // Initialise values.
         mLoginBackground = findViewById(R.id.login_background);
         mBackgroundAnimation = (AnimationDrawable) mLoginBackground.getBackground();
-        // Set duration
+        // Set duration.
         mBackgroundAnimation.setEnterFadeDuration(4500);
         mBackgroundAnimation.setExitFadeDuration(4500);
-        //Start animation
+        //Start animation.
         mBackgroundAnimation.start();
     }
 }

@@ -32,6 +32,11 @@
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Send" />
+            <!-- Sorry Hugo adding this temp for testing-->
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Sign out"/>
         </menu>
     </item>
 

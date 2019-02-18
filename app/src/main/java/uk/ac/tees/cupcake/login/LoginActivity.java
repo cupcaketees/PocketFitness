@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialise Fields.
+        // Initialise fields.
         mAuth = FirebaseAuth.getInstance();
         mEmailEditText = findViewById(R.id.login_email_edit_text);
         mPasswordEditText = findViewById(R.id.login_password_edit_text);
@@ -67,6 +67,8 @@ public class LoginActivity extends AppCompatActivity {
         mSignInGoogleButton = findViewById(R.id.sign_in_google_button);
         mSignUpButton = findViewById(R.id.login_sign_up_button);
         mForgotPasswordButton = findViewById(R.id.login_forgot_password_button);
+
+        // Call method to start background animation.
         initBackground();
 
         /*
@@ -132,7 +134,9 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        /*
+         * Send user to forgot password activity.
+         */
         mForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

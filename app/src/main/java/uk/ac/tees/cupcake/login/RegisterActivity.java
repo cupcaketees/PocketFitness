@@ -118,7 +118,8 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            sendUserToHomeActivity();
+                            Toast.makeText(RegisterActivity.this, "You have signed up!", Toast.LENGTH_SHORT).show();
+                            sendUserToLoginActivity();
                         }else{
                             String errorMessage = task.getException().getMessage();
                             Toast.makeText(RegisterActivity.this, "Sign up failed: " + errorMessage, Toast.LENGTH_LONG).show();
@@ -136,6 +137,14 @@ public class RegisterActivity extends AppCompatActivity {
     private void sendUserToHomeActivity(){
         Intent homeIntent = new Intent(RegisterActivity.this, HomeActivity.class);
         startActivity(homeIntent);
+        finish();
+    }
+    /*
+     * Send user to login activity.
+     */
+    private void sendUserToLoginActivity(){
+        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
         finish();
     }
 

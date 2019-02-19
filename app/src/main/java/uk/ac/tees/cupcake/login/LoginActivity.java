@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                 signInUserEmailAndPassword();
             }
         });
+
         /*
          * Calls method to sign in with Google account.
          */
@@ -124,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
                 signInGoogle();
             }
         });
+
         /*
          * Send user to register activity.
          */
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
         mForgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Add intent for forgot password activity when created.
+                startActivity(new Intent (LoginActivity.this, LostPasswordActivity.class));
             }
         });
     }
@@ -173,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
     /*
      * Uses google account to authenticate with FireBase.
      */
+
     private void fireBaseAuthWithGoogle(GoogleSignInAccount account) {
         AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)

@@ -77,6 +77,9 @@ public class LostPasswordActivity extends AppCompatActivity {
             }
         });
 
+        /*
+         * Calls reset password method
+         */
         mResetPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,6 +87,7 @@ public class LostPasswordActivity extends AppCompatActivity {
             }
         });
     }
+
     /*
      * Validates user input and attempts sends password instructions to email.
      */

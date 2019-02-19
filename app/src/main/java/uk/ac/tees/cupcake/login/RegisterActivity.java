@@ -93,7 +93,6 @@ public class RegisterActivity extends AppCompatActivity {
                 signUpAccount();
             }
         });
-
     }
 
     /*
@@ -118,7 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "You have signed up!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Sign up successful! You can now sign in", Toast.LENGTH_SHORT).show();
+                            // Sign out user so mAuth listener does not direct user to homepage.
+                            mAuth.signOut();
                             sendUserToLoginActivity();
                         }else{
                             String errorMessage = task.getException().getMessage();
@@ -131,6 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         }
     }
+
     /*
      * Send user to home activity.
      */
@@ -139,6 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
         startActivity(homeIntent);
         finish();
     }
+
     /*
      * Send user to login activity.
      */
@@ -161,6 +164,4 @@ public class RegisterActivity extends AppCompatActivity {
         //Start animation.
         mBackgroundAnimation.start();
     }
-
-
 }

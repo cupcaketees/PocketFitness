@@ -1,7 +1,7 @@
 <resources>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-                
+
     <string name="app_name">CupCake</string>
 
     <string name="title_activity_scrolling">ScrollingActivity</string>
@@ -10,5 +10,9 @@
     <string name="finger_on_sensor_message">Now monitoring heart rate</string>
     <string name="heart_rate_text">%1$d bpm</string>
     <string name="heart_rate_current_text">Current heart rate: %1$d bpm</string>
+    <string name="rewind_button">Rewind Button</string>
+    <string name="play_button">Play Button</string>
+    <string name="pause_button">Pause Button</string>
+    <string name="fast_forward">Fast Forward</string>
 
 </resources>

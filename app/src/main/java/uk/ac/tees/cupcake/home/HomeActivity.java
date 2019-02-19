@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.VideoPlayer.VideoPlayerActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity
@@ -89,6 +91,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_gallery:
                 break;
             case R.id.nav_slideshow:
+                Intent intent = new Intent(HomeActivity.this, VideoPlayerActivity.class);
+                intent.putExtra("VIDEO_NAME", "http://techslides.com/demos/sample-videos/small.mp4");
+                startActivity(intent);
                 break;
             case R.id.nav_manage:
                 break;

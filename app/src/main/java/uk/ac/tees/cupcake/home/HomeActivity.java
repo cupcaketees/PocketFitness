@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_slideshow:
                 Intent intent = new Intent(HomeActivity.this, VideoPlayerActivity.class);
-                intent.putExtra("VIDEO_NAME", "http://techslides.com/demos/sample-videos/small.mp4");
+                intent.putExtra("VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
                 startActivity(intent);
                 break;
             case R.id.nav_manage:

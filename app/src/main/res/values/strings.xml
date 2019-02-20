@@ -30,5 +30,6 @@
     <string name="lost_password_email_edit_text_hint">Email Address</string>
     <string name="lost_password_reset_password_button_text">Reset Password</string>
     <string name="lost_password_sign_in_button_text">Back to Sign in</string>
+    <string name="sensor_no_sensor">Sensor of type %1$d does not exist</string>
 
 </resources>

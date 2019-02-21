@@ -46,8 +46,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         
         holder.descriptionTextView.setText(post.getDescription());
         holder.usernameTextView.setText(post.getUsername());
+        holder.dateTextView.setText(post.getDate());
         
-        Picasso.with(holder.itemView.getContext()).load(post.getImage()).resize(100,100).centerCrop().into(holder.mImageView);
+        Picasso.
+                with(holder.itemView.getContext())
+                .load(post.getImage())
+                .into(holder.mImageView);
         
         Log.d("Positiontag", "position: "+position);
     }
@@ -64,6 +68,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private ImageView mImageView;
 
         private TextView usernameTextView;
+        private TextView dateTextView;
 
         FeedViewHolder(View postView) {
 
@@ -71,6 +76,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             descriptionTextView = postView.findViewById(R.id.post_description);
             mImageView = postView.findViewById(R.id.post_image);
             usernameTextView = postView.findViewById(R.id.post_username);
+            dateTextView = postView.findViewById(R.id.post_date);
 
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(mImageView);
             photoViewAttacher.update();

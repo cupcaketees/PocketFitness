@@ -26,7 +26,7 @@ public class NewsFeedFragment extends Fragment {
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        RecyclerView.Adapter mFeedAdapter = new FeedAdapter(Post.createPostsList(50));
+        RecyclerView.Adapter mFeedAdapter = new FeedAdapter(Post.createPostsList(5));
         mRecyclerView.setAdapter(mFeedAdapter);
         return  rootView;
     }

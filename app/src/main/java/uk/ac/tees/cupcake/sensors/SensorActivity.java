@@ -77,7 +77,7 @@ public abstract class SensorActivity extends AppCompatActivity {
         
         sensor = sensorManager.getDefaultSensor(sensorType());
         
-        return hasSensor = (sensor == null);
+        return hasSensor = (sensor != null);
     }
     
     /**

@@ -34,7 +34,7 @@ public abstract class SensorActivity extends AppCompatActivity {
     private boolean hasSensor;
     
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         if (setupSensor()) {

@@ -16,6 +16,7 @@
         <activity android:name=".feed.FeedActivity" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".home.health.HeartRateActivity" />
+        <activity android:name=".home.health.StepCounterActivity" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -27,7 +28,7 @@
         </activity>
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
-        <activity android:name=".login.LostPasswordActivity"></activity>
+        <activity android:name=".login.LostPasswordActivity" />
     </application>
 
 </manifest>

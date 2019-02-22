@@ -22,7 +22,6 @@
 
         <activity android:name=".VideoPlayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".feed.FeedActivity" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".home.health.HeartRateActivity" />
         <activity android:name=".home.health.StepCounterActivity" />

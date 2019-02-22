@@ -54,19 +54,18 @@ public class Post  {
                 "https://images.pexels.com/photos/134989/pexels-photo-134989.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
                 "https://upload.wikimedia.org/wikipedia/commons/3/38/Tampa_FL_Sulphur_Springs_Tower_tall_pano01.jpg"
         };
-        
+
         for (int i = 1; i <= posts; i++) {
             contacts.add(new Post("User " + i,  imageUrls[(i - 1) % imageUrls.length],  "Post number " + i, getCurrentTimeUsingDate()));
         }
 
-
-        
         return contacts;
+
     }
 
     public static String getCurrentTimeUsingDate() {
         Date date = new Date();
-        String strDateFormat = "hh:mm:ss a";
+        String strDateFormat = "yyyy-MM-dd HH:mm";
         DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
         String formattedDate = dateFormat.format(date);
         return formattedDate;

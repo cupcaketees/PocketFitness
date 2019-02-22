@@ -10,6 +10,7 @@
     <string name="finger_on_sensor_message">Now monitoring heart rate</string>
     <string name="heart_rate_text">%1$d bpm</string>
     <string name="heart_rate_current_text">Current heart rate: %1$d bpm</string>
+<<<<<<< HEAD
     <string name="login_email_edit_text_hint">Email Address</string>
     <string name="login_password_edit_text_hint">Password</string>
     <string name="login_forgot_password_button_text">Forgot Password?</string>
@@ -30,5 +31,11 @@
     <string name="lost_password_email_edit_text_hint">Email Address</string>
     <string name="lost_password_reset_password_button_text">Reset Password</string>
     <string name="lost_password_sign_in_button_text">Back to Sign in</string>
+=======
+    <string name="rewind_button">Rewind Button</string>
+    <string name="play_button">Play Button</string>
+    <string name="pause_button">Pause Button</string>
+    <string name="fast_forward">Fast Forward</string>
+>>>>>>> 4ba2c1c7fddba412c3e28032918458facf6c7d00
 
 </resources>

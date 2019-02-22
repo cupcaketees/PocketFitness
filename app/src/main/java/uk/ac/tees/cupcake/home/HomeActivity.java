@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.login.LoginActivity;
+import uk.ac.tees.cupcake.VideoPlayer.VideoPlayerActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity
@@ -110,6 +111,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_gallery:
                 break;
             case R.id.nav_slideshow:
+                Intent intent = new Intent(HomeActivity.this, VideoPlayerActivity.class);
+                intent.putExtra("VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+                startActivity(intent);
                 break;
             case R.id.nav_manage:
                 break;

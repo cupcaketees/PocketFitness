@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uk.ac.tees.cupcake">
 
-    <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
+  
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -20,16 +20,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <activity android:name=".VideoPlayer.VideoPlayerActivity"
+            android:configChanges="orientation|screenSize" />
+        <activity android:name=".feed.FeedActivity" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".home.health.HeartRateActivity" />
-          
-        <activity android:name=".SplashActivity" android:theme="@style/SplashTheme">
+        <activity android:name=".home.health.StepCounterActivity" />
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".login.RegisterActivity" />
+        <activity android:name=".login.LostPasswordActivity" />
     </application>
 
 </manifest>

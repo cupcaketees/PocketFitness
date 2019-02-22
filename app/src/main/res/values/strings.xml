@@ -30,6 +30,8 @@
     <string name="lost_password_email_edit_text_hint">Email Address</string>
     <string name="lost_password_reset_password_button_text">Reset Password</string>
     <string name="lost_password_sign_in_button_text">Back to Sign in</string>
+    <string name="sensor_no_sensor">Sensor of type %1$d does not exist</string>
+    <string name="step_counter_steps_text">%1$s steps</string>
     <string name="rewind_button">Rewind Button</string>
     <string name="play_button">Play Button</string>
     <string name="pause_button">Pause Button</string>

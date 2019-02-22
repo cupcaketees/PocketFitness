@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@layout/post_border">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -22,6 +23,14 @@
         android:layout_weight="1"
         android:textStyle="bold"
         />
+    <Button
+        android:id="@+id/dropdown_menu"
+        android:layout_width="35dp"
+        android:layout_height="wrap_content"
+        android:drawableRight="@android:drawable/arrow_down_float"
+        android:padding="10dp"
+        android:textColor="#eee"
+        android:layout_gravity="end"/>
 
     <TextView
         android:id="@+id/post_description"
@@ -30,13 +39,21 @@
         android:layout_weight="1"
         />
 
+    <TextView
+        android:id="@+id/post_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"/>
 
     <ImageView
         android:id="@+id/post_image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
         android:adjustViewBounds="true"
-        android:visibility="visible"/>
+        android:visibility="visible"
+        android:resizeable="true"
+        android:maxHeight="350dp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
     </LinearLayout>
 
@@ -46,35 +63,17 @@
     android:layout_height="50dp"
     android:orientation="horizontal"
         android:layout_below="@id/layout1"
+        android:layout_marginBottom="50dp"
     android:gravity="bottom">
 
         <RatingBar
             android:id="@+id/post_rating"
-            android:layout_width="260dp"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginHorizontal="5dp"
-            android:layout_weight="1"
-            android:numStars="5"
-            android:stepSize="0.5" />
-
-    <Button
-        android:id="@+id/post_report"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Report"
-        android:textSize="10sp"
-        />
-
-    <Button
-        android:id="@+id/post_share"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Share"
-        android:textSize="10sp"
-        />
+            android:layout_marginHorizontal="175dp"
+            android:numStars="1"
+            android:stepSize="1" />
 
     </LinearLayout>
     </RelativeLayout>

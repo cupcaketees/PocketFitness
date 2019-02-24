@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
-  
+
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".VideoPlayer.VideoPlayerActivity"
+        <activity
+            android:name=".VideoPlayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".home.health.HeartRateActivity" />

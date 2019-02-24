@@ -3,9 +3,13 @@ package uk.ac.tees.cupcake.VideoPlayer;
 import android.app.Dialog;
 import android.content.res.Configuration;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -40,7 +44,7 @@ import uk.ac.tees.cupcake.R;
 public class VideoPlayerActivity extends AppCompatActivity {
 
     private static final String TAG = "VideoPlayerActivity";
-    
+
     private final String STATE_RESUME_WINDOW = "resumeWindow";
     private final String STATE_RESUME_POSITION = "resumePosition";
     private final String STATE_PLAYER_FULLSCREEN = "playerFullscreen";
@@ -52,6 +56,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private ImageView mFullScreenIcon;
     private Dialog mFullScreenDialog;
 
+    private DrawerLayout layout;
+
     private int mResumeWindow;
     private long mResumePosition;
     private boolean mExoPlayerFullscreen = false;
@@ -60,18 +66,43 @@ public class VideoPlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exo_activity_video_player);
+        setContentView(R.layout.exo_player_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        layout = findViewById(R.id.drawerLayout);
         if (savedInstanceState != null) {
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);
             mResumePosition = savedInstanceState.getLong(STATE_RESUME_POSITION);
             mExoPlayerFullscreen = savedInstanceState.getBoolean(STATE_PLAYER_FULLSCREEN);
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        initialiseView();
         Log.d(TAG, "onCreate: onEnd");
     }
+
+    /**
+     * Initialises Toolbar and Drawer sets the Toolbar for the View
+     */
+    public void initialiseView() {
+        Log.d(TAG, "initialiseView: onStart");
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        layout.addDrawerListener(toggle);
+
+        toggle.syncState();
+        Log.d(TAG, "initialiseView: Navigation Bar and Toolbar added");
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView.getMenu().getItem(2).setChecked(true);
+        navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(VideoPlayerActivity.this));
+        Log.d(TAG, "initialiseView: onEnd");
+    }
+
+
 
     /**
      * @param outState - ensures all states are saved so when returned they can continue where they left off
@@ -104,7 +135,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
     }
 
     /**
-     *
      * @param newConfig - fixes when orientation is changed it doesn't reset the video.
      */
     @Override
@@ -148,7 +178,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         PlaybackControlView controlView = mSimpleExoPlayerView.findViewById(R.id.exo_controller);
         mFullScreenIcon = controlView.findViewById(R.id.exo_fullscreen_icon);
         mFullScreenButton = controlView.findViewById(R.id.exo_fullscreen_button);
-        Log.d(TAG, "initFullscreenButton: isFullscreen: " +  mExoPlayerFullscreen);
+        Log.d(TAG, "initFullscreenButton: isFullscreen: " + mExoPlayerFullscreen);
         mFullScreenButton.setOnClickListener(v -> {
             if (!mExoPlayerFullscreen)
                 openFullscreenDialog();
@@ -242,4 +272,18 @@ public class VideoPlayerActivity extends AppCompatActivity {
         Log.d(TAG, "onPause: onEnd");
     }
 
+
+    @Override
+    public void onBackPressed() {
+
+
+        DrawerLayout drawer = findViewById(R.id.drawerLayout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            drawer.closeDrawer(GravityCompat.START);
+            super.onBackPressed();
+        }
+
+    }
 }

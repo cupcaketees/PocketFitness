@@ -15,8 +15,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = "SectionPagerAdapter";
 
-    private static final List<Fragment> HOME_FRAGMENTS = Arrays.asList(new HomeFragment(), new NewsFeedFragment());
-    
+    private final List<Fragment> HOME_FRAGMENTS = Arrays.asList(new HomeFragment(), new NewsFeedFragment());
+
     public SectionsPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -28,10 +28,10 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Log.d(TAG, "getItem: getting fragment at position: " + position);
-        
+
         return HOME_FRAGMENTS.get(position);
     }
-    
+
     /**
      * @return amount of fragments
      */

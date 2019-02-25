@@ -1,6 +1,7 @@
 package uk.ac.tees.cupcake.VideoPlayer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
@@ -13,10 +14,10 @@ import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemSelectedListener {
 
-    public Activity activity;
+    public Context context;
 
-    public NavigationDrawerAdapter(Activity activity) {
-        this.activity = activity;
+    public NavigationDrawerAdapter(Context context) {
+        this.context = context;
     }
 
     /**
@@ -27,12 +28,12 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.nav_camera:
-                IntentUtils.invokeBaseView(activity, HomeActivity.class);
+                IntentUtils.invokeBaseView(context, HomeActivity.class);
                 break;
             case R.id.nav_gallery:
                 break;
             case R.id.nav_slideshow:
-                IntentUtils.invokeVideoView(activity, VideoPlayerActivity.class, "VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+                IntentUtils.invokeVideoView(context, VideoPlayerActivity.class, "VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
                 break;
             case R.id.nav_manage:
                 break;

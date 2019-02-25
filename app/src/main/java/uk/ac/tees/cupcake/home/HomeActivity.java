@@ -80,7 +80,7 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "initialiseView: Navigation Bar and Toolbar added");
 
 
-        navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(HomeActivity.this));
+        navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(getApplicationContext()));
         Log.d(TAG, "initialiseView: onEnd");
     }
 

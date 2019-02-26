@@ -31,7 +31,7 @@
         android:layout_marginTop="64dp"
         android:background="@drawable/login_button_shape"
         android:backgroundTint="@color/white"
-        android:onClick="goToAccountActivity"
+        android:onClick="sendUserToAccountSettings"
         android:text="@string/settings_account_button_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

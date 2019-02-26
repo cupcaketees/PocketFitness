@@ -16,6 +16,7 @@
         android:layout_marginTop="32dp"
         android:background="@drawable/login_button_shape"
         android:backgroundTint="@color/white"
+        android:onClick="sendUserToDeleteAccount"
         android:text="@string/account_delete_account_button_text"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"

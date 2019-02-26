@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="64dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:text="@string/delete_account_title_text"
         android:textColor="@android:color/black"
         android:textSize="24sp"
@@ -25,6 +25,7 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="sendUserToAccountSettings"
         android:text="@string/delete_account_cancel_button_text"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
@@ -52,31 +53,20 @@
         android:id="@+id/delete_account_delete_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/login_button_shape"
-        android:backgroundTint="@color/grey"
+        android:backgroundTint="@color/white"
+        android:onClick="deleteUserAccount"
         android:text="@string/delete_account_delete_button_text"
         android:textAllCaps="false"
         android:textColor="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
-        android:ems="10"
-        android:hint="@string/delete_account_password_edit_text_hint"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/delete_account_description" />
+        app:layout_constraintTop_toBottomOf="@+id/delete_account_password_edit_text" />
 
     <TextView
         android:id="@+id/delete_account_header"
@@ -93,4 +83,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/delete_account_title" />
+
+    <EditText
+        android:id="@+id/delete_account_password_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:ems="10"
+        android:hint="@string/delete_account_password_edit_text_hint"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/delete_account_description" />
 </android.support.constraint.ConstraintLayout>

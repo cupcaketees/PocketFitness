@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
     /*
      * Takes user to Account activity
      */
-    public void goToAccountActivity(View view){
+    public void sendUserToAccountSettings(View view){
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }

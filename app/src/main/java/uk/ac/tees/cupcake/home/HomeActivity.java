@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.VideoPlayer.VideoPlayerActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
@@ -121,6 +122,9 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_send:
                 break;
+            case R.id.nav_settings:
+                sendUserToSettingsActivity();
+                break;
             case R.id.nav_signout:
                 signOut();
                 break;
@@ -143,10 +147,20 @@ public class HomeActivity extends AppCompatActivity
     }
 
     /*
+     * Send user to Settings activity
+     */
+    private void sendUserToSettingsActivity(){
+        Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+
+    /*
      * Signs out user
      */
     private void signOut(){
         mAuth.signOut();
     }
+
+
 
 }

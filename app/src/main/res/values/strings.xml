@@ -36,5 +36,12 @@
     <string name="play_button">Play Button</string>
     <string name="pause_button">Pause Button</string>
     <string name="fast_forward">Fast Forward</string>
+    <string name="settings_title_text">Settings</string>
+    <string name="settings_account_button_text">Account</string>
+    <string name="account_delete_account_button_text">Delete My Account</string>
+    <string name="account_title_text">Account Settings</string>
+    <string name="account_change_password_button_text">Change Password</string>
+    <string name="account_verify_email_button_text">Verify Email Address</string>
+    <string name="account_change_email_button_text">Change Email Address</string>
 
 </resources>

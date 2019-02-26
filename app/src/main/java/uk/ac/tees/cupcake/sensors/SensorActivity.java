@@ -7,16 +7,20 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
 /**
  * A generalised activity that uses some sensor.
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public abstract class SensorActivity extends AppCompatActivity {
+public abstract class SensorActivity extends NavigationBarActivity {
     
     /**
      * {@link Sensor} that we listen for events on.
@@ -34,12 +38,11 @@ public abstract class SensorActivity extends AppCompatActivity {
     private boolean hasSensor;
     
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
+    public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
         if (setupSensor()) {
             setup();
-            
         } else {
             finish();
             

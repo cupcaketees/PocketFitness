@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity
             }
         };
         
-        layout = findViewById(R.id.drawerLayout);
+        layout = findViewById(R.id.drawer_layout);
         initialiseView();
         setupFragments();
         Log.d(TAG, "onCreate: onEnd");

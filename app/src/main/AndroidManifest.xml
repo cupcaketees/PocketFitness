@@ -38,7 +38,8 @@
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.LostPasswordActivity" />
         <activity android:name=".account.SettingsActivity" />
-        <activity android:name=".account.AccountSettingsActivity"></activity>
+        <activity android:name=".account.AccountSettingsActivity" />
+        <activity android:name=".account.DeleteAccountActivity"></activity>
     </application>
 
 </manifest>

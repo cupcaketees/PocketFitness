@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@android:color/white"
     tools:context="uk.ac.tees.cupcake.account.SettingsActivity">
 
     <TextView
         android:id="@+id/settings_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/settings_title_text"
-        android:textColor="@color/white"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,16 +24,18 @@
 
     <Button
         android:id="@+id/settings_account_button"
-        android:layout_width="0dp"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
-        android:background="@drawable/login_button_shape"
-        android:backgroundTint="@color/white"
+        android:drawablePadding="5dp"
+        android:drawableStart="@drawable/settings_account_icon2"
         android:onClick="sendUserToAccountSettings"
         android:text="@string/settings_account_button_text"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAllCaps="false"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_title" />
+
 </android.support.constraint.ConstraintLayout>

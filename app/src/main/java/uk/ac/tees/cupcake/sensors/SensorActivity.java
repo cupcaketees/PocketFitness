@@ -38,15 +38,14 @@ public abstract class SensorActivity extends NavigationBarActivity {
     private boolean hasSensor;
     
     @Override
-    public final void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        if (setupSensor()) {
-            setup();
-        } else {
+    public final void setup() {
+        if (!setupSensor()) {
             finish();
             
             Toast.makeText(this, getString(R.string.sensor_no_sensor, sensorType()), Toast.LENGTH_SHORT).show();
+        } else {
+            
+            setupLayout();
         }
     }
     
@@ -84,9 +83,9 @@ public abstract class SensorActivity extends NavigationBarActivity {
     }
     
     /**
-     * This method is called in the {@link #onCreate}
+     * Called in setup. Only layout related code should be invoked within this method.
      */
-    public abstract void setup();
+    public abstract void setupLayout();
     
     /**
      * Poor design but necessary due to no-args constructor only restriction.

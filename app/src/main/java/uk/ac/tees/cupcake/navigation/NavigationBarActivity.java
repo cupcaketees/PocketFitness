@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewStub;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,9 +22,9 @@ import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAct
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public class NavigationBarActivity extends AppCompatActivity {
+public abstract class NavigationBarActivity extends AppCompatActivity {
     
-    protected DrawerLayout drawerLayout;
+    protected ViewStub stub;
     
     public static final Map<Integer, NavigationItemOnClickAction> NAV_BAR_ACTIONS = new HashMap<>();
     
@@ -38,33 +39,39 @@ public class NavigationBarActivity extends AppCompatActivity {
     }
     
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
         
-        drawerLayout = findViewById(R.id.drawer_layout);
+        stub = findViewById(R.id.layout_stub);
         
-        setupNavigationView(drawerLayout);
+        addNavigationView();
+        setup();
     }
     
     /**
-     * Sets up the navigation view.
-     *
-     * @param layout
+     * Sets up and adds the navigation view.
      */
-    private void setupNavigationView(DrawerLayout layout) {
+    private void addNavigationView() {
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         Toolbar toolbar = findViewById(R.id.toolbar);
         NavigationView navigationView = findViewById(R.id.nav_view);
     
         setSupportActionBar(toolbar);
     
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        layout.addDrawerListener(toggle);
+                this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        
+        drawerLayout.addDrawerListener(toggle);
     
         toggle.syncState();
     
         navigationView.setNavigationItemSelectedListener(new NavigationItemSelectionListener(this, NAV_BAR_ACTIONS));
     }
-
+    
+    /**
+     * This method is called in the {@link #onCreate}
+     */
+    public abstract void setup();
+    
 }

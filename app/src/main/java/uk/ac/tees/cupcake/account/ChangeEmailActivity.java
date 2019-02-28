@@ -37,7 +37,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
 
     /*
-     * Authenticate current user using password input, on success attempts to change email.
+     * Authenticate current user using password input, on success attempts to change email with input provided.
      */
     public void changeEmail(View view){
 

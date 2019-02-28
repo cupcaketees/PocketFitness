@@ -32,4 +32,14 @@ public class AccountSettingsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChangeEmailActivity.class);
         startActivity(intent);
     }
+
+    /*
+     * Takes user to Change Password Activity
+     */
+    public void sendUserToChangePassword(View view){
+        Intent intent = new Intent(this, ChangePasswordActivity.class);
+        startActivity(intent);
+    }
+
+
 }

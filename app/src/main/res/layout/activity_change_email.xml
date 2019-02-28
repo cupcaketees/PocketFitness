@@ -14,6 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp"
         android:text="@string/change_email_header_text_view_text"
+        android:textAlignment="center"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"

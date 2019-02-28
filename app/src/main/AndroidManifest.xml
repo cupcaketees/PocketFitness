@@ -53,10 +53,15 @@
             android:name=".account.ChangeEmailActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-
-        <activity android:name=".account.ChangePasswordActivity"
+        <activity
+            android:name=".account.ChangePasswordActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".account.VerifyEmailActivity"
+            android:parentActivityName=".account.AccountSettingsActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
     </application>
 
 </manifest>

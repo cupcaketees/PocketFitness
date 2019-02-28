@@ -50,15 +50,18 @@
     <string name="account_change_email_button_text">Change Email Address</string>
 
     <string name="delete_account_delete_button_text">Delete My Account</string>
-    <string name="delete_account_header_text_view_text">We\'re sorry to hear you\'d like to delete your account.</string>
+    <string name="delete_account_header_text_view_text">We\'re sorry to hear you\'d like to delete your account. We just need your current password.</string>
 
-    <string name="change_email_header_text_view_text">We just need your new email address and current password to update your email address.</string>
+    <string name="change_email_header_text_view_text">We just need your new email address and current password to change your email address.</string>
     <string name="change_email_email_edit_text_text">Enter your new email address</string>
     <string name="change_email_change_email_button_text">Change Email</string>
 
-    <string name="change_password_header_text_view_text">We just need your current password and new password to update your password.</string>
+    <string name="change_password_header_text_view_text">We just need your current password and new password to change your password.</string>
     <string name="change_password_new_password_edit_text_text">Enter your new password</string>
     <string name="change_password_change_password_button_text">Change Password</string>
+
+    <string name="verify_email_send_email_button_text">Send Instructions</string>
+    <string name="verify_email_header_text_view_text">We will send instructions to your registered email address.</string>
 
 
 </resources>

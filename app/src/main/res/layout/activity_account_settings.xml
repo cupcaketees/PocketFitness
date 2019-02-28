@@ -96,7 +96,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:text="@string/account_verify_email_status_text_view_text"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/account_verify_email_button"

@@ -16,7 +16,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
         setTitle("Settings");
     }
 
@@ -24,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     /*
      * Takes user to Account activity
      */
-    public void sendUserToAccountSettings(View view){
+    public void accountSettingsActivity(View view){
         Intent intent = new Intent(this, AccountSettingsActivity.class);
         startActivity(intent);
     }

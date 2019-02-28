@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.login.LoginActivity;
 
 /**
  * Account Settings Activity
@@ -35,20 +34,29 @@ public class AccountSettingsActivity extends AppCompatActivity {
         setTitle("Account Settings");
         mAuth = FirebaseAuth.getInstance();
 
-        mAuth.getCurrentUser().reload().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    if(mAuth.getCurrentUser().isEmailVerified()){
-                        TextView verifyEmailStatus = findViewById(R.id.account_verify_email_status_text_view);
-                        verifyEmailStatus.setText("Your email address is verified");
-                        verifyEmailStatus.setTextColor(Color.GREEN);
-                    }
-                }
-            }
-        });
+        /*
+         * Reload auth on create and updates verify email status accordingly
+         */
+        mAuth.getCurrentUser().reload()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
+                        if(task.isSuccessful()) {
+                            TextView verifyEmailStatus = findViewById(R.id.account_verify_email_status_text_view);
+
+                            if (mAuth.getCurrentUser().isEmailVerified()) {
+                                verifyEmailStatus.setText(R.string.account_settings_verified_email);
+                                verifyEmailStatus.setTextColor(Color.GREEN);
+                            } else {
+                                verifyEmailStatus.setText(R.string.account_settings_not_verified_email);
+                                verifyEmailStatus.setTextColor(Color.RED);
+                            }
+                        }
+                    }
+                });
     }
+
 
     /*
      * Sends user to delete account activity.

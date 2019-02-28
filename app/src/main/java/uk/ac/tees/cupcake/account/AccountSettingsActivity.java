@@ -18,26 +18,34 @@ public class AccountSettingsActivity extends AppCompatActivity {
     }
 
     /*
-     * Takes user to Delete Account activity
+     * Sends user to delete account activity.
      */
-    public void sendUserToDeleteAccount(View view){
+    public void deleteAccountActivity(View view){
         Intent intent = new Intent(this, DeleteAccountActivity.class);
         startActivity(intent);
     }
 
     /*
-     * Takes user to Change Email Activity
+     * Sends user to change email activity.
      */
-    public void sendUserToChangeEmail(View view){
+    public void changeEmailActivity(View view){
         Intent intent = new Intent(this, ChangeEmailActivity.class);
         startActivity(intent);
     }
 
     /*
-     * Takes user to Change Password Activity
+     * Sends user to change password activity.
      */
-    public void sendUserToChangePassword(View view){
+    public void changePasswordActivity(View view){
         Intent intent = new Intent(this, ChangePasswordActivity.class);
+        startActivity(intent);
+    }
+
+    /*
+     * Sends user to verify email activity.
+     */
+    public void verifyEmailActivity(View view){
+        Intent intent = new Intent(this, VerifyEmailActivity.class);
         startActivity(intent);
     }
 

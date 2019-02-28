@@ -37,9 +37,22 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.LostPasswordActivity" />
-        <activity android:name=".account.SettingsActivity" />
-        <activity android:name=".account.AccountSettingsActivity" />
-        <activity android:name=".account.DeleteAccountActivity"></activity>
+        <activity
+            android:name=".account.SettingsActivity"
+            android:parentActivityName=".home.HomeActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".account.AccountSettingsActivity"
+            android:parentActivityName=".account.SettingsActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".account.DeleteAccountActivity"
+            android:parentActivityName=".account.AccountSettingsActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".account.ChangeEmailActivity"
+            android:parentActivityName=".account.AccountSettingsActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
     </application>
 
 </manifest>

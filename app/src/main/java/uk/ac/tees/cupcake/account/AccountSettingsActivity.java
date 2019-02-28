@@ -13,6 +13,8 @@ public class AccountSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
+
+        setTitle("Account Settings");
     }
 
     /*
@@ -20,6 +22,14 @@ public class AccountSettingsActivity extends AppCompatActivity {
      */
     public void sendUserToDeleteAccount(View view){
         Intent intent = new Intent(this, DeleteAccountActivity.class);
+        startActivity(intent);
+    }
+
+    /*
+     * Takes user to Change Email Activity
+     */
+    public void sendUserToChangeEmail(View view){
+        Intent intent = new Intent(this, ChangeEmailActivity.class);
         startActivity(intent);
     }
 }

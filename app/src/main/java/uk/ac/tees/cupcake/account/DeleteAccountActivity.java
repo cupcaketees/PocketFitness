@@ -19,6 +19,11 @@ import com.google.firebase.auth.FirebaseUser;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.login.LoginActivity;
 
+/**
+ * Delete Account Activity
+ * @author Bradley Hunter <s6263464@tees.ac.uk>
+ */
+
 public class DeleteAccountActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -61,7 +66,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
                                     if(task.isSuccessful()){
                                         Toast.makeText(DeleteAccountActivity.this, "Account deleted", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(DeleteAccountActivity.this, LoginActivity.class));
-                                        finish();
+                                        //finish();
                                     }else{
                                         String errorMessage = task.getException().getMessage();
                                         Toast.makeText(DeleteAccountActivity.this, "Error:" + errorMessage, Toast.LENGTH_LONG).show();

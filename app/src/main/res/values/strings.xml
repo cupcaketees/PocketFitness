@@ -62,6 +62,7 @@
 
     <string name="verify_email_send_email_button_text">Send Instructions</string>
     <string name="verify_email_header_text_view_text">We will send instructions to your registered email address.</string>
+    <string name="account_verify_email_status_text_view_text">Your email address is not verified</string>
 
 
 </resources>

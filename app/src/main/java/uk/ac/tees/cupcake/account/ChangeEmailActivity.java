@@ -19,6 +19,11 @@ import com.google.firebase.auth.FirebaseUser;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.HomeActivity;
 
+/**
+ * Change Email Activity
+ * @author Bradley Hunter <s6263464@tees.ac.uk>
+ */
+
 public class ChangeEmailActivity extends AppCompatActivity {
 
     FirebaseAuth mAuth;

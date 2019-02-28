@@ -42,6 +42,7 @@
     <string name="fast_forward">Fast Forward</string>
 
     <string name="settings_account_button_text">Account Settings</string>
+    <string name="current_password_edit_text_hint">Enter your current password</string>
 
     <string name="account_delete_account_button_text">Delete My Account</string>
     <string name="account_change_password_button_text">Change Password</string>
@@ -49,8 +50,11 @@
     <string name="account_change_email_button_text">Change Email Address</string>
 
     <string name="delete_account_delete_button_text">Delete My Account</string>
-    <string name="delete_account_password_edit_text_hint">Enter your current password</string>
-    <string name="delete_account_message_text">We\'re sorry to hear you\'d like to delete your account.</string>
+    <string name="delete_account_header_text_view_text">We\'re sorry to hear you\'d like to delete your account.</string>
+
+    <string name="change_email_header_text_view_text">We just need your new email address and current password to update your email address.</string>
+    <string name="change_email_email_edit_text_text">Enter your new email address</string>
+    <string name="change_email_change_email_button_text">Change Email</string>
 
 
 </resources>

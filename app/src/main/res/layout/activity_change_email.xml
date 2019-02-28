@@ -6,4 +6,73 @@
     android:layout_height="match_parent"
     tools:context="uk.ac.tees.cupcake.account.ChangeEmailActivity">
 
+    <TextView
+        android:id="@+id/change_email_header_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/change_email_header_text_view_text"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/change_email_password_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/account_settings_password_icon"
+        android:ems="10"
+        android:hint="@string/current_password_edit_text_hint"
+        android:inputType="textPassword"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_email_email_edit_text" />
+
+    <EditText
+        android:id="@+id/change_email_email_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:drawablePadding="10dp"
+        android:drawableStart="@drawable/account_settings_email_icon"
+        android:ems="10"
+        android:hint="@string/change_email_email_edit_text_text"
+        android:inputType="textEmailAddress"
+        android:textColorLink="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.562"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/change_email_header_text_view" />
+
+    <Button
+        android:id="@+id/change_email_change_email_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/login_button_shape"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/change_email_change_email_button_text"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

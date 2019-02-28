@@ -19,7 +19,7 @@ import static uk.ac.tees.cupcake.R.id.step_counter_view;
 public class StepCounterActivity extends SensorActivity {
     
     @Override
-    public void setup() {
+    public void setupLayout() {
         setContentView(R.layout.activity_step_counter);
     
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {

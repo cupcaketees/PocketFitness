@@ -35,16 +35,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
     }
 
     /*
-     * Sends user to Login Activity
-     */
-    public void sendUserToLogin(){
-        Intent loginIntent = new Intent(this, LoginActivity.class );
-        startActivity(loginIntent);
-        finish();
-    }
-
-    /*
-     * Authenticate user using password input, on success attempts to delete user account.
+     * Authenticate current user using password input, on success attempts to delete user account.
      * TODO Include deletion of google accounts.
      */
     public void deleteAccount(View view){
@@ -56,26 +47,27 @@ public class DeleteAccountActivity extends AppCompatActivity {
             Toast.makeText(DeleteAccountActivity.this, "You must enter your password", Toast.LENGTH_SHORT).show();
             return;
         }
-        // Email and Password
+
         AuthCredential credential = EmailAuthProvider.getCredential(mAuth.getCurrentUser().getEmail(), userInputPassword);
 
         currentUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){
-                    currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-
-                            if(task.isSuccessful()){
-                                Toast.makeText(DeleteAccountActivity.this, "Account deleted", Toast.LENGTH_SHORT).show();
-                                sendUserToLogin();
-                            }else{
-                                String errorMessage = task.getException().getMessage();
-                                Toast.makeText(DeleteAccountActivity.this, "Error:" + errorMessage, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                    currentUser.delete()
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){
+                                        Toast.makeText(DeleteAccountActivity.this, "Account deleted", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(DeleteAccountActivity.this, LoginActivity.class));
+                                        finish();
+                                    }else{
+                                        String errorMessage = task.getException().getMessage();
+                                        Toast.makeText(DeleteAccountActivity.this, "Error:" + errorMessage, Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
                 }else{
                     String errorMessage = task.getException().getMessage();
                     Toast.makeText(DeleteAccountActivity.this, "Error:" + errorMessage, Toast.LENGTH_LONG).show();
@@ -84,7 +76,4 @@ public class DeleteAccountActivity extends AppCompatActivity {
         });
     }
 }
-
-
-
 

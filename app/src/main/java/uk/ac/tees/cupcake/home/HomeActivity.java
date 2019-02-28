@@ -16,9 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.VideoPlayer.NavigationDrawerAdapter;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
+import uk.ac.tees.cupcake.videoplayer.NavigationDrawerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private DrawerLayout layout;
-    NavigationView navigationView;
+    private NavigationView navigationView;
     ViewPager viewPager;
 
     @Override
@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
@@ -62,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         setupFragments();
         Log.d(TAG, "onCreate: onEnd");
     }
+
 
     /**
      * Initialises Toolbar and Drawer sets the Toolbar for the View
@@ -132,7 +133,7 @@ public class HomeActivity extends AppCompatActivity {
         if (layout.isDrawerOpen(GravityCompat.START)) {
             layout.closeDrawer(GravityCompat.START);
         } else {
-            if(viewPager.getCurrentItem() == 0) {
+            if (viewPager.getCurrentItem() == 0) {
                 super.onBackPressed();
             } else {
                 viewPager.setCurrentItem(0);

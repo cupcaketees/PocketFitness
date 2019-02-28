@@ -1,20 +1,22 @@
-package uk.ac.tees.cupcake.VideoPlayer;
+package uk.ac.tees.cupcake.videoplayer;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
-
 import com.google.firebase.auth.FirebaseAuth;
-
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.HomeActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
+/**
+ * NavigationDrawer Adapter
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
+
 public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemSelectedListener {
 
-    public Context context;
+    private final Context context;
 
     public NavigationDrawerAdapter(Context context) {
         this.context = context;
@@ -33,7 +35,7 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
             case R.id.nav_gallery:
                 break;
             case R.id.nav_slideshow:
-                IntentUtils.invokeVideoView(context, VideoPlayerActivity.class, "VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
+                IntentUtils.invokeBaseView(context, VideoListActivity.class);
                 break;
             case R.id.nav_manage:
                 break;

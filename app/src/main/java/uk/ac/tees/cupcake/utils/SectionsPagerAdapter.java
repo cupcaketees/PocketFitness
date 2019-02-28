@@ -11,6 +11,11 @@ import java.util.List;
 import uk.ac.tees.cupcake.home.HomeFragment;
 import uk.ac.tees.cupcake.home.NewsFeedFragment;
 
+/**
+ * SectionPager Adapter
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
+
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = "SectionPagerAdapter";

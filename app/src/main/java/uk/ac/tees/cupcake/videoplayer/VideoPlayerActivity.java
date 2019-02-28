@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.VideoPlayer;
+package uk.ac.tees.cupcake.videoplayer;
 
 import android.app.Dialog;
 import android.content.res.Configuration;
@@ -6,12 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -41,6 +41,11 @@ import com.google.android.exoplayer2.util.Util;
 
 import uk.ac.tees.cupcake.R;
 
+/**
+ * VideoPlayer Activity
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
+
 public class VideoPlayerActivity extends AppCompatActivity {
 
     private static final String TAG = "VideoPlayerActivity";
@@ -52,11 +57,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private SimpleExoPlayerView mSimpleExoPlayerView;
     private MediaSource mVideoSource;
 
-    private FrameLayout mFullScreenButton;
     private ImageView mFullScreenIcon;
     private Dialog mFullScreenDialog;
-
-    private DrawerLayout layout;
 
     private int mResumeWindow;
     private long mResumePosition;
@@ -66,41 +68,18 @@ public class VideoPlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.exo_player_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        layout = findViewById(R.id.drawerLayout);
+        setContentView(R.layout.exo_activity_video_player);
+        DrawerLayout layout = findViewById(R.id.drawerLayout);
         if (savedInstanceState != null) {
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);
             mResumePosition = savedInstanceState.getLong(STATE_RESUME_POSITION);
             mExoPlayerFullscreen = savedInstanceState.getBoolean(STATE_PLAYER_FULLSCREEN);
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        initialiseView();
+        //initialiseView();
         Log.d(TAG, "onCreate: onEnd");
     }
 
-    /**
-     * Initialises Toolbar and Drawer sets the Toolbar for the View
-     */
-    public void initialiseView() {
-        Log.d(TAG, "initialiseView: onStart");
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        layout.addDrawerListener(toggle);
-
-        toggle.syncState();
-        Log.d(TAG, "initialiseView: Navigation Bar and Toolbar added");
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.getMenu().getItem(2).setChecked(true);
-        navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(VideoPlayerActivity.this));
-        Log.d(TAG, "initialiseView: onEnd");
-    }
 
 
 
@@ -150,6 +129,12 @@ public class VideoPlayerActivity extends AppCompatActivity {
         Log.d(TAG, "openFullscreenDialog: onStart");
         ((ViewGroup) mSimpleExoPlayerView.getParent()).removeView(mSimpleExoPlayerView);
         mFullScreenDialog.addContentView(mSimpleExoPlayerView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        ((ViewGroup) mSimpleExoPlayerView.getParent()).setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                | View.SYSTEM_UI_FLAG_IMMERSIVE);
         mFullScreenIcon.setImageDrawable(ContextCompat.getDrawable(VideoPlayerActivity.this, R.drawable.ic_fullscreen_shrink));
         mExoPlayerFullscreen = true;
         mFullScreenDialog.show();
@@ -177,7 +162,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         Log.d(TAG, "initFullscreenButton: onStart");
         PlaybackControlView controlView = mSimpleExoPlayerView.findViewById(R.id.exo_controller);
         mFullScreenIcon = controlView.findViewById(R.id.exo_fullscreen_icon);
-        mFullScreenButton = controlView.findViewById(R.id.exo_fullscreen_button);
+        FrameLayout mFullScreenButton = controlView.findViewById(R.id.exo_fullscreen_button);
         Log.d(TAG, "initFullscreenButton: isFullscreen: " + mExoPlayerFullscreen);
         mFullScreenButton.setOnClickListener(v -> {
             if (!mExoPlayerFullscreen)
@@ -273,17 +258,4 @@ public class VideoPlayerActivity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-
-
-        DrawerLayout drawer = findViewById(R.id.drawerLayout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            drawer.closeDrawer(GravityCompat.START);
-            super.onBackPressed();
-        }
-
-    }
 }

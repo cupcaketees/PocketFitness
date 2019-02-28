@@ -4,6 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import java.io.Serializable;
+import java.util.Map;
+
+/**
+ * Intent Utility
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
+
 public class IntentUtils {
 
 
@@ -12,6 +20,7 @@ public class IntentUtils {
         intent.putExtra(title, extra);
         context.startActivity(intent);
     }
+
 
     public static void invokeBaseView(Context context, Class<?> selectedClass) {
         Intent intent = new Intent(context, selectedClass);

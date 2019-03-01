@@ -16,6 +16,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import uk.ac.tees.cupcake.R;
 
 /*
@@ -35,6 +41,8 @@ public class ProfilePageActivity extends AppCompatActivity {
     private String currentUserId;
     private ListenerRegistration profileListener;
 
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +57,9 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         TextView memberSinceTextView = findViewById(R.id.profile_member_since_text_view);
         TextView emailTextView = findViewById(R.id.profile_email_text_view);
-
-        //String accountCreated = String.valueOf(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
-        //memberSinceTextView.setText();
+        Date date = new Date(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
+        String accountCreated = "Member since " + DATE_FORMAT.format(date);
+        memberSinceTextView.setText(accountCreated);
 
         emailTextView.setText(mAuth.getCurrentUser().getEmail());
 

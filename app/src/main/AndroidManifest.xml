@@ -61,7 +61,7 @@
             android:name=".account.VerifyEmailActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-
+        <activity android:name=".account.ProfilePageActivity"></activity>
     </application>
 
 </manifest>

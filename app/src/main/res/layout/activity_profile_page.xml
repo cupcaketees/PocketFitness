@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="uk.ac.tees.cupcake.account.ProfilePageActivity">
+
+    <ImageView
+        android:id="@+id/profile_cover_image_image_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="16:9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/cover_image_placeholder" />
+
+    <ImageView
+        android:id="@+id/profile_profile_image_image_view"
+        android:layout_width="0dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_cover_image_image_view"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/profile_cover_image_image_view"
+        app:srcCompat="@drawable/profile_picture_placeholder" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="17dp" />
+
+    <TextView
+        android:id="@+id/profile_name_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_cover_image_image_view"
+        tools:text="Bradley Hunter" />
+
+    <TextView
+        android:id="@+id/profile_member_since_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_name_text_view"
+        tools:text="Member since Feb, 28, 2019 " />
+
+    <Button
+        android:id="@+id/profile_follow_button"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/login_button_shape"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="@string/profile_follow_button_text"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintStart_toStartOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_profile_image_image_view"
+        tools:text="Follow" />
+
+
+    <TextView
+        android:id="@+id/profile_email_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/profile_follow_button"
+        tools:text="brad@example.com" />
+
+    <TextView
+        android:id="@+id/profile_location_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email_text_view"
+        tools:text="Middlesbrough" />
+
+    <TextView
+        android:id="@+id/profile_posts_header_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toEndOf="@+id/profile_followers_header_text_view"
+        app:layout_constraintTop_toTopOf="@+id/guideline_center"
+        tools:text="Posts" />
+
+    <TextView
+        android:id="@+id/profile_followers_header_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/profile_posts_header_text_view"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/profile_following_header_text_view"
+        app:layout_constraintTop_toTopOf="@+id/guideline_center"
+        tools:text="Followers" />
+
+    <TextView
+        android:id="@+id/profile_posts_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/profile_posts_header_text_view"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toStartOf="@+id/profile_posts_header_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_posts_header_text_view"
+        tools:text="999" />
+
+    <TextView
+        android:id="@+id/profile_followers_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/profile_followers_header_text_view"
+        app:layout_constraintStart_toStartOf="@+id/profile_followers_header_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_followers_header_text_view"
+        tools:text="999" />
+
+    <TextView
+        android:id="@+id/profile_following_header_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/profile_followers_header_text_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toTopOf="@+id/guideline_center"
+        tools:text="Following" />
+
+    <TextView
+        android:id="@+id/profile_following_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/profile_following_header_text_view"
+        app:layout_constraintStart_toStartOf="@+id/profile_following_header_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_following_header_text_view"
+        tools:text="999" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="372dp" />
+
+</android.support.constraint.ConstraintLayout>

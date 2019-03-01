@@ -24,7 +24,7 @@ import uk.ac.tees.cupcake.R;
 public class AccountSettingsActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    FirebaseUser currentUser;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
 
         setTitle("Account Settings");
         mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         /*
          * Reload auth on create and updates verify email status accordingly
@@ -83,8 +84,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
      * Sends user to verify email activity if email address is not verified.
      */
     public void verifyEmailActivity(View view){
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if(currentUser.isEmailVerified()){
             Toast.makeText(AccountSettingsActivity.this, "Your email address is already verified", Toast.LENGTH_SHORT).show();

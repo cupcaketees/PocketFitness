@@ -65,6 +65,7 @@
 
     <string name="account_settings_verified_email">Your email address is verified</string>
     <string name="account_settings_not_verified_email">Your email address is not verified</string>
+    <string name="profile_follow_button_text">Follow</string>
 
 
 </resources>

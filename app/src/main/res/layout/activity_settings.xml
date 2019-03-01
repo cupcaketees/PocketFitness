@@ -19,7 +19,7 @@
         android:drawablePadding="5dp"
         android:drawableStart="@drawable/settings_account_icon2"
         android:elevation="0dp"
-        android:onClick="sendUserToAccountSettings"
+        android:onClick="accountSettingsActivity"
         android:text="@string/settings_account_button_text"
         android:textAlignment="viewStart"
         android:textAllCaps="false"

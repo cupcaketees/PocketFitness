@@ -3,32 +3,31 @@ package uk.ac.tees.cupcake.home;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
-import uk.ac.tees.cupcake.VideoPlayer.VideoPlayerActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
+import uk.ac.tees.cupcake.videoplayer.NavigationDrawerAdapter;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity {
 
     private static final String TAG = "HomeActivity";
     private FirebaseAuth mAuth;
@@ -36,6 +35,8 @@ public class HomeActivity extends AppCompatActivity
     private FirebaseFirestore firebaseFirestore;
 
     private DrawerLayout layout;
+    private NavigationView navigationView;
+    ViewPager viewPager;
 
     @Override
     protected void onStart() {
@@ -44,7 +45,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
@@ -59,7 +60,7 @@ public class HomeActivity extends AppCompatActivity
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() == null){
+                if (firebaseAuth.getCurrentUser() == null) {
                     sendUserToLoginActivity();
                 }else{
                     String currentUserId = mAuth.getCurrentUser().getUid();
@@ -81,8 +82,10 @@ public class HomeActivity extends AppCompatActivity
                 }
             }
         };
-        
+
         layout = findViewById(R.id.drawerLayout);
+        viewPager = findViewById(R.id.container);
+
         initialiseView();
         setupFragments();
         Log.d(TAG, "onCreate: onEnd");
@@ -96,16 +99,16 @@ public class HomeActivity extends AppCompatActivity
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         layout.addDrawerListener(toggle);
-        
+
         toggle.syncState();
         Log.d(TAG, "initialiseView: Navigation Bar and Toolbar added");
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(getApplicationContext()));
         Log.d(TAG, "initialiseView: onEnd");
     }
 
@@ -118,66 +121,35 @@ public class HomeActivity extends AppCompatActivity
 
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        ViewPager viewPager = findViewById(R.id.container);
+
         viewPager.setAdapter(adapter);
-        
+
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_NavBar);
         bottomNavigationView.setupWithViewPager(viewPager);
-        
-        Log.d(TAG, "setupFragments: onEnd");
-    }
-    
-    /**
-     * @param item - that was selected (NavigationView)
-     * @return - true if successful and takes to new view.
-     */
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        Log.d(TAG, "onNavigationItemSelected: onStart");
 
-        switch (item.getItemId()) {
-            case R.id.nav_camera:
-                break;
-            case R.id.nav_gallery:
-                break;
-            case R.id.nav_slideshow:
-                Intent intent = new Intent(HomeActivity.this, VideoPlayerActivity.class);
-                intent.putExtra("VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
-                startActivity(intent);
-                break;
-            case R.id.nav_manage:
-                break;
-            case R.id.nav_share:
-                break;
-            case R.id.nav_send:
-                break;
-            case R.id.nav_settings:
-                sendUserToSettingsActivity();
-                break;
-            case R.id.nav_signout:
-                signOut();
-                break;
-            case R.id.nav_view_profile:
-                sendUserToProfileActivity();
-                break;
-            default:
-                Log.d(TAG, "onNavigationItemSelected: Error no item Selected");
-                return false;
-        }
-        
-        layout.closeDrawer(GravityCompat.START);
-        return true;
+        Log.d(TAG, "setupFragments: onEnd");
     }
 
     /*
      * Send user to login activity.
      */
-    private void sendUserToLoginActivity(){
+    private void sendUserToLoginActivity() {
         Intent homeIntent = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(homeIntent);
         finish();
     }
 
+    /**
+     * Ensures no matter how the user gets to the page it resets the menu to the correct menu item highlighted.
+     * Closes drawer when reaching this page
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        navigationView.getMenu().getItem(0).setChecked(true);
+        layout.closeDrawer(GravityCompat.START);
+    }
+  
     /*
      * Send user to Settings activity
      */
@@ -185,6 +157,7 @@ public class HomeActivity extends AppCompatActivity
         Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
         startActivity(settingsIntent);
     }
+  
     /*
      * Send user to Profile page activity
      */
@@ -193,16 +166,21 @@ public class HomeActivity extends AppCompatActivity
         startActivity(profileIntent);
     }
 
-
-
     /*
      * Signs out user
      * //TODO add google auth signout
      */
-    private void signOut(){
-        mAuth.signOut();
+    @Override
+    public void onBackPressed() {
+        if (layout.isDrawerOpen(GravityCompat.START)) {
+            layout.closeDrawer(GravityCompat.START);
+        } else {
+            if (viewPager.getCurrentItem() == 0) {
+                super.onBackPressed();
+            } else {
+                viewPager.setCurrentItem(0);
+            }
+        }
     }
-
-
 
 }

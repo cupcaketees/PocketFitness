@@ -20,7 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".VideoPlayer.VideoPlayerActivity"
+            android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".home.health.HeartRateActivity" />
@@ -37,6 +37,9 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.LostPasswordActivity" />
+        <activity android:name=".videoplayer.VideoListActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:label="Workout Videos"/>
         <activity
             android:name=".account.SettingsActivity"
             android:parentActivityName=".home.HomeActivity"

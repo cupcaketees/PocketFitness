@@ -51,6 +51,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         Picasso.
                 with(holder.itemView.getContext())
                 .load(post.getImage())
+                .placeholder(R.drawable.cupcake)
                 .into(holder.mImageView);
         
         Log.d("Positiontag", "position: "+position);
@@ -68,7 +69,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private ImageView mImageView;
 
         private TextView usernameTextView;
+
         private TextView dateTextView;
+
 
         FeedViewHolder(View postView) {
 
@@ -81,6 +84,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(mImageView);
             photoViewAttacher.update();
         }
+
     }
     @Override
     public long getItemId(int position) {

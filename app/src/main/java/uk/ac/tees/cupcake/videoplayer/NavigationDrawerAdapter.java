@@ -6,6 +6,8 @@ import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.ProfilePageActivity;
+import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
@@ -29,19 +31,17 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_camera:
+            case R.id.nav_home:
                 IntentUtils.invokeBaseView(context, HomeActivity.class);
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_view_profile:
+                IntentUtils.invokeBaseView(context, ProfilePageActivity.class);
                 break;
             case R.id.nav_slideshow:
                 IntentUtils.invokeBaseView(context, VideoListActivity.class);
                 break;
-            case R.id.nav_manage:
-                break;
-            case R.id.nav_share:
-                break;
-            case R.id.nav_send:
+            case R.id.nav_settings:
+                IntentUtils.invokeBaseView(context, SettingsActivity.class);
                 break;
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();

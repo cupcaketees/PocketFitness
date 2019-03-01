@@ -24,6 +24,7 @@ import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.videoplayer.NavigationDrawerAdapter;
 
@@ -61,7 +62,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
-                    sendUserToLoginActivity();
+                    IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
                 }else{
                     String currentUserId = mAuth.getCurrentUser().getUid();
                     firebaseFirestore.collection("Users")
@@ -130,14 +131,6 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "setupFragments: onEnd");
     }
 
-    /*
-     * Send user to login activity.
-     */
-    private void sendUserToLoginActivity() {
-        Intent homeIntent = new Intent(HomeActivity.this, LoginActivity.class);
-        startActivity(homeIntent);
-        finish();
-    }
 
     /**
      * Ensures no matter how the user gets to the page it resets the menu to the correct menu item highlighted.
@@ -149,22 +142,7 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
         layout.closeDrawer(GravityCompat.START);
     }
-  
-    /*
-     * Send user to Settings activity
-     */
-    private void sendUserToSettingsActivity(){
-        Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
-  
-    /*
-     * Send user to Profile page activity
-     */
-    private void sendUserToProfileActivity(){
-        Intent profileIntent = new Intent(HomeActivity.this, ProfilePageActivity.class);
-        startActivity(profileIntent);
-    }
+
 
     /*
      * Signs out user

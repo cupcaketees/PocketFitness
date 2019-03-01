@@ -4,10 +4,14 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,7 +23,7 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by User on 12/02/2019.
+ * Created by s6065431 on 12/02/2019.
  */
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
@@ -72,6 +76,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private TextView dateTextView;
 
+        private Button optionsButton;
+
 
         FeedViewHolder(View postView) {
 
@@ -80,12 +86,27 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             mImageView = postView.findViewById(R.id.post_image);
             usernameTextView = postView.findViewById(R.id.post_username);
             dateTextView = postView.findViewById(R.id.post_date);
+            optionsButton = (Button) postView.findViewById(R.id.dropdown_menu);
+            optionsButton.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(postView.getContext(), optionsButton);
+                    popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
+
+                    popupMenu.setOnMenuItemClickListener(item -> {
+                        Toast.makeText(postView.getContext(), "You clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+                        return true;
+                    });
+                    popupMenu.show(); //showing popup menu
+                }
+            });
 
             PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(mImageView);
             photoViewAttacher.update();
         }
 
     }
+
     @Override
     public long getItemId(int position) {
         return position;

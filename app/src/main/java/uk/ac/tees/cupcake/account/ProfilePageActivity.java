@@ -51,9 +51,12 @@ public class ProfilePageActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if(documentSnapshot.exists()){
-                            String firstName = documentSnapshot.getString(KEY_FIRST_NAME);
-                            String lastName = documentSnapshot.getString(KEY_LAST_NAME);
+                            //String firstName = documentSnapshot.getString(KEY_FIRST_NAME);
+                            //String lastName = documentSnapshot.getString(KEY_LAST_NAME);
 
+                            UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
+                            String firstName = userProfile.getFirstName();
+                            String lastName = userProfile.getLastName();
                             mProfileNameTextView.setText(firstName + " " + lastName);
                         }else{
                             Toast.makeText(ProfilePageActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();

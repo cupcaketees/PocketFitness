@@ -67,12 +67,14 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         String currentUserId = mAuth.getCurrentUser().getUid();
 
-        Map<String, Object> profile = new HashMap<>();
-        profile.put(KEY_FIRST_NAME, userInputFirstName);
-        profile.put(KEY_LAST_NAME, userInputLastName);
+        UserProfile userProfile = new UserProfile(userInputFirstName, userInputLastName);
+
+        //Map<String, Object> profile = new HashMap<>();
+        //profile.put(KEY_FIRST_NAME, userInputFirstName);
+        //profile.put(KEY_LAST_NAME, userInputLastName);
 
         firebaseFirestore.collection("Users")
-                         .document(currentUserId).set(profile)
+                         .document(currentUserId).set(userProfile)
                          .addOnSuccessListener(new OnSuccessListener<Void>() {
                              @Override
                              public void onSuccess(Void aVoid) {

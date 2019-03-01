@@ -11,11 +11,18 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-
+import android.view.MenuItem;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.ProfilePageActivity;
+import uk.ac.tees.cupcake.account.SettingsActivity;
+import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.videoplayer.NavigationDrawerAdapter;
@@ -25,6 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final String TAG = "HomeActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseFirestore firebaseFirestore;
 
     private DrawerLayout layout;
     private NavigationView navigationView;
@@ -43,14 +51,34 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.navbar);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         /*
-         * Checks if user is signed in and updates UI accordingly.
+         * Sends user to login page if current user is null.
+         * Sends user to setup profile if account does not exist in firestore collection.
          */
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     sendUserToLoginActivity();
+                }else{
+                    String currentUserId = mAuth.getCurrentUser().getUid();
+                    firebaseFirestore.collection("Users")
+                                     .document(currentUserId)
+                                     .get()
+                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                         @Override
+                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                           if(task.isSuccessful()){
+                                               if(!task.getResult().exists()){
+                                                   Intent setupIntent = new Intent(HomeActivity.this, SetupProfileActivity.class);
+                                                   startActivity(setupIntent);
+                                                   finish();
+                                               }
+                                           }
+                                         }
+                                     });
                 }
             }
         };
@@ -62,7 +90,6 @@ public class HomeActivity extends AppCompatActivity {
         setupFragments();
         Log.d(TAG, "onCreate: onEnd");
     }
-
 
     /**
      * Initialises Toolbar and Drawer sets the Toolbar for the View
@@ -112,7 +139,6 @@ public class HomeActivity extends AppCompatActivity {
         finish();
     }
 
-
     /**
      * Ensures no matter how the user gets to the page it resets the menu to the correct menu item highlighted.
      * Closes drawer when reaching this page
@@ -123,10 +149,26 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
         layout.closeDrawer(GravityCompat.START);
     }
+  
+    /*
+     * Send user to Settings activity
+     */
+    private void sendUserToSettingsActivity(){
+        Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+  
+    /*
+     * Send user to Profile page activity
+     */
+    private void sendUserToProfileActivity(){
+        Intent profileIntent = new Intent(HomeActivity.this, ProfilePageActivity.class);
+        startActivity(profileIntent);
+    }
 
-    /**
-     * Closes drawers when back button is pressed if its open.
-     * If its on main menu button and back button is pressed it closes app if any other fragment it'll return to home page.
+    /*
+     * Signs out user
+     * //TODO add google auth signout
      */
     @Override
     public void onBackPressed() {

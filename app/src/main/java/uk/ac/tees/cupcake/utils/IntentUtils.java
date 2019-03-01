@@ -1,6 +1,5 @@
 package uk.ac.tees.cupcake.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -11,9 +10,7 @@ import java.util.Map;
  * Intent Utility
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
  */
-
 public class IntentUtils {
-
 
     public static void invokeVideoView(Context context, Class<?> selectedClass, String title, String extra) {
         Intent intent = new Intent(context, selectedClass);

@@ -10,11 +10,14 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+
+import java.util.Objects;
 
 import uk.ac.tees.cupcake.R;
 
@@ -28,6 +31,8 @@ public class ProfilePageActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private TextView mProfileNameTextView;
+    private TextView mLocationTextView;
+
     private static final String KEY_FIRST_NAME = "firstName";
     private static final String KEY_LAST_NAME = "lastName";
     private String currentUserId;
@@ -39,10 +44,19 @@ public class ProfilePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         mProfileNameTextView = findViewById(R.id.profile_name_text_view);
+        mLocationTextView = findViewById(R.id.profile_location_text_view);
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         currentUserId = mAuth.getCurrentUser().getUid();
+
+        TextView memberSinceTextView = findViewById(R.id.profile_member_since_text_view);
+        TextView emailTextView = findViewById(R.id.profile_email_text_view);
+
+        //String accountCreated = String.valueOf(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
+        //memberSinceTextView.setText();
+
+        emailTextView.setText(mAuth.getCurrentUser().getEmail());
 
         loadProfileData();
     }
@@ -68,7 +82,9 @@ public class ProfilePageActivity extends AppCompatActivity {
                     UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
                     String firstName = userProfile.getFirstName();
                     String lastName = userProfile.getLastName();
+                    String location = userProfile.getLocation();
                     mProfileNameTextView.setText(firstName + " " + lastName);
+                    mLocationTextView.setText(location);
                 }
             }
         });
@@ -99,7 +115,9 @@ public class ProfilePageActivity extends AppCompatActivity {
                             UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
                             String firstName = userProfile.getFirstName();
                             String lastName = userProfile.getLastName();
+                            String location = userProfile.getLocation();
                             mProfileNameTextView.setText(firstName + " " + lastName);
+                            mLocationTextView.setText(location);
                         }else{
                             Toast.makeText(ProfilePageActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                         }
@@ -112,6 +130,10 @@ public class ProfilePageActivity extends AppCompatActivity {
                         Toast.makeText(ProfilePageActivity.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void followButton(){
+        // TODO
     }
 
 }

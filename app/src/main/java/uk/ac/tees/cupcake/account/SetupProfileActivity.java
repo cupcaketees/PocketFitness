@@ -32,6 +32,7 @@ public class SetupProfileActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private EditText mFirstNameEditText;
     private EditText mLastNameEditText;
+    private EditText mLocationEditText;
     private FirebaseAuth mAuth;
 
     private static final String KEY_FIRST_NAME = "firstName";
@@ -45,6 +46,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         mFirstNameEditText = findViewById(R.id.setup_profile_first_name_edit_text);
         mLastNameEditText = findViewById(R.id.setup_profile_last_name_edit_text);
+        mLocationEditText = findViewById(R.id.setup_profile_location_edit_text);
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
     }
@@ -55,6 +57,7 @@ public class SetupProfileActivity extends AppCompatActivity {
     public void saveProfileData(View view){
         String userInputFirstName = mFirstNameEditText.getText().toString().trim();
         String userInputLastName = mLastNameEditText.getText().toString().trim();
+        String userInputLocation = mLocationEditText.getText().toString().trim();
 
         if(TextUtils.isEmpty(userInputFirstName)){
             Toast.makeText(SetupProfileActivity.this, "You must enter your first name", Toast.LENGTH_SHORT).show();
@@ -67,11 +70,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         String currentUserId = mAuth.getCurrentUser().getUid();
 
-        UserProfile userProfile = new UserProfile(userInputFirstName, userInputLastName);
-
-        //Map<String, Object> profile = new HashMap<>();
-        //profile.put(KEY_FIRST_NAME, userInputFirstName);
-        //profile.put(KEY_LAST_NAME, userInputLastName);
+        UserProfile userProfile = new UserProfile(userInputFirstName, userInputLastName, userInputLocation);
 
         firebaseFirestore.collection("Users")
                          .document(currentUserId).set(userProfile)

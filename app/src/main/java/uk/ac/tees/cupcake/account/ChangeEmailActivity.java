@@ -40,7 +40,6 @@ public class ChangeEmailActivity extends AppCompatActivity {
         setTitle("Change Email");
     }
 
-
     /*
      * Authenticate current user using password input, on success attempts to change email with input provided.
      */

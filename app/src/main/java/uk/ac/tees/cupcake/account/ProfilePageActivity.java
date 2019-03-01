@@ -1,6 +1,5 @@
 package uk.ac.tees.cupcake.account;
 
-import android.net.sip.SipSession;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,8 +15,6 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
-
-import java.util.Objects;
 
 import uk.ac.tees.cupcake.R;
 

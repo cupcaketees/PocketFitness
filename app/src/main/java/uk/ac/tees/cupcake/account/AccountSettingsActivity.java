@@ -58,7 +58,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
                 });
     }
 
-
     /*
      * Sends user to delete account activity.
      */
@@ -98,5 +97,4 @@ public class AccountSettingsActivity extends AppCompatActivity {
     private void sendUserToActivity(Class dest){
         startActivity(new Intent(this, dest));
     }
-
 }

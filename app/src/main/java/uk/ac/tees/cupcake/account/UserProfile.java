@@ -10,13 +10,13 @@ public class UserProfile {
     private String location;
 
     public UserProfile(){
-        //  firestore requires empty constructor
+        //  Firestore requires empty constructor
     }
 
     public UserProfile(String firstName, String lastName, String location){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.location = location.isEmpty() ? "location not set" : location;
+        this.location = location.isEmpty() ? "" : location;
     }
 
     public String getFirstName(){

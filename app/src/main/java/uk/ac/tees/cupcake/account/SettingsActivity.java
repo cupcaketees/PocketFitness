@@ -20,7 +20,6 @@ public class SettingsActivity extends AppCompatActivity {
         setTitle("Settings");
     }
 
-
     /*
      * Takes user to Account activity
      */

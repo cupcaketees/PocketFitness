@@ -12,9 +12,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.ProfilePageActivity;
+import uk.ac.tees.cupcake.account.SettingsActivity;
+import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.VideoPlayer.VideoPlayerActivity;
 import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
@@ -25,6 +33,8 @@ public class HomeActivity extends AppCompatActivity
     private static final String TAG = "HomeActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private FirebaseFirestore firebaseFirestore;
+
     private DrawerLayout layout;
 
     @Override
@@ -40,14 +50,34 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.navbar);
 
         mAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         /*
-         * Checks if user is signed in and updates UI accordingly.
+         * Sends user to login page if current user is null.
+         * Sends user to setup profile if account does not exist in firestore collection.
          */
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null){
                     sendUserToLoginActivity();
+                }else{
+                    String currentUserId = mAuth.getCurrentUser().getUid();
+                    firebaseFirestore.collection("Users")
+                                     .document(currentUserId)
+                                     .get()
+                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                         @Override
+                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                           if(task.isSuccessful()){
+                                               if(!task.getResult().exists()){
+                                                   Intent setupIntent = new Intent(HomeActivity.this, SetupProfileActivity.class);
+                                                   startActivity(setupIntent);
+                                                   finish();
+                                               }
+                                           }
+                                         }
+                                     });
                 }
             }
         };
@@ -121,8 +151,14 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_send:
                 break;
+            case R.id.nav_settings:
+                sendUserToSettingsActivity();
+                break;
             case R.id.nav_signout:
                 signOut();
+                break;
+            case R.id.nav_view_profile:
+                sendUserToProfileActivity();
                 break;
             default:
                 Log.d(TAG, "onNavigationItemSelected: Error no item Selected");
@@ -143,10 +179,30 @@ public class HomeActivity extends AppCompatActivity
     }
 
     /*
+     * Send user to Settings activity
+     */
+    private void sendUserToSettingsActivity(){
+        Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+    /*
+     * Send user to Profile page activity
+     */
+    private void sendUserToProfileActivity(){
+        Intent profileIntent = new Intent(HomeActivity.this, ProfilePageActivity.class);
+        startActivity(profileIntent);
+    }
+
+
+
+    /*
      * Signs out user
+     * //TODO add google auth signout
      */
     private void signOut(){
         mAuth.signOut();
     }
+
+
 
 }

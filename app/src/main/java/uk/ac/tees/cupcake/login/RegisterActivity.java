@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;
 
 /**
@@ -117,10 +118,9 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "Sign up successful! You can now sign in", Toast.LENGTH_SHORT).show();
-                            // Sign out user so mAuth listener does not direct user to homepage.
-                            mAuth.signOut();
-                            sendUserToLoginActivity();
+                            Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegisterActivity.this, SetupProfileActivity.class));
+                            finish();
                         }else{
                             String errorMessage = task.getException().getMessage();
                             Toast.makeText(RegisterActivity.this, "Sign up failed: " + errorMessage, Toast.LENGTH_LONG).show();

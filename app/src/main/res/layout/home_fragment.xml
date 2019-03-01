@@ -1,9 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/heart_rate_chart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
+        android:id="@+id/home_heart_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:text="60"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/heart_rate_chart"
+        app:layout_constraintEnd_toStartOf="@+id/textView18" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="24dp"
+        android:text="bpm"
+        app:layout_constraintBottom_toBottomOf="@+id/home_heart_rate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/home_heart_rate" />
+
+    <ImageView
+        android:id="@+id/heart_icon"
+        android:layout_width="25dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView18"
+        app:layout_constraintStart_toEndOf="@+id/home_heart_rate"
+        app:srcCompat="@mipmap/ic_heart" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/step_chart"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heart_rate_chart" />
+
+    <TextView
+        android:id="@+id/home_steps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="4dp"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@+id/step_chart"
+        app:layout_constraintEnd_toStartOf="@+id/textView19" />
+
+    <TextView
+        android:id="@+id/textView19"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -11,4 +78,4 @@
         android:text="Home Fragment"
         android:textSize="20sp" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

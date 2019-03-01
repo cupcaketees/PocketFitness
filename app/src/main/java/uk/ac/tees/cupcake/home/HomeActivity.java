@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
@@ -156,6 +157,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_signout:
                 signOut();
                 break;
+            case R.id.nav_view_profile:
+                sendUserToProfileActivity();
+                break;
             default:
                 Log.d(TAG, "onNavigationItemSelected: Error no item Selected");
                 return false;
@@ -181,6 +185,15 @@ public class HomeActivity extends AppCompatActivity
         Intent settingsIntent = new Intent(HomeActivity.this, SettingsActivity.class);
         startActivity(settingsIntent);
     }
+    /*
+     * Send user to Profile page activity
+     */
+    private void sendUserToProfileActivity(){
+        Intent profileIntent = new Intent(HomeActivity.this, ProfilePageActivity.class);
+        startActivity(profileIntent);
+    }
+
+
 
     /*
      * Signs out user

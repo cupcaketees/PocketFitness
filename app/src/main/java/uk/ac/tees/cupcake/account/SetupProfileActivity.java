@@ -52,7 +52,7 @@ public class SetupProfileActivity extends AppCompatActivity {
      * Checks required input fields are not empty, adds data to database, return user to homepage.
      */
 
-    public void saveProfile(View view){
+    public void saveProfileData(View view){
         String userInputFirstName = mFirstNameEditText.getText().toString().trim();
         String userInputLastName = mLastNameEditText.getText().toString().trim();
 
@@ -87,6 +87,6 @@ public class SetupProfileActivity extends AppCompatActivity {
                                  Toast.makeText(SetupProfileActivity.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
                              }
                          });
-
     }
+
 }

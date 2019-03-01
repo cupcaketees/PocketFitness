@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import uk.ac.tees.cupcake.R;
-/**
+
+/*
  * Settings Activity
  * @author Bradley Hunter <s6263464@tees.ac.uk>
  */

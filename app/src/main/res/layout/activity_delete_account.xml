@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="32dp"
         android:text="@string/delete_account_header_text_view_text"
         android:textAlignment="center"
         android:textSize="18sp"

@@ -65,7 +65,14 @@
 
     <string name="account_settings_verified_email">Your email address is verified</string>
     <string name="account_settings_not_verified_email">Your email address is not verified</string>
+
     <string name="profile_follow_button_text">Follow</string>
+
+    <string name="setup_profile_first_name_edit_text_hint">Enter first name</string>
+    <string name="setup_profile_last_name_edit_text_hint">Enter last name</string>
+    <string name="setup_profile_gallery_button_text">Gallery</string>
+    <string name="setup_profile_camera_button_text">Camera</string>
+    <string name="setup_profile_finish_setup_button_text">Finish setup</string>
 
 
 </resources>

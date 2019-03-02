@@ -45,4 +45,9 @@ public class HeartRateActivity extends SensorActivity {
         return new HeartRateSensorEventListener(view);
     }
     
+    @Override
+    public int delay() {
+        return SensorManager.SENSOR_DELAY_FASTEST;
+    }
+    
 }

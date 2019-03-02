@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -37,5 +38,10 @@ public class StepCounterActivity extends SensorActivity {
         View stepCounterView = findViewById(step_counter_view);
     
         return new StepCounterSensorListener(stepCounterView);
+    }
+    
+    @Override
+    public int delay() {
+        return SensorManager.SENSOR_DELAY_NORMAL;
     }
 }

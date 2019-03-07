@@ -72,6 +72,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private ImageView mImageView;
 
+        private ImageView mProfilePic;
+
         private TextView usernameTextView;
 
         private TextView dateTextView;
@@ -86,6 +88,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             mImageView = postView.findViewById(R.id.post_image);
             usernameTextView = postView.findViewById(R.id.post_username);
             dateTextView = postView.findViewById(R.id.post_date);
+            mProfilePic = postView.findViewById(R.id.post_profile_picture);
+            mProfilePic.setImageResource(R.drawable.profilepic);
             optionsButton = (Button) postView.findViewById(R.id.dropdown_menu);
             optionsButton.setOnClickListener(new View.OnClickListener(){
                 @Override

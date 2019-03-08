@@ -67,15 +67,13 @@
     <string name="profile_followers_text_view_text">Followers</string>
     <string name="profile_following_text_view_text">Following</string>
     <string name="profile_posts_text_view_text">Posts</string>
-
+    
+    <string name="setup_profile_add_photo_button_text">Add Photo</string>
     <string name="setup_profile_first_name_edit_text_hint">Enter first name</string>
     <string name="setup_profile_last_name_edit_text_hint">Enter last name</string>
-    <string name="setup_profile_location_edit_text_hint">Enter location</string>
-    <string name="setup_profile_optional_text_view_text">Optional</string>
-
-    <string name="setup_profile_header_text">Welcome to Pocket fitness! To get started please enter your first and last name.</string>
-    <string name="setup_profile_finish_setup_button_text">Finish setup</string>
-
+    <string name="setup_profile_finish_setup_button_text">Finish Setup</string>
+    <string name="setup_profile_header_text_view_text">To get started we just need to setup your profile page please enter your name and add an optional profile picture.</string>
+    <string name="setup_profile_title_text_view_text">Welcome to Pocket fitness!</string>
 
 
 </resources>

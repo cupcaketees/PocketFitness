@@ -4,10 +4,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <supports-screens
         android:anyDensity="true"
@@ -41,9 +39,10 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.LostPasswordActivity" />
-        <activity android:name=".videoplayer.VideoListActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="Workout Videos"/>
+        <activity
+            android:name=".videoplayer.VideoListActivity"
+            android:label="Workout Videos"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".account.SettingsActivity"
             android:parentActivityName=".home.HomeActivity"
@@ -69,9 +68,13 @@
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".account.ProfilePageActivity" />
-        <activity android:name=".account.SetupProfileActivity"/>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity android:name=".account.SetupProfileActivity" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity android:name=".account.EditProfileActivity"
+            android:parentActivityName=".home.HomeActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
 
     </application>
 

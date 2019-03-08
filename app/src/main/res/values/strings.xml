@@ -74,6 +74,10 @@
     <string name="setup_profile_finish_setup_button_text">Finish Setup</string>
     <string name="setup_profile_header_text_view_text">To get started we just need to setup your profile page please enter your name and add an optional profile picture.</string>
     <string name="setup_profile_title_text_view_text">Welcome to Pocket fitness!</string>
+    <string name="edit_profile_first_name_text_view_text">First name</string>
+    <string name="edit_profile_last_name_text_view_text">Last name</string>
+    <string name="edit_profile_change_profile_image_button_text">Change Profile Picture</string>
+    <string name="edit_profile_update_profile_button_text">Save Changes</string>
 
 
 </resources>

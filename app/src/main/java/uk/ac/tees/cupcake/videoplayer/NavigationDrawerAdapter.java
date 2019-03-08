@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;
@@ -36,6 +37,9 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
                 break;
             case R.id.nav_view_profile:
                 IntentUtils.invokeBaseView(context, ProfilePageActivity.class);
+                break;
+            case R.id.nav_edit_profile:
+                IntentUtils.invokeBaseView(context, EditProfileActivity.class);
                 break;
             case R.id.nav_slideshow:
                 IntentUtils.invokeBaseView(context, VideoListActivity.class);

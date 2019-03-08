@@ -80,6 +80,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private Button optionsButton;
 
+        private  TextView ratingCount;
+
 
         FeedViewHolder(View postView) {
 
@@ -90,6 +92,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             dateTextView = postView.findViewById(R.id.post_date);
             mProfilePic = postView.findViewById(R.id.post_profile_picture);
             mProfilePic.setImageResource(R.drawable.profilepic);
+            ratingCount = postView.findViewById(R.id.post_ratingcount);
+            ratingCount.setText("999");
             optionsButton = (Button) postView.findViewById(R.id.dropdown_menu);
             optionsButton.setOnClickListener(new View.OnClickListener(){
                 @Override

@@ -67,12 +67,17 @@
         android:layout_height="wrap_content"
         android:numStars="1"
         android:stepSize="1" />
+        <TextView
+            android:id="@+id/post_ratingcount"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
     <TextView
         android:id="@+id/post_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
         android:layout_marginLeft="145dp"/>
+
 
     </LinearLayout>
 

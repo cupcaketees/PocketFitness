@@ -43,7 +43,7 @@
         android:layout_width="102dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:text="Button"
+        android:text="@string/setup_profile_add_photo_button_text"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"
         app:layout_constraintEnd_toEndOf="@+id/setup_profile_profile_image"
@@ -100,7 +100,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/setup_profile_finish_button"
+        android:id="@+id/setup_profile_finish_setup_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -108,6 +108,7 @@
         android:layout_marginStart="64dp"
         android:background="@drawable/login_button_shape"
         android:backgroundTint="@color/colorPrimaryDark"
+        android:onClick="saveProfileInformation"
         android:text="@string/setup_profile_finish_setup_button_text"
         android:textAllCaps="false"
         android:textColor="@color/white"

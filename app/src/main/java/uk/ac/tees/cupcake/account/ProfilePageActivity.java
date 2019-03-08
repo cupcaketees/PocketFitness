@@ -3,24 +3,22 @@ package uk.ac.tees.cupcake.account;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 import uk.ac.tees.cupcake.R;
 
@@ -34,7 +32,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private TextView mProfileNameTextView;
-    private TextView mLocationTextView;
+    private ImageView mProfilePictureImageView;
 
     private static final String KEY_FIRST_NAME = "firstName";
     private static final String KEY_LAST_NAME = "lastName";
@@ -49,7 +47,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         mProfileNameTextView = findViewById(R.id.profile_name_text_view);
-        mLocationTextView = findViewById(R.id.profile_location_text_view);
+        mProfilePictureImageView = findViewById(R.id.profile_profile_image_image_view);
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
@@ -57,9 +55,11 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         TextView memberSinceTextView = findViewById(R.id.profile_member_since_text_view);
         TextView emailTextView = findViewById(R.id.profile_email_text_view);
-        Date date = new Date(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
-        String accountCreated = "Member since " + DATE_FORMAT.format(date);
-        memberSinceTextView.setText(accountCreated);
+
+        //TODO date returns null sometimes and crashes app. commented it out for now
+        //Date date = new Date(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
+        //String accountCreated = "Member since " + DATE_FORMAT.format(date);
+        //memberSinceTextView.setText(accountCreated);
 
         emailTextView.setText(mAuth.getCurrentUser().getEmail());
 
@@ -87,9 +87,13 @@ public class ProfilePageActivity extends AppCompatActivity {
                     UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
                     String firstName = userProfile.getFirstName();
                     String lastName = userProfile.getLastName();
-                    String location = userProfile.getLocation();
+                    String profileImage = userProfile.getProfileImageUrl();
+
+                    if(!profileImage.isEmpty()){
+                        Picasso.with(ProfilePageActivity.this).load(profileImage).into(mProfilePictureImageView);
+                    }
+
                     mProfileNameTextView.setText(firstName + " " + lastName);
-                    mLocationTextView.setText(location);
                 }
             }
         });
@@ -120,9 +124,12 @@ public class ProfilePageActivity extends AppCompatActivity {
                             UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
                             String firstName = userProfile.getFirstName();
                             String lastName = userProfile.getLastName();
-                            String location = userProfile.getLocation();
+                            String profileImage = userProfile.getProfileImageUrl();
                             mProfileNameTextView.setText(firstName + " " + lastName);
-                            mLocationTextView.setText(location);
+
+                            if(!profileImage.isEmpty()){
+                                Picasso.with(ProfilePageActivity.this).load(profileImage).into(mProfilePictureImageView);
+                            }
                         }else{
                             Toast.makeText(ProfilePageActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
                         }
@@ -136,9 +143,4 @@ public class ProfilePageActivity extends AppCompatActivity {
                     }
                 });
     }
-
-    public void followButton(){
-        // TODO
-    }
-
 }

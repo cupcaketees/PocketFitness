@@ -67,7 +67,7 @@
     <string name="profile_followers_text_view_text">Followers</string>
     <string name="profile_following_text_view_text">Following</string>
     <string name="profile_posts_text_view_text">Posts</string>
-    
+
     <string name="setup_profile_add_photo_button_text">Add Photo</string>
     <string name="setup_profile_first_name_edit_text_hint">Enter first name</string>
     <string name="setup_profile_last_name_edit_text_hint">Enter last name</string>

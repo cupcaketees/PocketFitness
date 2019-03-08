@@ -7,23 +7,22 @@ package uk.ac.tees.cupcake.account;
 public class UserProfile {
     private String firstName;
     private String lastName;
-    private String location;
+    private String profileImageUrl;
 
     public UserProfile(){
         //  Firestore requires empty constructor
     }
 
-    public UserProfile(String firstName, String lastName, String location){
+    public UserProfile(String firstName, String lastName, String profileImageUrl){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.location = location.isEmpty() ? "" : location;
+        this.profileImageUrl = profileImageUrl;
+
     }
 
     public String getFirstName(){
         return firstName;
     }
-    public String getLastName(){
-        return lastName;
-    }
-    public String getLocation(){ return location; }
+    public String getLastName(){return lastName;}
+    public String getProfileImageUrl(){return profileImageUrl;}
 }

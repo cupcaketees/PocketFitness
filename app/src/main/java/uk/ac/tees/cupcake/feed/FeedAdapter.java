@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import uk.ac.tees.cupcake.R;
+import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 import static android.content.ContentValues.TAG;
@@ -25,6 +27,7 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by s6065431 on 12/02/2019.
  */
+
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
     private final List<Post> posts;
@@ -83,6 +86,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private  TextView ratingCount;
 
 
+
+        private boolean isImageFitToScreen;
         FeedViewHolder(View postView) {
 
             super(postView);
@@ -109,8 +114,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                 }
             });
 
-            PhotoViewAttacher photoViewAttacher = new PhotoViewAttacher(mImageView);
-            photoViewAttacher.update();
         }
 
     }

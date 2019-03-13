@@ -9,6 +9,7 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.posts.PostActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.videoplayer.VideoListActivity;
 
@@ -40,6 +41,9 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
                 break;
             case R.id.nav_slideshow:
                 IntentUtils.invokeBaseView(context, VideoListActivity.class);
+                break;
+            case R.id.nav_post:
+                IntentUtils.invokeBaseView(context, PostActivity.class);
                 break;
             case R.id.nav_settings:
                 IntentUtils.invokeBaseView(context, SettingsActivity.class);

@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.videoplayer;
+package uk.ac.tees.cupcake.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -10,6 +10,7 @@ import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
+import uk.ac.tees.cupcake.videoplayer.VideoListActivity;
 
 /**
  * NavigationDrawer Adapter

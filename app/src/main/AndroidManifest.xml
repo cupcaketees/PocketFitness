@@ -72,6 +72,7 @@
         <activity android:name=".account.ProfilePageActivity" />
         <activity android:name=".account.SetupProfileActivity"/>
         <activity android:name=".posts.PostActivity"/>
+        <activity android:name=".posts.FinalisePost" />
     </application>
 
 </manifest>

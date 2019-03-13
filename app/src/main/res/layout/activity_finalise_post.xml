@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <RelativeLayout
+                android:id="@+id/relFinalise1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <include layout="@layout/finalise_post_toolbar"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relFinalise2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relFinalise1"
+                android:background="@drawable/finalise_post_text_view_border_bottom"
+                >
+
+                <ImageView
+                    android:id="@+id/imageShare"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:scaleType="centerCrop"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginBottom="40dp"/>
+
+                <EditText
+                    android:id="@+id/finaliseDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/imageShare"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
+                    android:hint="Write Description"
+                    android:background="@null"/>
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

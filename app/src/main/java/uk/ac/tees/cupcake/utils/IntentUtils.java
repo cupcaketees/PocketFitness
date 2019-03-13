@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
-import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Intent Utility

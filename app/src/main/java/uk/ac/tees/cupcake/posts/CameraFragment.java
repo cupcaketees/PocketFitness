@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
@@ -67,9 +66,7 @@ public class CameraFragment extends Fragment {
 
             Bitmap bitmap;
             bitmap = (Bitmap) data.getExtras().get("data");
-            Intent intent = new Intent(getActivity(),FinalisePost.class );
-            intent.putExtra("selected_bitmap", bitmap);
-            startActivity(intent);
+            IntentUtils.invokePhotoView(getActivity(), FinalisePost.class, bitmap);
         }
     }
 

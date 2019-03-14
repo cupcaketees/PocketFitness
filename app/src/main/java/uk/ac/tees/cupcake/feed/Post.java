@@ -10,20 +10,27 @@ import java.util.Date;
  */
 public class Post  {
 
-    private final String username;
+    private String username;
 
-    private final String image;
+    private String image;
     
-    private final String description;
+    private String description;
 
-    private final String date;
+    private String date;
+
+    public Post() {
+    }
 
     public Post(String username, String image, String description, String date){
         this.username = username;
         this.image = image;
         this.description = description;
-        this.date = date;
+
+
+        this.date = date ;
     }
+
+
 
     public String getUsername(){
         return username;

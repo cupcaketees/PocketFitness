@@ -3,6 +3,7 @@ package uk.ac.tees.cupcake.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
 
 /**
@@ -16,6 +17,13 @@ public class IntentUtils {
         intent.putExtra(title, extra);
         context.startActivity(intent);
     }
+
+    public static void invokePhotoView(Context context, Class<?> selectedClass, Bitmap bitmap) {
+        Intent intent = new Intent(context, selectedClass);
+        intent.putExtra("selected_bitmap", bitmap);
+        context.startActivity(intent);
+    }
+
 
 
     public static void invokeBaseView(Context context, Class<?> selectedClass) {

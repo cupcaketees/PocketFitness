@@ -15,7 +15,7 @@ import com.google.firebase.auth.FirebaseUser;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.HomeActivity;
 
-/**
+/*
  * Verify Email Address Activity
  * @author Bradley Hunter <s6263464@tees.ac.uk>
  */

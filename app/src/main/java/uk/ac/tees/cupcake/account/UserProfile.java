@@ -1,7 +1,8 @@
 package uk.ac.tees.cupcake.account;
 
-/**
- * Author Bradley Hunter.
+/*
+ * User Profile
+ * @author Bradley Hunter <s6263464@tees.ac.uk>
  */
 
 public class UserProfile {
@@ -10,14 +11,13 @@ public class UserProfile {
     private String profileImageUrl;
 
     public UserProfile(){
-        //  Firestore requires empty constructor
+        //  empty constructor required for firebase.
     }
 
     public UserProfile(String firstName, String lastName, String profileImageUrl){
         this.firstName = firstName;
         this.lastName = lastName;
         this.profileImageUrl = profileImageUrl;
-
     }
 
     public String getFirstName(){

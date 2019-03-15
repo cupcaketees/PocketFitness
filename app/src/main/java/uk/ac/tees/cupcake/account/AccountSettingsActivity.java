@@ -42,11 +42,9 @@ public class AccountSettingsActivity extends AppCompatActivity {
      * Reloads current user information
      * on success changes mVerifyEmailStatus text and colour appropriately. on failure prompts user with appropriate message.
      */
-
     @Override
     protected void onStart() {
         super.onStart();
-
         currentUser.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -65,7 +63,6 @@ public class AccountSettingsActivity extends AppCompatActivity {
             }
         });
     }
-
 
     public void deleteAccountActivity(View view){
         sendUserToActivity(DeleteAccountActivity.class);

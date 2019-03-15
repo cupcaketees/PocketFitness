@@ -61,7 +61,7 @@
         tools:text="Bradley Hunter" />
 
     <TextView
-        android:id="@+id/profile_member_since_text_view"
+        android:id="@+id/profile_account_created_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"

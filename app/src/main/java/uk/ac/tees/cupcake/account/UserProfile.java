@@ -9,20 +9,33 @@ public class UserProfile {
     private String firstName;
     private String lastName;
     private String profileImageUrl;
+    private String accountCreated;
 
     public UserProfile(){
         //  empty constructor required for firebase.
     }
 
-    public UserProfile(String firstName, String lastName, String profileImageUrl){
+    public UserProfile(String firstName, String lastName, String profileImageUrl, String accountCreated){
         this.firstName = firstName;
         this.lastName = lastName;
         this.profileImageUrl = profileImageUrl;
+        this.accountCreated = accountCreated;
     }
 
     public String getFirstName(){
         return firstName;
     }
-    public String getLastName(){return lastName;}
-    public String getProfileImageUrl(){return profileImageUrl;}
+
+    public String getLastName(){
+        return lastName;
+    }
+
+    public String getProfileImageUrl(){
+        return profileImageUrl;
+    }
+
+    public String getAccountCreated() {
+        return accountCreated;
+    }
+
 }

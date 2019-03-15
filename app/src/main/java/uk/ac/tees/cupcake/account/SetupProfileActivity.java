@@ -21,6 +21,10 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.HomeActivity;
@@ -39,6 +43,9 @@ public class SetupProfileActivity extends AppCompatActivity {
 
     private StorageReference profileImageStorageReference;
     private String mProfileImageURL;
+    private String mAccountCreationDate;
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,10 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         mCurrentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         profileImageStorageReference = FirebaseStorage.getInstance().getReference().child("Users profile picture");
+
+        Date date = new Date(FirebaseAuth.getInstance().getCurrentUser().getMetadata().getCreationTimestamp());
+        mAccountCreationDate = "Member since " + DATE_FORMAT.format(date);
+
     }
 
     public void addPhoto(View view){
@@ -102,7 +113,7 @@ public class SetupProfileActivity extends AppCompatActivity {
             return;
         }
 
-        UserProfile userProfile = new UserProfile(userInputFirstName, userInputLastName, mProfileImageURL);
+        UserProfile userProfile = new UserProfile(userInputFirstName, userInputLastName, mProfileImageURL, mAccountCreationDate);
 
         FirebaseFirestore.getInstance()
                          .collection("Users")

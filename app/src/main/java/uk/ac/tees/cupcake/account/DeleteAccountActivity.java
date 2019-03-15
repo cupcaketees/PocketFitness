@@ -23,7 +23,6 @@ import uk.ac.tees.cupcake.login.LoginActivity;
  * Delete Account Activity
  * @author Bradley Hunter <s6263464@tees.ac.uk>
  */
-
 public class DeleteAccountActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -44,7 +43,6 @@ public class DeleteAccountActivity extends AppCompatActivity {
      * On success deletes current user account and returns user to login screen.
      * On failure prompts user with appropriate message.
      */
-
     public void deleteAccount(View view){
 
         String userInputCurrentPassword = mPasswordEditText.getText().toString().trim();

@@ -9,8 +9,8 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,38 +24,45 @@ import uk.ac.tees.cupcake.R;
 public class AccountSettingsActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private TextView mVerifyEmailStatus;
     private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_settings);
-
         setTitle("Account Settings");
+
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        mVerifyEmailStatus = findViewById(R.id.account_verify_email_status_text_view);
 
-        /*
-         * Reload auth on create and updates verify email status accordingly
-         */
-        mAuth.getCurrentUser().reload()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+        checkEmailVerified();
+    }
 
-                        if(task.isSuccessful()) {
-                            TextView verifyEmailStatus = findViewById(R.id.account_verify_email_status_text_view);
+    /*
+     * Reloads current user information
+     * on success changes mVerifyEmailStatus text and colour appropriately. on failure prompts user with appropriate message.
+     */
+    private void checkEmailVerified(){
 
-                            if (mAuth.getCurrentUser().isEmailVerified()) {
-                                verifyEmailStatus.setText(R.string.account_settings_verified_email);
-                                verifyEmailStatus.setTextColor(Color.GREEN);
-                            } else {
-                                verifyEmailStatus.setText(R.string.account_settings_not_verified_email);
-                                verifyEmailStatus.setTextColor(Color.RED);
-                            }
-                        }
-                    }
-                });
+        currentUser.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                if (mAuth.getCurrentUser().isEmailVerified()) {
+                    mVerifyEmailStatus.setText(R.string.account_settings_verified_email);
+                    mVerifyEmailStatus.setTextColor(Color.GREEN);
+                } else {
+                    mVerifyEmailStatus.setText(R.string.account_settings_not_verified_email);
+                    mVerifyEmailStatus.setTextColor(Color.RED);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AccountSettingsActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /*
@@ -80,12 +87,11 @@ public class AccountSettingsActivity extends AppCompatActivity {
     }
 
     /*
-     * Sends user to verify email activity if email address is not verified.
+     * Sends user to verify email activity if email address is not verified otherwise displays appropriate message.
      */
     public void verifyEmailActivity(View view){
-
         if(currentUser.isEmailVerified()){
-            Toast.makeText(AccountSettingsActivity.this, "Your email address is already verified", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AccountSettingsActivity.this, "Your email address is already verified.", Toast.LENGTH_SHORT).show();
         }else{
             sendUserToActivity(VerifyEmailActivity.class);
         }

@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import java.util.ArrayList;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.adapters.NavigationDrawerAdapter;
 
 
 /**

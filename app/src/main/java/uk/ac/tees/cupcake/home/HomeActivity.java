@@ -11,7 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MenuItem;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,13 +20,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.account.ProfilePageActivity;
-import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
-import uk.ac.tees.cupcake.utils.SectionsPagerAdapter;
-import uk.ac.tees.cupcake.videoplayer.NavigationDrawerAdapter;
+import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
+import uk.ac.tees.cupcake.adapters.NavigationDrawerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 

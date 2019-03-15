@@ -7,15 +7,19 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="home" />
         <item
             android:id="@+id/nav_view_profile"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="View Profile" />
+            android:title="view_profile" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Workout Videos" />
+            android:title="workout_videos" />
+        <item
+            android:id="@+id/nav_post"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="posts" />
     </group>
 
     <item android:title="Communicate">

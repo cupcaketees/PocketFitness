@@ -1,10 +1,10 @@
 package uk.ac.tees.cupcake.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 
-import java.io.Serializable;
-import java.util.Map;
 
 /**
  * Intent Utility
@@ -18,9 +18,22 @@ public class IntentUtils {
         context.startActivity(intent);
     }
 
+    public static void invokePhotoView(Context context, Class<?> selectedClass, Bitmap bitmap) {
+        Intent intent = new Intent(context, selectedClass);
+        intent.putExtra("selected_bitmap", bitmap);
+        context.startActivity(intent);
+    }
+
+
 
     public static void invokeBaseView(Context context, Class<?> selectedClass) {
         Intent intent = new Intent(context, selectedClass);
         context.startActivity(intent);
+    }
+
+    public static void invokeFromFragmentView(Activity activity, Class<?> selectedClass) {
+        Intent intent = new Intent(activity, selectedClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        activity.startActivity(intent);
     }
 }

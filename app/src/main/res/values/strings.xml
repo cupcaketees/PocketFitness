@@ -76,6 +76,8 @@
     <string name="setup_profile_header_text">Welcome to Pocket fitness! To get started please enter your first and last name.</string>
     <string name="setup_profile_finish_setup_button_text">Finish setup</string>
 
+    <string name="open_camera_button">open camera</string>
+
 
 
 </resources>

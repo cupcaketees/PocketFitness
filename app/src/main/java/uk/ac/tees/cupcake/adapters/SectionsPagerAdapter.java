@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.utils;
+package uk.ac.tees.cupcake.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

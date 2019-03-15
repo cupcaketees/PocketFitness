@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relFinalise1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/finalise_post_toolbar" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relFinalise0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relFinalise1"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/navigation_view_border"
+
+            >
+
+            <TextView
+                android:id="@+id/ppl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:maxLines="6"
+                android:padding="5dp"
+                android:text="Person Name"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relFinalise2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relFinalise0"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="2dp"
+            android:scaleType="centerCrop">
+
+            <ImageView
+                android:id="@+id/imageShare"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:background="@drawable/navigation_view_border"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+
+                />
+
+            <ProgressBar
+                android:id="@+id/shareProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:maxWidth="100dip"
+                android:maxHeight="100dip"
+                android:minWidth="100dip"
+                android:minHeight="100dip"
+                android:visibility="invisible" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relFinalise2"
+            android:background="@drawable/navigation_view_border"
+
+            >
+
+            <EditText
+                android:id="@+id/finaliseDescription"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:background="@null"
+                android:gravity="start|top"
+                android:hint="Write Description"
+                android:maxLines="6"
+                android:padding="5dp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,7 +1,9 @@
 package uk.ac.tees.cupcake.account;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 
 /*
@@ -24,7 +27,9 @@ import uk.ac.tees.cupcake.R;
 public class ProfilePageActivity extends AppCompatActivity {
 
     private TextView mProfileNameTextView;
-    private ImageView mProfilePictureImageView;
+    private CircleImageView mProfilePictureImageView;
+    private ImageView mCoverPhotoImageView;
+
     private TextView mEmailAddressTextView;
     private TextView mAccountCreatedTextView;
 
@@ -41,6 +46,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         mProfilePictureImageView = findViewById(R.id.profile_profile_image_image_view);
         mEmailAddressTextView = findViewById(R.id.profile_email_text_view);
         mAccountCreatedTextView = findViewById(R.id.profile_account_created_text_view);
+        mCoverPhotoImageView = findViewById(R.id.edit_profile_cover_image_view);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -68,16 +74,29 @@ public class ProfilePageActivity extends AppCompatActivity {
                     String firstName = userProfile.getFirstName();
                     String lastName = userProfile.getLastName();
                     String profileImage = userProfile.getProfileImageUrl();
+                    String coverImage = userProfile.getCoverPhotoUrl();
 
                     mProfileNameTextView.setText(firstName + " " + lastName);
                     mAccountCreatedTextView.setText(userProfile.getAccountCreated());
 
-                    if(!profileImage.isEmpty()){
+                    if(profileImage != null){
                         Picasso.with(ProfilePageActivity.this).load(profileImage).into(mProfilePictureImageView);
                     }
+
+                    if(coverImage != null){
+                        //Picasso.with(ProfilePageActivity.this).load(coverImage).into(mCoverPhotoImageView);
+                    }
+
                 }
             }
         });
+    }
+
+    /*
+     * Sends user to edit profile activity
+     */
+    public void editProfile(View view){
+        startActivity(new Intent(ProfilePageActivity.this,EditProfileActivity.class));
     }
 
     /*

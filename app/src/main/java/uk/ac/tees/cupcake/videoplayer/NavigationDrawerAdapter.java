@@ -38,9 +38,6 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
             case R.id.nav_view_profile:
                 IntentUtils.invokeBaseView(context, ProfilePageActivity.class);
                 break;
-            case R.id.nav_edit_profile:
-                IntentUtils.invokeBaseView(context, EditProfileActivity.class);
-                break;
             case R.id.nav_slideshow:
                 IntentUtils.invokeBaseView(context, VideoListActivity.class);
                 break;

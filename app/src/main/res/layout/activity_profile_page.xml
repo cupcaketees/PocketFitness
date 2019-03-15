@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,16 +17,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cover_image_placeholder" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_profile_image_image_view"
         android:layout_width="0dp"
         android:layout_height="125dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
+        android:src="@drawable/profile_picture_placeholder"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="5dp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_cover_image_image_view"
         app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/profile_cover_image_image_view"
-        app:srcCompat="@drawable/profile_picture_placeholder" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_cover_image_image_view" />
+
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline_left"
@@ -47,29 +53,28 @@
 
     <TextView
         android:id="@+id/profile_name_text_view"
-        android:layout_width="0dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toEndOf="@+id/profile_profile_image_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/profile_cover_image_image_view"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintStart_toStartOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/profile_profile_image_image_view"
         tools:text="Bradley Hunter" />
 
     <TextView
         android:id="@+id/profile_account_created_text_view"
-        android:layout_width="0dp"
+        android:layout_width="174dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="TextView"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintStart_toEndOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/profile_name_text_view"
+        app:layout_constraintStart_toStartOf="@+id/profile_name_text_view"
         app:layout_constraintTop_toBottomOf="@+id/profile_name_text_view"
         tools:text="Member since Feb, 28, 2019 " />
 
@@ -78,32 +83,29 @@
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:background="@drawable/login_button_shape"
         android:backgroundTint="@color/colorPrimaryDark"
         android:text="@string/profile_follow_button_text"
         android:textAllCaps="false"
         android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Inverse"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_profile_image_image_view"
-        app:layout_constraintEnd_toEndOf="@+id/profile_profile_image_image_view"
-        app:layout_constraintStart_toStartOf="@+id/profile_profile_image_image_view"
-        app:layout_constraintTop_toBottomOf="@+id/profile_profile_image_image_view"
+        app:layout_constraintBottom_toTopOf="@+id/profile_following_header_text_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
         tools:text="Follow" />
 
 
     <TextView
         android:id="@+id/profile_email_text_view"
-        android:layout_width="0dp"
+        android:layout_width="166dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
+        android:textAlignment="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline_right"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toBottomOf="@+id/profile_follow_button"
+        app:layout_constraintTop_toBottomOf="@+id/profile_account_created_text_view"
         tools:text="brad@example.com" />
 
     <TextView
@@ -190,6 +192,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="493dp" />
+        app:layout_constraintGuide_begin="515dp" />
+
+    <ImageButton
+        android:id="@+id/profile_page_edit_profile_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@null"
+        android:cropToPadding="false"
+        android:onClick="editProfile"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_right"
+        app:layout_constraintStart_toStartOf="@+id/guideline_left"
+        app:layout_constraintTop_toBottomOf="@+id/profile_email_text_view"
+        app:srcCompat="@drawable/ic_edit_profile_icon" />
 
 </android.support.constraint.ConstraintLayout>

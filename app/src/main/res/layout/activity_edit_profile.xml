@@ -1,108 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="uk.ac.tees.cupcake.account.EditProfileActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/edit_profile_profile_image"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/profile_picture_placeholder"
-        app:civ_border_color="@color/colorPrimaryDark"
-        app:civ_border_width="2dp"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/edit_profile_change_profile_picture_button"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/edit_profile_change_profile_image_button_text"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_profile_profile_image"
-        app:layout_constraintStart_toEndOf="@+id/edit_profile_profile_image"
-        app:layout_constraintTop_toTopOf="@+id/edit_profile_profile_image" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/edit_profile_profile_circle_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/profile_picture_placeholder"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintEnd_toEndOf="@+id/edit_profile_profile_picture_title_text_view"
+            app:layout_constraintStart_toStartOf="@+id/edit_profile_profile_picture_title_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_picture_title_text_view" />
 
-    <EditText
-        android:id="@+id/edit_profile_first_name_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/edit_profile_first_name_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/edit_profile_first_name_text_view"
-        tools:text="Bradley" />
+        <TextView
+            android:id="@+id/edit_profile_profile_picture_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/edit_profile_profile_image_title_text_view_text"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edit_profile_last_name_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/edit_profile_last_name_text_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/edit_profile_last_name_text_view"
-        tools:text="Hunter" />
+        <ImageView
+            android:id="@+id/edit_profile_cover_image_view"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintDimensionRatio="w,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_cover_photo_title_text_view"
+            app:srcCompat="@color/grey" />
 
-    <TextView
-        android:id="@+id/edit_profile_first_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="64dp"
-        android:text="@string/edit_profile_first_name_text_view_text"
-        app:layout_constraintEnd_toStartOf="@+id/edit_profile_first_name_edit_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_image"
-        tools:text="First name" />
+        <TextView
+            android:id="@+id/edit_profile_cover_photo_title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/edit_profile_cover_image_title_text_view_text"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_circle_image" />
 
-    <TextView
-        android:id="@+id/edit_profile_last_name_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/edit_profile_last_name_text_view_text"
-        app:layout_constraintEnd_toStartOf="@+id/edit_profile_last_name_edit_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_first_name_text_view"
-        tools:text="Last name" />
+        <Button
+            android:id="@+id/edit_profile_profile_picture_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:onClick="editProfilePicture"
+            android:text="@string/edit_profile_profile_picture_button_text"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_profile_profile_circle_image"
+            app:layout_constraintEnd_toEndOf="@+id/edit_profile_profile_circle_image"
+            app:layout_constraintStart_toStartOf="@+id/edit_profile_profile_circle_image"
+            tools:text="Edit" />
 
-    <Button
-        android:id="@+id/edit_profile_update_profile_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginStart="64dp"
-        android:background="@drawable/login_button_shape"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:text="@string/edit_profile_update_profile_button_text"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/edit_profile_cover_photo_button"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:onClick="editCoverPhoto"
+            android:text="@string/edit_profile_cover_photo_button_text"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_profile_cover_image_view"
+            app:layout_constraintEnd_toEndOf="@+id/edit_profile_cover_image_view"
+            tools:text="Edit" />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/edit_profile_save_changes_button"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="64dp"
+            android:background="@drawable/login_button_shape"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="saveChanges"
+            android:text="@string/edit_profile_save_changes_button_text"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_last_name_edit_text" />
+
+        <TextView
+            android:id="@+id/edit_profile_profile_details_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/edit_profile_profile_details_title_text_view"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_cover_image_view"
+            tools:text="Profile Details" />
+
+        <EditText
+            android:id="@+id/edit_profile_first_name_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:ems="10"
+            android:hint="@string/edit_profile_first_name_edit_text_hint"
+            android:inputType="textPersonName"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_details_text_view" />
+
+        <EditText
+            android:id="@+id/edit_profile_last_name_edit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:ems="10"
+            android:hint="@string/edit_profile_last_name_edit_text_hint"
+            android:inputType="textPersonName"
+            android:textColorLink="@color/colorPrimaryDark"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_profile_first_name_edit_text" />
+
+
+    </android.support.constraint.ConstraintLayout>
+
+
+</ScrollView>
+
+
 
 

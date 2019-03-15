@@ -73,7 +73,7 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".account.EditProfileActivity"
-            android:parentActivityName=".home.HomeActivity"
+            android:parentActivityName=".account.ProfilePageActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
 
     </application>

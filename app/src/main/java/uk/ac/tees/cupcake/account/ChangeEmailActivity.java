@@ -41,8 +41,8 @@ public class ChangeEmailActivity extends AppCompatActivity {
         mEmailEditText = findViewById(R.id.change_email_email_edit_text);
     }
     /*
-     * Attempts to re authenticate current user, requires current user password and new password input value from user.
-     * On success changes current user password to mNewPasswordEditText value and returns user to home activity.
+     * Attempts to re authenticate current user, requires current user password and new email input value from user.
+     * On success changes current user email address to mEmailEditText value and returns user to home activity.
      * On failure prompts user with appropriate message.
      */
     public void changeEmail(View view){
@@ -66,7 +66,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
                 currentUser.updateEmail(userInputNewEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(ChangeEmailActivity.this, "Email hass been updated", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangeEmailActivity.this, "Your email has been changed successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ChangeEmailActivity.this, HomeActivity.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {

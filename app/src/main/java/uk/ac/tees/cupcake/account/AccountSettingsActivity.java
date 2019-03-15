@@ -36,15 +36,16 @@ public class AccountSettingsActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
         mVerifyEmailStatus = findViewById(R.id.account_verify_email_status_text_view);
-
-        checkEmailVerified();
     }
 
     /*
      * Reloads current user information
      * on success changes mVerifyEmailStatus text and colour appropriately. on failure prompts user with appropriate message.
      */
-    private void checkEmailVerified(){
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         currentUser.reload().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -65,9 +66,7 @@ public class AccountSettingsActivity extends AppCompatActivity {
         });
     }
 
-    /*
-     * Sends user to delete account activity.
-     */
+
     public void deleteAccountActivity(View view){
         sendUserToActivity(DeleteAccountActivity.class);
     }

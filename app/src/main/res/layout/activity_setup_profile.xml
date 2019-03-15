@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="uk.ac.tees.cupcake.account.SetupProfileActivity">
-
 
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -32,7 +32,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/setup_profile_header_text_view_text"
         android:textAlignment="center"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,6 +44,7 @@
         android:layout_width="102dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:onClick="addPhoto"
         android:text="@string/setup_profile_add_photo_button_text"
         android:textAllCaps="false"
         android:textColor="@color/cardview_dark_background"

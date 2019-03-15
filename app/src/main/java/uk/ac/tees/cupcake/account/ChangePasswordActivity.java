@@ -60,7 +60,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             return;
         }
 
-        AuthCredential credential = EmailAuthProvider.getCredential(mAuth.getCurrentUser().getEmail(), userInputCurrentPassword);
+        AuthCredential credential = EmailAuthProvider.getCredential(currentUser.getEmail(), userInputCurrentPassword);
 
         currentUser.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

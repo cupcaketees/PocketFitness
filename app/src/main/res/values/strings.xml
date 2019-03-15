@@ -54,7 +54,7 @@
     <string name="change_email_change_email_button_text">Change Email</string>
 
     <string name="change_password_header_text_view_text">We just need your current password and new password to change your password.</string>
-    <string name="change_password_new_password_edit_text_text">Enter your new password</string>
+    <string name="change_password_new_password_edit_text_hint">Enter your new password</string>
     <string name="change_password_change_password_button_text">Change Password</string>
 
     <string name="verify_email_send_email_button_text">Send Instructions</string>

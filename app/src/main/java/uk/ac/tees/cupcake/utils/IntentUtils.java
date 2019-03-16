@@ -54,12 +54,11 @@ public class IntentUtils {
      */
     public static void invokeViewWithExtras(Context context, Class<?> selectedClass, Map<String, ? extends Serializable> extras) {
         Intent intent = new Intent(context, selectedClass);
-        
+
         for (Map.Entry<String, ? extends Serializable> e : extras.entrySet()) {
             intent.putExtra(e.getKey(), e.getValue());
         }
         
         context.startActivity(intent);
     }
-    
 }

@@ -24,9 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+		
         <activity
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
+
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".home.health.HeartRateActivity" />
         <activity android:name=".home.health.StepCounterActivity" />
@@ -42,9 +44,10 @@
         <activity android:name=".login.LoginActivity" />
         <activity android:name=".login.RegisterActivity" />
         <activity android:name=".login.LostPasswordActivity" />
-        <activity android:name=".videoplayer.VideoListActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:label="Workout Videos"/>
+        <activity
+            android:name=".videoplayer.VideoListActivity"
+            android:label="Workout Videos"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".account.SettingsActivity"
             android:parentActivityName=".home.HomeActivity"
@@ -69,10 +72,13 @@
             android:name=".account.VerifyEmailActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+
         <activity android:name=".account.ProfilePageActivity" />
         <activity android:name=".account.SetupProfileActivity"/>
         <activity android:name=".posts.PostActivity"/>
         <activity android:name=".posts.FinalisePost" />
+        <activity android:name=".account.SetupProfileActivity" />
+        <activity android:name=".home.health.SaveHeartRateActivity" />
     </application>
 
 </manifest>

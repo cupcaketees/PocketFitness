@@ -1,36 +1,27 @@
 package uk.ac.tees.cupcake.account;
 
-/*
- * User Profile
- * @author Bradley Hunter <s6263464@tees.ac.uk>
+/**
+ * User Profile class
+ * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
-
 public class UserProfile {
     private String firstName;
     private String lastName;
-    private String profileImageUrl;
-    private String accountCreated;
+    private String profilePictureUrl;
     private String coverPhotoUrl;
+    private String accountCreated;
 
     public UserProfile(){
-        //  empty constructor required for firebase.
+        //  empty constructor required for fire base.
     }
 
-    public UserProfile(String firstName, String lastName, String profileImageUrl, String accountCreated){
+    public UserProfile(String firstName, String lastName, String profilePictureUrl, String accountCreated){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.profileImageUrl = profileImageUrl;
+        this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
     }
-
-    public UserProfile(String profileImageUrl, String coverPhoto, String firstName, String lastName, String temp){
-        this.profileImageUrl = profileImageUrl;
-        this.coverPhotoUrl = coverPhoto;
-        this.firstName = firstName;
-        this.lastName = lastName;
-
-    }
-
+    
     public String getFirstName(){
         return firstName;
     }
@@ -39,14 +30,13 @@ public class UserProfile {
         return lastName;
     }
 
-    public String getProfileImageUrl(){
-        return profileImageUrl;
-    }
-
-    public String getAccountCreated() {
-        return accountCreated;
+    public String getProfilePictureUrl(){
+        return profilePictureUrl;
     }
 
     public String getCoverPhotoUrl() { return coverPhotoUrl; }
 
+    public String getAccountCreated() {
+        return accountCreated;
+    }
 }

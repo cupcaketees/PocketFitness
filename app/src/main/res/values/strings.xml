@@ -77,14 +77,17 @@
     <string name="setup_profile_title_text_view_text">Welcome to Pocket fitness!</string>
 
 
-    <string name="edit_profile_profile_image_title_text_view_text">"Profile picture</string>
-    <string name="edit_profile_cover_image_title_text_view_text">Cover photo</string>
-    <string name="edit_profile_cover_photo_button_text">Edit</string>
-    <string name="edit_profile_profile_picture_button_text">Edit</string>
+    <string name="edit_profile_profile_image_header_text_view_text">"Profile picture</string>
+    <string name="edit_profile_cover_image_header_text_view_text">Cover photo</string>
+    <string name="edit_profile_profile_details_header_text_view">Profile details</string>
+
+    <string name="edit_profile_cover_photo_button_text">Change</string>
+    <string name="edit_profile_profile_picture_button_text">Change</string>
+
     <string name="edit_profile_save_changes_button_text">Save changes</string>
+
     <string name="edit_profile_first_name_edit_text_hint">Enter first name</string>
     <string name="edit_profile_last_name_edit_text_hint">Enter last name</string>
-    <string name="edit_profile_profile_details_title_text_view">Profile details</string>
 
 
 </resources>

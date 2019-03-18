@@ -54,12 +54,11 @@ public class Post  {
         ArrayList<Post> contacts = new ArrayList<Post>();
 
         String[] imageUrls = new String[] {
-                "https://images.pexels.com/photos/5548/red-bouquet-roses-bridal.jpg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                "https://mhviraf.files.wordpress.com/2008/11/1794dubaiplans1140metretalltower_pic1.jpg",
-                "https://images.pexels.com/photos/67567/bridal-bouquet-bride-bridal-bouquet-67567.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                "https://images.pexels.com/photos/119603/bouquet-roses-cloves-wedding-119603.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                "https://images.pexels.com/photos/134989/pexels-photo-134989.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
-                "https://upload.wikimedia.org/wikipedia/commons/3/38/Tampa_FL_Sulphur_Springs_Tower_tall_pano01.jpg"
+                "https://www.yellowblissroad.com/wp-content/uploads/2015/07/lemon-chicken-fb.jpg",
+                "https://cdn.images.dailystar.co.uk/dynamic/21/photos/701000/620x/Chilech-before-and-after-542139.jpg",
+                "https://img1.cookinglight.timeinc.net/sites/default/files/styles/4_3_horizontal_-_1200x900/public/image/2017/10/main/cl_digi_58.jpg?itok=C2WHk01D",
+                "https://southernbite.com/wp-content/uploads/2018/02/Ultimate-Chicken-Spaghetti-5.jpg",
+                "https://www.fitneass.com/wp-content/uploads/2014/10/weight-loss-story-before-and-after-2.jpg",
         };
 
         for (int i = 1; i <= posts; i++) {
@@ -72,7 +71,7 @@ public class Post  {
 
     public static String getCurrentTimeUsingDate() {
         Date date = new Date();
-        String strDateFormat = "yyyy-MM-dd HH:mm";
+        String strDateFormat = "E, dd MMM yyyy HH:mm";
         DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
         String formattedDate = dateFormat.format(date);
         return formattedDate;

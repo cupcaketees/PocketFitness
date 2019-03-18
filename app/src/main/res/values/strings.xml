@@ -72,7 +72,6 @@
     <string name="profile_edit_profile_button_text">Edit Profile</string>
     <string name="profile_basic_info_header_text_view_text">Basic Info</string>
 
-
     <string name="setup_profile_add_photo_button_text">Add Photo</string>
     <string name="setup_profile_first_name_edit_text_hint">Enter first name</string>
     <string name="setup_profile_last_name_edit_text_hint">Enter last name</string>
@@ -80,18 +79,10 @@
     <string name="setup_profile_header_text_view_text">To get started we just need to setup your profile page please enter your name and add an optional profile picture.</string>
     <string name="setup_profile_title_text_view_text">Welcome to Pocket fitness!</string>
 
-
-    <string name="edit_profile_profile_image_header_text_view_text">"Profile picture</string>
-    <string name="edit_profile_cover_image_header_text_view_text">Cover photo</string>
-    <string name="edit_profile_profile_details_header_text_view">Profile details</string>
-
-    <string name="edit_profile_cover_photo_button_text">Change</string>
-    <string name="edit_profile_profile_picture_button_text">Change</string>
-
+    <string name="edit_profile_first_name_header_text_view">First name</string>
+    <string name="edit_profile_last_name_header_text_view">Last name</string>
+    <string name="edit_profile_bio_header_text_view">Bio</string>
     <string name="edit_profile_save_changes_button_text">Save changes</string>
-
-    <string name="edit_profile_first_name_edit_text_hint">Enter first name</string>
-    <string name="edit_profile_last_name_edit_text_hint">Enter last name</string>
-
+    <string name="edit_profile_cover_photo_button_text">Edit Cover Photo</string>
 
 </resources>

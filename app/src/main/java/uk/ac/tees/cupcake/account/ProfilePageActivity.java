@@ -29,7 +29,7 @@ public class ProfilePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-
+        setTitle("Profile");
         mAuth = FirebaseAuth.getInstance();
     }
 
@@ -55,10 +55,16 @@ public class ProfilePageActivity extends AppCompatActivity {
                                  TextView profileNameTextView = findViewById(R.id.profile_name_text_view);
                                  TextView dateJoinedTextView = findViewById(R.id.profile_date_joined_text_view);
                                  TextView emailAddressTextView = findViewById(R.id.profile_email_text_view);
+                                 TextView bioTextView = findViewById(R.id.profile_bio_text_view);
                                  CircleImageView profilePictureImageView = findViewById(R.id.profile_profile_picture_image_view);
                                  ImageView coverPhotoImageView = findViewById(R.id.profile_cover_photo_image_view);
 
+
                                  UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
+
+                                 if(userProfile.getBio() != null){
+                                     bioTextView.setText(userProfile.getBio());
+                                 }
 
                                  if(userProfile.getProfilePictureUrl() != null){
                                      Picasso.with(ProfilePageActivity.this).load(userProfile.getProfilePictureUrl()).into(profilePictureImageView);

@@ -38,6 +38,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private ImageView mCoverPhotoImageView;
     private EditText mFirstNameEditText;
     private EditText mLastNameEditText;
+    private EditText mBioEditText;
 
     private FirebaseStorage mStorage;
     private FirebaseAuth mAuth;
@@ -63,6 +64,7 @@ public class EditProfileActivity extends AppCompatActivity {
         mCoverPhotoImageView = findViewById(R.id.edit_profile_cover_photo_image_view);
         mFirstNameEditText = findViewById(R.id.edit_profile_first_name_edit_text);
         mLastNameEditText = findViewById(R.id.edit_profile_last_name_edit_text);
+        mBioEditText = findViewById(R.id.edit_profile_bio_edit_text);
 
         setValues();
     }
@@ -97,8 +99,9 @@ public class EditProfileActivity extends AppCompatActivity {
     public void saveChangesOnClick(View view){
         String firstNameUserInput = mFirstNameEditText.getText().toString().trim();
         String lastNameUserInput = mLastNameEditText.getText().toString().trim();
+        String bioUserInput = mBioEditText.getText().toString().trim();
 
-        String result = validateUserInput(firstNameUserInput, lastNameUserInput);
+        String result = validateUserInput(firstNameUserInput, lastNameUserInput, bioUserInput);
 
         if(!result.isEmpty()){
             Toast.makeText(EditProfileActivity.this, result, Toast.LENGTH_SHORT).show();
@@ -108,6 +111,7 @@ public class EditProfileActivity extends AppCompatActivity {
         Map<String, Object> value = new HashMap<>();
         value.put("firstName" , firstNameUserInput);
         value.put("lastName", lastNameUserInput);
+        value.put("bio", bioUserInput);
 
         mFireStore.collection("Users")
                   .document(mAuth.getCurrentUser().getUid())
@@ -129,6 +133,11 @@ public class EditProfileActivity extends AppCompatActivity {
 
                         mFirstNameEditText.setText(profile.getFirstName());
                         mLastNameEditText.setText(profile.getLastName());
+                        mBioEditText.setText(R.string.profile_bio_temp_value_text_view_text);
+
+                        if(profile.getBio() != null){
+                            mBioEditText.setText(profile.getBio());
+                        }
 
                         if(profile.getProfilePictureUrl() != null){
                             Picasso.with(EditProfileActivity.this)
@@ -175,15 +184,18 @@ public class EditProfileActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
-    private String validateUserInput(String userInputFirstName, String userInputLastName){
+    private String validateUserInput(String userInputFirstName, String userInputLastName, String userInputBio){
 
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {
-            sb.append("You must enter your first name. ");
+            sb.append("You cant leave first name field empty. ");
         }
         if(TextUtils.isEmpty(userInputLastName)) {
-            sb.append("You must enter your last name.");
+            sb.append("You cant leave last name field empty. ");
+        }
+        if(TextUtils.isEmpty(userInputBio)) {
+            sb.append("You cant leave bio field empty.");
         }
         return sb.toString();
     }

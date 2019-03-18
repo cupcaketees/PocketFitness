@@ -10,6 +10,7 @@ public class UserProfile {
     private String profilePictureUrl;
     private String coverPhotoUrl;
     private String accountCreated;
+    private String bio;
 
     public UserProfile(){
         //  empty constructor required for fire base.
@@ -21,6 +22,8 @@ public class UserProfile {
         this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
     }
+
+    public String getBio() { return bio; }
 
     public String getFirstName(){
         return firstName;

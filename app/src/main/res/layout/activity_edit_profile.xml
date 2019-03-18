@@ -1,137 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
     tools:context="uk.ac.tees.cupcake.account.EditProfileActivity">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/edit_profile_profile_picture_image_view"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/profile_picture_placeholder"
-        app:layout_constraintDimensionRatio="w,1:1"
-        app:layout_constraintEnd_toEndOf="@+id/edit_profile_profile_picture_header_text_view"
-        app:layout_constraintStart_toStartOf="@+id/edit_profile_profile_picture_header_text_view"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_picture_header_text_view" />
-
-    <TextView
-        android:id="@+id/edit_profile_profile_picture_header_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:focusedByDefault="false"
-        android:text="@string/edit_profile_profile_image_header_text_view_text"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/edit_profile_cover_photo_image_view"
         android:layout_width="0dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintDimensionRatio="w,16:9"
+        android:layout_height="183dp"
+        app:layout_constraintDimensionRatio="w,21:10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="?android:attr/colorButtonNormal" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/edit_profile_profile_picture_image_view"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@android:color/darker_gray"
+        app:civ_border_color="#FFFFFF"
+        app:civ_border_width="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_profile_cover_photo_image_view"
+        app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_cover_photo_header_text_view"
-        app:srcCompat="@color/grey" />
-
-    <TextView
-        android:id="@+id/edit_profile_cover_photo_header_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/edit_profile_cover_image_header_text_view_text"
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_picture_image_view" />
-
-    <Button
-        android:id="@+id/edit_profile_profile_picture_button"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:focusedByDefault="false"
-        android:onClick="changeProfilePictureOnClick"
-        android:text="@string/edit_profile_profile_picture_button_text"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_profile_profile_picture_image_view"
-        app:layout_constraintEnd_toEndOf="@+id/edit_profile_profile_picture_image_view"
-        app:layout_constraintStart_toStartOf="@+id/edit_profile_profile_picture_image_view" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_cover_photo_image_view"
+        app:layout_constraintVertical_bias="0.464"
+        app:srcCompat="@android:color/darker_gray" />
 
     <Button
         android:id="@+id/edit_profile_cover_photo_button"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusedByDefault="false"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_border"
         android:onClick="changeCoverPhotoOnClick"
         android:text="@string/edit_profile_cover_photo_button_text"
         android:textAlignment="center"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@+id/edit_profile_cover_photo_image_view"
-        app:layout_constraintEnd_toEndOf="@+id/edit_profile_cover_photo_image_view" />
-
-    <EditText
-        android:id="@+id/edit_profile_first_name_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:hint="@string/edit_profile_first_name_edit_text_hint"
-        android:inputType="textPersonName"
-        android:textSize="18sp"
+        android:textColor="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_cover_photo_image_view" />
+        app:layout_constraintTop_toTopOf="@+id/edit_profile_cover_photo_image_view" />
 
-    <EditText
-        android:id="@+id/edit_profile_last_name_edit_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="@string/edit_profile_last_name_edit_text_hint"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_first_name_edit_text" />
-
-    <Button
-        android:id="@+id/edit_profile_save_changes_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:id="@+id/edit_profile_profile_picture_button"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:onClick="changeProfilePictureOnClick"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_profile_profile_picture_image_view"
+        app:layout_constraintEnd_toEndOf="@+id/edit_profile_profile_picture_image_view"
+        app:layout_constraintStart_toStartOf="@+id/edit_profile_profile_picture_image_view"
+        app:layout_constraintTop_toTopOf="@+id/edit_profile_profile_picture_image_view"
+        app:srcCompat="@drawable/ic_camera" />
+
+
+    <EditText
+        android:id="@+id/edit_profile_first_name_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_first_name_text_view"
+        tools:text="Bradley" />
+
+    <EditText
+        android:id="@+id/edit_profile_last_name_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_last_name_text_view"
+        tools:text="Hunter" />
+
+    <TextView
+        android:id="@+id/edit_profile_first_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="@string/edit_profile_first_name_header_text_view"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_profile_picture_image_view" />
+
+    <TextView
+        android:id="@+id/edit_profile_last_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/edit_profile_last_name_header_text_view"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_first_name_edit_text" />
+
+    <TextView
+        android:id="@+id/edit_profile_bio_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/edit_profile_bio_header_text_view"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_last_name_edit_text" />
+
+    <EditText
+        android:id="@+id/edit_profile_bio_edit_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_bio_text_view"
+        tools:text="Wubba lubba dub dub friends!" />
+
+    <Button
+        android:id="@+id/edit_profile_save_changes_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/login_button_shape"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="sans-serif"
         android:onClick="saveChangesOnClick"
         android:text="@string/edit_profile_save_changes_button_text"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_profile_last_name_edit_text" />
+        tools:text="Save changes" />
+
+
+
+
 
 
 </android.support.constraint.ConstraintLayout>

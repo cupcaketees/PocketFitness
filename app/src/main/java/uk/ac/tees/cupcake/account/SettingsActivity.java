@@ -7,9 +7,9 @@ import android.view.View;
 
 import uk.ac.tees.cupcake.R;
 
-/*
+/**
  * Settings Activity
- * @author Bradley Hunter <s6263464@tees.ac.uk>
+ * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
 public class SettingsActivity extends AppCompatActivity {
 
@@ -20,10 +20,8 @@ public class SettingsActivity extends AppCompatActivity {
         setTitle("Settings");
     }
 
-    /*
-     * Sends user to account settings activity
+    /**
+     * Intent to account settings activity
      */
-    public void accountSettingsActivity(View view){
-        startActivity(new Intent(SettingsActivity.this, AccountSettingsActivity.class));
-    }
+    public void accountSettingsOnClick(View view){startActivity(new Intent(SettingsActivity.this, AccountSettingsActivity.class));}
 }

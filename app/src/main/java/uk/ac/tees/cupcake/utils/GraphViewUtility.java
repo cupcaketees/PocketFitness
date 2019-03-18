@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -24,17 +25,15 @@ public class GraphViewUtility {
         chart.setPinchZoom(true);
         
         chart.getAxisRight().setEnabled(false);
-        chart.getAxisLeft().setEnabled(false);
         chart.getAxisRight().setAxisMaximum(220);
+        chart.getViewPortHandler().setMaximumScaleX(2f);
+        chart.getViewPortHandler().setMaximumScaleY(2f);
         
         chart.getAxisLeft().setSpaceBottom(75f);
         chart.setViewPortOffsets(0, 0, 0, 0);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         
         chart.getLegend().setEnabled(false);
-        
-        chart.getViewPortHandler().setMaximumScaleX(2f);
-        chart.getViewPortHandler().setMaximumScaleY(2f);
         
         //bit of bit manipulation to add alpha component to the colour
         int[] colours = {(GRADIENT_START_ALPHA << 24) | (Color.parseColor(colour) & 0x00FFFFFF), Color.TRANSPARENT};
@@ -46,7 +45,7 @@ public class GraphViewUtility {
         dataSet.setColor(Color.parseColor(colour));
         
         dataSet.setDrawCircles(false);
-        dataSet.setDrawValues(false);
+        dataSet.setDrawValues(true);
         dataSet.setDrawFilled(true);
         dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
         
@@ -55,6 +54,12 @@ public class GraphViewUtility {
         
         chart.setBackgroundColor(colours[1]);
         chart.getXAxis().setDrawGridLines(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        
+        LimitLine limitLine = new LimitLine(dataSet.getYMax());
+        limitLine.setLabel("Highest Measurement " + dataSet.getYMax());
+        
+        chart.getAxisLeft().addLimitLine(limitLine);
     }
     
 }

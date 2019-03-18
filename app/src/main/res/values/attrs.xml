@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HeartRateTypeConstraintViewAttrs">
+        <attr name="label_text" format="string" localization="suggested" />
+        <attr name="image_src" format="reference" />
+    </declare-styleable>
+
+</resources>

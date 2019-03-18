@@ -1,6 +1,6 @@
 package uk.ac.tees.cupcake.home.health;
 
-import com.github.mikephil.charting.data.Entry;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.io.Serializable;
 
@@ -12,35 +12,64 @@ public final class HeartRateMeasurement implements Serializable {
     /**
      * Time stamp of when this measurement was taken.
      */
-    private final long timestamp;
+    private long timestamp;
     
     /**
      * The beats per minute value of this measurement.
      */
-    private final int bpm;
+    private int bpm;
+    
+    /**
+     * The integer representation of the selected measurement type. Types being general, resting,
+     * after exercise and before exercise.
+     */
+    private int measurementType;
+    
+    /**
+     * Required for {@link DocumentSnapshot#toObject}
+     */
+    public HeartRateMeasurement() {}
     
     /**
      * Constructs new HeartRateMeasurement.
      *
      * @param timestamp when the measurement was taken.
      * @param bpm the beats per minute of the measurement.
+     * @param measurementType the measurement type (e.g. resting, before or after exercise...)
      */
-    public HeartRateMeasurement(long timestamp, int bpm) {
+    public HeartRateMeasurement(long timestamp, int bpm, int measurementType) {
         this.timestamp = timestamp;
         this.bpm = bpm;
+        this.measurementType = measurementType;
+    }
+    
+    public long getTimestamp() {
+        return timestamp;
+    }
+    
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
     
     public int getBpm() {
         return bpm;
     }
     
-    /**
-     * Constructs a new {@link Entry} object for this {@link HeartRateMeasurement}.
-     *
-     * @return an {@link Entry} instance for this {@link HeartRateMeasurement}.
-     */
-    public Entry toChartEntry() {
-        return new Entry(timestamp, bpm, null);
+    public void setBpm(int bpm) {
+        this.bpm = bpm;
+    }
+    
+    public int getMeasurementType() {
+        return measurementType;
+    }
+    
+    public void setMeasurementType(int measurementType) {
+        this.measurementType = measurementType;
+    }
+    
+    @Override
+    public String toString() {
+        return timestamp + " : " + bpm;
     }
     
 }

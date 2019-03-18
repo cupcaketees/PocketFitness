@@ -112,11 +112,11 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         heartRateView.removeCallbacks(measurementCallback);
         pulseView.finishPulse();
         
-        //todo: go to heart rate save screen
-        HeartRateMeasurement measurement = new HeartRateMeasurement(System.currentTimeMillis(), getAverageMeasurement());
+        HeartRateMeasurement measurement = new HeartRateMeasurement(System.currentTimeMillis(), getAverageMeasurement(), 0);
         
         Map<String, Serializable> extras = new HashMap<>();
         extras.put("heart_rate_measurement", measurement);
+        
         IntentUtils.invokeViewWithExtras(heartRateView.getContext(), SaveHeartRateActivity.class, extras);
     }
     

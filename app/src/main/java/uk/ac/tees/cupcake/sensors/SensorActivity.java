@@ -7,16 +7,20 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
 /**
  * A generalised activity that uses some sensor.
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public abstract class SensorActivity extends AppCompatActivity {
+public abstract class SensorActivity extends NavigationBarActivity {
     
     /**
      * {@link Sensor} that we listen for events on.
@@ -34,16 +38,14 @@ public abstract class SensorActivity extends AppCompatActivity {
     private boolean hasSensor;
     
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        if (setupSensor()) {
-            setup();
-            
-        } else {
+    public final void setup() {
+        if (!setupSensor()) {
             finish();
             
             Toast.makeText(this, getString(R.string.sensor_no_sensor, sensorType()), Toast.LENGTH_SHORT).show();
+        } else {
+            
+            setupLayout();
         }
     }
     
@@ -81,9 +83,9 @@ public abstract class SensorActivity extends AppCompatActivity {
     }
     
     /**
-     * This method is called in the {@link #onCreate}
+     * Called in setup. Only layout related code should be invoked within this method.
      */
-    public abstract void setup();
+    public abstract void setupLayout();
     
     /**
      * Poor design but necessary due to no-args constructor only restriction.

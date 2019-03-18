@@ -32,7 +32,7 @@
         android:drawablePadding="10dp"
         android:drawableStart="@drawable/account_settings_email_icon"
         android:ems="10"
-        android:hint="@string/change_email_email_edit_text_text"
+        android:hint="@string/change_email_email_edit_text_hint"
         android:inputType="textEmailAddress"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"

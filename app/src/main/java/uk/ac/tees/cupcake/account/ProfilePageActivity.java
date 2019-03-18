@@ -1,144 +1,88 @@
 package uk.ac.tees.cupcake.account;
 
-import android.support.annotation.NonNull;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.squareup.picasso.Picasso;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 
-/*
- * Profile Page
- * @author Bradley Hunter <s6263464@tees.ac.uk>
+/**
+ * Profile Page Activity
+ * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
-
 public class ProfilePageActivity extends AppCompatActivity {
 
-    private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
-    private TextView mProfileNameTextView;
-    private TextView mLocationTextView;
-
-    private static final String KEY_FIRST_NAME = "firstName";
-    private static final String KEY_LAST_NAME = "lastName";
-    private String currentUserId;
-    private ListenerRegistration profileListener;
-
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy");
+    private ListenerRegistration mProfilePageListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_page);
-
-        mProfileNameTextView = findViewById(R.id.profile_name_text_view);
-        mLocationTextView = findViewById(R.id.profile_location_text_view);
-        firebaseFirestore = FirebaseFirestore.getInstance();
+        setTitle("Profile");
         mAuth = FirebaseAuth.getInstance();
-
-        currentUserId = mAuth.getCurrentUser().getUid();
-
-        TextView memberSinceTextView = findViewById(R.id.profile_member_since_text_view);
-        TextView emailTextView = findViewById(R.id.profile_email_text_view);
-        Date date = new Date(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
-        String accountCreated = "Member since " + DATE_FORMAT.format(date);
-        memberSinceTextView.setText(accountCreated);
-
-        emailTextView.setText(mAuth.getCurrentUser().getEmail());
-
-        loadProfileData();
     }
 
-    /*
-     * Listener update profile page if any changes are made to the database
+    /**
+     * Listener immediately gets data from current user document and sets profile page to values
      */
     @Override
     protected void onStart(){
         super.onStart();
-        profileListener = firebaseFirestore.collection("Users")
-                         .document(currentUserId).addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(DocumentSnapshot documentSnapshot, FirebaseFirestoreException e) {
+        String currentUserUid = mAuth.getCurrentUser().getUid();
 
-                if(e != null){
-                    String errorMessage = e.getMessage();
-                    Toast.makeText(ProfilePageActivity.this, "Error " + errorMessage, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        FirebaseFirestore.getInstance()
+                         .collection("Users")
+                         .document(currentUserUid)
+                         .addSnapshotListener(this, (documentSnapshot, e) -> {
+                             // In case something went wrong while loading
+                             if(e != null){
+                                 Toast.makeText(ProfilePageActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                                 return;
+                             }
 
-                if(documentSnapshot.exists()){
-                    UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
-                    String firstName = userProfile.getFirstName();
-                    String lastName = userProfile.getLastName();
-                    String location = userProfile.getLocation();
-                    mProfileNameTextView.setText(firstName + " " + lastName);
-                    mLocationTextView.setText(location);
-                }
-            }
-        });
+                             if(documentSnapshot.exists()){
+                                 TextView profileNameTextView = findViewById(R.id.profile_name_text_view);
+                                 TextView dateJoinedTextView = findViewById(R.id.profile_date_joined_text_view);
+                                 TextView emailAddressTextView = findViewById(R.id.profile_email_text_view);
+                                 TextView bioTextView = findViewById(R.id.profile_bio_text_view);
+                                 CircleImageView profilePictureImageView = findViewById(R.id.profile_profile_picture_image_view);
+                                 ImageView coverPhotoImageView = findViewById(R.id.profile_cover_photo_image_view);
+
+
+                                 UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
+
+                                 if(userProfile.getBio() != null){
+                                     bioTextView.setText(userProfile.getBio());
+                                 }
+
+                                 if(userProfile.getProfilePictureUrl() != null){
+                                     Picasso.with(ProfilePageActivity.this).load(userProfile.getProfilePictureUrl()).into(profilePictureImageView);
+                                 }
+
+                                 if(userProfile.getCoverPhotoUrl() != null){
+                                     Picasso.with(ProfilePageActivity.this).load(userProfile.getCoverPhotoUrl()).into(coverPhotoImageView);
+                                 }
+
+                                 profileNameTextView.setText(userProfile.getFirstName() + " " + userProfile.getLastName());
+                                 emailAddressTextView.setText(mAuth.getCurrentUser().getEmail());
+                                 dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
+                             }
+                         });
     }
 
-    /*
-     * Removes profile page listener on stop to reduce bandwidth
+    /**
+     * Intent to edit profile activity
      */
-    @Override
-    protected void onStop(){
-        super.onStop();
-        profileListener.remove();
-    }
-
-    /*
-     * Gets current user profile data and updates activity accordingly (currently only gets first and last name)
-     */
-    public void loadProfileData(){
-
-        firebaseFirestore.collection("Users")
-                .document(currentUserId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists()){
-
-                            UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
-                            String firstName = userProfile.getFirstName();
-                            String lastName = userProfile.getLastName();
-                            String location = userProfile.getLocation();
-                            mProfileNameTextView.setText(firstName + " " + lastName);
-                            mLocationTextView.setText(location);
-                        }else{
-                            Toast.makeText(ProfilePageActivity.this, "Failed to load data", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        String errorMessage = e.getMessage();
-                        Toast.makeText(ProfilePageActivity.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    public void followButton(){
-        // TODO
-    }
-
+    public void editProfileOnClick(View view){ startActivity(new Intent(ProfilePageActivity.this,EditProfileActivity.class)); }
 }

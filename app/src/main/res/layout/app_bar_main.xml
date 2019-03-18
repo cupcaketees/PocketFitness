@@ -6,29 +6,27 @@
     tools:context=".home.HomeActivity">
 
     <!-- Top bar (Toolbar) -->
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <include layout="@layout/toolbar"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <!-- Center area (fragments) -->
-    <ViewStub
-        android:id="@+id/layout_stub"
-        android:layout_marginTop="56dp"
-        android:inflatedId="@+id/nav_content_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include layout="@layout/home_center_view_pager" />
 
-    <!-- Bottom area (bottom navigation bar)
+    <!-- Bottom area (bottom navigation bar) -->
     <RelativeLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include layout="@layout/bottom_navigation_view"/>
-    </RelativeLayout>-->
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>

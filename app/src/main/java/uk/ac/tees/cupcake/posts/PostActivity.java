@@ -36,7 +36,7 @@ public class PostActivity extends AppCompatActivity {
 
         setupFragments();
 
-        mLayout = findViewById(R.id.drawerLayout);
+        mLayout = findViewById(R.id.drawer_layout);
     }
 
     /**

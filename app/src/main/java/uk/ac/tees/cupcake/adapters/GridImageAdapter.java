@@ -10,12 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.posts.SquareImagePostView;
@@ -23,13 +25,12 @@ import uk.ac.tees.cupcake.posts.SquareImagePostView;
 public class GridImageAdapter extends ArrayAdapter<String> {
 
     private LayoutInflater mLayoutInflater;
-    /**
-     *
-     */
+
     private int resourceLayout;
+    
     private String mAppend;
 
-    public GridImageAdapter(Context context, int layoutResource, String append, ArrayList<String> imgURLs) {
+    public GridImageAdapter(Context context, int layoutResource, String append, List<String> imgURLs) {
         super(context, layoutResource, imgURLs);
 
         ImageLoader.getInstance().init(ImageLoaderConfiguration.createDefault(context));
@@ -63,10 +64,19 @@ public class GridImageAdapter extends ArrayAdapter<String> {
         String imgURL = getItem(position);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-
-        imageLoader.displayImage(mAppend + imgURL, holder.imageView, new ImageLoadingListener() {
+        
+        DisplayImageOptions options = new DisplayImageOptions
+                .Builder()
+                .cacheInMemory(true)
+                .resetViewBeforeLoading(true)
+                .build();
+        
+        imageLoader.displayImage(mAppend + imgURL, holder.imageView, options, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
+                if (holder.imageView != null) {
+                    holder.imageView.setVisibility(View.INVISIBLE);
+                }
                 if (holder.mProgress != null) {
                     holder.mProgress.setVisibility(View.VISIBLE);
                 }
@@ -81,6 +91,9 @@ public class GridImageAdapter extends ArrayAdapter<String> {
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                if (holder.imageView != null) {
+                    holder.imageView.setVisibility(View.VISIBLE);
+                }
                 if (holder.mProgress != null) {
                     holder.mProgress.setVisibility(View.GONE);
                 }

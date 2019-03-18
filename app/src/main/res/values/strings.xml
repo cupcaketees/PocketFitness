@@ -39,6 +39,7 @@
     <string name="fast_forward">Fast Forward</string>
 
     <string name="settings_account_button_text">Account Settings</string>
+
     <string name="current_password_edit_text_hint">Enter your current password</string>
 
     <string name="account_delete_account_button_text">Delete My Account</string>
@@ -50,11 +51,11 @@
     <string name="delete_account_header_text_view_text">We\'re sorry to hear you\'d like to delete your account. We just need your current password.</string>
 
     <string name="change_email_header_text_view_text">We just need your new email address and current password to change your email address.</string>
-    <string name="change_email_email_edit_text_text">Enter your new email address</string>
+    <string name="change_email_email_edit_text_hint">Enter your new email address</string>
     <string name="change_email_change_email_button_text">Change Email</string>
 
     <string name="change_password_header_text_view_text">We just need your current password and new password to change your password.</string>
-    <string name="change_password_new_password_edit_text_text">Enter your new password</string>
+    <string name="change_password_new_password_edit_text_hint">Enter your new password</string>
     <string name="change_password_change_password_button_text">Change Password</string>
 
     <string name="verify_email_send_email_button_text">Send Instructions</string>
@@ -63,21 +64,26 @@
     <string name="account_settings_verified_email">Your email address is verified</string>
     <string name="account_settings_not_verified_email">Your email address is not verified</string>
 
-    <string name="profile_follow_button_text">Follow</string>
-    <string name="profile_followers_text_view_text">Followers</string>
-    <string name="profile_following_text_view_text">Following</string>
-    <string name="profile_posts_text_view_text">Posts</string>
+    <string name="profile_followers_title_text_view_text">Followers</string>
+    <string name="profile_followers_count_temp_value_text_view_text">99</string>
+    <string name="profile_following_count_temp_value_text_view_text">99</string>
+    <string name="profile_bio_temp_value_text_view_text">Wubba lubba dub dub friends!</string>
+    <string name="profile_following_title_text_view_text">Following</string>
+    <string name="profile_edit_profile_button_text">Edit Profile</string>
+    <string name="profile_basic_info_header_text_view_text">Basic Info</string>
 
+    <string name="setup_profile_add_photo_button_text">Add Photo</string>
     <string name="setup_profile_first_name_edit_text_hint">Enter first name</string>
     <string name="setup_profile_last_name_edit_text_hint">Enter last name</string>
-    <string name="setup_profile_location_edit_text_hint">Enter location</string>
-    <string name="setup_profile_optional_text_view_text">Optional</string>
+    <string name="setup_profile_finish_setup_button_text">Finish Setup</string>
+    <string name="setup_profile_header_text_view_text">To get started we just need to setup your profile page please enter your name and add an optional profile picture.</string>
+    <string name="setup_profile_title_text_view_text">Welcome to Pocket fitness!</string>
 
-    <string name="setup_profile_header_text">Welcome to Pocket fitness! To get started please enter your first and last name.</string>
-    <string name="setup_profile_finish_setup_button_text">Finish setup</string>
+    <string name="edit_profile_first_name_header_text_view">First name</string>
+    <string name="edit_profile_last_name_header_text_view">Last name</string>
+    <string name="edit_profile_bio_header_text_view">Bio</string>
+    <string name="edit_profile_save_changes_button_text">Save changes</string>
+    <string name="edit_profile_cover_photo_button_text">Edit Cover Photo</string>
 
     <string name="open_camera_button">open camera</string>
-
-
-
 </resources>

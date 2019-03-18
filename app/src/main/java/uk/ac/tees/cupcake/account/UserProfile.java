@@ -1,29 +1,45 @@
 package uk.ac.tees.cupcake.account;
 
 /**
- * Author Bradley Hunter.
+ * User Profile class
+ * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
-
 public class UserProfile {
     private String firstName;
     private String lastName;
-    private String location;
+    private String profilePictureUrl;
+    private String coverPhotoUrl;
+    private String accountCreated;
+    private String bio;
 
     public UserProfile(){
-        //  Firestore requires empty constructor
+        //  empty constructor required for fire base.
     }
 
-    public UserProfile(String firstName, String lastName, String location){
+    public UserProfile(String firstName, String lastName, String profilePictureUrl, String accountCreated){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.location = location.isEmpty() ? "" : location;
+        this.profilePictureUrl = profilePictureUrl;
+        this.accountCreated = accountCreated;
     }
+
+    public String getBio() { return bio; }
 
     public String getFirstName(){
         return firstName;
     }
+
     public String getLastName(){
         return lastName;
     }
-    public String getLocation(){ return location; }
+
+    public String getProfilePictureUrl(){
+        return profilePictureUrl;
+    }
+
+    public String getCoverPhotoUrl() { return coverPhotoUrl; }
+
+    public String getAccountCreated() {
+        return accountCreated;
+    }
 }

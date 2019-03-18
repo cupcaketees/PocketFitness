@@ -1,7 +1,6 @@
 package uk.ac.tees.cupcake.account;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,8 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,14 +16,13 @@ import com.google.firebase.auth.FirebaseUser;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.HomeActivity;
 
-/*
+/**
  * Change Email Activity
- * @author Bradley Hunter <s6263464@tees.ac.uk>
+ * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
-
 public class ChangeEmailActivity extends AppCompatActivity {
 
-    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
     private EditText mPasswordEditText;
     private EditText mEmailEditText;
 
@@ -36,18 +32,17 @@ public class ChangeEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_email);
         setTitle("Change Email");
 
-        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mPasswordEditText = findViewById(R.id.change_email_password_edit_text);
         mEmailEditText = findViewById(R.id.change_email_email_edit_text);
     }
-    /*
-     * Attempts to re authenticate current user, requires current user password and new email input value from user.
-     * On success changes current user email address to mEmailEditText value and returns user to home activity.
+
+    /**
+     * Attempts to authenticate current user with mPasswordEditText input value from user.
+     * On success changes current user email address to mEmailEditText value and sends user to home activity.
      * On failure prompts user with appropriate message.
      */
     public void changeEmail(View view){
-
-        FirebaseUser currentUser = mAuth.getCurrentUser();
         String userInputCurrentPassword = mPasswordEditText.getText().toString().trim();
         String userInputNewEmail = mEmailEditText.getText().toString().trim();
 
@@ -58,35 +53,24 @@ public class ChangeEmailActivity extends AppCompatActivity {
             return;
         }
 
-        AuthCredential credential = EmailAuthProvider.getCredential(currentUser.getEmail(), userInputCurrentPassword);
+        AuthCredential credential = EmailAuthProvider.getCredential(mCurrentUser.getEmail(), userInputCurrentPassword);
 
-        currentUser.reauthenticate(credential).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                currentUser.updateEmail(userInputNewEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(ChangeEmailActivity.this, "Your email has been changed successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(ChangeEmailActivity.this, HomeActivity.class));
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(ChangeEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ChangeEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        mCurrentUser.reauthenticate(credential)
+                    .addOnSuccessListener(aVoid -> {
+
+                        mCurrentUser.updateEmail(userInputNewEmail)
+                                    .addOnSuccessListener(aVoid1 -> {
+                                        Toast.makeText(ChangeEmailActivity.this, "Your email has been changed successfully", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(ChangeEmailActivity.this, HomeActivity.class));
+                                    })
+                                    .addOnFailureListener(e -> Toast.makeText(ChangeEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(ChangeEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
-    /*
-     * Validates input values passed are not empty.
-     * Returns empty string on success, otherwise a string with appropriate message.
+    /**
+     * Validates input values passed through params are not empty.
+     * @return string with appropriate message.
      */
     private String validateUserInput(String userInputCurrentPassword, String userInputNewPassword){
         StringBuilder sb = new StringBuilder();

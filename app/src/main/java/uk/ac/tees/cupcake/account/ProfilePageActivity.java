@@ -53,15 +53,15 @@ public class ProfilePageActivity extends AppCompatActivity {
 
                              if(documentSnapshot.exists()){
                                  TextView profileNameTextView = findViewById(R.id.profile_name_text_view);
-                                 TextView accountCreatedTextView = findViewById(R.id.profile_account_created_text_view);
+                                 TextView dateJoinedTextView = findViewById(R.id.profile_date_joined_text_view);
                                  TextView emailAddressTextView = findViewById(R.id.profile_email_text_view);
-                                 CircleImageView profileImageView = findViewById(R.id.profile_profile_image_image_view);
-                                 ImageView coverPhotoImageView = findViewById(R.id.profile_cover_image_image_view);
+                                 CircleImageView profilePictureImageView = findViewById(R.id.profile_profile_picture_image_view);
+                                 ImageView coverPhotoImageView = findViewById(R.id.profile_cover_photo_image_view);
 
                                  UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
 
                                  if(userProfile.getProfilePictureUrl() != null){
-                                     Picasso.with(ProfilePageActivity.this).load(userProfile.getProfilePictureUrl()).into(profileImageView);
+                                     Picasso.with(ProfilePageActivity.this).load(userProfile.getProfilePictureUrl()).into(profilePictureImageView);
                                  }
 
                                  if(userProfile.getCoverPhotoUrl() != null){
@@ -70,7 +70,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
                                  profileNameTextView.setText(userProfile.getFirstName() + " " + userProfile.getLastName());
                                  emailAddressTextView.setText(mAuth.getCurrentUser().getEmail());
-                                 accountCreatedTextView.setText("Member since " + userProfile.getAccountCreated());
+                                 dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
                              }
                          });
     }

@@ -72,7 +72,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void changeCoverPhotoOnClick(View view) {
-        cropImageIntent(16,9, COVER_PHOTO_REQUEST_CODE);
+        cropImageIntent(21,10, COVER_PHOTO_REQUEST_CODE);
     }
 
     @Override

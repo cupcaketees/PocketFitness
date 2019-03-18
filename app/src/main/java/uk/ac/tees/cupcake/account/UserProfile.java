@@ -21,7 +21,7 @@ public class UserProfile {
         this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
     }
-    
+
     public String getFirstName(){
         return firstName;
     }

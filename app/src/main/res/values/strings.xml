@@ -64,10 +64,14 @@
     <string name="account_settings_verified_email">Your email address is verified</string>
     <string name="account_settings_not_verified_email">Your email address is not verified</string>
 
-    <string name="profile_follow_button_text">Follow</string>
-    <string name="profile_followers_text_view_text">Followers</string>
-    <string name="profile_following_text_view_text">Following</string>
-    <string name="profile_posts_text_view_text">Posts</string>
+    <string name="profile_followers_title_text_view_text">Followers</string>
+    <string name="profile_followers_count_temp_value_text_view_text">99</string>
+    <string name="profile_following_count_temp_value_text_view_text">99</string>
+    <string name="profile_bio_temp_value_text_view_text">Wubba lubba dub dub friends!</string>
+    <string name="profile_following_title_text_view_text">Following</string>
+    <string name="profile_edit_profile_button_text">Edit Profile</string>
+    <string name="profile_basic_info_header_text_view_text">Basic Info</string>
+
 
     <string name="setup_profile_add_photo_button_text">Add Photo</string>
     <string name="setup_profile_first_name_edit_text_hint">Enter first name</string>

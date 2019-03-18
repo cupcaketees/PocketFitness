@@ -7,16 +7,20 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
 /**
  * A generalised activity that uses some sensor.
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public abstract class SensorActivity extends AppCompatActivity {
+public abstract class SensorActivity extends NavigationBarActivity {
     
     /**
      * {@link Sensor} that we listen for events on.
@@ -29,21 +33,24 @@ public abstract class SensorActivity extends AppCompatActivity {
     protected SensorManager sensorManager;
     
     /**
+     * The {@link SensorEventListener} that listens for {@link SensorEvent}s from the sensor.
+     */
+    private SensorEventListener eventListener;
+    
+    /**
      * Whether the heart rate sensor exists.
      */
     private boolean hasSensor;
     
     @Override
-    protected final void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        
-        if (setupSensor()) {
-            setup();
-            
-        } else {
+    public final void setup() {
+        if (!setupSensor()) {
             finish();
             
             Toast.makeText(this, getString(R.string.sensor_no_sensor, sensorType()), Toast.LENGTH_SHORT).show();
+        } else {
+            
+            setupLayout();
         }
     }
     
@@ -52,7 +59,7 @@ public abstract class SensorActivity extends AppCompatActivity {
         super.onResume();
         
         if (hasSensor) {
-            sensorManager.registerListener(eventListener(), sensor, SensorManager.SENSOR_DELAY_NORMAL);
+            sensorManager.registerListener(eventListener, sensor, delay());
         }
     }
     
@@ -61,7 +68,7 @@ public abstract class SensorActivity extends AppCompatActivity {
         super.onPause();
         
         if (hasSensor) {
-            sensorManager.unregisterListener(eventListener());
+            sensorManager.unregisterListener(eventListener);
         }
     }
     
@@ -76,14 +83,15 @@ public abstract class SensorActivity extends AppCompatActivity {
         }
         
         sensor = sensorManager.getDefaultSensor(sensorType());
+        eventListener = eventListener();
         
         return hasSensor = (sensor != null);
     }
     
     /**
-     * This method is called in the {@link #onCreate}
+     * Called in setup. Only layout related code should be invoked within this method.
      */
-    public abstract void setup();
+    public abstract void setupLayout();
     
     /**
      * Poor design but necessary due to no-args constructor only restriction.
@@ -96,11 +104,21 @@ public abstract class SensorActivity extends AppCompatActivity {
     
     /**
      * Poor design but necessary due to no-args constructor only restriction.
+     * This method is only invoked once where {@link #eventListener} is assigned
+     * the return value of this method.
      *
-     * <p>Handles {@link SensorEvent}s from the {@link #sensor}.</p>
+     * <p>Creates a {@link SensorEventListener} that handles {@link SensorEvent}s from the {@link #sensor}.</p>
      *
      * @return the event listener that's called when event is received.
      */
     public abstract SensorEventListener eventListener();
+    
+    /**
+     * The guide delay at which {@link SensorEvent}s will be received from the sensor.
+     * Use one of SensorManager.SENSOR_DELAY_*.
+     *
+     * @return sensor event delay.
+     */
+    public abstract int delay();
     
 }

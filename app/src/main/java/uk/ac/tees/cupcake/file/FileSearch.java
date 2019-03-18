@@ -1,26 +1,30 @@
 package uk.ac.tees.cupcake.file;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-public class FileSearch {
+public final class FileSearch {
 
     /**
+     * Returns an {@link ArrayList} of directories.
      *
-     * @param dir -
-     * @return - list of all directories inside
+     * @param dir the parent directory.
+     * @return list of directories within the specified dir
      */
-    public static ArrayList<String> getDirectoryPath (String dir) {
+    public static List<String> getDirectories(String dir) {
         ArrayList<String> arrayPath = new ArrayList<>();
-        File file = new File(dir);
-        File[] fileList = file.listFiles();
-        for (File listFile : fileList) {
-            if (listFile.isDirectory()) {
-                arrayPath.add(listFile.getAbsolutePath());
+        File[] fileList = new File(dir).listFiles();
+        if (fileList != null) {
+            for (File listFile : fileList) {
+                if (listFile.isDirectory()) {
+                    arrayPath.add(listFile.getAbsolutePath());
+                }
             }
         }
         return arrayPath;
-
     }
 
     /**
@@ -28,21 +32,17 @@ public class FileSearch {
      * @param dir
      * @return all the items in a directory
      */
-    public static ArrayList<String> getFilePaths(String dir) {
+    public static List<String> getFiles(String dir) {
         ArrayList<String> arrayPath = new ArrayList<>();
-        File file = new File(dir);
-        File[] fileList = file.listFiles();
-        for (File listFile : fileList) {
-            if (listFile.isFile()) {
-                arrayPath.add(listFile.getAbsolutePath());
+        File[] fileList = new File(dir).listFiles();
+        if (fileList != null) {
+            for (File listFile : fileList) {
+                if (listFile.isFile()) {
+                    arrayPath.add(listFile.getAbsolutePath());
+                }
             }
         }
         return arrayPath;
-
     }
-
-
-
-
 
 }

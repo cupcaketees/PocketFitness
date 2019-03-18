@@ -18,12 +18,14 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.GridImageAdapter;
@@ -44,7 +46,6 @@ public class GalleryFragment extends Fragment {
     private Spinner dirSpinner;
     private View view;
 
-    private ArrayList<String> directories;
     private static final int NUM_GRID_COLUMNS = 3;
     private String mAppend = "file:/";
 
@@ -72,7 +73,7 @@ public class GalleryFragment extends Fragment {
         shareClose.setOnClickListener(v -> {
             Log.d(TAG, "initialiseView: closing gallery fragment");
             IntentUtils.invokeBaseView(getActivity(), HomeActivity.class);
-//              getActivity().finish();
+            //getActivity().finish();
         });
 
         TextView nextFragment = view.findViewById(R.id.postNext);
@@ -80,31 +81,28 @@ public class GalleryFragment extends Fragment {
             Log.d(TAG, "initialiseView: navigate to finalise post");
             IntentUtils.invokeVideoView(getActivity(), FinalisePost.class, "Selected_image",mSelectedImage);
         });
-
-
-
-
     }
 
     private void init() {
-        FilePathImages filePathImages = new FilePathImages();
-
-        if (FileSearch.getDirectoryPath(filePathImages.PICTURES) != null) {
-            directories = FileSearch.getDirectoryPath(filePathImages.CAMERA);
-        }
-
-        directories.add(filePathImages.CAMERA);
-        directories.add(filePathImages.SCREENSHOTS);
-        directories.add(filePathImages.MESSENGER);
-        directories.add(filePathImages.INSTAGRAM);
+        final List<String> directories = new ArrayList<>();
+        
+        directories.add(FilePathImages.PICTURES);
+        directories.add(FilePathImages.CAMERA);
+        directories.add(FilePathImages.SCREENSHOTS);
+        directories.add(FilePathImages.MESSENGER);
+        directories.add(FilePathImages.INSTAGRAM);
 
         ArrayList<String> directoryNames = new ArrayList<>();
         for (int i = 0; i < directories.size(); i++) {
+            if (FileSearch.getFiles(directories.get(i)).isEmpty()) {
+                continue;
+            }
+            
             int index = directories.get(i).lastIndexOf("/");
             String substring = directories.get(i).substring(index).replace("/", "");
             directoryNames.add(substring);
         }
-
+        
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, directoryNames);
 
@@ -124,12 +122,14 @@ public class GalleryFragment extends Fragment {
         });
     }
 
-
-
     private void setupGridView(String selectedDirectory) {
         Log.d(TAG, "setupGridView: directory chosen: " + selectedDirectory);
-        final ArrayList<String> imageURLS = FileSearch.getFilePaths(selectedDirectory);
-
+        final List<String> imageURLS = FileSearch.getFiles(selectedDirectory);
+        
+        if (imageURLS.isEmpty()) {
+            return;
+        }
+        
         Collections.reverse(imageURLS);
         int gridWidth = getResources().getDisplayMetrics().widthPixels;
         int imageWidth = gridWidth / NUM_GRID_COLUMNS;
@@ -138,20 +138,22 @@ public class GalleryFragment extends Fragment {
         GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.create_post_layout_gridview, mAppend, imageURLS);
         gridView.setAdapter(adapter);
 
-        setImage(imageURLS.get(0), imageGallery, mAppend);
+        setImage(imageURLS.get(0), imageGallery);
         mSelectedImage = imageURLS.get(0);
 
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             Log.d(TAG, "onItemClick: selected image" + imageURLS.get(position));
-            setImage(imageURLS.get(position), imageGallery, mAppend);
+            setImage(imageURLS.get(position), imageGallery);
             mSelectedImage = imageURLS.get(position);
         });
     }
 
 
-    private void setImage(String imgURL, ImageView image, String append) {
+    private void setImage(String imgURL, ImageView image) {
         Log.d(TAG, "setImage: setting image");
+        
         ImageLoader imageLoader = ImageLoader.getInstance();
+        
         imageLoader.displayImage(mAppend + imgURL, image, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {

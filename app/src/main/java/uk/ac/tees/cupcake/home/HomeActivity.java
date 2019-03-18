@@ -21,34 +21,35 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
+import uk.ac.tees.cupcake.adapters.NavigationDrawerAdapter;
+import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
-import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
-import uk.ac.tees.cupcake.adapters.NavigationDrawerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
-
+    
     private static final String TAG = "HomeActivity";
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private FirebaseFirestore firebaseFirestore;
-
+    
     private DrawerLayout layout;
     private NavigationView navigationView;
-    ViewPager viewPager;
-
+    
+    private ViewPager viewPager;
+    
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
     }
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
-
+        
         mAuth = FirebaseAuth.getInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -61,75 +62,72 @@ public class HomeActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() == null) {
                     IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
-                }else{
+                } else {
                     String currentUserId = mAuth.getCurrentUser().getUid();
                     firebaseFirestore.collection("Users")
-                                     .document(currentUserId)
-                                     .get()
-                                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                         @Override
-                                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                           if(task.isSuccessful()){
-                                               if(!task.getResult().exists()){
-                                                   Intent setupIntent = new Intent(HomeActivity.this, SetupProfileActivity.class);
-                                                   startActivity(setupIntent);
-                                                   finish();
-                                               }
-                                           }
-                                         }
-                                     });
+                            .document(currentUserId)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        if (!task.getResult().exists()) {
+                                            Intent setupIntent = new Intent(HomeActivity.this, SetupProfileActivity.class);
+                                            startActivity(setupIntent);
+                                            finish();
+                                        }
+                                    }
+                                }
+                            });
                 }
             }
         };
-
-        layout = findViewById(R.id.drawerLayout);
+        layout = findViewById(R.id.drawer_layout);
         viewPager = findViewById(R.id.container);
-
+        
         initialiseView();
         setupFragments();
         Log.d(TAG, "onCreate: onEnd");
     }
-
+    
     /**
      * Initialises Toolbar and Drawer sets the Toolbar for the View
      */
     public void initialiseView() {
         Log.d(TAG, "initialiseView: onStart");
-
+        
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         layout.addDrawerListener(toggle);
-
+        
         toggle.syncState();
         Log.d(TAG, "initialiseView: Navigation Bar and Toolbar added");
-
-
+        
         navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(getApplicationContext()));
         Log.d(TAG, "initialiseView: onEnd");
     }
-
+    
     /**
      * Setup fragments by calling SectionPagerAdapter
      * sets up bottom navigation bar with viewpager to move to each fragment.
      */
     private void setupFragments() {
         Log.d(TAG, "setupFragments: onStart");
-
+        
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-
+        
         viewPager.setAdapter(adapter);
-
+        
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_NavBar);
         bottomNavigationView.setupWithViewPager(viewPager);
-
+        
         Log.d(TAG, "setupFragments: onEnd");
     }
-
-
+    
+    
     /**
      * Ensures no matter how the user gets to the page it resets the menu to the correct menu item highlighted.
      * Closes drawer when reaching this page
@@ -140,8 +138,8 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
         layout.closeDrawer(GravityCompat.START);
     }
-
-
+    
+    
     /*
      * Signs out user
      * //TODO add google auth signout
@@ -158,5 +156,5 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
-
+    
 }

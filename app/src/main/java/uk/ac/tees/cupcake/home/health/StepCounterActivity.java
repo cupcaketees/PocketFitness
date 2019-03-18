@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ import static uk.ac.tees.cupcake.R.id.step_counter_view;
 public class StepCounterActivity extends SensorActivity {
     
     @Override
-    public void setup() {
+    public void setupLayout() {
         setContentView(R.layout.activity_step_counter);
     
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
@@ -37,5 +38,10 @@ public class StepCounterActivity extends SensorActivity {
         View stepCounterView = findViewById(step_counter_view);
     
         return new StepCounterSensorListener(stepCounterView);
+    }
+    
+    @Override
+    public int delay() {
+        return SensorManager.SENSOR_DELAY_NORMAL;
     }
 }

@@ -82,7 +82,7 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
-        if(requestCode == RESULT_OK){
+        if(resultCode == RESULT_OK){
             Uri resultUri = result.getUri();
 
             if(requestCode == PROFILE_PICTURE_REQUEST_CODE){

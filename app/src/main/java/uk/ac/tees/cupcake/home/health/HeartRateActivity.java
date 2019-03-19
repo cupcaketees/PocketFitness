@@ -14,9 +14,6 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.sensors.HeartRateSensorEventListener;
 import uk.ac.tees.cupcake.sensors.SensorAdapter;
 
-import uk.ac.tees.cupcake.utils.CheckableLinearViewGroup;
-import uk.ac.tees.cupcake.utils.OneSelectedOnCheckStrategy;
-
 /**
  * An activity for measuring heart rate.
  *

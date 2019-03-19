@@ -1,6 +1,5 @@
 package uk.ac.tees.cupcake.posts;
 
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
@@ -48,7 +46,6 @@ public class GalleryFragment extends Fragment {
 
     private static final int NUM_GRID_COLUMNS = 3;
     private String mAppend = "file:/";
-
 
     @Nullable
     @Override
@@ -148,7 +145,6 @@ public class GalleryFragment extends Fragment {
         });
     }
 
-
     private void setImage(String imgURL, ImageView image) {
         Log.d(TAG, "setImage: setting image");
         
@@ -176,5 +172,4 @@ public class GalleryFragment extends Fragment {
             }
         });
     }
-
 }

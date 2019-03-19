@@ -13,7 +13,6 @@
         android:paddingTop="4dp"
         android:orientation="horizontal">
 
-
         <ImageButton
             android:id="@id/exo_rew"
             style="@style/ExoMediaButton.Rewind" />
@@ -33,7 +32,6 @@
         <ImageButton
             android:id="@id/exo_ffwd"
             style="@style/ExoMediaButton.FastForward" />
-
 
     </LinearLayout>
 

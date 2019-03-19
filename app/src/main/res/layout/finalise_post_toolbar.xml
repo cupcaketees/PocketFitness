@@ -29,7 +29,6 @@
                     android:contentDescription="image to leave page"
                     />
 
-
                 <TextView
                     android:id="@+id/postFinalise"
                     android:layout_width="wrap_content"

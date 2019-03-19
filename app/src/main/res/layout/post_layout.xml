@@ -66,7 +66,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
                 <RatingBar
                     android:id="@+id/post_rating"
                     android:layout_width="50dp"
@@ -88,7 +87,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="145dp"
                 android:gravity="end" />
-
 
         </LinearLayout>
 

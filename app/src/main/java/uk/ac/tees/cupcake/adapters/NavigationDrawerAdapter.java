@@ -6,7 +6,6 @@ import android.support.design.widget.NavigationView;
 import android.view.MenuItem;
 import com.google.firebase.auth.FirebaseAuth;
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;

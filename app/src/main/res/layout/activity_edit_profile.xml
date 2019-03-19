@@ -67,7 +67,6 @@
         app:layout_constraintTop_toTopOf="@+id/edit_profile_profile_picture_image_view"
         app:srcCompat="@drawable/ic_camera" />
 
-
     <EditText
         android:id="@+id/edit_profile_first_name_edit_text"
         android:layout_width="0dp"
@@ -165,14 +164,4 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Save changes" />
 
-
-
-
-
-
 </android.support.constraint.ConstraintLayout>
-
-
-
-
-

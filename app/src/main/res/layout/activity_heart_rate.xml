@@ -94,5 +94,4 @@
         app:pv_measure="height"
         app:pv_spawn_period="1000" />
 
-
 </android.support.constraint.ConstraintLayout>

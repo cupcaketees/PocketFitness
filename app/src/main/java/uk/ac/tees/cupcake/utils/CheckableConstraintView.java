@@ -109,7 +109,6 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
          * @param isChecked the checked state of the {@link CheckableConstraintView}
          */
         void onChecked(boolean isChecked);
-        
     }
     
 }

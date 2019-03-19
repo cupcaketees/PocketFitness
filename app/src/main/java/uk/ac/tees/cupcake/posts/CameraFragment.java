@@ -25,7 +25,6 @@ public class CameraFragment extends Fragment {
     private static final int GALLERY_FRAGMENT_NUM = 2;
     private static final int CAMERA_REQUEST_CODE = 5;
 
-
     View view;
     Button button;
 
@@ -36,8 +35,6 @@ public class CameraFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_photo, container, false);
         button = view.findViewById(R.id.button_camera);
         initialiseButton();
-
-
         return view;
     }
 
@@ -55,7 +52,6 @@ public class CameraFragment extends Fragment {
                 }
             }
         });
-
     }
 
     @Override

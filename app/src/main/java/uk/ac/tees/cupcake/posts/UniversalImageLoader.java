@@ -1,32 +1,20 @@
 package uk.ac.tees.cupcake.posts;
 
-
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
-
-import uk.ac.tees.cupcake.R;
-
 
 /**
  * Created by User on 6/4/2017.
  */
 
 public class UniversalImageLoader {
-
-
-
 
     /**
      * this method can be sued to set images that are static. It can't be used if the images

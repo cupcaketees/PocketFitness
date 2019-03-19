@@ -40,6 +40,5 @@ public class PostPagerAdapter extends FragmentPagerAdapter {
     public int getCount() {
         return POST_FRAGMENTS.size();
     }
-
 }
 

@@ -1,9 +1,7 @@
 package uk.ac.tees.cupcake.file;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class FileSearch {
@@ -44,5 +42,4 @@ public final class FileSearch {
         }
         return arrayPath;
     }
-
 }

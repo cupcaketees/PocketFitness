@@ -4,12 +4,9 @@ import android.app.Dialog;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +66,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exo_activity_video_player);
-        DrawerLayout layout = findViewById(R.id.drawerLayout);
+        DrawerLayout layout = findViewById(R.id.drawer_layout);
         if (savedInstanceState != null) {
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);
             mResumePosition = savedInstanceState.getLong(STATE_RESUME_POSITION);
@@ -79,9 +76,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
         //initialiseView();
         Log.d(TAG, "onCreate: onEnd");
     }
-
-
-
 
     /**
      * @param outState - ensures all states are saved so when returned they can continue where they left off
@@ -220,7 +214,6 @@ public class VideoPlayerActivity extends AppCompatActivity {
             mVideoSource = new ExtractorMediaSource(daUri, dataSourceFactory, extractorsFactory, null, null);
             //OTHER TYPE OF PLAYER
 //            mVideoSource = new HlsMediaSource(daUri, dataSourceFactory, 1, null, null);
-
         }
 
         initExoPlayer();
@@ -256,6 +249,4 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
         Log.d(TAG, "onPause: onEnd");
     }
-
-
 }

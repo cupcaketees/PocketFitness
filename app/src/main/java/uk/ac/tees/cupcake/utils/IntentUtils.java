@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -33,6 +34,13 @@ public class IntentUtils {
         intent.putExtra("selected_bitmap", bitmap);
         context.startActivity(intent);
     }
+
+    public static void invokeDietPlan(Context context, Class<?> selectedClass, String title, Parcelable extra) {
+        Intent intent = new Intent(context, selectedClass);
+        intent.putExtra(title, extra);
+        context.startActivity(intent);
+    }
+
     
     public static void invokeBaseView(Context context, Class<?> selectedClass) {
         Intent intent = new Intent(context, selectedClass);

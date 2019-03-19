@@ -18,6 +18,7 @@ import java.util.Map;
 import uk.ac.tees.cupcake.R;
 
 import uk.ac.tees.cupcake.account.SettingsActivity;
+import uk.ac.tees.cupcake.dietplan.DietActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
@@ -45,6 +46,8 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         NAV_BAR_ACTIONS.put(R.id.nav_workout_videos, new StartIntentNavigationItemAction(VideoListActivity.class));
         
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
+
+        NAV_BAR_ACTIONS.put(R.id.nav_30diet, new StartIntentNavigationItemAction(DietActivity.class));
         
         NAV_BAR_ACTIONS.put(R.id.nav_settings, new StartIntentNavigationItemAction(SettingsActivity.class));
         

@@ -79,5 +79,7 @@
         <activity android:name=".account.SetupProfileActivity" />
         <activity android:name=".home.health.SaveHeartRateActivity" />
         <activity android:name=".home.MainActivity" />
+        <activity android:name=".dietplan.DietActivity" />
+        <activity android:name=".dietplan.DietDetailsActivity" />
     </application>
 </manifest>

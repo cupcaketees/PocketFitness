@@ -117,5 +117,4 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         IntentUtils.invokeBaseView(SaveHeartRateActivity.this, HomeActivity.class);
         finish();
     }
-    
 }

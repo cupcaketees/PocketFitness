@@ -77,8 +77,6 @@ class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder>
             mDescription = itemView.findViewById(R.id.post_desc);
             mImageView = itemView.findViewById(R.id.post_image);
             mTime = itemView.findViewById(R.id.post_time);
-
-
         }
 
     }

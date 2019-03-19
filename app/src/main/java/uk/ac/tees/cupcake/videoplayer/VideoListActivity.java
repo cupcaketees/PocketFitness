@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.NavigationDrawerAdapter;
 
-
 /**
  * VideoList Activity
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
@@ -38,7 +37,7 @@ public class VideoListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_list);
 
-        layout = findViewById(R.id.drawerLayout);
+        layout = findViewById(R.id.drawer_layout);
         viewPager = findViewById(R.id.container);
 
         RecyclerView mRecyclerView = findViewById(R.id.myRecycleView);
@@ -84,7 +83,6 @@ public class VideoListActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationDrawerAdapter(getApplicationContext()));
         Log.d(TAG, "initialiseView: onEnd");
     }
-
 
     /**
      * Closes drawers when back button is pressed if its open.

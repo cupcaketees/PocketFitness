@@ -3,7 +3,6 @@ package uk.ac.tees.cupcake.sensors;
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
-import android.hardware.SensorEventCallback;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 

@@ -8,7 +8,6 @@
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-
     <TextView
         android:id="@+id/log_in"
         android:layout_width="match_parent"

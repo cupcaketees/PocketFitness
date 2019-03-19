@@ -89,7 +89,6 @@ public class FinalisePost extends AppCompatActivity {
 
             StorageReference userFilePath = postImages.child(mCurrentUserId).child(Post.getCurrentTimeUsingDate() + ".jpg");
 
-
             if (intent.hasExtra("Selected_image")) {
                 String imageURL = intent.getStringExtra("Selected_image");
                 Bitmap bm = convertToBitmap(imageURL);
@@ -97,7 +96,6 @@ public class FinalisePost extends AppCompatActivity {
                 uri = getImageUri(FinalisePost.this, bm);
             } else {
                 uri = getImageUri(FinalisePost.this, bitmap);
-
 
             }
 
@@ -124,12 +122,10 @@ public class FinalisePost extends AppCompatActivity {
     private void savePost() {
         Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), Post.getCurrentTimeUsingDate());
 
-
         firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(post.getDate()).set(post)
                 .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, HomeActivity.class))
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show());
     }
-
 
     private void defineImage() {
 
@@ -170,5 +166,4 @@ public class FinalisePost extends AppCompatActivity {
         }
         return bitmap;
     }
-
 }

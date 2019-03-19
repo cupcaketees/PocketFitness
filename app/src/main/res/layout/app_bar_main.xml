@@ -28,5 +28,4 @@
         <include layout="@layout/bottom_navigation_view"/>
     </RelativeLayout>
 
-
 </android.support.design.widget.CoordinatorLayout>

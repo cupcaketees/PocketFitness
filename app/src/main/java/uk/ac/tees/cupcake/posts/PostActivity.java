@@ -21,7 +21,6 @@ public class PostActivity extends AppCompatActivity {
 
     private static final int VERIFY_PERMISSIONS_REQUEST = 1;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: started");
@@ -62,6 +61,5 @@ public class PostActivity extends AppCompatActivity {
         tabLayout.getTabAt(1).setText("PHOTO");
 
     }
-
 
 }

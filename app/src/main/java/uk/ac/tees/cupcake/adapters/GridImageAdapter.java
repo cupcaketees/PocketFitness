@@ -16,7 +16,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.tees.cupcake.R;
@@ -27,7 +26,7 @@ public class GridImageAdapter extends ArrayAdapter<String> {
     private LayoutInflater mLayoutInflater;
 
     private int resourceLayout;
-    
+
     private String mAppend;
 
     public GridImageAdapter(Context context, int layoutResource, String append, List<String> imgURLs) {

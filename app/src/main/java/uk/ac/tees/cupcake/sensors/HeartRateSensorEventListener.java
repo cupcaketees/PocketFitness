@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
 import uk.ac.tees.cupcake.home.health.HeartRateMeasurement;
 import uk.ac.tees.cupcake.home.health.SaveHeartRateActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;

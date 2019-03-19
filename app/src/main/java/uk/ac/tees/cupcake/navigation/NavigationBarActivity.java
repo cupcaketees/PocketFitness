@@ -13,9 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.VideoPlayer.VideoPlayerActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
-import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
 
 /**
  * An {@link Activity} that includes a navigation bar.
@@ -27,23 +25,13 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
     protected ViewStub stub;
     
     public static final Map<Integer, NavigationItemOnClickAction> NAV_BAR_ACTIONS = new HashMap<>();
-    
-    static {
-        /**
-         * This entry will not exist in release because uri is determined at run time
-         */
-        Map<String, String> uri = new HashMap<>();
-        uri.put("VIDEO_NAME", "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4");
-        
-        NAV_BAR_ACTIONS.put(R.id.nav_slideshow, new StartIntentNavigationItemAction<>(VideoPlayerActivity.class, uri));
-    }
-    
+
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navbar);
         
-        stub = findViewById(R.id.layout_stub);
+        //stub = findViewById(R.id.layout_stub);
         
         addNavigationView();
         setup();

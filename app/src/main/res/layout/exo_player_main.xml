@@ -8,9 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-
     <include layout="@layout/exo_activity_video_player" />
-
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

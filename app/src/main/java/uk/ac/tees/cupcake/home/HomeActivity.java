@@ -126,8 +126,7 @@ public class HomeActivity extends AppCompatActivity {
         
         Log.d(TAG, "setupFragments: onEnd");
     }
-    
-    
+
     /**
      * Ensures no matter how the user gets to the page it resets the menu to the correct menu item highlighted.
      * Closes drawer when reaching this page
@@ -138,8 +137,7 @@ public class HomeActivity extends AppCompatActivity {
         navigationView.getMenu().getItem(0).setChecked(true);
         layout.closeDrawer(GravityCompat.START);
     }
-    
-    
+
     /*
      * Signs out user
      * //TODO add google auth signout
@@ -156,5 +154,4 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
     }
-    
 }

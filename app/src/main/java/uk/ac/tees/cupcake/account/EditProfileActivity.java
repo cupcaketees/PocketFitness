@@ -81,15 +81,18 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         CropImage.ActivityResult result = CropImage.getActivityResult(data);
-        Uri resultUri = result.getUri();
 
-        if(requestCode == PROFILE_PICTURE_REQUEST_CODE && resultCode == RESULT_OK){
-            saveImage("profile pictures", resultUri, KEY_PROFILE_PICTURE);
-            mProfilePictureImageView.setImageURI(resultUri);
+        if(resultCode == RESULT_OK){
+            Uri resultUri = result.getUri();
 
-        }else if (requestCode == COVER_PHOTO_REQUEST_CODE && resultCode == RESULT_OK){
-            saveImage("cover photos", resultUri, KEY_COVER_PHOTO);
-            mCoverPhotoImageView.setImageURI(resultUri);
+            if(requestCode == PROFILE_PICTURE_REQUEST_CODE){
+                saveImage("profile pictures", resultUri, KEY_PROFILE_PICTURE);
+                mProfilePictureImageView.setImageURI(resultUri);
+
+            }else if (requestCode == COVER_PHOTO_REQUEST_CODE) {
+                saveImage("cover photos", resultUri, KEY_COVER_PHOTO);
+                mCoverPhotoImageView.setImageURI(resultUri);
+            }
 
         }else if(resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE){
             Toast.makeText(EditProfileActivity.this, result.getError().getMessage(), Toast.LENGTH_LONG).show();
@@ -185,7 +188,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private String validateUserInput(String userInputFirstName, String userInputLastName, String userInputBio){
-
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {

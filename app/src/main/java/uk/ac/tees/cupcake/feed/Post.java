@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by User on 12/02/2019.
+ * Created by s6065431 on 12/02/2019.
  */
 public class Post  {
 
@@ -18,35 +18,33 @@ public class Post  {
 
     private String date;
 
-    public Post() {
-    }
-
     public Post(String username, String image, String description, String date){
         this.username = username;
         this.image = image;
         this.description = description;
-
-
-        this.date = date ;
+        this.date = date;
     }
 
-
-
-    public String getUsername(){
+    public String getUsername()
+    {
         return username;
     }
 
-    public String getImage(){
+    public String getImage()
+    {
         return image;
     }
 
-    public String getDescription(){
+    public String getDescription()
+    {
         return description;
     }
 
-    public String getDate() { return date; }
+    public String getDate()
+    {
+        return date;
+    }
 
-    
     /**
      * Temporary function to generate feed data.
      */

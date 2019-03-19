@@ -59,7 +59,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return posts.size();
     }
 
@@ -79,7 +80,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private  TextView ratingCount;
 
-        private boolean isImageFitToScreen;
         FeedViewHolder(View postView) {
 
             super(postView);
@@ -109,12 +109,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     }
 
     @Override
-    public long getItemId(int position) {
+    public long getItemId(int position)
+    {
         return position;
     }
 
     @Override
-    public int getItemViewType(int position) {
+    public int getItemViewType(int position)
+    {
         return position;
     }
 }

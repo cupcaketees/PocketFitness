@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.utils.CheckableConstraintView;
+import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
 
 /**
  * @author Sam-Hammersley <q5315908@tees.ac.uk>

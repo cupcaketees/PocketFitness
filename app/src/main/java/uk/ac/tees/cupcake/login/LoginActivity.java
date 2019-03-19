@@ -28,7 +28,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Login Activity
@@ -225,7 +225,7 @@ public class LoginActivity extends AppCompatActivity {
      * Send user to home activity.
      */
     private void sendUserToHomeActivity(){
-        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+        Intent homeIntent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(homeIntent);
         finish();
     }

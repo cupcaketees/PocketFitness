@@ -5,7 +5,6 @@ import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -66,7 +65,7 @@ public class VideoPlayerActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.exo_activity_video_player);
-        DrawerLayout layout = findViewById(R.id.drawer_layout);
+
         if (savedInstanceState != null) {
             mResumeWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW);
             mResumePosition = savedInstanceState.getLong(STATE_RESUME_POSITION);

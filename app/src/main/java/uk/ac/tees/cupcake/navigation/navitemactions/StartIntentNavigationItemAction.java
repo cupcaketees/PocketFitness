@@ -13,24 +13,24 @@ import uk.ac.tees.cupcake.utils.IntentUtils;
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public class StartIntentNavigationItemAction<T> implements NavigationItemOnClickAction {
+public class StartIntentNavigationItemAction implements NavigationItemOnClickAction {
     
     /**
      * The class to be invoked for the intended activity.
      */
-    private final Class<T> activityClass;
+    private final Class<?> activityClass;
     
     /**
      * Extra data to be passed to the activity.
      */
     private final Map<String, ? extends Serializable> extras;
     
-    public StartIntentNavigationItemAction(Class<T> activityClass, Map<String, ? extends Serializable> extras) {
+    public StartIntentNavigationItemAction(Class<?> activityClass, Map<String, ? extends Serializable> extras) {
         this.activityClass = activityClass;
         this.extras = extras;
     }
     
-    public StartIntentNavigationItemAction(Class<T> activityClass) {
+    public StartIntentNavigationItemAction(Class<?> activityClass) {
         this(activityClass, new HashMap<>());
     }
     

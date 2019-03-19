@@ -43,4 +43,10 @@ public class StepCounterActivity extends SensorActivity {
     public int delay() {
         return SensorManager.SENSOR_DELAY_NORMAL;
     }
+    
+    @Override
+    public void onBack() {
+        super.onBackPressed();
+    }
+    
 }

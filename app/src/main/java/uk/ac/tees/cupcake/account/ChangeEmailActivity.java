@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Change Email Activity
@@ -61,7 +61,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
                         mCurrentUser.updateEmail(userInputNewEmail)
                                     .addOnSuccessListener(aVoid1 -> {
                                         Toast.makeText(ChangeEmailActivity.this, "Your email has been changed successfully", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(ChangeEmailActivity.this, HomeActivity.class));
+                                        startActivity(new Intent(ChangeEmailActivity.this, MainActivity.class));
                                     })
                                     .addOnFailureListener(e -> Toast.makeText(ChangeEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
                     })

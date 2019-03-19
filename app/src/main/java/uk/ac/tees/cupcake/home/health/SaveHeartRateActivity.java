@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
-import uk.ac.tees.cupcake.utils.CheckableLinearViewGroup;
-import uk.ac.tees.cupcake.utils.GraphViewUtility;
+import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;
+import uk.ac.tees.cupcake.utils.views.GraphViewUtility;
 import uk.ac.tees.cupcake.utils.IntentUtils;
-import uk.ac.tees.cupcake.utils.OneSelectedOnCheckStrategy;
+import uk.ac.tees.cupcake.utils.views.OneSelectedOnCheckStrategy;
 
 public final class SaveHeartRateActivity extends AppCompatActivity {
     
@@ -103,7 +103,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
                 .collection("HeartRates")
                 .add(measurement)
                 .addOnSuccessListener(doc -> {
-                    IntentUtils.invokeBaseView(SaveHeartRateActivity.this, HomeActivity.class);
+                    IntentUtils.invokeBaseView(SaveHeartRateActivity.this, MainActivity.class);
                     finish();
                 })
                 .addOnFailureListener(doc -> Toast.makeText(SaveHeartRateActivity.this, doc.getMessage(), Toast.LENGTH_SHORT).show());
@@ -114,7 +114,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
      * @param view
      */
     public void cancelMeasurement(View view) {
-        IntentUtils.invokeBaseView(SaveHeartRateActivity.this, HomeActivity.class);
+        IntentUtils.invokeBaseView(SaveHeartRateActivity.this, MainActivity.class);
         finish();
     }
 }

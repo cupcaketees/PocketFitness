@@ -29,7 +29,7 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.GridImageAdapter;
 import uk.ac.tees.cupcake.file.FilePathImages;
 import uk.ac.tees.cupcake.file.FileSearch;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class GalleryFragment extends Fragment {
@@ -69,7 +69,7 @@ public class GalleryFragment extends Fragment {
         ImageView shareClose = view.findViewById(R.id.exitPost);
         shareClose.setOnClickListener(v -> {
             Log.d(TAG, "initialiseView: closing gallery fragment");
-            IntentUtils.invokeBaseView(getActivity(), HomeActivity.class);
+            IntentUtils.invokeBaseView(getActivity(), MainActivity.class);
             //getActivity().finish();
         });
 

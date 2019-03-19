@@ -6,7 +6,7 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Created by HugoT on 13/02/2019.
@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         
         //Replace with brads login page will need verification if logged in
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         
         SystemClock.sleep(1000);

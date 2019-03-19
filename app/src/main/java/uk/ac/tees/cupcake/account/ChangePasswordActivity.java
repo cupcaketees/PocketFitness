@@ -1,8 +1,8 @@
 package uk.ac.tees.cupcake.account;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Change Password Activity
@@ -60,7 +60,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                        currentUser.updatePassword(userInputNewPassword)
                                   .addOnSuccessListener(aVoid1 -> {
                                       Toast.makeText(ChangePasswordActivity.this, "Your password has been changed successfully", Toast.LENGTH_SHORT).show();
-                                      startActivity(new Intent(ChangePasswordActivity.this, HomeActivity.class));
+                                      startActivity(new Intent(ChangePasswordActivity.this, MainActivity.class));
                                   })
                                   .addOnFailureListener(e -> Toast.makeText(ChangePasswordActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
                    })

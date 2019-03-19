@@ -31,7 +31,7 @@ import java.util.Objects;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.feed.Post;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class FinalisePost extends AppCompatActivity {
@@ -123,7 +123,7 @@ public class FinalisePost extends AppCompatActivity {
         Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), Post.getCurrentTimeUsingDate());
 
         firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(post.getDate()).set(post)
-                .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, HomeActivity.class))
+                .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show());
     }
 

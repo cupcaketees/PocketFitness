@@ -1,8 +1,11 @@
-package uk.ac.tees.cupcake.utils;
+package uk.ac.tees.cupcake.utils.views;
 
 import android.widget.Checkable;
 
 import java.util.Map;
+
+import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
+import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;
 
 /**
  * An {@link CheckableLinearViewGroup.OnCheckStrategy} where checking is

@@ -63,7 +63,7 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         measurements.clear();
     }
     
-    public int getAverageMeasurement() {
+    private int getAverageMeasurement() {
         float totalBpm = 0;
         
         for (float i : measurements) {

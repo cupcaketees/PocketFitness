@@ -9,12 +9,8 @@
             android:icon="@drawable/ic_home"
             android:title="Home" />
         <item
-            android:id="@+id/nav_view_profile"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="View profile" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_workout_videos"
+            android:icon="@drawable/ic_workout_videos"
             android:title="Workout videos" />
         <item
             android:id="@+id/nav_post"
@@ -27,7 +23,7 @@
 
             <item
                 android:id="@+id/nav_settings"
-                android:icon="@drawable/nav_settings_icon"
+                android:icon="@drawable/ic_nav_settings"
                 android:title="Settings"/>
 
             <!-- TODO Add better icon for sign out option-->

@@ -69,14 +69,10 @@
             android:name=".account.VerifyEmailActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-        <activity android:name=".account.ProfilePageActivity"
-            android:parentActivityName=".home.MainActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".account.EditProfileActivity"
-            android:parentActivityName=".account.ProfilePageActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".posts.PostActivity" />
         <activity android:name=".posts.FinalisePost" />

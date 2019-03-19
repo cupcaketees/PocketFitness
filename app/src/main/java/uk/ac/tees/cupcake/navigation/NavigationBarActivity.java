@@ -17,7 +17,6 @@ import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
 
-import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
@@ -43,9 +42,7 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
     static {
         NAV_BAR_ACTIONS.put(R.id.nav_home, new StartIntentNavigationItemAction(MainActivity.class));
         
-        NAV_BAR_ACTIONS.put(R.id.nav_view_profile, new StartIntentNavigationItemAction(ProfilePageActivity.class));
-        
-        NAV_BAR_ACTIONS.put(R.id.nav_slideshow, new StartIntentNavigationItemAction(VideoListActivity.class));
+        NAV_BAR_ACTIONS.put(R.id.nav_workout_videos, new StartIntentNavigationItemAction(VideoListActivity.class));
         
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
         
@@ -93,7 +90,9 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
     /**
      * Invoked in {@link #onBackPressed()} after {@link #drawerLayout} has been closed.
      */
-    public abstract void onBack();
+    public void onBack() {
+        super.onBackPressed();
+    }
     
     @Override
     public final void onBackPressed() {

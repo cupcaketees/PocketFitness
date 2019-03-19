@@ -7,13 +7,13 @@
         android:title="home"/>
 
     <item
-        android:id="@+id/nav_favourites"
-        android:icon="@drawable/ic_favorite_border_black_24dp"
-        android:title="favourite"/>
+        android:id="@+id/nav_feed"
+        android:icon="@drawable/ic_feed"
+        android:title="feed"/>
 
     <item
-        android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="search"/>
+        android:id="@+id/nav_profile"
+        android:icon="@drawable/ic_profile"
+        android:title="profile"/>
 
 </menu>

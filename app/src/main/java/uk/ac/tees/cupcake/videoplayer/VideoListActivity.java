@@ -19,7 +19,7 @@ public class VideoListActivity extends NavigationBarActivity {
     public void setup() {
         stub.setLayoutResource(R.layout.activity_video_list);
         stub.inflate();
-        
+
         RecyclerView mRecyclerView = findViewById(R.id.myRecycleView);
         ArrayList<Video> mVideos = new ArrayList<>();
         mVideos.add(new Video("Warm up", "The warming up is a preparation for physical exertion or a performance by exercising or practising gently beforehand.", R.drawable.temp_stretch, "link", "https://httpsak-a.akamaihd.net/4005328972001/4005328972001_5675453105001_5675442412001.mp4", "7.26"));
@@ -41,8 +41,4 @@ public class VideoListActivity extends NavigationBarActivity {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    @Override
-    public void onBack() {
-        super.onBackPressed();
-    }
 }

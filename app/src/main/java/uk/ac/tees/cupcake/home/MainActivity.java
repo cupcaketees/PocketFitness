@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
+import java.util.Arrays;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
@@ -55,7 +57,8 @@ public class MainActivity extends NavigationBarActivity {
         stub.inflate();
         
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),
+                Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment())));
         
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_bar);
         bottomNavigationView.setupWithViewPager(viewPager);

@@ -69,7 +69,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     private void getData() {
         String uid = auth.getCurrentUser().getUid();
     
-        String resourceId = getResources().getResourceName(measurementTypes.getCheckedChild());
+        String resourceId = getResources().getResourceName(measurementTypes.getChecked().get(0));
         String type = resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_"));
         
         firestore.collection("UserStats")
@@ -98,7 +98,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         Intent intent = getIntent();
         HeartRateMeasurement measurement = (HeartRateMeasurement) intent.getSerializableExtra("heart_rate_measurement");
         
-        String resourceId = getResources().getResourceName(measurementTypes.getCheckedChild());
+        String resourceId = getResources().getResourceName(measurementTypes.getChecked().get(0));
         measurement.setMeasurementType(resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_")));
         
         String uid = auth.getCurrentUser().getUid();

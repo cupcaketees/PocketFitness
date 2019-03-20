@@ -22,8 +22,6 @@ public class CheckableLinearViewGroup extends LinearLayout {
      */
     private final Map<Integer, Checkable> checkableViews = new HashMap<>();
     
-    private int checkedChild;
-    
     /**
      * This is invoked upon one of the child checkableViews being checked.
      */
@@ -47,7 +45,6 @@ public class CheckableLinearViewGroup extends LinearLayout {
      * @param id the id of the clicked checkable.
      */
     protected void childClicked(int id) {
-        checkedChild = id;
         for (OnCheckStrategy strategy : onCheckStrategies) {
             strategy.checked(id, this);
         }
@@ -74,8 +71,21 @@ public class CheckableLinearViewGroup extends LinearLayout {
         return checkableViews;
     }
     
-    public int getCheckedChild() {
-        return checkedChild;
+    /**
+     * Gets a list of the ids of checked children in this view.
+     *
+     * @return a list of resource ids.
+     */
+    public List<Integer> getChecked() {
+        List<Integer> checked = new ArrayList<>();
+        
+        for (Map.Entry<Integer, Checkable> entry : checkableViews.entrySet()) {
+            if (entry.getValue().isChecked()) {
+                checked.add(entry.getKey());
+            }
+        }
+        
+        return checked;
     }
 
     /**

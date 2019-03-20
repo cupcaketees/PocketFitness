@@ -5,7 +5,7 @@
     android:id="@+id/heart_rate_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uk.ac.tees.cupcake.home.health.HeartRateActivity">
+    tools:context="uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity">
 
     <TextView
         android:id="@+id/heart_rate_label"

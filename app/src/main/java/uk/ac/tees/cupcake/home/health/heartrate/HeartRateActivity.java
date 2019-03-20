@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.home.health;
+package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.Manifest;
 import android.content.pm.PackageManager;

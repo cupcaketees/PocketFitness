@@ -28,7 +28,7 @@
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
 
-        <activity android:name=".home.health.HeartRateActivity" />
+        <activity android:name=".home.health.heartrate.HeartRateActivity" />
         <activity android:name=".home.health.StepCounterActivity" />
         <activity
             android:name=".SplashActivity"
@@ -77,7 +77,7 @@
         <activity android:name=".posts.PostActivity" />
         <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
-        <activity android:name=".home.health.SaveHeartRateActivity" />
+        <activity android:name=".home.health.heartrate.SaveHeartRateActivity" />
         <activity android:name=".home.MainActivity" />
     </application>
 </manifest>

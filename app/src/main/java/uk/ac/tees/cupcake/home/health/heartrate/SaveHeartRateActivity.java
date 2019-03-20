@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.home.health;
+package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +27,8 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     
+    private CheckableLinearViewGroup measurementTypes;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +40,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         HeartRateMeasurement measurement = (HeartRateMeasurement) getIntent().getSerializableExtra("heart_rate_measurement");
         measurementTextView.setText(Integer.toString(measurement.getBpm()));
     
-        CheckableLinearViewGroup measurementTypes = findViewById(R.id.measurement_types);
+        measurementTypes = findViewById(R.id.measurement_types);
         measurementTypes.setOnCheckStrategy(new OneSelectedOnCheckStrategy());
     }
     
@@ -91,10 +93,8 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     public void saveMeasurement(View view) {
         Intent intent = getIntent();
         HeartRateMeasurement measurement = (HeartRateMeasurement) intent.getSerializableExtra("heart_rate_measurement");
-        
-        CheckableLinearViewGroup viewGroup = findViewById(R.id.measurement_types);
-        
-        measurement.setMeasurementType(viewGroup.getCheckedChild());
+        String resourceId = getResources().getResourceName(measurementTypes.getCheckedChild());
+        measurement.setMeasurementType(resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_")));
         
         String uid = auth.getCurrentUser().getUid();
         

@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.sensors;
+package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.content.Context;
 import android.content.res.TypedArray;

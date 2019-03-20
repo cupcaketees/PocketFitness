@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.home.health;
+package uk.ac.tees.cupcake.home.health.heartrate;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 
@@ -20,10 +20,9 @@ public final class HeartRateMeasurement implements Serializable {
     private int bpm;
     
     /**
-     * The integer representation of the selected measurement type. Types being general, resting,
-     * after exercise and before exercise.
+     * Types being general, resting, after exercise and before exercise.
      */
-    private int measurementType;
+    private String measurementType;
     
     /**
      * Required for {@link DocumentSnapshot#toObject}
@@ -37,7 +36,7 @@ public final class HeartRateMeasurement implements Serializable {
      * @param bpm the beats per minute of the measurement.
      * @param measurementType the measurement type (e.g. resting, before or after exercise...)
      */
-    public HeartRateMeasurement(long timestamp, int bpm, int measurementType) {
+    public HeartRateMeasurement(long timestamp, int bpm, String measurementType) {
         this.timestamp = timestamp;
         this.bpm = bpm;
         this.measurementType = measurementType;
@@ -59,11 +58,11 @@ public final class HeartRateMeasurement implements Serializable {
         this.bpm = bpm;
     }
     
-    public int getMeasurementType() {
+    public String getMeasurementType() {
         return measurementType;
     }
     
-    public void setMeasurementType(int measurementType) {
+    public void setMeasurementType(String measurementType) {
         this.measurementType = measurementType;
     }
     

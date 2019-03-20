@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.health.HeartRateMeasurement;
-import uk.ac.tees.cupcake.home.health.SaveHeartRateActivity;
+import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
+import uk.ac.tees.cupcake.home.health.heartrate.SaveHeartRateActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 /**
@@ -111,7 +111,7 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         heartRateView.removeCallbacks(measurementCallback);
         pulseView.finishPulse();
         
-        HeartRateMeasurement measurement = new HeartRateMeasurement(System.currentTimeMillis(), getAverageMeasurement(), 0);
+        HeartRateMeasurement measurement = new HeartRateMeasurement(System.currentTimeMillis(), getAverageMeasurement(), "");
         
         Map<String, Serializable> extras = new HashMap<>();
         extras.put("heart_rate_measurement", measurement);

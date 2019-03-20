@@ -42,6 +42,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     
         measurementTypes = findViewById(R.id.measurement_types);
         measurementTypes.setOnCheckStrategy(new OneSelectedOnCheckStrategy());
+        measurementTypes.setChecked(R.id.general_measurement_type, true);
     }
     
     /**

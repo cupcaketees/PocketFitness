@@ -5,7 +5,9 @@ import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +27,7 @@ public class CheckableLinearViewGroup extends LinearLayout {
     /**
      * This is invoked upon one of the child checkableViews being checked.
      */
-    private OnCheckStrategy onCheckStrategy;
+    private final List<OnCheckStrategy> onCheckStrategies = new ArrayList<>();
     
     public CheckableLinearViewGroup(Context context) {
         super(context);
@@ -35,8 +37,8 @@ public class CheckableLinearViewGroup extends LinearLayout {
         super(context, attrs);
     }
     
-    public void setOnCheckStrategy(OnCheckStrategy onCheckStrategy) {
-        this.onCheckStrategy = onCheckStrategy;
+    public void addOnCheckStrategy(OnCheckStrategy onCheckStrategy) {
+        onCheckStrategies.add(onCheckStrategy);
     }
     
     /**
@@ -46,7 +48,9 @@ public class CheckableLinearViewGroup extends LinearLayout {
      */
     protected void childClicked(int id) {
         checkedChild = id;
-        onCheckStrategy.checked(id, this);
+        for (OnCheckStrategy strategy : onCheckStrategies) {
+            strategy.checked(id, this);
+        }
     }
     
     /**

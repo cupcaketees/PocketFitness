@@ -33,15 +33,16 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_heart_rate);
-        getData();
         
+        GraphViewUtility.setupChart(findViewById(R.id.heart_rate_chart));
         TextView measurementTextView = findViewById(R.id.save_heart_rate_bpm);
         
         HeartRateMeasurement measurement = (HeartRateMeasurement) getIntent().getSerializableExtra("heart_rate_measurement");
         measurementTextView.setText(Integer.toString(measurement.getBpm()));
     
         measurementTypes = findViewById(R.id.measurement_types);
-        measurementTypes.setOnCheckStrategy(new OneSelectedOnCheckStrategy());
+        measurementTypes.addOnCheckStrategy((e, v) -> getData());
+        measurementTypes.addOnCheckStrategy(new OneSelectedOnCheckStrategy());
         measurementTypes.setChecked(R.id.general_measurement_type, true);
     }
     
@@ -58,8 +59,6 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         
         String averageValue = Integer.toString(Math.round(average / entries.size()));
         graphText.setText(averageValue);
-    
-        GraphViewUtility.setupChart(findViewById(R.id.heart_rate_chart), "#FF0000", "heart-rate", entries);
     }
     
     /**
@@ -69,10 +68,14 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
      */
     private void getData() {
         String uid = auth.getCurrentUser().getUid();
+    
+        String resourceId = getResources().getResourceName(measurementTypes.getCheckedChild());
+        String type = resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_"));
         
         firestore.collection("UserStats")
                 .document(uid)
                 .collection("HeartRates")
+                .whereEqualTo("measurementType", type)
                 .get()
                 .addOnSuccessListener(documentSnapshots -> {
                     List<Entry> entries = new ArrayList<>();
@@ -81,8 +84,8 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
                     for (HeartRateMeasurement heartRateMeasurement : documentSnapshots.toObjects(HeartRateMeasurement.class)) {
                         entries.add(new Entry(index++, heartRateMeasurement.getBpm()));
                     }
-                    
                     setAverage(entries);
+                    GraphViewUtility.setChartData(findViewById(R.id.heart_rate_chart), "#FF0000", entries);
                 })
                 .addOnFailureListener(doc -> Toast.makeText(SaveHeartRateActivity.this, doc.getMessage(), Toast.LENGTH_SHORT).show());
     }
@@ -94,6 +97,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     public void saveMeasurement(View view) {
         Intent intent = getIntent();
         HeartRateMeasurement measurement = (HeartRateMeasurement) intent.getSerializableExtra("heart_rate_measurement");
+        
         String resourceId = getResources().getResourceName(measurementTypes.getCheckedChild());
         measurement.setMeasurementType(resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_")));
         

@@ -78,6 +78,9 @@
         <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
         <activity android:name=".home.health.SaveHeartRateActivity" />
+
         <activity android:name=".home.MainActivity" />
+
+        <activity android:name=".workouts.BodybuildingListActivity" />
     </application>
 </manifest>

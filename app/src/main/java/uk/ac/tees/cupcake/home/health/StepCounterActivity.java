@@ -45,6 +45,11 @@ public class StepCounterActivity extends SensorActivity {
     }
     
     @Override
+    protected int layoutResource() {
+        return R.layout.activity_step_counter;
+    }
+    
+    @Override
     public void onBack() {
         super.onBackPressed();
     }

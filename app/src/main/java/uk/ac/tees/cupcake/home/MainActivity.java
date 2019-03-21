@@ -52,10 +52,12 @@ public class MainActivity extends NavigationBarActivity {
     }
     
     @Override
+    protected int layoutResource() {
+        return R.layout.activity_main;
+    }
+    
+    @Override
     public void setup() {
-        stub.setLayoutResource(R.layout.activity_main);
-        stub.inflate();
-        
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment())));

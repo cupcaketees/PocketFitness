@@ -8,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import java.util.Arrays;
+
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.adapters.PostPagerAdapter;
+import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
 
@@ -48,7 +50,8 @@ public class PostActivity extends AppCompatActivity {
     private void setupFragments() {
         Log.d(TAG, "setupFragments: started");
 
-        PostPagerAdapter postPagerAdapter = new PostPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+                Arrays.asList(new GalleryFragment(), new CameraFragment()));
 
         Toolbar toolbar = findViewById(R.id.postToolbar);
         setSupportActionBar(toolbar);

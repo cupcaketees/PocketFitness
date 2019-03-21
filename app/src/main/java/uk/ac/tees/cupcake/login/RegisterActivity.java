@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Register Activity
@@ -137,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
      * Send user to home activity.
      */
     private void sendUserToHomeActivity(){
-        Intent homeIntent = new Intent(RegisterActivity.this, HomeActivity.class);
+        Intent homeIntent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(homeIntent);
         finish();
     }

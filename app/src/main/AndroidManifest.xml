@@ -27,7 +27,7 @@
         <activity
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
-        <activity android:name=".home.HomeActivity" />
+
         <activity android:name=".home.health.HeartRateActivity" />
         <activity android:name=".home.health.StepCounterActivity" />
         <activity
@@ -47,7 +47,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".account.SettingsActivity"
-            android:parentActivityName=".home.HomeActivity"
+            android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity
             android:name=".account.AccountSettingsActivity"
@@ -69,18 +69,15 @@
             android:name=".account.VerifyEmailActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-        <activity android:name=".account.ProfilePageActivity"
-            android:parentActivityName=".home.HomeActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".account.EditProfileActivity"
-            android:parentActivityName=".account.ProfilePageActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".posts.PostActivity" />
         <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
         <activity android:name=".home.health.SaveHeartRateActivity" />
+        <activity android:name=".home.MainActivity" />
     </application>
 </manifest>

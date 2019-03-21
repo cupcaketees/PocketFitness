@@ -10,6 +10,7 @@ import java.util.List;
 
 import uk.ac.tees.cupcake.home.HomeFragment;
 import uk.ac.tees.cupcake.home.NewsFeedFragment;
+import uk.ac.tees.cupcake.home.ProfileFragment;
 
 /**
  * SectionPager Adapter
@@ -20,10 +21,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     private static final String TAG = "SectionPagerAdapter";
 
-    private final List<Fragment> HOME_FRAGMENTS = Arrays.asList(new HomeFragment(), new NewsFeedFragment());
+    private final List<Fragment> fragments;
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public SectionsPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         super(fm);
+        this.fragments = fragments;
     }
 
     /**
@@ -34,7 +36,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Log.d(TAG, "getItem: getting fragment at position: " + position);
 
-        return HOME_FRAGMENTS.get(position);
+        return fragments.get(position);
     }
 
     /**
@@ -42,7 +44,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return HOME_FRAGMENTS.size();
+        return fragments.size();
     }
 
 }

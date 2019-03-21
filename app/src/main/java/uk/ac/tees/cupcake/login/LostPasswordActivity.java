@@ -17,7 +17,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Lost Password Activity
@@ -58,12 +58,9 @@ public class LostPasswordActivity extends AppCompatActivity {
         /*
          * Checks if user is logged in and updates UI accordingly.
          */
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null){
-                    sendUserToHomeActivity();
-                }
+        mAuthListener = firebaseAuth -> {
+            if(firebaseAuth.getCurrentUser() != null){
+                sendUserToHomeActivity();
             }
         };
 
@@ -125,7 +122,7 @@ public class LostPasswordActivity extends AppCompatActivity {
      * Send user to home activity.
      */
     private void sendUserToHomeActivity(){
-        Intent loginIntent = new Intent(LostPasswordActivity.this, HomeActivity.class);
+        Intent loginIntent = new Intent(LostPasswordActivity.this, MainActivity.class);
         startActivity(loginIntent);
         finish();
     }

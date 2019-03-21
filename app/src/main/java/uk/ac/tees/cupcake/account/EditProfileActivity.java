@@ -27,6 +27,11 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
+import uk.ac.tees.cupcake.home.HomeFragment;
+import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.home.ProfileFragment;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 /**
  * Edit Profile Activity
@@ -121,7 +126,7 @@ public class EditProfileActivity extends AppCompatActivity {
                   .set(value, SetOptions.merge())
                   .addOnSuccessListener(aVoid -> {
                       Toast.makeText(EditProfileActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
-                      startActivity(new Intent(EditProfileActivity.this, ProfilePageActivity.class));
+                      onBackPressed();
                   })
                   .addOnFailureListener(e -> Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }

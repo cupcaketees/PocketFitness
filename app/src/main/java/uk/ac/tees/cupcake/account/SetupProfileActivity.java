@@ -2,8 +2,8 @@ package uk.ac.tees.cupcake.account;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -13,16 +13,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.DateFormat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.HomeActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 
 /**
@@ -115,7 +113,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                   .set(profile)
                   .addOnSuccessListener(aVoid -> {
                       Toast.makeText(SetupProfileActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
-                      startActivity(new Intent(SetupProfileActivity.this, HomeActivity.class));
+                      startActivity(new Intent(SetupProfileActivity.this, MainActivity.class));
                   })
                   .addOnFailureListener(e -> Toast.makeText(SetupProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }

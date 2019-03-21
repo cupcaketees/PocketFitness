@@ -16,6 +16,11 @@
             android:id="@+id/nav_post"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Posts" />
+
+        <item
+            android:id="@+id/nav_bodybuilding"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Bodybuilding Workouts" />
     </group>
 
     <item android:title="Communicate">

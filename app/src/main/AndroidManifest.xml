@@ -82,5 +82,10 @@
         <activity android:name=".home.MainActivity" />
 
         <activity android:name=".workouts.BodybuildingListActivity" />
+        <activity android:name=".workouts.BodybuildingArmsActivity" />
+        <activity android:name=".workouts.BodybuildingBackActivity" />
+        <activity android:name=".workouts.BodybuildingChestActivity" />
+        <activity android:name=".workouts.BodybuildingLegsActivity" />
+        <activity android:name=".workouts.BodybuildingShouldersActivity" />
     </application>
 </manifest>

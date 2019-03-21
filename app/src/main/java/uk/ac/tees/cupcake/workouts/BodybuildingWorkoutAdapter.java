@@ -7,9 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import uk.ac.tees.cupcake.R;
 
 /**
@@ -17,18 +15,17 @@ import uk.ac.tees.cupcake.R;
  *
  * @author Michael Small <s6065431@tees.ac.uk>
  */
-public class BodybuildingWorkoutsAdapter extends RecyclerView.Adapter<BodybuildingWorkoutsAdapter.ViewHolder> {
+public class BodybuildingWorkoutAdapter extends RecyclerView.Adapter<BodybuildingWorkoutAdapter.ViewHolder> {
 
-    private final ArrayList<Workout> mWorkout;
+     final ArrayList<Workout> mWorkout;
 
-    public BodybuildingWorkoutsAdapter(ArrayList<Workout> mWorkout) {
+    public BodybuildingWorkoutAdapter(ArrayList<Workout> mWorkout) {
         this.mWorkout = mWorkout;
     }
 
     @Override
-    public BodybuildingWorkoutsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bodybuilding_workout_types, parent, false);
+    public BodybuildingWorkoutAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bodybuilding_part_workouts, parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,12 +36,10 @@ public class BodybuildingWorkoutsAdapter extends RecyclerView.Adapter<Bodybuildi
         holder.mDescription.setText(mWorkout.get(position).getDesc());
         holder.mImageView.setImageResource(mWorkout.get(position).getImage());
         holder.mDifficulty.setText(mWorkout.get(position).getDifficulty());
-
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return mWorkout.size();
     }
 
@@ -62,6 +57,7 @@ public class BodybuildingWorkoutsAdapter extends RecyclerView.Adapter<Bodybuildi
             mDescription = itemView.findViewById(R.id.post_desc);
             mImageView = itemView.findViewById(R.id.post_image);
             mDifficulty = itemView.findViewById(R.id.post_difficulty);
+
         }
     }
 }

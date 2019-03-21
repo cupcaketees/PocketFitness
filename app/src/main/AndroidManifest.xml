@@ -77,7 +77,9 @@
         <activity android:name=".posts.PostActivity" />
         <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
-        <activity android:name=".home.health.heartrate.SaveHeartRateActivity" />
+        <activity android:name=".home.health.heartrate.SaveHeartRateActivity"
+            android:parentActivityName=".home.MainActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".home.MainActivity" />
     </application>
 </manifest>

@@ -75,6 +75,11 @@ public class HeartRateSensorEventListener implements SensorEventListener {
     
     @Override
     public void onSensorChanged(SensorEvent event) {
+        if (measurements.size() >= SAMPLE_SIZE) {
+            finish();
+            return;
+        }
+        
         float heartRate = event.values[0];
         
         if (heartRate > 0) {
@@ -123,20 +128,17 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         
         @Override
         public void run() {
-            if (measurements.size() > SAMPLE_SIZE) {
-                finish();
-                return;
+            if (measurements.size() <= SAMPLE_SIZE) {
+                ArcProgress progressBar = heartRateView.findViewById(R.id.arc_progress);
+                progressBar.setProgress(measurements.size() * 100 / SAMPLE_SIZE);
+    
+                int colour = heartRateView.getResources().getColor(R.color.heart_rate_measure);
+                bpm.setTextColor(colour);
+                heartRateText.setTextColor(colour);
+    
+                heartRateText.setText(heartRateView.getContext().getString(R.string.heart_rate_text, measurements.get(measurements.size() - 1).intValue()));
+                heartRateView.postDelayed(this, 1000);
             }
-    
-            ArcProgress progressBar = heartRateView.findViewById(R.id.arc_progress);
-            progressBar.setProgress(measurements.size() * 100 / SAMPLE_SIZE);
-    
-            int colour = heartRateView.getResources().getColor(R.color.heart_rate_measure);
-            bpm.setTextColor(colour);
-            heartRateText.setTextColor(colour);
-    
-            heartRateText.setText(heartRateView.getContext().getString(R.string.heart_rate_text, measurements.get(measurements.size() - 1).intValue()));
-            heartRateView.postDelayed(this, 1000);
         }
     };
 }

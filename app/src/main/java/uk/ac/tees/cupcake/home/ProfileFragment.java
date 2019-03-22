@@ -25,8 +25,8 @@ import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
 
-
     private FirebaseAuth mAuth;
+
     private View rootView;
 
     @Nullable
@@ -37,7 +37,6 @@ public class ProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         Button editProfile = rootView.findViewById(R.id.profile_edit_profile_button);
-        
 
         editProfile.setOnClickListener(v -> {
             IntentUtils.invokeBaseView(getContext(), EditProfileActivity.class);
@@ -69,7 +68,6 @@ public class ProfileFragment extends Fragment {
                         TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
                         CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
                         ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
-
 
                         UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
 

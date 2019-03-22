@@ -52,7 +52,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         Picasso.
                 with(holder.itemView.getContext())
                 .load(post.getImage())
-                .placeholder(R.drawable.cupcake)
+                .placeholder(R.drawable.temp_man_running)
                 .into(holder.mImageView);
         
         Log.d("Positiontag", "position: "+position);

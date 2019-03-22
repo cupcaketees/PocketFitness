@@ -28,7 +28,10 @@
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
 
-        <activity android:name=".home.health.heartrate.HeartRateActivity" />
+        <activity android:name=".home.health.heartrate.HeartRateActivity"
+            android:parentActivityName=".home.MainActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
         <activity android:name=".home.health.StepCounterActivity" />
         <activity
             android:name=".SplashActivity"

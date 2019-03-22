@@ -40,7 +40,7 @@ public class HeartRateActivity extends AppCompatActivity {
     
         eventListener = new HeartRateSensorEventListener(findViewById(R.id.heart_rate_view));
         
-        sensorAdapter.onCreate();
+        sensorAdapter.setupSensors();
     }
     
     @Override

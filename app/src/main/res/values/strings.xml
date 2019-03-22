@@ -90,5 +90,6 @@
 
     <string name="cancel_text">Cancel</string>
     <string name="save_text">Save</string>
-
+    <string name="home_steps_label_text">steps</string>
+    <string name="home_steps_distance_label_text">miles</string>
 </resources>

@@ -47,7 +47,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_save_heart_rate);
     
         graph = findViewById(R.id.heart_rate_chart);
-        GraphViewUtility.setupChart(graph);
+        GraphViewUtility.setupLineChart(graph);
     
         TextView measurementTextView = findViewById(R.id.save_heart_rate_bpm);
         HeartRateMeasurement measurement = (HeartRateMeasurement) getIntent().getSerializableExtra("heart_rate_measurement");
@@ -80,7 +80,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         graphText.setText(averageValue);
     
         GraphViewUtility.setChartData(graph, "#FF0000", entries);
-        graph.setVisibility(View.VISIBLE);
+        
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1000);
         graph.startAnimation(fadeIn);

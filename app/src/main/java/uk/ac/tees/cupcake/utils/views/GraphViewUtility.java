@@ -3,6 +3,7 @@ package uk.ac.tees.cupcake.utils.views;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -19,7 +20,7 @@ public class GraphViewUtility {
     
     private static final int GRADIENT_START_ALPHA = 0x50;
     
-    public static void setupChart(LineChart chart) {
+    public static void setupLineChart(LineChart chart) {
         chart.getDescription().setEnabled(false);
         chart.setTouchEnabled(true);
         chart.setPinchZoom(true);

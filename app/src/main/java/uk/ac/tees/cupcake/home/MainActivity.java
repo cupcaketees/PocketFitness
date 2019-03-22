@@ -1,6 +1,11 @@
 package uk.ac.tees.cupcake.home;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -11,6 +16,7 @@ import java.util.Arrays;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
+import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
@@ -58,6 +64,10 @@ public class MainActivity extends NavigationBarActivity {
     
     @Override
     public void setup() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BODY_SENSORS}, 0);
+        }
+        
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment())));
@@ -83,6 +93,10 @@ public class MainActivity extends NavigationBarActivity {
         } else {
             viewPager.setCurrentItem(0);
         }
+    }
+    
+    public void goToHeartRate(View view) {
+        IntentUtils.invokeBaseView(view.getContext(), HeartRateActivity.class);
     }
     
 }

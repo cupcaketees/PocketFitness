@@ -1,23 +1,18 @@
 package uk.ac.tees.cupcake.food;
 
 
-import android.support.constraint.ConstraintLayout;
-import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -70,19 +65,10 @@ public class SearchFoodActivity extends AppCompatActivity {
             //todo app key should be hidden
             String url = "https://api.edamam.com/api/food-database/parser?ingr=" + input + "&app_id=824ccde8&app_key=df089d0c12a5a75b413a7a21a0a5a9e2";
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-
-                @Override
-                public void onResponse(String response) {
-                    foods = Food.fromJSONObject(response);
-                    mRecyclerView.setAdapter(new FoodAdapter(foods));
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(SearchFoodActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show();
-                }
-            });
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
+                foods = Food.fromJSONObject(response);
+                mRecyclerView.setAdapter(new FoodAdapter(foods));
+            }, error -> Toast.makeText(SearchFoodActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show());
 
             queue.add(stringRequest);
 

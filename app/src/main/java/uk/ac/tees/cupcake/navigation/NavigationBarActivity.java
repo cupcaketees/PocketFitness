@@ -25,6 +25,7 @@ import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
 import uk.ac.tees.cupcake.posts.PostActivity;
 import uk.ac.tees.cupcake.videoplayer.VideoListActivity;
+import uk.ac.tees.cupcake.workouts.BodybuildingListActivity;
 
 /**
  * An {@link Activity} that includes a navigation bar.
@@ -45,6 +46,8 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         NAV_BAR_ACTIONS.put(R.id.nav_home, new StartIntentNavigationItemAction(MainActivity.class));
         
         NAV_BAR_ACTIONS.put(R.id.nav_workout_videos, new StartIntentNavigationItemAction(VideoListActivity.class));
+
+        NAV_BAR_ACTIONS.put(R.id.nav_bodybuilding, new StartIntentNavigationItemAction(BodybuildingListActivity.class));
         
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
 

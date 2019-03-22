@@ -114,45 +114,49 @@ public class HomeFragment extends Fragment {
     }
     
     private void getStepsData(final BarChart barChart) {
-        firestore.collection("UserStats")
-                .document(auth.getCurrentUser().getUid())
-                .collection("StepCounts")
-                .limit(7)
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-                    List<StepCountMeasurement> measurements = documentSnapshots.toObjects(StepCountMeasurement.class);
-                    List<BarEntry> entries = new ArrayList<>(measurements.size());
-                    
-                    for (int index = 0; index < measurements.size(); index++) {
-                        StepCountMeasurement measurement = measurements.get(index);
-                        
-                        BarEntry barEntry = new BarEntry(measurement.getTimestamp().getDay(), measurement.getCount());
-    
-                        entries.add(barEntry);
-                    }
-                    
-                    setChartData(barChart, entries);
-                    barChart.animateY(1000, Easing.Linear);
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+        if (auth.getCurrentUser() != null) {
+            firestore.collection("UserStats")
+                    .document(auth.getCurrentUser().getUid())
+                    .collection("StepCounts")
+                    .limit(7)
+                    .get()
+                    .addOnSuccessListener(documentSnapshots -> {
+                        List<StepCountMeasurement> measurements = documentSnapshots.toObjects(StepCountMeasurement.class);
+                        List<BarEntry> entries = new ArrayList<>(measurements.size());
+
+                        for (int index = 0; index < measurements.size(); index++) {
+                            StepCountMeasurement measurement = measurements.get(index);
+
+                            BarEntry barEntry = new BarEntry(measurement.getTimestamp().getDay(), measurement.getCount());
+
+                            entries.add(barEntry);
+                        }
+
+                        setChartData(barChart, entries);
+                        barChart.animateY(1000, Easing.Linear);
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
     }
     
     private void getHeartData(final TextView textView) {
-        firestore.collection("UserStats")
-                .document(auth.getCurrentUser().getUid())
-                .collection("HeartRates")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .limit(1)
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-                    List<HeartRateMeasurement> measurements = documentSnapshots.toObjects(HeartRateMeasurement.class);
+        if (auth.getCurrentUser() != null) {
+            firestore.collection("UserStats")
+                    .document(auth.getCurrentUser().getUid())
+                    .collection("HeartRates")
+                    .orderBy("timestamp", Query.Direction.DESCENDING)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener(documentSnapshots -> {
+                        List<HeartRateMeasurement> measurements = documentSnapshots.toObjects(HeartRateMeasurement.class);
 
-                    if (!measurements.isEmpty()) {
+                        if (!measurements.isEmpty()) {
 
-                        textView.setText(getResources().getString(R.string.heart_rate_text, measurements.get(0).getBpm()));
-                    }
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                            textView.setText(getResources().getString(R.string.heart_rate_text, measurements.get(0).getBpm()));
+                        }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
     }
     
 }

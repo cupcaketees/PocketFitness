@@ -9,9 +9,9 @@
         android:layout_height="wrap_content"
         android:gravity="top"
         android:orientation="vertical"
-        android:paddingBottom="10dp"
         android:paddingHorizontal="10dp"
         android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:weightSum="2">
 
         <LinearLayout

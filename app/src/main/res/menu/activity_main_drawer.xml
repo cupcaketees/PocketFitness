@@ -9,10 +9,6 @@
             android:icon="@drawable/ic_home"
             android:title="Home" />
         <item
-            android:id="@+id/nav_workout_videos"
-            android:icon="@drawable/ic_workout_videos"
-            android:title="Workout videos" />
-        <item
             android:id="@+id/nav_post"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Posts" />
@@ -24,6 +20,14 @@
             android:id="@+id/nav_search_food"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Search Food" />
+        <item
+            android:id="@+id/nav_workout_videos"
+            android:icon="@drawable/ic_workout_videos"
+            android:title="Workout videos" />
+        <item
+            android:id="@+id/nav_bodybuilding"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Bodybuilding Workouts" />
     </group>
 
     <item android:title="Communicate">

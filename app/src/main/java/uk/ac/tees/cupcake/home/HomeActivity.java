@@ -11,16 +11,19 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+import com.squareup.picasso.Picasso;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
+import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.NavigationDrawerAdapter;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.login.LoginActivity;
@@ -56,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         /*
          * Sends user to login page if current user is null.
          * Sends user to setup profile if account does not exist in firestore collection.
+         * if it does exist it sets nav bar name text view and profile picture image view to users values.
          */
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -65,20 +69,30 @@ public class HomeActivity extends AppCompatActivity {
                 } else {
                     String currentUserId = mAuth.getCurrentUser().getUid();
                     firebaseFirestore.collection("Users")
-                            .document(currentUserId)
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        if (!task.getResult().exists()) {
-                                            Intent setupIntent = new Intent(HomeActivity.this, SetupProfileActivity.class);
-                                            startActivity(setupIntent);
-                                            finish();
-                                        }
-                                    }
-                                }
-                            });
+                                     .document(currentUserId)
+                                     .get()
+                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                         @Override
+                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                             if (documentSnapshot.exists()) {
+                                                 TextView navBarProfileNameTextView = findViewById(R.id.nav_bar_name_text_view);
+                                                 CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
+                                                 UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+
+                                                 navBarProfileNameTextView.setText(profile.getFirstName() +" " + profile.getLastName());
+
+                                                 if(profile.getProfilePictureUrl() != null){
+                                                     Picasso.with(HomeActivity.this)
+                                                            .load(profile.getProfilePictureUrl())
+                                                            .into(profilePictureImageView);
+                                                 }
+                                             }else{
+                                                 Intent setupIntent = new Intent(HomeActivity.this, SetupProfileActivity.class);
+                                                 startActivity(setupIntent);
+                                                 finish();
+                                             }
+                                         }
+                                     });
                 }
             }
         };

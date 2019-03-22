@@ -24,7 +24,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.HomeActivity;
 
-
 /**
  * Setup Profile Activity
  * @author Bradley Hunter <s6263464@live.tees.ac.uk>
@@ -108,7 +107,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
 
-        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
+        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl,date);
 
         mFireStore.collection("Users")
                   .document(mAuth.getCurrentUser().getUid())

@@ -56,7 +56,7 @@ public class ProfilePageActivity extends AppCompatActivity {
                                  TextView dateJoinedTextView = findViewById(R.id.profile_date_joined_text_view);
                                  TextView emailAddressTextView = findViewById(R.id.profile_email_text_view);
                                  TextView bioTextView = findViewById(R.id.profile_bio_text_view);
-                                 CircleImageView profilePictureImageView = findViewById(R.id.profile_profile_picture_image_view);
+                                 CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
                                  ImageView coverPhotoImageView = findViewById(R.id.profile_cover_photo_image_view);
 
 

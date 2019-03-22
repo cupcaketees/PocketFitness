@@ -90,5 +90,8 @@
 
     <string name="cancel_text">Cancel</string>
     <string name="save_text">Save</string>
+    <string name="search_food_header_text_view">Search nutrition and diet data</string>
+    <string name="search_food_search_edit_text_hint">e.g. apples, cheese, chocolate</string>
+    <string name="search_food_search_button_text">Search</string>
 
 </resources>

@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,12 +23,16 @@ import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
 import uk.ac.tees.cupcake.sensors.SensorAdapter;
 import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
@@ -40,26 +45,40 @@ public class HomeFragment extends Fragment {
     
     private static final List<String> DAYS = Arrays.asList( "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
     
+    private View stepsCard;
+    
+    private BarChart barChart;
+    
+    private TextView lastMeasurement;
+    
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        
         View view = inflater.inflate(R.layout.home_fragment, container, false);
         
+        barChart = view.findViewById(R.id.home_steps_bar_chart);
+        setupBarChart(barChart);
+        
+        stepsCard = view.findViewById(R.id.home_steps_card);
+        lastMeasurement = view.findViewById(R.id.home_heart_last_measurement);
+        
+        return view;
+    }
+    
+    
+    @Override
+    public void onStart() {
+        super.onStart();
+    
         SensorAdapter sensorAdapter = new SensorAdapter(getContext(), Sensor.TYPE_STEP_COUNTER);
         if (!sensorAdapter.setupSensors()) {
             Toast.makeText(getContext(), "Failed to setup sensors", Toast.LENGTH_SHORT).show();
         }
-        
-        BarChart barChart = view.findViewById(R.id.home_steps_bar_chart);
-        setupBarChart(barChart);
-        
-        View stepsCard = view.findViewById(R.id.home_steps_card);
         sensorAdapter.registerListener(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_STEP_COUNTER, new StepCounterSensorListener(stepsCard));
     
         getStepsData(barChart);
-        getHeartData(view.findViewById(R.id.home_heart_last_measurement));
-        
-        return view;
+        getHeartData(lastMeasurement);
     }
     
     private void setupBarChart(BarChart barChart) {
@@ -122,6 +141,7 @@ public class HomeFragment extends Fragment {
         firestore.collection("UserStats")
                 .document(auth.getCurrentUser().getUid())
                 .collection("HeartRates")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(1)
                 .get()
                 .addOnSuccessListener(documentSnapshots -> {

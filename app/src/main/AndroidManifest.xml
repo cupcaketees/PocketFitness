@@ -82,10 +82,25 @@
         <activity android:name=".home.MainActivity" />
 
         <activity android:name=".workouts.BodybuildingListActivity" />
-        <activity android:name=".workouts.BodybuildingArmsActivity" />
-        <activity android:name=".workouts.BodybuildingBackActivity" />
-        <activity android:name=".workouts.BodybuildingChestActivity" />
-        <activity android:name=".workouts.BodybuildingLegsActivity" />
-        <activity android:name=".workouts.BodybuildingShouldersActivity" />
+        <activity android:name=".workouts.BodybuildingArmsActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
+        <activity android:name=".workouts.BodybuildingBackActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
+        <activity android:name=".workouts.BodybuildingChestActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
+        <activity android:name=".workouts.BodybuildingLegsActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
+        <activity android:name=".workouts.BodybuildingShouldersActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
     </application>
 </manifest>

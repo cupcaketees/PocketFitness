@@ -20,6 +20,8 @@ public class BodybuildingBackActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bodybuilding_bodyparts_list);
 
+        setTitle("Back Workouts");
+
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
 

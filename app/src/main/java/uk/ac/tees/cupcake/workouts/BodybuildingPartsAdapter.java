@@ -41,26 +41,8 @@ public class BodybuildingPartsAdapter extends RecyclerView.Adapter<BodybuildingP
         holder.mDescription.setText(mBodypart.get(position).getDesc());
         holder.mImageView.setImageResource(mBodypart.get(position).getImage());
         holder.itemView.setClickable(true);
-        holder.itemView.setOnClickListener(view -> {
-            switch (position) {
-                case 0:
-                    IntentUtils.invokeBaseView(mContext, BodybuildingArmsActivity.class);
-                    break;
-                case 1:
-                    IntentUtils.invokeBaseView(mContext, BodybuildingBackActivity.class);
-                    break;
-                case 2:
-                    IntentUtils.invokeBaseView(mContext, BodybuildingChestActivity.class);
-                    break;
-                case 3:
-                    IntentUtils.invokeBaseView(mContext, BodybuildingLegsActivity.class);
-                    break;
-                case 4:
-                    IntentUtils.invokeBaseView(mContext, BodybuildingShouldersActivity.class);
-                    break;
-                default:
-                    break;
-            }
+        holder.itemView.setOnClickListener(v -> {
+            IntentUtils.invokeBaseView(mContext, mBodypart.get(position).getClassName());
         });
 
     }

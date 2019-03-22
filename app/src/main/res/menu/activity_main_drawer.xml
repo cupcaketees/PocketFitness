@@ -16,6 +16,10 @@
             android:id="@+id/nav_post"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Posts" />
+        <item
+            android:id="@+id/nav_search_food"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Search Food" />
     </group>
 
     <item android:title="Communicate">
@@ -26,7 +30,6 @@
                 android:icon="@drawable/ic_nav_settings"
                 android:title="Settings"/>
 
-            <!-- TODO Add better icon for sign out option-->
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/ic_menu_manage"

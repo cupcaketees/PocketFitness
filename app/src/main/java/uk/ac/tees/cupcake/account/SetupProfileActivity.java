@@ -22,7 +22,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.MainActivity;
 
-
 /**
  * Setup Profile Activity
  * @author Bradley Hunter <s6263464@live.tees.ac.uk>
@@ -51,7 +50,6 @@ public class SetupProfileActivity extends AppCompatActivity {
         mProfilePictureImageView = findViewById(R.id.setup_profile_profile_picture_image_view);
         mFirstNameEditText = findViewById(R.id.setup_profile_first_name_edit_text);
         mLastNameEditText = findViewById(R.id.setup_profile_last_name_edit_text);
-
     }
 
     public void addPhotoOnClick(View view){

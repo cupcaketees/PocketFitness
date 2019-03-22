@@ -1,6 +1,7 @@
 package uk.ac.tees.cupcake.account;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -8,10 +9,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.login.LoginActivity;
@@ -45,15 +49,21 @@ public class DeleteAccountActivity extends AppCompatActivity {
             Toast.makeText(DeleteAccountActivity.this, "You must enter your current password.", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         AuthCredential credential = EmailAuthProvider.getCredential(currentUser.getEmail(), userInputCurrentPassword);
+
+        firestore.collection("Users")
+                 .document(currentUser.getUid())
+                 .delete()
+                 .addOnSuccessListener(aVoid -> Toast.makeText(DeleteAccountActivity.this, "Data stored has been deleted", Toast.LENGTH_SHORT).show())
+                 .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
 
         currentUser.reauthenticate(credential)
                    .addOnSuccessListener(aVoid -> {
                        currentUser.delete()
                                   .addOnSuccessListener(aVoid1 -> {
-                                      Toast.makeText(DeleteAccountActivity.this, "Your account has been deleted successfully", Toast.LENGTH_SHORT).show();
+                                      Toast.makeText(DeleteAccountActivity.this, "Your account deleted successfully", Toast.LENGTH_SHORT).show();
                                       startActivity(new Intent(DeleteAccountActivity.this, LoginActivity.class));
                                       finish();
                                   })

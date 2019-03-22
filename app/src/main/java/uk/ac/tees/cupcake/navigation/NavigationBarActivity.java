@@ -18,6 +18,7 @@ import java.util.Map;
 import uk.ac.tees.cupcake.R;
 
 import uk.ac.tees.cupcake.account.SettingsActivity;
+import uk.ac.tees.cupcake.food.SearchFoodActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
@@ -35,19 +36,21 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
     
     protected NavigationView navigationView;
     
-    private DrawerLayout drawerLayout;
+    protected DrawerLayout drawerLayout;
     
     public static final Map<Integer, NavigationItemOnClickAction> NAV_BAR_ACTIONS = new HashMap<>();
 
     static {
         NAV_BAR_ACTIONS.put(R.id.nav_home, new StartIntentNavigationItemAction(MainActivity.class));
-        
+
         NAV_BAR_ACTIONS.put(R.id.nav_workout_videos, new StartIntentNavigationItemAction(VideoListActivity.class));
-        
+
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
-        
+
         NAV_BAR_ACTIONS.put(R.id.nav_settings, new StartIntentNavigationItemAction(SettingsActivity.class));
-        
+
+        NAV_BAR_ACTIONS.put(R.id.nav_search_food, new StartIntentNavigationItemAction(SearchFoodActivity.class));
+
         NAV_BAR_ACTIONS.put(R.id.nav_signout, c -> FirebaseAuth.getInstance().signOut());
     }
     

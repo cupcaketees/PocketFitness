@@ -17,7 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
 
     /**
-     * Starts HomeActivity/LoginActivity depending on user SystemClock.sleep runs the activity but
+     * Starts LoginActivity depending on user SystemClock.sleep runs the activity but
      * only opens it after 1 second gives everything time to load.
      */
     @Override

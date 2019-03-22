@@ -149,13 +149,13 @@ public class EditProfileActivity extends AppCompatActivity {
 
                         if(profile.getProfilePictureUrl() != null){
                             Picasso.with(EditProfileActivity.this)
-                                    .load(profile.getProfilePictureUrl())
-                                    .into(mProfilePictureImageView);
+                                   .load(profile.getProfilePictureUrl())
+                                   .into(mProfilePictureImageView);
                         }
                         if(profile.getCoverPhotoUrl() != null){
                             Picasso.with(EditProfileActivity.this)
-                                    .load(profile.getCoverPhotoUrl())
-                                    .into(mCoverPhotoImageView);
+                                   .load(profile.getCoverPhotoUrl())
+                                   .into(mCoverPhotoImageView);
                         }
                     }
                 })
@@ -164,18 +164,18 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void cropImageIntent(int x, int y, int requestCode){
         Intent intent = CropImage.activity()
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setMultiTouchEnabled(true)
-                .setAspectRatio(x,y)
-                .getIntent(EditProfileActivity.this);
+                                 .setGuidelines(CropImageView.Guidelines.ON)
+                                 .setMultiTouchEnabled(true)
+                                 .setAspectRatio(x,y)
+                                 .getIntent(EditProfileActivity.this);
 
         startActivityForResult(intent, requestCode);
     }
 
     private void saveImage(String reference, Uri imageUri, final String key){
         StorageReference storageRef = mStorage.getReference()
-                .child(reference)
-                .child(mAuth.getCurrentUser().getUid());
+                                              .child(reference)
+                                              .child(mAuth.getCurrentUser().getUid());
         storageRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> {
                     Map<String, Object> value = new HashMap<>();

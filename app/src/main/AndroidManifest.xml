@@ -85,7 +85,10 @@
         <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
         <activity android:name=".home.health.SaveHeartRateActivity" />
-        <activity android:name=".food.SearchFoodActivity"></activity>
+        <activity android:name=".food.SearchFoodActivity"
+            android:parentActivityName=".home.HomeActivity"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
     </application>
 
 </manifest>

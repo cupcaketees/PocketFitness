@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.ProfilePageActivity;
 import uk.ac.tees.cupcake.account.SettingsActivity;
+import uk.ac.tees.cupcake.food.SearchFoodActivity;
 import uk.ac.tees.cupcake.home.HomeActivity;
 import uk.ac.tees.cupcake.posts.PostActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
@@ -51,6 +52,8 @@ public class NavigationDrawerAdapter implements NavigationView.OnNavigationItemS
             case R.id.nav_signout:
                 FirebaseAuth.getInstance().signOut();
                 break;
+            case R.id.search_food:
+                IntentUtils.invokeBaseView(context, SearchFoodActivity.class);
             default:
                 return false;
         }

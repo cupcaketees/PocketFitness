@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_food_row_layout"
     android:layout_width="match_parent"
 
     android:layout_height="wrap_content">
@@ -30,32 +31,16 @@
                 tools:text="category_text" />
 
             <TextView
-                android:id="@+id/search_food_row_category_header_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@string/search_food_row_category_header_text_view_text"
-                app:layout_constraintBaseline_toBaselineOf="@+id/search_food_row_category_value_text_view"
-                app:layout_constraintEnd_toStartOf="@+id/search_food_row_category_value_text_view" />
-
-            <TextView
-                android:id="@+id/search_food_row_label_header_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:text="@string/search_food_row_label_header_text_view"
-                android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="8dp" />
-
-            <TextView
                 android:id="@+id/search_food_row_label_value_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
                 android:layout_marginStart="8dp"
-                android:textSize="18sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/search_food_row_label_header_text_view"
-                app:layout_constraintStart_toEndOf="@+id/search_food_row_label_header_text_view"
+                android:layout_marginTop="32dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="label_value" />
 
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/search_food_layout"
     tools:context="uk.ac.tees.cupcake.food.SearchFoodActivity">
 
     <TextView
@@ -13,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/search_food_header_text_view"
-        android:textSize="24sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,6 +40,7 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="searchFood"
         android:text="@string/search_food_search_button_text"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="@+id/search_bar_edit_text"

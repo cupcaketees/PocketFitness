@@ -22,6 +22,7 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
@@ -139,7 +140,11 @@ public class ProfileFragment extends Fragment {
                         imgURLS.add(post.getImage());
 
 
+
                     }
+
+                    Collections.reverse(imgURLS);
+
                     GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.create_post_layout_gridview, "",imgURLS);
 
                     gridView.setAdapter(adapter);

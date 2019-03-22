@@ -9,25 +9,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.adapters.GridImageAdapter;
+import uk.ac.tees.cupcake.feed.Post;
+import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
 
+    private static final int NUM_GRID_COLUMNS = 4;
 
     private FirebaseAuth mAuth;
     private View rootView;
+    String currentUserUid;
+
 
     @Nullable
     @Override
@@ -36,6 +47,7 @@ public class ProfileFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_profile_page, container, false);
         mAuth = FirebaseAuth.getInstance();
 
+        currentUserUid = mAuth.getCurrentUser().getUid();
         Button editProfile = rootView.findViewById(R.id.profile_edit_profile_button);
         
 
@@ -50,7 +62,7 @@ public class ProfileFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        String currentUserUid = mAuth.getCurrentUser().getUid();
+
 
         FirebaseFirestore.getInstance()
                 .collection("Users")
@@ -61,6 +73,7 @@ public class ProfileFragment extends Fragment {
                         Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         return;
                     }
+
 
                     if (documentSnapshot.exists()) {
                         TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
@@ -90,6 +103,25 @@ public class ProfileFragment extends Fragment {
                         dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
                     }
                 });
+    }
+
+
+    private void  setupGridView() {
+
+        final ArrayList<Post> post = new ArrayList<>();
+        GridView gridView =  rootView.findViewById(R.id.gridProfileView);
+
+        int gridWidth = getResources().getDisplayMetrics().widthPixels;
+        int imageWidth = gridWidth / NUM_GRID_COLUMNS;
+        gridView.setColumnWidth(imageWidth);
+
+        ArrayList<String> imgUrls = new ArrayList<>();
+        for(int i = 0; i < post.size(); i++) {
+            imgUrls.add(post.get(i).getImage());
+        }
+        GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.create_post_layout_gridview, "",imgUrls);
+
+        gridView.setAdapter(adapter);
     }
 
 }

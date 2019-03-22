@@ -48,7 +48,7 @@
             android:layout_weight="40"
             android:verticalSpacing="1.5dp"
             android:horizontalSpacing="1.5dp"
-            android:numColumns="3"
+            android:numColumns="4"
             android:stretchMode="none"
             android:gravity="center"
             android:layout_marginTop="1dp"

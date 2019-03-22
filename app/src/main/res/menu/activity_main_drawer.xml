@@ -24,6 +24,12 @@
             android:id="@+id/nav_workout_videos"
             android:icon="@drawable/ic_workout_videos"
             android:title="Workout videos" />
+
+        <item
+            android:id="@+id/news_list_view"
+            android:icon="@drawable/ic_workout_videos"
+            android:title="News Articles" />
+
         <item
             android:id="@+id/nav_bodybuilding"
             android:icon="@drawable/ic_menu_slideshow"

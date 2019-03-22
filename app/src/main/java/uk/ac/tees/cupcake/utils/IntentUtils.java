@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
+import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class IntentUtils {
         context.startActivity(intent);
     }
 
-    
+
     public static void invokeBaseView(Context context, Class<?> selectedClass) {
         Intent intent = new Intent(context, selectedClass);
         context.startActivity(intent);
@@ -52,7 +53,15 @@ public class IntentUtils {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
-    
+
+    public static void invokeToURL(Context context,String url) {
+        Intent browserIntent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(url));
+
+        context.startActivity(browserIntent);
+    }
+
     /**
      * Invoke a view with extra data to pass to the invoked view.
      *

@@ -17,9 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
+
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.food.SearchFoodActivity;
 import uk.ac.tees.cupcake.dietplan.DietActivity;
+import uk.ac.tees.cupcake.healthnews.NewsActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
@@ -48,7 +50,9 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         NAV_BAR_ACTIONS.put(R.id.nav_workout_videos, new StartIntentNavigationItemAction(VideoListActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_bodybuilding, new StartIntentNavigationItemAction(BodybuildingListActivity.class));
-        
+
+        NAV_BAR_ACTIONS.put(R.id.news_list_view, new StartIntentNavigationItemAction(NewsActivity.class));
+
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_30diet, new StartIntentNavigationItemAction(DietActivity.class));
@@ -70,16 +74,16 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         
         addNavigationView();
-    
+
         stub.setLayoutResource(layoutResource());
         stub.inflate();
-        
+
         setup();
     }
     
     @LayoutRes
     protected abstract int layoutResource();
-    
+
     /**
      * Sets up and adds the navigation view.
      */

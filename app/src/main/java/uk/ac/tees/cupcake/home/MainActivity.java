@@ -26,7 +26,10 @@ import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
+import uk.ac.tees.cupcake.posts.PostActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
+import uk.ac.tees.cupcake.utils.PermissionCheck;
+import uk.ac.tees.cupcake.utils.Permissions;
 
 /**
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
@@ -89,10 +92,10 @@ public class MainActivity extends NavigationBarActivity {
 
     @Override
     public void setup() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.BODY_SENSORS}, 0);
+        if (PermissionCheck.checkPermissionsList(Permissions.PERMISSIONS, getApplicationContext())) {
+            PermissionCheck.verifyPermissions(Permissions.PERMISSIONS, MainActivity.this);
         }
-        
+
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment())));

@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.posts.PostActivity;
+import uk.ac.tees.cupcake.utils.PermissionCheck;
+import uk.ac.tees.cupcake.utils.Permissions;
 
 /**
  * Created by HugoT on 13/02/2019.
@@ -24,7 +27,8 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
-        
+
+
         //Replace with brads login page will need verification if logged in
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

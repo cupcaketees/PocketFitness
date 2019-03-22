@@ -25,11 +25,6 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_create);
         mViewPager = findViewById(R.id.container);
-        if (PermissionCheck.checkPermissionsList(Permissions.PERMISSIONS, getApplicationContext())) {
-            setupFragments();
-        } else {
-            PermissionCheck.verifyPermissions(Permissions.PERMISSIONS, PostActivity.this);
-        }
 
         setupFragments();
 

@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Posts" />
         <item
+            android:id="@+id/nav_30diet"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="30 Day Diet" />
+        <item
             android:id="@+id/nav_search_food"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Search Food" />

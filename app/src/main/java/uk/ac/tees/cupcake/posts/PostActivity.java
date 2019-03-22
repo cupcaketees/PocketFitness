@@ -17,11 +17,7 @@ import uk.ac.tees.cupcake.utils.Permissions;
 
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "PostActivity";
-    private static final int ACTIVITY_NUM = 2;
     private ViewPager mViewPager;
-    private DrawerLayout mLayout;
-
-    private static final int VERIFY_PERMISSIONS_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +33,6 @@ public class PostActivity extends AppCompatActivity {
 
         setupFragments();
 
-        mLayout = findViewById(R.id.drawer_layout);
     }
 
     /**

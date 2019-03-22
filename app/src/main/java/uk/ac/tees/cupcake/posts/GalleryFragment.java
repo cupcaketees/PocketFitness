@@ -44,7 +44,7 @@ public class GalleryFragment extends Fragment {
     private Spinner dirSpinner;
     private View view;
 
-    private static final int NUM_GRID_COLUMNS = 3;
+    private static final int NUM_GRID_COLUMNS = 4;
     private String mAppend = "file:/";
 
     @Nullable

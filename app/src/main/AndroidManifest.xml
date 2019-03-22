@@ -69,9 +69,6 @@
             android:name=".account.VerifyEmailActivity"
             android:parentActivityName=".account.AccountSettingsActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-        <activity
-            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".account.EditProfileActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".posts.PostActivity" />
@@ -79,5 +76,6 @@
         <activity android:name=".account.SetupProfileActivity" />
         <activity android:name=".home.health.SaveHeartRateActivity" />
         <activity android:name=".home.MainActivity" />
+        <activity android:name=".healthnews.NewsActivity" />
     </application>
 </manifest>

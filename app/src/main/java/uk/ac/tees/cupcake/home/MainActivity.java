@@ -79,7 +79,7 @@ public class MainActivity extends NavigationBarActivity {
     @Override
     public void onBack() {
         if (viewPager.getCurrentItem() == 0) {
-            super.onBackPressed();
+            super.onBack();
         } else {
             viewPager.setCurrentItem(0);
         }

@@ -8,6 +8,7 @@ public class NewsArticle {
     private String articleDesc;
     private int articleImage;
     private String articleDate;
+    private String articleURL;
 
     /**
      * All the parameters a News Article will require.
@@ -17,11 +18,20 @@ public class NewsArticle {
      * @param articleImage - Article image
      * @param articleDate - Article date
      */
-    public NewsArticle(String articleName, String articleDesc, int articleImage, String articleDate) {
+    public NewsArticle(String articleName, String articleDesc, int articleImage, String articleDate, String articleURL) {
         this.articleName = articleName;
         this.articleDesc = articleDesc;
         this.articleImage = articleImage;
         this.articleDate = articleDate;
+        this.articleURL = articleURL;
+    }
+
+    public String getArticleURL() {
+        return articleURL;
+    }
+
+    public void setArticleURL(String articleURL) {
+        this.articleURL = articleURL;
     }
 
     public int getArticleImage() {

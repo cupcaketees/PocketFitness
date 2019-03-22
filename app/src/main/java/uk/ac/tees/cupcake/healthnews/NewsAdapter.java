@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
@@ -32,6 +33,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.articleName.setText(mNewsArticle.get(position).getArticleName());
         holder.articleImage.setImageResource(mNewsArticle.get(position).getArticleImage());
         holder.articleDate.setText(mNewsArticle.get(position).getArticleDate());
+
+
+        holder.itemView.setOnClickListener(v -> IntentUtils.invokeToURL(mContext, mNewsArticle.get(position).getArticleURL()));
+
+
     }
 
     @Override

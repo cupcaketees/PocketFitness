@@ -15,13 +15,16 @@ import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
  */
 
 public class DietActivity extends NavigationBarActivity {
+
     private static final String TAG = "DietActivity";
 
     @Override
-    public void setup() {
+    protected int layoutResource() {
+        return R.layout.activity_video_list;
+    }
 
-        stub.setLayoutResource(R.layout.activity_video_list);
-        stub.inflate();
+    @Override
+    public void setup() {
         setupDays();
     }
 

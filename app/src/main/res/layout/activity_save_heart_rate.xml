@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <uk.ac.tees.cupcake.sensors.HeartRateTypeConstraintView
+            <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
                 android:id="@+id/general_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <uk.ac.tees.cupcake.sensors.HeartRateTypeConstraintView
+            <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
                 android:id="@+id/resting_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,7 +103,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <uk.ac.tees.cupcake.sensors.HeartRateTypeConstraintView
+            <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
                 android:id="@+id/after_exercise_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -114,7 +114,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <uk.ac.tees.cupcake.sensors.HeartRateTypeConstraintView
+            <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
                 android:id="@+id/before_exercise_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

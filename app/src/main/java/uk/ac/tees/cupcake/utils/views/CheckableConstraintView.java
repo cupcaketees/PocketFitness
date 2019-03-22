@@ -59,7 +59,7 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
             if (checked && getParent() instanceof CheckableLinearViewGroup) {
                 CheckableLinearViewGroup parent = (CheckableLinearViewGroup) getParent();
         
-                parent.checked(getId());
+                parent.childClicked(getId());
             }
         }
     }

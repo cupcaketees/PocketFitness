@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.navigation;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
-
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.food.SearchFoodActivity;
 import uk.ac.tees.cupcake.dietplan.DietActivity;
@@ -67,8 +67,15 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         
         addNavigationView();
+    
+        stub.setLayoutResource(layoutResource());
+        stub.inflate();
+        
         setup();
     }
+    
+    @LayoutRes
+    protected abstract int layoutResource();
     
     /**
      * Sets up and adds the navigation view.

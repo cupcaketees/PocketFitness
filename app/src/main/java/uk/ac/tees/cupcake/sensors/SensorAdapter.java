@@ -5,6 +5,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public final class SensorAdapter {
     
-    private final Activity activity;
+    private final Context context;
     
     private final int[] sensorTypes;
     
@@ -25,19 +26,13 @@ public final class SensorAdapter {
     
     private SensorManager sensorManager;
     
-    public SensorAdapter(Activity activity, int...sensorTypes) {
-        this.activity = activity;
+    public SensorAdapter(Context context, int...sensorTypes) {
+        this.context = context;
         this.sensorTypes = sensorTypes;
     }
     
-    public final void onCreate() {
-        if (!setupSensors()) {
-            activity.finish();
-        }
-    }
-    
-    private boolean setupSensors() {
-        if ((sensorManager = (SensorManager) activity.getSystemService(Context.SENSOR_SERVICE)) == null) {
+    public boolean setupSensors() {
+        if ((sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE)) == null) {
             throw new RuntimeException("No sensor service");
         }
         

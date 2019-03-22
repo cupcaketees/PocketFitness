@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.sensors;
+package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -16,7 +16,7 @@ import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
  */
 public class HeartRateTypeConstraintView extends CheckableConstraintView {
     
-    private CardView cardView;
+    private CircleImageView imageView;
     
     private final OnCheckedListener checkedListener = new HeartRateTypeCheckedListener();
     
@@ -24,7 +24,8 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
     
         @Override
         public void onChecked(boolean isChecked) {
-            cardView.setCardBackgroundColor(isChecked ? 0xFFB7B7B7 : 0xFFE7E7E7);
+            imageView.setCircleBackgroundColor(isChecked ? 0x20FF0000 : 0x00000000);
+            imageView.setBorderColor(isChecked ? 0x50FF0000 : 0x00000000);
         }
     }
     
@@ -44,13 +45,12 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
     public void inflateView() {
         View root = inflate(getContext(), R.layout.heart_rate_measurement_type_layout, this);
         root.setClickable(true);
-        
-        cardView = root.findViewById(R.id.measurement_type_card);
+    
+        imageView = findViewById(R.id.measurement_type_image);
     }
     
     private void applyAttributes(AttributeSet attrs) {
         TextView label = findViewById(R.id.measurement_type_label);
-        CircleImageView imageView = findViewById(R.id.measurement_type_image);
         
         TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.HeartRateTypeConstraintViewAttrs, 0, 0);
     

@@ -5,7 +5,9 @@ import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,12 +22,10 @@ public class CheckableLinearViewGroup extends LinearLayout {
      */
     private final Map<Integer, Checkable> checkableViews = new HashMap<>();
     
-    private int checkedChild;
-    
     /**
      * This is invoked upon one of the child checkableViews being checked.
      */
-    private OnCheckStrategy onCheckStrategy;
+    private final List<OnCheckStrategy> onCheckStrategies = new ArrayList<>();
     
     public CheckableLinearViewGroup(Context context) {
         super(context);
@@ -35,21 +35,57 @@ public class CheckableLinearViewGroup extends LinearLayout {
         super(context, attrs);
     }
     
-    public void setOnCheckStrategy(OnCheckStrategy onCheckStrategy) {
-        this.onCheckStrategy = onCheckStrategy;
+    public void addOnCheckStrategy(OnCheckStrategy onCheckStrategy) {
+        onCheckStrategies.add(onCheckStrategy);
     }
     
-    public void checked(int id) {
-        checkedChild = id;
-        onCheckStrategy.checked(id, this);
+    /**
+     * Called when one of the checkables have been clicked.
+     *
+     * @param id the id of the clicked checkable.
+     */
+    protected void childClicked(int id) {
+        for (OnCheckStrategy strategy : onCheckStrategies) {
+            strategy.checked(id, this);
+        }
+    }
+    
+    /**
+     * Sets the {@link Checkable} associated with the specified id to the specified checked value.
+     *
+     * @param id the id of the checkable view
+     * @param checked {@code true} if the checkable should be checked.
+     */
+    public void setChecked(int id, boolean checked) {
+        Checkable checkable = checkableViews.containsKey(id) ? checkableViews.get(id) : findViewById(id);
+        
+        if (checkable == null) {
+            throw new RuntimeException(id + " does not exist in this view group");
+        }
+        
+        checkable.setChecked(checked);
+        childClicked(id);
     }
     
     public Map<Integer, Checkable> getCheckableViews() {
         return checkableViews;
     }
     
-    public int getCheckedChild() {
-        return checkedChild;
+    /**
+     * Gets a list of the ids of checked children in this view.
+     *
+     * @return a list of resource ids.
+     */
+    public List<Integer> getChecked() {
+        List<Integer> checked = new ArrayList<>();
+        
+        for (Map.Entry<Integer, Checkable> entry : checkableViews.entrySet()) {
+            if (entry.getValue().isChecked()) {
+                checked.add(entry.getKey());
+            }
+        }
+        
+        return checked;
     }
 
     /**

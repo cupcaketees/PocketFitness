@@ -97,4 +97,6 @@
     <string name="search_food_row_category_header_text_view_text">Category</string>
     <string name="search_food_row_label_header_text_view">Name</string>
 
+    <string name="home_steps_label_text">steps</string>
+    <string name="home_steps_distance_label_text">miles</string>
 </resources>

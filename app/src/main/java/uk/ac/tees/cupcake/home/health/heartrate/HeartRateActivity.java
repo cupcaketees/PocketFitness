@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.home.health;
+package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -40,7 +40,7 @@ public class HeartRateActivity extends AppCompatActivity {
     
         eventListener = new HeartRateSensorEventListener(findViewById(R.id.heart_rate_view));
         
-        sensorAdapter.onCreate();
+        sensorAdapter.setupSensors();
     }
     
     @Override

@@ -16,10 +16,12 @@ import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 public class VideoListActivity extends NavigationBarActivity {
     
     @Override
+    protected int layoutResource() {
+        return R.layout.activity_video_list;
+    }
+    
+    @Override
     public void setup() {
-        stub.setLayoutResource(R.layout.activity_video_list);
-        stub.inflate();
-
         RecyclerView mRecyclerView = findViewById(R.id.myRecycleView);
         ArrayList<Video> mVideos = new ArrayList<>();
         mVideos.add(new Video("Warm up", "The warming up is a preparation for physical exertion or a performance by exercising or practising gently beforehand.",

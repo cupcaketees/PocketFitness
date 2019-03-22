@@ -80,6 +80,8 @@
         <activity android:name=".home.health.SaveHeartRateActivity" />
         <activity android:name=".home.MainActivity" />
         <activity android:name=".dietplan.DietActivity" />
-        <activity android:name=".dietplan.DietDetailsActivity" />
+        <activity android:name=".dietplan.DietDetailsActivity"
+            android:parentActivityName=".dietplan.DietActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />/>
     </application>
 </manifest>

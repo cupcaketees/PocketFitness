@@ -8,6 +8,12 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.DietListAdapter;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
+/**
+ * Diet Activity
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
+
 public class DietActivity extends NavigationBarActivity {
     private static final String TAG = "DietActivity";
 
@@ -19,6 +25,9 @@ public class DietActivity extends NavigationBarActivity {
         setupDays();
     }
 
+    /**
+     * Initialise Recycler View add diets to then be added.
+     */
     public void setupDays() {
         RecyclerView mRecyclerView = findViewById(R.id.myRecycleView);
         ArrayList<Diet> mDiets = new ArrayList<>();

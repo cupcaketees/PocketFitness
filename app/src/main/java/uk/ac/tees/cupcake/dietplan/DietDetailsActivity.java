@@ -1,31 +1,37 @@
 package uk.ac.tees.cupcake.dietplan;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
-public class DietDetailsActivity extends NavigationBarActivity {
+/**
+ * DietDetails Activity
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
+
+public class DietDetailsActivity extends AppCompatActivity {
     private static final String TAG = "DietDetailsActivity";
 
-    private DrawerLayout layout;
-
     @Override
-    public void setup() {
-        stub.setLayoutResource(R.layout.activity_food_description);
-        stub.inflate();
-
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_food_description);
+        setTitle("30 Day Diet");
         populateView();
+
     }
 
+    /**
+     * Populate the view in the details page showing all Diet information.
+     */
     public void populateView() {
-
         Diet mDiets = getIntent().getParcelableExtra("DIET");
-
+        Log.d(TAG, "populateView: Stored Diet" + mDiets.toString());
         TextView mDay = findViewById(R.id.foodDay);
         TextView mStarter = findViewById(R.id.foodStarter);
         TextView mStarterDesc = findViewById(R.id.foodStarterDesc);

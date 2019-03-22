@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardCornerRadius="0dp"
+    android:layout_margin="7dp"
+    android:elevation="90dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
+
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/article_title"
+            android:text="Article title"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:paddingStart="5dp"
+            android:paddingBottom="0dp"
+            android:paddingEnd="5dp"
+            android:textSize="20sp"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/article_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/article_title"
+            android:layout_below="@+id/article_date"
+            android:paddingEnd="5dp"
+            android:layout_toStartOf="@+id/article_image"
+            android:paddingStart="5dp"
+            android:text="Description"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:drawablePadding="5dp"
+            android:id="@+id/article_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/article_title"
+            android:layout_below="@+id/article_title"
+            android:paddingEnd="5dp"
+            android:layout_toStartOf="@+id/post_image"
+            android:paddingStart="5dp"
+            android:text="Date:  "
+            android:paddingTop="0dp"
+            android:textSize="12sp"
+            android:textColor="#000000"/>
+
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="10dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_no_image" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

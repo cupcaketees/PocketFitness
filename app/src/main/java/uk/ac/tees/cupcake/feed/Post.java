@@ -13,7 +13,7 @@ public class Post  {
     private String username;
 
     private String image;
-    
+
     private String description;
 
     private String date;
@@ -46,7 +46,7 @@ public class Post  {
 
     public String getDate() { return date; }
 
-    
+
     /**
      * Temporary function to generate feed data.
      */

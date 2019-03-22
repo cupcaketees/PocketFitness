@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
@@ -101,27 +102,50 @@ public class ProfileFragment extends Fragment {
                         profileNameTextView.setText(userProfile.getFirstName() + " " + userProfile.getLastName());
                         emailAddressTextView.setText(mAuth.getCurrentUser().getEmail());
                         dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
+
                     }
                 });
+        setupGridView();
+
     }
 
 
     private void  setupGridView() {
 
-        final ArrayList<Post> post = new ArrayList<>();
-        GridView gridView =  rootView.findViewById(R.id.gridProfileView);
 
-        int gridWidth = getResources().getDisplayMetrics().widthPixels;
-        int imageWidth = gridWidth / NUM_GRID_COLUMNS;
-        gridView.setColumnWidth(imageWidth);
 
-        ArrayList<String> imgUrls = new ArrayList<>();
-        for(int i = 0; i < post.size(); i++) {
-            imgUrls.add(post.get(i).getImage());
-        }
-        GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.create_post_layout_gridview, "",imgUrls);
+        ArrayList<Post> list = new ArrayList<>();
 
-        gridView.setAdapter(adapter);
+        ArrayList<String> imgURLS = new ArrayList<>();
+
+        FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(currentUserUid)
+                .collection("User Posts")
+                //.orderBy("Date", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(documentSnapshots -> {
+
+                    GridView gridView =  rootView.findViewById(R.id.gridProfileView);
+                    int gridWidth = getResources().getDisplayMetrics().widthPixels;
+                    int imageWidth = gridWidth / NUM_GRID_COLUMNS;
+                    gridView.setColumnWidth(imageWidth);
+
+                    for(DocumentSnapshot imageSnapshots : documentSnapshots){
+                        Post post = imageSnapshots.toObject(Post.class);
+                        System.out.println(post.getDate());
+                        System.out.println(post.getDescription());
+                        list.add(post);
+                        imgURLS.add(post.getImage());
+
+
+                    }
+                    GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.create_post_layout_gridview, "",imgURLS);
+
+                    gridView.setAdapter(adapter);
+                });
+
+
     }
 
 }

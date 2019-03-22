@@ -27,6 +27,7 @@ public class DietActivity extends NavigationBarActivity {
 
     /**
      * Initialise Recycler View add diets to then be added.
+     * Uses {@link Diet} to store all necessary information for daily diet.
      */
     public void setupDays() {
         RecyclerView mRecyclerView = findViewById(R.id.myRecycleView);

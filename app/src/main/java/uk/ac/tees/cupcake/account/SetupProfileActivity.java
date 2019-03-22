@@ -52,7 +52,6 @@ public class SetupProfileActivity extends AppCompatActivity {
         mProfilePictureImageView = findViewById(R.id.setup_profile_profile_picture_image_view);
         mFirstNameEditText = findViewById(R.id.setup_profile_first_name_edit_text);
         mLastNameEditText = findViewById(R.id.setup_profile_last_name_edit_text);
-
     }
 
     public void addPhotoOnClick(View view){
@@ -107,7 +106,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
 
-        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl,date);
+        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
 
         mFireStore.collection("Users")
                   .document(mAuth.getCurrentUser().getUid())

@@ -8,13 +8,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
+
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.feed.Post;
 
 /**
  * Profile Page Activity
@@ -23,7 +28,7 @@ import uk.ac.tees.cupcake.R;
 public class ProfilePageActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private ListenerRegistration mProfilePageListener;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +36,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
         setTitle("Profile");
         mAuth = FirebaseAuth.getInstance();
+
     }
 
     /**
@@ -77,6 +83,22 @@ public class ProfilePageActivity extends AppCompatActivity {
                                  profileNameTextView.setText(userProfile.getFirstName() + " " + userProfile.getLastName());
                                  emailAddressTextView.setText(mAuth.getCurrentUser().getEmail());
                                  dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
+                             }
+                         });
+        ArrayList<Post> list = new ArrayList<>();
+
+        FirebaseFirestore.getInstance()
+                         .collection("Users")
+                         .document(currentUserUid)
+                         .collection("User Posts")
+                         //.orderBy("Date", Query.Direction.DESCENDING)
+                         .get()
+                         .addOnSuccessListener(documentSnapshots -> {
+                            for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                                 Post post = documentSnapshot.toObject(Post.class);
+                                 System.out.println(post.getDate());
+                                 System.out.println(post.getDescription());
+                                 list.add(post);
                              }
                          });
     }

@@ -56,7 +56,7 @@
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/search_food_row_category_header_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/bpm_label"

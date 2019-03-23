@@ -92,10 +92,10 @@ public class MainActivity extends NavigationBarActivity {
 
     @Override
     public void setup() {
-        if (PermissionCheck.checkPermissionsList(Permissions.PERMISSIONS, getApplicationContext())) {
+        if (!PermissionCheck.checkPermissionsList(Permissions.PERMISSIONS, getApplicationContext())) {
             PermissionCheck.verifyPermissions(Permissions.PERMISSIONS, MainActivity.this);
-        }
 
+        }
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),
                 Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment())));

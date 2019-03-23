@@ -3,7 +3,6 @@ package uk.ac.tees.cupcake.utils.views;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
-import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -12,6 +11,8 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.List;
+
+import uk.ac.tees.cupcake.utils.ColourUtility;
 
 /**
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
@@ -22,7 +23,7 @@ public class GraphViewUtility {
     
     public static void setupLineChart(LineChart chart) {
         chart.getDescription().setEnabled(false);
-        chart.setTouchEnabled(true);
+        chart.setTouchEnabled(false);
         chart.setPinchZoom(true);
         
         chart.getAxisRight().setEnabled(false);
@@ -41,17 +42,16 @@ public class GraphViewUtility {
         chart.getAxisLeft().setDrawGridLines(false);
     }
     
-    public static void setChartData(LineChart chart, String colour, List<Entry> data) {
+    public static void setChartData(LineChart chart, int colour, List<Entry> data) {
         chart.getAxisLeft().removeAllLimitLines();
         
-        //bit of bit manipulation to add alpha component to the colour
-        int[] colours = {(GRADIENT_START_ALPHA << 24) | (Color.parseColor(colour) & 0x00FFFFFF), Color.TRANSPARENT};
+        int[] colours = {ColourUtility.setAlpha(GRADIENT_START_ALPHA, colour), Color.TRANSPARENT};
         
         GradientDrawable gd = new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM, colours);
         
         LineDataSet dataSet = new LineDataSet(data, "");
         dataSet.setFillDrawable(gd);
-        dataSet.setColor(Color.parseColor(colour));
+        dataSet.setColor(colour);
         
         dataSet.setDrawCircles(false);
         dataSet.setDrawValues(true);
@@ -60,10 +60,14 @@ public class GraphViewUtility {
         
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
-        LimitLine limitLine = new LimitLine(dataSet.getYMax());
-        limitLine.setLabel("Highest Measurement " + dataSet.getYMax());
+        LimitLine maxLine = new LimitLine(dataSet.getYMax());
+        maxLine.setLabel("Max " + (int) dataSet.getYMax());
+    
+        LimitLine minLine = new LimitLine(dataSet.getYMin());
+        minLine.setLabel("Min " + (int) dataSet.getYMin());
         
-        chart.getAxisLeft().addLimitLine(limitLine);
+        chart.getAxisLeft().addLimitLine(maxLine);
+        chart.getAxisLeft().addLimitLine(minLine);
         chart.invalidate();
     }
     

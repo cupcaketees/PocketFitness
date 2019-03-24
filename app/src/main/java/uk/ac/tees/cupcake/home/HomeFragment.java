@@ -34,6 +34,7 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
 import uk.ac.tees.cupcake.sensors.SensorAdapter;
 import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public final class HomeFragment extends OnChangeFragment {
     
@@ -73,14 +74,15 @@ public final class HomeFragment extends OnChangeFragment {
     public void onStart() {
         super.onStart();
     
+        getStepsData(barChart);
+        getHeartData(lastMeasurement, lastMeasurementType, lastMeasurementDate);
+    
         SensorAdapter sensorAdapter = new SensorAdapter(getContext(), Sensor.TYPE_STEP_COUNTER);
         if (!sensorAdapter.setupSensors()) {
             Toast.makeText(getContext(), "Failed to setup sensors", Toast.LENGTH_SHORT).show();
+        } else {
+            sensorAdapter.registerListener(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_STEP_COUNTER, new StepCounterSensorListener(stepsCard));
         }
-        sensorAdapter.registerListener(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_STEP_COUNTER, new StepCounterSensorListener(stepsCard));
-        
-        getStepsData(barChart);
-        getHeartData(lastMeasurement, lastMeasurementType, lastMeasurementDate);
     }
     
     @Override

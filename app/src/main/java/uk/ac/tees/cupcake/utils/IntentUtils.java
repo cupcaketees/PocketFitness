@@ -45,6 +45,7 @@ public class IntentUtils {
 
     public static void invokeBaseView(Context context, Class<?> selectedClass) {
         Intent intent = new Intent(context, selectedClass);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
         context.startActivity(intent);
     }
 

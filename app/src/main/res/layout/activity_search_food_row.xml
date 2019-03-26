@@ -26,22 +26,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="category_text" />
 
             <TextView
                 android:id="@+id/search_food_row_label_value_text_view"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="32dp"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/search_food_row_category_value_text_view"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="label_value" />
+
+            <TextView
+                android:id="@+id/seach_food_row_nutrition_label_left_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_food_row_label_value_text_view"
+                tools:text="nutrition_left" />
+
+            <TextView
+                android:id="@+id/seach_food_row_nutrition_label_right_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/seach_food_row_nutrition_label_left_text_view"
+                app:layout_constraintStart_toEndOf="@+id/seach_food_row_nutrition_label_left_text_view"
+                tools:text="nutrition_right" />
 
 
         </android.support.constraint.ConstraintLayout>

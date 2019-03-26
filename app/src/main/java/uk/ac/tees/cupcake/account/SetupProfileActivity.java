@@ -37,7 +37,6 @@ public class SetupProfileActivity extends AppCompatActivity {
     private FirebaseStorage mStorage;
     private FirebaseFirestore mFireStore;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

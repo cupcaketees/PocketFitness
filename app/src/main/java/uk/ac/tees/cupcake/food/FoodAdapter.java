@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.Map;
+
 import uk.ac.tees.cupcake.R;
 
 /**
@@ -34,6 +36,24 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         Food food = foods.get(position);
         holder.mFoodLabel.setText(food.getLabel());
         holder.mFoodCategory.setText(food.getCategory());
+        setNutritionalValuesText(food.getNutritionalValues(), holder.mFoodNutritionLeft, holder.mFoodNutritionRight);
+    }
+
+    private void setNutritionalValuesText(Map<String, Double> nutritionalValues, TextView column1, TextView column2) {
+        StringBuilder columnText1 = new StringBuilder();
+        StringBuilder columnText2 = new StringBuilder();
+
+        int index = 0;
+        for (Map.Entry<String, Double> entry : nutritionalValues.entrySet()) {
+            String readableLabel = Food.getReadableLabel(entry.getKey());
+            (index++ % 2 == 0 ? columnText1 : columnText2)
+                    .append("\n")
+                    .append(readableLabel)
+                    .append(":  ")
+                    .append(String.format("%.2f", entry.getValue()));
+        }
+        column1.setText(columnText1);
+        column2.setText(columnText2);
     }
 
     @Override
@@ -43,13 +63,17 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView mFoodLabel;
-        public TextView mFoodCategory;
+        private TextView mFoodLabel;
+        private TextView mFoodCategory;
+        private TextView mFoodNutritionLeft;
+        private TextView mFoodNutritionRight;
 
         public ViewHolder(View itemView) {
             super(itemView);
             mFoodLabel = itemView.findViewById(R.id.search_food_row_label_value_text_view);
             mFoodCategory = itemView.findViewById(R.id.search_food_row_category_value_text_view);
+            mFoodNutritionLeft = itemView.findViewById(R.id.seach_food_row_nutrition_label_left_text_view);
+            mFoodNutritionRight = itemView.findViewById(R.id.seach_food_row_nutrition_label_right_text_view);
         }
     }
 }

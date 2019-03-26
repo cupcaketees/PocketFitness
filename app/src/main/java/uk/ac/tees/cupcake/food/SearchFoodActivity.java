@@ -66,6 +66,11 @@ public class SearchFoodActivity extends AppCompatActivity {
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
                 foods = Food.fromJSONObject(response);
+
+                if(foods.isEmpty()){
+                    Toast.makeText(SearchFoodActivity.this, "No search results found", Toast.LENGTH_SHORT).show();
+                }
+
                 mRecyclerView.setAdapter(new FoodAdapter(foods));
             }, error -> Toast.makeText(SearchFoodActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show());
 

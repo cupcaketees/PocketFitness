@@ -63,8 +63,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        public TextView mFoodLabel;
-        public TextView mFoodCategory;
+        private TextView mFoodLabel;
+        private TextView mFoodCategory;
         private TextView mFoodNutritionLeft;
         private TextView mFoodNutritionRight;
 

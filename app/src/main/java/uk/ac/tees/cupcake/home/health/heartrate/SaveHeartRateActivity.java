@@ -1,9 +1,11 @@
 package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -29,17 +31,53 @@ import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;
 import uk.ac.tees.cupcake.utils.views.GraphViewUtility;
 import uk.ac.tees.cupcake.utils.views.OneSelectedOnCheckStrategy;
 
+/**
+ * On this view the user is given the choice to save the taken heart rate measurement.
+ *
+ * @author Sam-Hammersley <q5315908@tees.ac.uk>
+ */
 public final class SaveHeartRateActivity extends AppCompatActivity {
     
+    /**
+     * Firestore database interface.
+     */
     private FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     
+    /**
+     * Firebase authentication system interface.
+     */
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     
+    /**
+     * The view group containing checkable heart rate measurement types.
+     */
     private CheckableLinearViewGroup measurementTypes;
     
+    /**
+     * A linechart to graph previous measurements.
+     */
     private LineChart graph;
-
+    
+    /**
+     * Stores data retrieved from the database; mapping a measurement type name to a set of data.
+     */
     private final Map<String, List<Entry>> cachedGraphingData = new HashMap<>();
+    
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.save_heart_rate_action_bar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.heart_rate_action_bar_save) {
+            saveMeasurement();
+            return true;
+        }
+        
+        return super.onOptionsItemSelected(item);
+    }
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +117,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         String averageValue = Integer.toString(Math.round(average / entries.size()));
         graphText.setText(averageValue);
     
-        GraphViewUtility.setChartData(graph, "#FF0000", entries);
+        GraphViewUtility.setChartData(graph, Color.RED, entries);
         
         Animation fadeIn = new AlphaAnimation(0, 1);
         fadeIn.setDuration(1000);
@@ -117,9 +155,8 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     
     /**
      * Invoked upon pressing the save button.
-     * @param view
      */
-    public void saveMeasurement(View view) {
+    public void saveMeasurement() {
         Intent intent = getIntent();
         HeartRateMeasurement measurement = (HeartRateMeasurement) intent.getSerializableExtra("heart_rate_measurement");
         
@@ -137,12 +174,4 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
                 .addOnFailureListener(doc -> Toast.makeText(SaveHeartRateActivity.this, doc.getMessage(), Toast.LENGTH_SHORT).show());
     }
     
-    /**
-     * Invoked upon pressing the cancel button.
-     * @param view
-     */
-    public void cancelMeasurement(View view) {
-        IntentUtils.invokeBaseView(SaveHeartRateActivity.this, MainActivity.class);
-        finish();
-    }
 }

@@ -3,6 +3,7 @@ package uk.ac.tees.cupcake.home.health.heartrate;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -38,9 +39,18 @@ public class HeartRateActivity extends AppCompatActivity {
         TextView heartRateAverage = findViewById(R.id.heart_rate_text);
         heartRateAverage.setText(getString(R.string.heart_rate_text, 0));
     
-        eventListener = new HeartRateSensorEventListener(findViewById(R.id.heart_rate_view));
+        eventListener = new HeartRateSensorEventListener(this);
         
         sensorAdapter.setupSensors();
+    }
+    
+    public void registerSensor(int delay, int sensorType, SensorEventListener eventListener) {
+        sensorAdapter.addSensor(sensorType);
+        sensorAdapter.registerListener(delay, sensorType, eventListener);
+    }
+    
+    public void deregisterSensor(int sensorType, SensorEventListener eventListener) {
+        sensorAdapter.unregisterListener(sensorType, eventListener);
     }
     
     @Override
@@ -48,7 +58,7 @@ public class HeartRateActivity extends AppCompatActivity {
         super.onPause();
     
         eventListener.clearMeasurements();
-        sensorAdapter.unregisterListener(Sensor.TYPE_HEART_RATE, eventListener);
+        deregisterSensor(Sensor.TYPE_HEART_RATE, eventListener);
     }
     
     @Override
@@ -56,7 +66,7 @@ public class HeartRateActivity extends AppCompatActivity {
         super.onResume();
     
         eventListener.clearMeasurements();
-        sensorAdapter.registerListener(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_HEART_RATE, eventListener);
+        registerSensor(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_HEART_RATE, eventListener);
     }
     
 }

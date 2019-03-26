@@ -2,32 +2,33 @@ package uk.ac.tees.cupcake.home.health.heartrate;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v7.widget.CardView;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TextView;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.utils.ColourUtility;
 import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
 
 /**
+ * An implementation of {@link CheckableConstraintView} specifically for heart rate measurement selection.
+ *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
 public class HeartRateTypeConstraintView extends CheckableConstraintView {
     
+    /**
+     * The {@CircleImageView} part of the layout.
+     */
     private CircleImageView imageView;
     
+    /**
+     * A reference of {@link CheckableConstraintView.OnCheckedListener} called when this view is checked.
+     */
     private final OnCheckedListener checkedListener = new HeartRateTypeCheckedListener();
-    
-    final class HeartRateTypeCheckedListener implements OnCheckedListener {
-    
-        @Override
-        public void onChecked(boolean isChecked) {
-            imageView.setCircleBackgroundColor(isChecked ? 0x20FF0000 : 0x00000000);
-            imageView.setBorderColor(isChecked ? 0x50FF0000 : 0x00000000);
-        }
-    }
     
     public HeartRateTypeConstraintView(Context context) {
         super(context);
@@ -47,8 +48,14 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
         root.setClickable(true);
     
         imageView = findViewById(R.id.measurement_type_image);
+        imageView.setCircleBackgroundColor(0xFFD0D0D0);
     }
     
+    /**
+     * Gets the attributes specified in the layout and applies them to the components of this view.
+     *
+     * @param attrs attribute set containing the attributes
+     */
     private void applyAttributes(AttributeSet attrs) {
         TextView label = findViewById(R.id.measurement_type_label);
         
@@ -59,6 +66,28 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
             imageView.setImageDrawable(a.getDrawable(R.styleable.HeartRateTypeConstraintViewAttrs_image_src));
         } finally {
             a.recycle();
+        }
+    }
+    
+    /**
+     * An {@link CheckableConstraintView.OnCheckedListener} specifically for {@link HeartRateTypeConstraintView}
+     * where the appropriate graphical changes are made upon checking/clicking the view.
+     */
+    private final class HeartRateTypeCheckedListener implements OnCheckedListener {
+        
+        @Override
+        public void onChecked(boolean isChecked) {
+            int colour = isChecked ?
+                    ColourUtility.setAlpha(0xF0, getResources().getColor(R.color.colorPrimary))
+                    : 0xFFD0D0D0;
+            
+            imageView.setCircleBackgroundColor(colour);
+            LayerDrawable d = (LayerDrawable) imageView.getBackground().mutate();
+            
+            for (int index = 0; index < 5; index++) {
+                int adjustedColour = ColourUtility.setAlpha((index + 1) * 0x10, colour);
+                ((GradientDrawable) d.getDrawable(index)).setColor(adjustedColour);
+            }
         }
     }
     

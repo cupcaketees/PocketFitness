@@ -71,6 +71,20 @@ public final class Food {
         }
     }
 
+    private static final Map<String, String> NUTRITIONAL_LABELS = new HashMap<>();
+
+    static {
+        NUTRITIONAL_LABELS.put("procnt", "protein");
+        NUTRITIONAL_LABELS.put("fat", "fat");
+        NUTRITIONAL_LABELS.put("fibtg", "fibre");
+        NUTRITIONAL_LABELS.put("enerc_kcal", "calories");
+        NUTRITIONAL_LABELS.put("chocdf", "carbohydrates");
+    }
+
+    public static String getReadableLabel(String tag) {
+        return NUTRITIONAL_LABELS.get(tag.toLowerCase());
+    }
+
     @Override
     public String toString() {
         return label + "" + nutritionalValues;

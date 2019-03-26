@@ -15,10 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +28,6 @@ import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.GridImageAdapter;
 import uk.ac.tees.cupcake.feed.Post;
-import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
@@ -81,7 +78,6 @@ public class ProfileFragment extends Fragment {
                         TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
                         CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
                         ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
-
 
                         UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
 
@@ -138,7 +134,5 @@ public class ProfileFragment extends Fragment {
 
                     gridView.setAdapter(adapter);
                 });
-
     }
-
 }

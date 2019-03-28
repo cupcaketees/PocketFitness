@@ -3,7 +3,6 @@ package uk.ac.tees.cupcake.posts;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,8 +11,6 @@ import java.util.Arrays;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
-import uk.ac.tees.cupcake.utils.PermissionCheck;
-import uk.ac.tees.cupcake.utils.Permissions;
 
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "PostActivity";

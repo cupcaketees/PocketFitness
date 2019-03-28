@@ -1,7 +1,5 @@
 package uk.ac.tees.cupcake.workouts;
 
-import android.content.Context;
-
 public class Bodypart {
 
     private String name;

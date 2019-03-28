@@ -24,6 +24,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <receiver
+            android:name=".home.uk.ac.tees.cupcake.home.steps.StepCounterReceiver"
+            android:enabled="true">
+
+        </receiver>
+
         <activity
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />

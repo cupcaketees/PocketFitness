@@ -1,11 +1,9 @@
 package uk.ac.tees.cupcake.sensors;
 
-import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.List;

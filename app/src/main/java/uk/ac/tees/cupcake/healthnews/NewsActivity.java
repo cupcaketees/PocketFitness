@@ -2,7 +2,9 @@ package uk.ac.tees.cupcake.healthnews;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import java.util.ArrayList;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 

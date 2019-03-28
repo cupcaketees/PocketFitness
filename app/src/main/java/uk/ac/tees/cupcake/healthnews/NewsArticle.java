@@ -1,7 +1,5 @@
 package uk.ac.tees.cupcake.healthnews;
 
-import java.util.Date;
-
 public class NewsArticle {
 
     private String articleName;

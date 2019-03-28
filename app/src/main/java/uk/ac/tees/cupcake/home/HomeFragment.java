@@ -5,7 +5,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,9 +31,9 @@ import java.util.List;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
+import uk.ac.tees.cupcake.home.uk.ac.tees.cupcake.home.steps.StepCountMeasurement;
 import uk.ac.tees.cupcake.sensors.SensorAdapter;
 import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
-import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public final class HomeFragment extends OnChangeFragment {
     

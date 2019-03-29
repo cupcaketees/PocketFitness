@@ -38,18 +38,20 @@ public class StepCounterSensorListener implements SensorEventListener {
     
     @Override
     public void onSensorChanged(SensorEvent event) {
-        int currentSteps = preferences.getInt("steps", 0);
+        int eventValue = (int) event.values[0];
+        int storedSteps = preferences.getInt("steps", 0);
+        int stepCount = storedSteps + (eventValue - storedSteps);
         
         if (!firstEvent) {
-            preferences.edit().putInt("steps", ++currentSteps).apply();
+            preferences.edit().putInt("steps", storedSteps + stepCount).apply();
         }
     
         firstEvent = false;
         
-        String stepsText = Integer.toString(currentSteps);
+        String stepsText = Integer.toString(stepCount);
         steps.setText(stepsText);
     
-        String dist = String.format("%.2f", currentSteps / STEPS_PER_MILE);
+        String dist = String.format("%.2f", stepCount / STEPS_PER_MILE);
         distance.setText(dist);
     }
     

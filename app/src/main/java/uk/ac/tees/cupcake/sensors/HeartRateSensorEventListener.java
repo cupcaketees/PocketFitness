@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
 import uk.ac.tees.cupcake.home.health.heartrate.SaveHeartRateActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
@@ -41,6 +42,8 @@ public class HeartRateSensorEventListener implements SensorEventListener {
     /**
      * The heart rate monitor view.
      */
+    private final HeartRateActivity heartRateActivity;
+    
     private final View heartRateView;
     
     private TextView bpm;
@@ -51,12 +54,13 @@ public class HeartRateSensorEventListener implements SensorEventListener {
     /**
      * Constructs a new {@link HeartRateSensorEventListener}
      */
-    public HeartRateSensorEventListener(View heartRateView) {
-        this.heartRateView = heartRateView;
-        this.bpm = heartRateView.findViewById(R.id.heart_rate_bpm);
-        this.label = heartRateView.findViewById(R.id.heart_rate_label);
-        this.heartRateText = heartRateView.findViewById(R.id.heart_rate_text);
-        this.pulseView = heartRateView.findViewById(R.id.pv);
+    public HeartRateSensorEventListener(HeartRateActivity heartRateActivity) {
+        this.heartRateActivity = heartRateActivity;
+        this.heartRateView = heartRateActivity.findViewById(R.id.heart_rate_view);
+        this.bpm = heartRateActivity.findViewById(R.id.heart_rate_bpm);
+        this.label = heartRateActivity.findViewById(R.id.heart_rate_label);
+        this.heartRateText = heartRateActivity.findViewById(R.id.heart_rate_text);
+        this.pulseView = heartRateActivity.findViewById(R.id.pv);
     }
     
     public void clearMeasurements() {
@@ -73,6 +77,8 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         return Math.round(totalBpm / measurements.size());
     }
     
+    private volatile boolean fingerOnSensor = true;
+    
     @Override
     public void onSensorChanged(SensorEvent event) {
         if (measurements.size() >= SAMPLE_SIZE) {
@@ -82,7 +88,15 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         
         float heartRate = event.values[0];
         
-        if (heartRate > 0) {
+        if (heartRate == 0) {
+            if (fingerOnSensor = !fingerOnSensor) {
+                label.setText(R.string.finger_on_sensor_message);
+                pulseView.startPulse();
+    
+            } else {
+                reset();
+            }
+        } else {
             measurements.add(heartRate);
         }
     }
@@ -90,28 +104,29 @@ public class HeartRateSensorEventListener implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         if (accuracy > SensorManager.SENSOR_STATUS_UNRELIABLE) {
-            label.setText(R.string.finger_on_sensor_message);
-            pulseView.startPulse();
-            
+            // start measuring
             heartRateView.postDelayed(measurementCallback, 0);
         } else {
-            heartRateView.removeCallbacks(measurementCallback);
-            label.setText(R.string.place_finger_on_sensor_message);
-            measurements.clear();
-            
-            ArcProgress progressBar = heartRateView.findViewById(R.id.arc_progress);
-            progressBar.setProgress(0);
-            
-            heartRateText.setText(heartRateView.getContext().getString(R.string.heart_rate_text, 0));
-            
-            int colour = heartRateView.getResources().getColor(R.color.heart_rate_empty);
-            bpm.setTextColor(colour);
-            heartRateText.setTextColor(colour);
-            
-            pulseView.finishPulse();
+            reset();
         }
     }
 
+    private void reset() {
+        heartRateView.removeCallbacks(measurementCallback);
+        pulseView.finishPulse();
+        measurements.clear();
+    
+        ArcProgress progressBar = heartRateView.findViewById(R.id.arc_progress);
+        progressBar.setProgress(0);
+    
+        heartRateText.setText(heartRateView.getContext().getString(R.string.heart_rate_text, 0));
+        label.setText(R.string.place_finger_on_sensor_message);
+        
+        int colour = heartRateView.getResources().getColor(R.color.heart_rate_empty);
+        bpm.setTextColor(colour);
+        heartRateText.setTextColor(colour);
+    }
+    
     private void finish() {
         heartRateView.removeCallbacks(measurementCallback);
         pulseView.finishPulse();

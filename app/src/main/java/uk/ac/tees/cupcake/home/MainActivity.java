@@ -1,13 +1,9 @@
 package uk.ac.tees.cupcake.home;
 
 import android.support.v4.view.GravityCompat;
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.widget.TextView;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,7 +22,6 @@ import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
-import uk.ac.tees.cupcake.posts.PostActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
@@ -41,7 +36,10 @@ public class MainActivity extends NavigationBarActivity {
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
 
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
+    
+    private final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+            Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment()));
+    
     /**
      * Sends user to login page if current user is null.
      * Sends user to setup profile if account does not exist in firestore collection.
@@ -97,8 +95,7 @@ public class MainActivity extends NavigationBarActivity {
 
         }
         viewPager = findViewById(R.id.view_pager);
-        viewPager.setAdapter(new SectionsPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment())));
+        viewPager.setAdapter(adapter);
         
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_bar);
         bottomNavigationView.setupWithViewPager(viewPager);
@@ -111,8 +108,17 @@ public class MainActivity extends NavigationBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        
         navigationView.getMenu().getItem(0).setChecked(true);
         drawerLayout.closeDrawer(GravityCompat.START);
+        viewPager.addOnPageChangeListener(adapter);
+    }
+    
+    @Override
+    protected void onPause() {
+        super.onPause();
+        
+        viewPager.removeOnPageChangeListener(adapter);
     }
     
     @Override

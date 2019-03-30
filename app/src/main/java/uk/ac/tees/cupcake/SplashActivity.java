@@ -6,8 +6,12 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.posts.PostActivity;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
 
@@ -28,10 +32,11 @@ public class SplashActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
 
-
-        //Replace with brads login page will need verification if logged in
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
+        } else {
+            IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class);
+        }
         
         SystemClock.sleep(1000);
         finish();

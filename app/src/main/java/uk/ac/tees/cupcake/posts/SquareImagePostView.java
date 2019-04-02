@@ -4,6 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
+
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ * Used for non static images.
+ */
 public class SquareImagePostView extends AppCompatImageView {
 
     public SquareImagePostView(Context context) {
@@ -18,6 +23,9 @@ public class SquareImagePostView extends AppCompatImageView {
         super(context, attribute, styleAttribute);
     }
 
+    /**
+     *The size you want each square to be.
+     */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);

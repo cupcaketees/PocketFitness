@@ -15,6 +15,10 @@ import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
 
+/**
+ *@author Hugo Tomas <s6006225@live.tees.ac.uk>
+ *Sets up the fragments for creating a post.
+ */
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "PostActivity";
     private ViewPager mViewPager;
@@ -37,6 +41,9 @@ public class PostActivity extends AppCompatActivity {
         return mViewPager.getCurrentItem();
     }
 
+    /**
+     * Creates a tab layout on the bottom that can navigate to the three fragments.
+     */
     private void setupFragments() {
         Log.d(TAG, "setupFragments: started");
 

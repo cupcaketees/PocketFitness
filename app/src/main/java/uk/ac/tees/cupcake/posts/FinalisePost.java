@@ -27,6 +27,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import uk.ac.tees.cupcake.R;
@@ -38,15 +42,15 @@ public class FinalisePost extends AppCompatActivity {
     private static final String TAG = "FinalisePost";
     private FirebaseFirestore firebaseFirestore;
     private StorageReference postImages;
-    private Bitmap bitmap;
     private String mCurrentUserId;
-    ImageView imageView;
-    EditText mText;
-    Context context;
-    String postPictureURL;
-    Intent intent;
-    ImageView backArrow;
-    TextView shareButton;
+    private ImageView imageView;
+    private EditText mText;
+    private Context context;
+    private String postPictureURL;
+    private Intent intent;
+    private ImageView backArrow;
+    private TextView shareButton;
+    private ProgressBar shareProgress;
 
     Uri uri;
 
@@ -65,6 +69,8 @@ public class FinalisePost extends AppCompatActivity {
         backArrow = findViewById(R.id.backArrow);
         intent = getIntent();
         mCurrentUserId = mAuth.getCurrentUser().getUid();
+        shareProgress = findViewById(R.id.shareProgressBar);
+
 
         imageView = findViewById(R.id.imageShare);
         defineImage();
@@ -74,70 +80,69 @@ public class FinalisePost extends AppCompatActivity {
     }
 
     private void initialise() {
-
         backArrow.setOnClickListener(v -> finish());
 
-        shareButton.setOnClickListener(v -> {
+        shareButton.setOnClickListener(v -> { setEnabled(false, View.VISIBLE); postImagesToStorage();
 
+        });
+    }
 
-            backArrow.setEnabled(false);
-            shareButton.setClickable(false);
-            mText.setClickable(false);
+    private void postImagesToStorage () {
 
-            ProgressBar shareProgress = findViewById(R.id.shareProgressBar);
-            shareProgress.setVisibility(View.VISIBLE);
+        StorageReference userFilePath = postImages.child(mCurrentUserId).child(formattedDate() + ".jpg");
 
-            StorageReference userFilePath = postImages.child(mCurrentUserId).child(Post.getCurrentTimeUsingDate() + ".jpg");
-
+        if(!intent.hasExtra("test_post")) {
             if (intent.hasExtra("Selected_image")) {
-                String imageURL = intent.getStringExtra("Selected_image");
-                Bitmap bm = convertToBitmap(imageURL);
-
-                uri = getImageUri(FinalisePost.this, bm);
+                Bitmap bitmap_gallery = convertToBitmap(intent.getStringExtra("Selected_image"));
+                uri = getImageUri(FinalisePost.this, bitmap_gallery);
             } else {
-                uri = getImageUri(FinalisePost.this, bitmap);
-
-            }
-
-            userFilePath.putFile(uri).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-
-                    Toast.makeText(FinalisePost.this, "image uploaded", Toast.LENGTH_SHORT).show();
-
-                    postPictureURL = task.getResult().getDownloadUrl().toString();
-                    savePost();
-
-                } else {
-                    Toast.makeText(FinalisePost.this, "image not uploaded", Toast.LENGTH_SHORT).show();
+                Bitmap bitmap_camera = null;
+                try {
+                    bitmap_camera = MediaStore.Images.Media
+                            .getBitmap(this.getContentResolver(), intent.getParcelableExtra("selected_uri"));
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+                uri = getImageUri(FinalisePost.this, bitmap_camera);
+            }
+        }
 
-                backArrow.setEnabled(true);
-                shareButton.setClickable(true);
-                mText.setClickable(true);
-                shareProgress.setVisibility(View.INVISIBLE);
-            });
+        userFilePath.putFile(uri).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(FinalisePost.this, "image uploaded", Toast.LENGTH_SHORT).show();
+                postPictureURL = task.getResult().getDownloadUrl().toString();
+                savePost();
+            } else {
+                Toast.makeText(FinalisePost.this, "image not uploaded", Toast.LENGTH_SHORT).show();
+            }
+            setEnabled(true, View.INVISIBLE);
+
         });
     }
 
     private void savePost() {
         Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), Post.getCurrentTimeUsingDate());
 
-        firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(post.getDate()).set(post)
+        firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(formattedDate()).set(post)
                 .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
                 .addOnFailureListener(e -> Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show());
     }
 
     private void defineImage() {
-
         String mAppend = "file:/";
         if (intent.hasExtra("Selected_image")) {
             UniversalImageLoader.setImage(intent.getStringExtra("Selected_image"), imageView, null, mAppend);
         } else {
-            bitmap = intent.getParcelableExtra("selected_bitmap");
-            imageView.setImageBitmap(bitmap);
+            Bitmap uri = null;
+            try {
+                uri = MediaStore.Images.Media.getBitmap(
+                        this.getContentResolver(), intent.getParcelableExtra("selected_uri"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageView.setImageBitmap(uri);
 
         }
-
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
@@ -165,5 +170,19 @@ public class FinalisePost extends AppCompatActivity {
             }
         }
         return bitmap;
+    }
+
+    private void setEnabled(boolean b, int v) {
+        backArrow.setEnabled(b);
+        shareButton.setClickable(b);
+        mText.setClickable(b);
+        shareProgress.setVisibility(v);
+    }
+
+    private String formattedDate() {
+        Date date = new Date();
+        String strDateFormat = "yyyy-MM-dd HH:mm:ss";
+        DateFormat dateFormat = new SimpleDateFormat(strDateFormat, Locale.UK);
+        return dateFormat.format(date);
     }
 }

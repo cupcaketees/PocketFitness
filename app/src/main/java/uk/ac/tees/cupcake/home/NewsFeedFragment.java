@@ -29,7 +29,7 @@ public class NewsFeedFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.newsfeed_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_newsfeed, container, false);
         recyclerView = rootView.findViewById(R.id.my_recycler_view);
         recyclerView.setHasFixedSize(true);
 

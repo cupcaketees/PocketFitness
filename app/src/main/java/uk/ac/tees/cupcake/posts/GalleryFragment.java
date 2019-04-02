@@ -69,10 +69,7 @@ public class GalleryFragment extends Fragment {
 
     private void initialiseToolbar() {
         ImageView shareClose = view.findViewById(R.id.exitPost);
-        shareClose.setOnClickListener(v -> {
-            Log.d(TAG, "initialiseView: closing gallery fragment");
-            IntentUtils.invokeBaseView(getActivity(), MainActivity.class);
-        });
+        shareClose.setOnClickListener(v -> IntentUtils.invokeBaseView(getActivity(), MainActivity.class));
 
         TextView nextFragment = view.findViewById(R.id.postNext);
         nextFragment.setOnClickListener(v -> {

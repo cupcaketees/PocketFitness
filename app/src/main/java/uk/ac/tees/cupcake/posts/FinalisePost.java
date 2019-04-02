@@ -142,14 +142,14 @@ public class FinalisePost extends AppCompatActivity {
         }
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
 
-    public Bitmap convertToBitmap(String imageURL) {
+    private Bitmap convertToBitmap(String imageURL) {
         File imageFile = new File(imageURL);
         FileInputStream fis = null;
         Bitmap bitmap = null;

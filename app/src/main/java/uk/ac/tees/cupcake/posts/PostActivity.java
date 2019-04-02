@@ -29,9 +29,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_create);
         mViewPager = findViewById(R.id.container);
-
         setupFragments();
-
     }
 
     /**
@@ -48,7 +46,7 @@ public class PostActivity extends AppCompatActivity {
         Log.d(TAG, "setupFragments: started");
 
         SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(new GalleryFragment(), new CameraFragment()));
+                Arrays.asList(new GalleryFragment(), new CameraFragment(), new TextFragment()));
 
         Toolbar toolbar = findViewById(R.id.postToolbar);
         setSupportActionBar(toolbar);
@@ -59,6 +57,7 @@ public class PostActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.getTabAt(0).setText("GALLERY");
         tabLayout.getTabAt(1).setText("PHOTO");
+        tabLayout.getTabAt(2).setText("TEXT");
 
     }
 

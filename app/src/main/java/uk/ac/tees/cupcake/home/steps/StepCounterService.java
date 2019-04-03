@@ -16,29 +16,16 @@ import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
 
 public final class StepCounterService extends Service {
     
-    private SensorAdapter sensorAdapter;
-    
-    private StepCounterSensorListener eventListener;
-    
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        sensorAdapter = new SensorAdapter(getApplicationContext(), Sensor.TYPE_STEP_COUNTER);
-        eventListener = new StepCounterSensorListener(getApplicationContext());
+        SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext(), Sensor.TYPE_STEP_COUNTER);
+        StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
     
         if (sensorAdapter.setupSensors()) {
             sensorAdapter.registerListener(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_STEP_COUNTER, eventListener);
         }
         
         return Service.START_STICKY;
-    }
-    
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        
-        if (sensorAdapter != null) {
-            sensorAdapter.unregisterListener(Sensor.TYPE_STEP_COUNTER, eventListener);
-        }
     }
     
     @Nullable

@@ -19,4 +19,6 @@ public final class ApplicationConstants {
     
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.UK);
     
+    public static final String BROADCAST_INTENT_ACTION = "uk.ac.tees.cupcake.home.steps.StepCountUpdate";
+    
 }

@@ -76,7 +76,7 @@ public final class HomeFragment extends OnChangeFragment {
     
         updateStepCount();
         
-        IntentFilter intentFilter = new IntentFilter(StepCounterSensorListener.BROADCAST_INTENT_ACTION);
+        IntentFilter intentFilter = new IntentFilter(ApplicationConstants.BROADCAST_INTENT_ACTION);
         getActivity().registerReceiver(updateStepCountBroadcastReceiver, intentFilter);
         
         getStepsData(barChart);

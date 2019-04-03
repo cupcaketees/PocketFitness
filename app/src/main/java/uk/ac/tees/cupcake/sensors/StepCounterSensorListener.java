@@ -14,8 +14,6 @@ import uk.ac.tees.cupcake.ApplicationConstants;
  */
 public class StepCounterSensorListener implements SensorEventListener {
     
-    public static final String BROADCAST_INTENT_ACTION = "uk.ac.tees.cupcake.home.steps.StepCountUpdate";
-    
     private SharedPreferences preferences;
     
     private boolean firstEvent = true;
@@ -41,7 +39,7 @@ public class StepCounterSensorListener implements SensorEventListener {
             firstEvent = false;
         }
     
-        Intent intent = new Intent(BROADCAST_INTENT_ACTION);
+        Intent intent = new Intent(ApplicationConstants.BROADCAST_INTENT_ACTION);
         context.sendBroadcast(intent);
         
         referenceStepCount = eventValue;

@@ -1,7 +1,9 @@
 package uk.ac.tees.cupcake.home;
 
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,16 +25,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import uk.ac.tees.cupcake.ApplicationConstants;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
-import uk.ac.tees.cupcake.home.uk.ac.tees.cupcake.home.steps.StepCountMeasurement;
-import uk.ac.tees.cupcake.sensors.SensorAdapter;
+import uk.ac.tees.cupcake.home.steps.StepCountMeasurement;
 import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
 
 public final class HomeFragment extends OnChangeFragment {
@@ -42,9 +44,7 @@ public final class HomeFragment extends OnChangeFragment {
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     
     private static final List<String> DAYS = Arrays.asList( "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat");
-    
-    private View stepsCard;
-    
+
     private BarChart barChart;
     
     private TextView lastMeasurement;
@@ -53,19 +53,20 @@ public final class HomeFragment extends OnChangeFragment {
     
     private TextView lastMeasurementType;
     
-    @Nullable
+    private View stepsCard;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         
         barChart = view.findViewById(R.id.home_steps_bar_chart);
         setupBarChart(barChart);
-        
+
         stepsCard = view.findViewById(R.id.home_steps_card);
         lastMeasurement = view.findViewById(R.id.home_heart_last_measurement);
         lastMeasurementDate = view.findViewById(R.id.home_heart_last_measurement_date);
         lastMeasurementType = view.findViewById(R.id.home_heart_last_measurement_type);
-    
+        
         return view;
     }
     
@@ -73,20 +74,27 @@ public final class HomeFragment extends OnChangeFragment {
     public void onStart() {
         super.onStart();
     
+        updateStepCount();
+        
+        IntentFilter intentFilter = new IntentFilter(StepCounterSensorListener.BROADCAST_INTENT_ACTION);
+        getActivity().registerReceiver(updateStepCountBroadcastReceiver, intentFilter);
+        
         getStepsData(barChart);
         getHeartData(lastMeasurement, lastMeasurementType, lastMeasurementDate);
+    }
     
-        SensorAdapter sensorAdapter = new SensorAdapter(getContext(), Sensor.TYPE_STEP_COUNTER);
-        if (!sensorAdapter.setupSensors()) {
-            Toast.makeText(getContext(), "Failed to setup sensors", Toast.LENGTH_SHORT).show();
-        } else {
-            sensorAdapter.registerListener(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_STEP_COUNTER, new StepCounterSensorListener(stepsCard));
-        }
+    @Override
+    public void onPause() {
+        super.onPause();
+        
+        getActivity().unregisterReceiver(updateStepCountBroadcastReceiver);
     }
     
     @Override
     public void onChange() {
-        barChart.animateY(1000, Easing.Linear);
+        if (barChart != null) {
+            barChart.animateY(1000, Easing.Linear);
+        }
     }
     
     private void setupBarChart(BarChart barChart) {
@@ -161,12 +169,37 @@ public final class HomeFragment extends OnChangeFragment {
     
                         value.setText(getResources().getString(R.string.heart_rate_text, measurement.getBpm()));
                         type.setText(Character.toUpperCase(measurementType.charAt(0)) + measurementType.substring(1));
-                        date.setText(DATE_FORMAT.format(new Date(measurement.getTimestamp())));
+                        date.setText(ApplicationConstants.DATE_TIME_FORMAT.format(new Date(measurement.getTimestamp())));
                     }
                 })
                 .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
     }
     
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm");
+    private BroadcastReceiver updateStepCountBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            updateStepCount();
+        }
+    };
+    
+    /**
+     * The number of steps per mile based on average.
+     */
+    private static final double STEPS_PER_MILE = 5280 / 2.5d;
+    
+    /**
+     * Updates the step count text views with the stored step count information.
+     */
+    private void updateStepCount() {
+        final int storedSteps = getContext().getSharedPreferences("CupcakePrefs", Context.MODE_PRIVATE).getInt("steps", 0);
+    
+        String stepsText = Integer.toString(storedSteps);
+        TextView steps = stepsCard.findViewById(R.id.home_steps_text);
+        steps.setText(stepsText);
+    
+        String dist = String.format(Locale.UK, "%.2f", storedSteps / STEPS_PER_MILE);
+        TextView distance = stepsCard.findViewById(R.id.home_steps_distance);
+        distance.setText(dist);
+    }
     
 }

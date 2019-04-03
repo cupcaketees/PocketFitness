@@ -19,6 +19,8 @@ import uk.ac.tees.cupcake.posts.PostActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
+import uk.ac.tees.cupcake.home.steps.StepCounterResetReceiver;
+import uk.ac.tees.cupcake.home.steps.StepCounterService;
 
 /**
  * Created by HugoT on 13/02/2019.
@@ -44,7 +46,8 @@ public class SplashActivity extends AppCompatActivity {
         } else {
             IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class);
         }
-    
+        
+        startService(new Intent(getApplicationContext(), StepCounterService.class));
         startStepCounterAlarm();
         
         SystemClock.sleep(1000);
@@ -54,7 +57,7 @@ public class SplashActivity extends AppCompatActivity {
     
     private void startStepCounterAlarm() {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(SplashActivity.this, StepCounterReceiver.class);
+        Intent intent = new Intent(SplashActivity.this, StepCounterResetReceiver.class);
         PendingIntent pending = PendingIntent.getBroadcast(SplashActivity.this, 0, intent, 0);
     
         Calendar calendar = Calendar.getInstance();

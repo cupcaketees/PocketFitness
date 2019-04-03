@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.home.uk.ac.tees.cupcake.home.steps;
+package uk.ac.tees.cupcake.home.steps;
 
 import java.util.Date;
 

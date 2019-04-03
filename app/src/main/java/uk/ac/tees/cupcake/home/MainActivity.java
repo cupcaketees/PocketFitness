@@ -93,8 +93,8 @@ public class MainActivity extends NavigationBarActivity {
     public void setup() {
         if (!PermissionCheck.checkPermissionsList(Permissions.PERMISSIONS, getApplicationContext())) {
             PermissionCheck.verifyPermissions(Permissions.PERMISSIONS, MainActivity.this);
-
         }
+
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
         

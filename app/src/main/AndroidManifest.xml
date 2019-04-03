@@ -25,11 +25,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <receiver
-            android:name=".home.uk.ac.tees.cupcake.home.steps.StepCounterReceiver"
-            android:enabled="true">
+        <receiver android:name=".home.steps.StepCounterResetReceiver" android:enabled="true" />
 
-        </receiver>
+        <service android:name=".home.steps.StepCounterService" />
 
         <activity
             android:name=".videoplayer.VideoPlayerActivity"

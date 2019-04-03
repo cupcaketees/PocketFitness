@@ -1,58 +1,50 @@
 package uk.ac.tees.cupcake.sensors;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.view.View;
-import android.widget.TextView;
 
-import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.ApplicationConstants;
 
 /**
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-
 public class StepCounterSensorListener implements SensorEventListener {
     
-    private TextView steps;
-    
-    private TextView distance;
+    public static final String BROADCAST_INTENT_ACTION = "uk.ac.tees.cupcake.home.steps.StepCountUpdate";
     
     private SharedPreferences preferences;
     
-    private static final double STEPS_PER_MILE = 5280 / 2.5d;
-    
     private boolean firstEvent = true;
     
-    /**
-     * Constructs a new {@link StepCounterSensorListener}
-     */
-    public StepCounterSensorListener(View stepCounterView) {
-        steps = stepCounterView.findViewById(R.id.home_steps_text);
-        distance = stepCounterView.findViewById(R.id.home_steps_distance);
+    private int referenceStepCount;
     
-        preferences = stepCounterView.getContext().getSharedPreferences("CupcakePrefs", Context.MODE_PRIVATE);
+    private final Context context;
+    
+    public StepCounterSensorListener(Context context) {
+        this.context = context;
+        this.preferences = context.getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
     
     @Override
     public void onSensorChanged(SensorEvent event) {
-        int eventValue = (int) event.values[0];
-        int storedSteps = preferences.getInt("steps", 0);
-        int stepCount = storedSteps + (eventValue - storedSteps);
+        final int eventValue = (int) event.values[0];
+        final int storedSteps = preferences.getInt("steps", 0);
+        int stepCount = storedSteps + (eventValue - referenceStepCount);
         
         if (!firstEvent) {
-            preferences.edit().putInt("steps", storedSteps + stepCount).apply();
+            preferences.edit().putInt("steps", stepCount).apply();
+        } else {
+            firstEvent = false;
         }
     
-        firstEvent = false;
+        Intent intent = new Intent(BROADCAST_INTENT_ACTION);
+        context.sendBroadcast(intent);
         
-        String stepsText = Integer.toString(stepCount);
-        steps.setText(stepsText);
-    
-        String dist = String.format("%.2f", stepCount / STEPS_PER_MILE);
-        distance.setText(dist);
+        referenceStepCount = eventValue;
     }
     
     @Override

@@ -87,7 +87,11 @@ public final class HomeFragment extends OnChangeFragment {
     public void onPause() {
         super.onPause();
         
-        getActivity().unregisterReceiver(updateStepCountBroadcastReceiver);
+        try {
+            getActivity().unregisterReceiver(updateStepCountBroadcastReceiver);
+        } catch (IllegalArgumentException e) {
+            // shouldn't really happen but does sometimes somehow.
+        }
     }
     
     @Override

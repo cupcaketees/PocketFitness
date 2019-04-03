@@ -24,11 +24,9 @@ public class StepCounterResetReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE);
         
-        final int yesterdaysSteps = preferences.getInt(ApplicationConstants.STEPS_PREFERENCE_KEY, 0);
+        final int steps = preferences.getInt(ApplicationConstants.STEPS_PREFERENCE_KEY, 0);
     
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, 1);
-        Date tomorrow = cal.getTime();
+        Date measurementDate = Calendar.getInstance().getTime();
         
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -37,10 +35,12 @@ public class StepCounterResetReceiver extends BroadcastReceiver {
             firestore.collection("UserStats")
                     .document(user.getUid())
                     .collection("StepCounts")
-                    .add(new StepCountMeasurement(tomorrow, yesterdaysSteps))
+                    .add(new StepCountMeasurement(measurementDate, steps))
                     .addOnFailureListener(x -> Log.e("StepCounterResetReceive", "onReceive: Failed to add step count to database", x));
         }
-        
+    
+        Intent updateIntent = new Intent(ApplicationConstants.BROADCAST_INTENT_ACTION);
+        context.sendBroadcast(updateIntent);
         preferences.edit().putInt("steps", 0).apply();
     }
     

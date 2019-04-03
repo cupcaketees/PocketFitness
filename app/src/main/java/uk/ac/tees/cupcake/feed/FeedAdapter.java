@@ -44,27 +44,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
         Post post = posts.get(position);
-        
+
         holder.descriptionTextView.setText(post.getDescription());
         holder.usernameTextView.setText(post.getUsername());
         holder.dateTextView.setText(post.getDate());
-        
-        Picasso.
-                with(holder.itemView.getContext())
-                .load(post.getImage())
-                .placeholder(R.drawable.temp_man_running)
-                .into(holder.mImageView);
-        
-        Log.d("Positiontag", "position: "+position);
+
+        if (!post.getImage().isEmpty()) {
+            Picasso.
+                    with(holder.itemView.getContext())
+                    .load(post.getImage())
+                    .placeholder(R.drawable.temp_man_running)
+                    .into(holder.mImageView);
+
+        }
+
+
+        Log.d("Positiontag", "position: " + position);
     }
 
     @Override
-    public int getItemCount()
-    {
+    public int getItemCount() {
         return posts.size();
     }
 
-    static class FeedViewHolder extends RecyclerView.ViewHolder{
+    static class FeedViewHolder extends RecyclerView.ViewHolder {
 
         private TextView descriptionTextView;
 
@@ -78,7 +81,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private Button optionsButton;
 
-        private  TextView ratingCount;
+        private TextView ratingCount;
 
         FeedViewHolder(View postView) {
 
@@ -92,7 +95,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             ratingCount = postView.findViewById(R.id.post_ratingcount);
             ratingCount.setText("999");
             optionsButton = (Button) postView.findViewById(R.id.dropdown_menu);
-            optionsButton.setOnClickListener(new View.OnClickListener(){
+            optionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     PopupMenu popupMenu = new PopupMenu(postView.getContext(), optionsButton);
@@ -109,14 +112,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     }
 
     @Override
-    public long getItemId(int position)
-    {
+    public long getItemId(int position) {
         return position;
     }
 
     @Override
-    public int getItemViewType(int position)
-    {
+    public int getItemViewType(int position) {
         return position;
     }
 }

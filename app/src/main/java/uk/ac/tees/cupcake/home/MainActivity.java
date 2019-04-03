@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.home;
 
+import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -131,7 +132,10 @@ public class MainActivity extends NavigationBarActivity {
     }
 
     public void goToHeartRate(View view) {
-        IntentUtils.invokeBaseView(view.getContext(), HeartRateActivity.class);
+        Intent intent = new Intent(view.getContext(), HeartRateActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        
+        view.getContext().startActivity(intent);
     }
 
 }

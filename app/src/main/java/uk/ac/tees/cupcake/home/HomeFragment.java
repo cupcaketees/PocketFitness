@@ -191,7 +191,7 @@ public final class HomeFragment extends OnChangeFragment {
      * Updates the step count text views with the stored step count information.
      */
     private void updateStepCount() {
-        final int storedSteps = getContext().getSharedPreferences("CupcakePrefs", Context.MODE_PRIVATE).getInt("steps", 0);
+        final int storedSteps = getContext().getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE).getInt("steps", 0);
     
         String stepsText = Integer.toString(storedSteps);
         TextView steps = stepsCard.findViewById(R.id.home_steps_text);

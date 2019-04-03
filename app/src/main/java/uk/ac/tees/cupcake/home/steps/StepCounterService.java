@@ -36,7 +36,9 @@ public final class StepCounterService extends Service {
     public void onDestroy() {
         super.onDestroy();
         
-        sensorAdapter.unregisterListener(Sensor.TYPE_STEP_COUNTER, eventListener);
+        if (sensorAdapter != null) {
+            sensorAdapter.unregisterListener(Sensor.TYPE_STEP_COUNTER, eventListener);
+        }
     }
     
     @Nullable

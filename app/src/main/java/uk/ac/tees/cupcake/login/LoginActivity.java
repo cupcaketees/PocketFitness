@@ -71,12 +71,12 @@ public class LoginActivity extends AppCompatActivity {
                                               .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                                               .build();
 
-        //On click calls method to start sign in process with Google account.
+        //On click method call to start sign in process with Google account.
         googleSignInButton.setOnClickListener(v -> signInGoogle());
     }
 
     /**
-     * Calls method to sign in with email and password.
+     * On click call method call to start sign in process with email and password.
      */
     public void emailPasswordSignInOnClick(View view){
         signInUserEmailAndPassword();
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
         String userInputEmail = emailEditText.getText().toString().trim();
         String userInputPassword = passwordEditText.getText().toString().trim();
 
-        String result = validateUserInput(userInputPassword, userInputEmail);
+        String result = validateUserInput(userInputEmail, userInputPassword);
         if(!result.isEmpty()){
             Toast.makeText(LoginActivity.this, result, Toast.LENGTH_SHORT).show();
             return;
@@ -163,13 +163,13 @@ public class LoginActivity extends AppCompatActivity {
      * Validates input values passed through params are not empty.
      * @return empty string or appended message.
      */
-    private String validateUserInput(String userInputCurrentPassword, String userInputNewPassword){
+    private String validateUserInput(String userInputEmailAddress, String userInputPassword){
         StringBuilder sb = new StringBuilder();
 
-        if(TextUtils.isEmpty(userInputCurrentPassword)) {
+        if(TextUtils.isEmpty(userInputEmailAddress)) {
             sb.append("You must enter your email address. ");
         }
-        if(TextUtils.isEmpty(userInputNewPassword)) {
+        if(TextUtils.isEmpty(userInputPassword)) {
             sb.append("You must enter your password.");
         }
         return sb.toString();

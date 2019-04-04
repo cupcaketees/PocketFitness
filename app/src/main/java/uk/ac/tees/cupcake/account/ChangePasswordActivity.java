@@ -69,7 +69,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
     /**
      * Validates input values passed through params are not empty.
-     * @return string with appropriate message.
+     * @return empty string or appended message.
      */
     private String validateUserInput(String userInputCurrentPassword, String userInputNewPassword){
         StringBuilder sb = new StringBuilder();

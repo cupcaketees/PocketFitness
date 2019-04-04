@@ -117,7 +117,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
     /**
      * Validates input values passed through params are not empty.
-     * @return string with appropriate message.
+     * @return empty string or appended message.
      */
     private String validateUserInput(String userInputFirstName, String userInputLastName){
 

@@ -26,7 +26,8 @@ public class StepCounterResetReceiver extends BroadcastReceiver {
         
         final int steps = preferences.getInt(ApplicationConstants.STEPS_PREFERENCE_KEY, 0);
     
-        Date measurementDate = Calendar.getInstance().getTime();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, -1);
         
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
@@ -35,7 +36,7 @@ public class StepCounterResetReceiver extends BroadcastReceiver {
             firestore.collection("UserStats")
                     .document(user.getUid())
                     .collection("StepCounts")
-                    .add(new StepCountMeasurement(measurementDate, steps))
+                    .add(new StepCountMeasurement(calendar.getTime(), steps))
                     .addOnFailureListener(x -> Log.e("StepCounterResetReceive", "onReceive: Failed to add step count to database", x));
         }
     

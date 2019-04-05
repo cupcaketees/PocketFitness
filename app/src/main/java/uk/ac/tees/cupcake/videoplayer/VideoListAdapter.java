@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
+import java.util.List;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
@@ -17,14 +18,16 @@ import uk.ac.tees.cupcake.utils.IntentUtils;
  * VideoList Adapter
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
  */
-class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> {
+class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder> implements Filterable {
 
     private ArrayList<Video> mVideos;
     private final Context mContext;
+    private ArrayList<Video> mVideosAll;
 
     VideoListAdapter(ArrayList<Video> mVideos, Context context) {
         this.mVideos = mVideos;
         this.mContext = context;
+        this.mVideosAll = new ArrayList<>(mVideos);
     }
 
     /**
@@ -59,6 +62,40 @@ class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.ViewHolder>
         return mVideos.size();
     }
 
+    @Override
+    public Filter getFilter() {
+        return videoFilter;
+    }
+
+    private Filter videoFilter = new Filter(){
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            ArrayList<Video> filteredList = new ArrayList<>();
+            if (constraint == null || constraint.length() == 0 ){
+                filteredList.addAll(mVideosAll);
+            } else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Video item : mVideosAll){
+                    if (item.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(item);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mVideos.clear();
+            mVideos.addAll((List)results.values);
+            notifyDataSetChanged();
+        }
+    };
     /**
      * inner class that extends the RecyclerView.
      * it defines variables to the id of each element in the card layout.

@@ -52,7 +52,6 @@ public class FinalisePost extends AppCompatActivity {
     private final String LAST_NAME_KEY = "lastName";
     private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,12 +132,13 @@ public class FinalisePost extends AppCompatActivity {
                         String lastName = documentSnapshot.getString(LAST_NAME_KEY);
                         String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(),Post.getCurrentTimeUsingDate(), firstName, lastName, profilePictureUrl);
+                        String id = Post.getCurrentTimeUsingDate();
+                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(),id, firstName, lastName, profilePictureUrl, id);
 
                         firebaseFirestore.collection("Users")
                                 .document(mCurrentUserId)
                                 .collection("User Posts")
-                                .document(post.getDate())
+                                .document(id)
                                 .set(post)
                                 .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
                                 .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());

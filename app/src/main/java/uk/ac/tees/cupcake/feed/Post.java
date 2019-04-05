@@ -13,12 +13,14 @@ public class Post  {
     private String firstName;
     private String lastName;
     private String profilePictureUrl;
+    private String postId;
 
     public Post() {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String userUid, String image, String description, String date, String firstName, String lastName, String profilePictureUrl){
+    public Post(String userUid, String image, String description, String date, String firstName, String lastName, String profilePictureUrl, String id){
+        this.postId = id;
         this.userUid = userUid;
         this.image = image;
         this.description = description;
@@ -29,6 +31,8 @@ public class Post  {
     }
 
     public String getUserUid() { return userUid; }
+
+    public String getPostId() { return postId;}
 
     public String getFirstName() { return firstName; }
 

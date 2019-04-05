@@ -119,5 +119,7 @@
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar"/>
 
+        <activity android:name=".account.HealthStatsSetupActivity" />
+
     </application>
 </manifest>

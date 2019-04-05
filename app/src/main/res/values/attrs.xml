@@ -6,4 +6,8 @@
         <attr name="image_src" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="ScrollingValuePickerAttrs">
+        <attr name="scale_color" format="color" />
+    </declare-styleable>
+
 </resources>

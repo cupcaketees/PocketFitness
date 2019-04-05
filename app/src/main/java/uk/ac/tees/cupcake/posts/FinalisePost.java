@@ -53,7 +53,6 @@ public class FinalisePost extends AppCompatActivity {
     private ProgressBar shareProgress;
     private Intent imageIntent;
     private Uri uri;
-
     private final String FIRST_NAME_KEY = "firstName";
     private final String LAST_NAME_KEY = "lastName";
     private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
@@ -65,6 +64,7 @@ public class FinalisePost extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
         mText = findViewById(R.id.finaliseDescription);
         shareButton = findViewById(R.id.postFinalise);
         backArrow = findViewById(R.id.backArrow);
@@ -130,7 +130,7 @@ public class FinalisePost extends AppCompatActivity {
                         String lastName = documentSnapshot.getString(LAST_NAME_KEY);
                         String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-                        String id = Post.getCurrentTimeUsingDate();
+                        String id = formattedDate();
                         Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(),id, firstName, lastName, profilePictureUrl, id);
 
                         firebaseFirestore.collection("Users")
@@ -139,22 +139,28 @@ public class FinalisePost extends AppCompatActivity {
                                 .document(id)
                                 .set(post)
                                 .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
-                                .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+                                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                     }
                 });
     }
 
     /**
      * This sets the image on the page depending on where it came from
-     */                            
+     */
     private void defineImage() {
         String mAppend = "file:/";
-        if (imageIntent.hasExtra("Selected_image")) {
-            UniversalImageLoader.setImage(imageIntent.getStringExtra("Selected_image"), imageView, null, mAppend);
+        if (getIntent().hasExtra("Selected_image")) {
+            UniversalImageLoader.setImage(getIntent().getStringExtra("Selected_image"), imageView, null, mAppend);
         } else {
-            bitmap = intent.getParcelableExtra("selected_bitmap");
-            imageView.setImageBitmap(bitmap);
-            imageView.setImageBitmap(getBitmapCamera());
+            Bitmap uri = null;
+            try {
+                uri = MediaStore.Images.Media.getBitmap(
+                        this.getContentResolver(), getIntent().getParcelableExtra("selected_uri"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageView.setImageBitmap(uri);
+
         }
     }
 

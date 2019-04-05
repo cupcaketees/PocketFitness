@@ -36,6 +36,9 @@ public class TextFragment extends Fragment {
     private String mCurrentUserId;
     private TextView nextFragment;
     private ImageView shareClose;
+    private final String FIRST_NAME_KEY = "firstName";
+    private final String LAST_NAME_KEY = "lastName";
+    private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
 
     @Nullable
     @Override
@@ -69,19 +72,36 @@ public class TextFragment extends Fragment {
         nextFragment.setOnClickListener(v -> {
             setEnabled(false);
 
-            Post post = new Post(mCurrentUserId, "", text.getText().toString(), Post.getCurrentTimeUsingDate());
+            FirebaseFirestore.getInstance()
+                    .collection("Users")
+                    .document(mCurrentUserId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if(documentSnapshot.exists()){
+                            String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
+                            String lastName = documentSnapshot.getString(LAST_NAME_KEY);
+                            String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-            Date date = new Date();
-            String strDateFormat = "yyyy-MM-dd HH:mm:ss";
-            DateFormat dateFormat = new SimpleDateFormat(strDateFormat, Locale.UK);
-            String formattedDate = dateFormat.format(date);
+                            Date date = new Date();
+                            String strDateFormat = "yyyy-MM-dd HH:mm:ss";
+                            DateFormat dateFormat = new SimpleDateFormat(strDateFormat, Locale.UK);
+                            String formattedDate = dateFormat.format(date);
 
-            firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(formattedDate).set(post)
-                    .addOnSuccessListener(aVoid -> {
-                        Toast.makeText(getContext(), "Successfully Posted", Toast.LENGTH_SHORT).show();
-                        IntentUtils.invokeBaseView(getActivity(), MainActivity.class);
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
+                            String id = formattedDate;
+                            Post post = new Post(mCurrentUserId, null, text.getText().toString(),id, firstName, lastName, profilePictureUrl, id);
+
+                            firebaseFirestore.collection("Users")
+                                    .document(mCurrentUserId)
+                                    .collection("User Posts")
+                                    .document(id)
+                                    .set(post)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(getContext(), "Successfully Posted", Toast.LENGTH_SHORT).show();
+                                        IntentUtils.invokeBaseView(getActivity(), MainActivity.class);
+                                    })
+                                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
+                        }
+                    });
 
             setEnabled(true);
         });

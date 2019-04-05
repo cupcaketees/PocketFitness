@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void sendUserToActivity(Class dest){
         startActivity(new Intent(LoginActivity.this, dest));
+        finish();
     }
 
     /**

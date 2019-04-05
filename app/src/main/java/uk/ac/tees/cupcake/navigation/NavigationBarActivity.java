@@ -12,9 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.ViewStub;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -25,7 +24,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 
 import uk.ac.tees.cupcake.account.SettingsActivity;
-import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.food.SearchFoodActivity;
 import uk.ac.tees.cupcake.dietplan.DietActivity;
@@ -66,21 +64,18 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
             firestore.collection("Users")
                     .document(currentUserId)
                     .get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                TextView navBarProfileNameTextView = findViewById(R.id.nav_bar_name_text_view);
-                                CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
-                                UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            TextView navBarProfileNameTextView = findViewById(R.id.nav_bar_name_text_view);
+                            CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
+                            UserProfile profile = documentSnapshot.toObject(UserProfile.class);
 
-                                navBarProfileNameTextView.setText(profile.getFirstName() + " " + profile.getLastName());
+                            navBarProfileNameTextView.setText(profile.getFirstName() + " " + profile.getLastName());
 
-                                if (profile.getProfilePictureUrl() != null) {
-                                    Picasso.with(NavigationBarActivity.this)
-                                            .load(profile.getProfilePictureUrl())
-                                            .into(profilePictureImageView);
-                                }
+                            if (profile.getProfilePictureUrl() != null) {
+                                Picasso.with(NavigationBarActivity.this)
+                                        .load(profile.getProfilePictureUrl())
+                                        .into(profilePictureImageView);
                             }
                         }
                     });
@@ -93,7 +88,11 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         auth.addAuthStateListener(authListener);
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        auth.removeAuthStateListener(authListener);
+    }
 
     static {
         NAV_BAR_ACTIONS.put(R.id.nav_home, new StartIntentNavigationItemAction(MainActivity.class));

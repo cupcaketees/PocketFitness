@@ -84,6 +84,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         });
 
         path.document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
+            if(documentSnapshot == null){
+                return;
+            }
             if(documentSnapshot.exists()){
                 holder.postLikeButton.setText("Unlike");
             }else{
@@ -92,6 +95,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         });
 
         path.addSnapshotListener((documentSnapshots, e) -> {
+            if(documentSnapshots == null){
+                return;
+            }
+
             if(documentSnapshots.isEmpty()){
                 holder.setPostLikesCount(0);
             }else{

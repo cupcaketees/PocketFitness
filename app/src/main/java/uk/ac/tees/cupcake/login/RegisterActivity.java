@@ -79,6 +79,7 @@ public class RegisterActivity extends AppCompatActivity {
      */
     private void sendUserToActivity(Class dest){
         startActivity(new Intent(RegisterActivity.this, dest));
+        finish();
     }
 
     /**

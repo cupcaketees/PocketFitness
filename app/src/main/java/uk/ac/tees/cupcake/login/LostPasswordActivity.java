@@ -69,6 +69,7 @@ public class LostPasswordActivity extends AppCompatActivity {
      */
     private void sendUserToActivity(Class dest){
         startActivity(new Intent(LostPasswordActivity.this, dest));
+        finish();
     }
 
     /**

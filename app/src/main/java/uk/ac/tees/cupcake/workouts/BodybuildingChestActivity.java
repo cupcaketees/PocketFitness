@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import uk.ac.tees.cupcake.R;
 
 /**
- * Bodybuilding Workout Chest Activity Class
+ * Bodybuilding Workout chest Activity Class
  *
  * @author Michael Small <s6065431@tees.ac.uk>
  */
@@ -20,7 +20,7 @@ public class BodybuildingChestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bodybuilding_bodyparts_list);
 
-        setTitle("Chest Workouts");
+        setTitle("chest Workouts");
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();

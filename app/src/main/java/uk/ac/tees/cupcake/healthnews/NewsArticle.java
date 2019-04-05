@@ -1,12 +1,9 @@
 package uk.ac.tees.cupcake.healthnews;
 
-import java.util.Date;
-
 public class NewsArticle {
 
     private String articleName;
     private String articleDesc;
-    private int articleImage;
     private String articleDate;
     private String articleURL;
 
@@ -15,13 +12,12 @@ public class NewsArticle {
      *
      * @param articleName - Name of article
      * @param articleDesc - Description of article
-     * @param articleImage - Article image
+     * @param articleURL - Article image
      * @param articleDate - Article date
      */
-    public NewsArticle(String articleName, String articleDesc, int articleImage, String articleDate, String articleURL) {
+    public NewsArticle(String articleName, String articleDesc, String articleDate, String articleURL) {
         this.articleName = articleName;
         this.articleDesc = articleDesc;
-        this.articleImage = articleImage;
         this.articleDate = articleDate;
         this.articleURL = articleURL;
     }
@@ -32,14 +28,6 @@ public class NewsArticle {
 
     public void setArticleURL(String articleURL) {
         this.articleURL = articleURL;
-    }
-
-    public int getArticleImage() {
-        return articleImage;
-    }
-
-    public void setArticleImage(int articleImage) {
-        this.articleImage = articleImage;
     }
 
     public String getArticleDesc() {

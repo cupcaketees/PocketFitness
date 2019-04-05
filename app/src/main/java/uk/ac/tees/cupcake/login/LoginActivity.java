@@ -19,6 +19,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.MainActivity;
 
@@ -30,15 +31,10 @@ import uk.ac.tees.cupcake.home.MainActivity;
 public class LoginActivity extends AppCompatActivity {
 
     private final static int GOOGLE_SIGN_IN = 1;
-    private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
-    private FirebaseAuth.AuthStateListener mAuthListener;
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         //Method call to start background animation.
         initBackground();
 
-        //When auth is not null send user to home fragment.
+        //When auth is not null send user to main activity.
         mAuthListener = firebaseAuth -> {
             if(firebaseAuth.getCurrentUser() != null){
                 sendUserToActivity(MainActivity.class);
@@ -73,6 +69,24 @@ public class LoginActivity extends AppCompatActivity {
 
         //On click method call to start sign in process with Google account.
         googleSignInButton.setOnClickListener(v -> signInGoogle());
+    }
+
+    /**
+     * Adds listener on activity
+     */
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    /**
+     * Removes listener on activity
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
     }
 
     /**

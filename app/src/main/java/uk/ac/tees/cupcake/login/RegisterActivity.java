@@ -89,10 +89,10 @@ public class RegisterActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputEmail)){
-            sb.append("You must enter your email address. ");
+            sb.append("You must enter your email address.\n");
         }
         if(TextUtils.isEmpty(userInputPassword)) {
-            sb.append("You must enter a password. ");
+            sb.append("You must enter a password.\n");
         }
         if(TextUtils.isEmpty(userInputNewPassword)) {
             sb.append("You must enter a new password.");
@@ -104,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
      * Starts background animation for activity.
      */
     private void initBackground(){
-        ConstraintLayout background = findViewById(R.id.login_background);
+        ConstraintLayout background = findViewById(R.id.register_background);
         AnimationDrawable animationDrawable = (AnimationDrawable) background.getBackground();
 
         // Duration.

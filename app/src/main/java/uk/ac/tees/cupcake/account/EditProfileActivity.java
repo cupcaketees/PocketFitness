@@ -190,10 +190,10 @@ public class EditProfileActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {
-            sb.append("You cant leave first name field empty. ");
+            sb.append("You cant leave first name field empty.\n");
         }
         if(TextUtils.isEmpty(userInputLastName)) {
-            sb.append("You cant leave last name field empty. ");
+            sb.append("You cant leave last name field empty.\n");
         }
         if(TextUtils.isEmpty(userInputBio)) {
             sb.append("You cant leave bio field empty.");

@@ -75,7 +75,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputCurrentPassword)) {
-            sb.append("You must enter your current password. ");
+            sb.append("You must enter your current password.\n");
         }
         if(TextUtils.isEmpty(userInputNewPassword)) {
             sb.append("You must enter your new password.");

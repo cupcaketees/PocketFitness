@@ -124,7 +124,7 @@ public class SetupProfileActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {
-            sb.append("You must enter your first name. ");
+            sb.append("You must enter your first name.\n");
         }
         if(TextUtils.isEmpty(userInputLastName)) {
             sb.append("You must enter your last name.");

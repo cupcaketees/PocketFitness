@@ -15,6 +15,10 @@ import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
 
+/**
+ *@author Hugo Tomas <s6006225@live.tees.ac.uk>
+ *Sets up the fragments for creating a post.
+ */
 public class PostActivity extends AppCompatActivity {
     private static final String TAG = "PostActivity";
     private ViewPager mViewPager;
@@ -25,9 +29,7 @@ public class PostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_create);
         mViewPager = findViewById(R.id.container);
-
         setupFragments();
-
     }
 
     /**
@@ -37,11 +39,14 @@ public class PostActivity extends AppCompatActivity {
         return mViewPager.getCurrentItem();
     }
 
+    /**
+     * Creates a tab layout on the bottom that can navigate to the three fragments.
+     */
     private void setupFragments() {
         Log.d(TAG, "setupFragments: started");
 
         SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(new GalleryFragment(), new CameraFragment()));
+                Arrays.asList(new GalleryFragment(), new CameraFragment(), new TextFragment()));
 
         Toolbar toolbar = findViewById(R.id.postToolbar);
         setSupportActionBar(toolbar);
@@ -52,6 +57,7 @@ public class PostActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
         tabLayout.getTabAt(0).setText("GALLERY");
         tabLayout.getTabAt(1).setText("PHOTO");
+        tabLayout.getTabAt(2).setText("TEXT");
 
     }
 

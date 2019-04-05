@@ -2,7 +2,6 @@ package uk.ac.tees.cupcake.posts;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,13 +13,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class CameraFragment extends Fragment {
     private static final String TAG = "PhotoFragment";
 
@@ -35,14 +41,31 @@ public class CameraFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView: started");
         view = inflater.inflate(R.layout.fragment_photo, container, false);
+
+        initialiseToolbar();
         initialiseButton();
+
         return view;
+    }
+
+    /**
+     * Initialise toolbar remove all non required fields.
+     */
+    private void initialiseToolbar() {
+        Spinner spinner = view.findViewById(R.id.spinnerDirectories);
+        spinner.setVisibility(View.INVISIBLE);
+
+        TextView textView = view.findViewById(R.id.postNext);
+        textView.setVisibility(View.GONE);
+
+        ImageView shareClose = view.findViewById(R.id.exitPost);
+        shareClose.setOnClickListener(v -> IntentUtils.invokeBaseView(getActivity(), MainActivity.class));
     }
 
     /**
      * Starts Camera, when picture is confirmed it'll store the image on the device.
      */
-    public void initialiseButton() {
+    private void initialiseButton() {
         Button openCamera = view.findViewById(R.id.button_camera);
 
         openCamera.setOnClickListener(v -> {
@@ -62,7 +85,7 @@ public class CameraFragment extends Fragment {
      * Stores in a ContentValue (Just a way to store items) but its what the Uri requires.
      * putExtra put's it on your phone allowing for better quality.
      */
-    public void retrieveUri() {
+    private void retrieveUri() {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, "Cupcake Image");
         values.put(MediaStore.Images.Media.DESCRIPTION, "Image From Camera");

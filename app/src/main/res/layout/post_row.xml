@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_food_row_layout"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="15dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="5dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/feed_post_profile_picture_image_view"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@android:color/darker_gray"
+                app:civ_border_color="@color/colorPrimary"
+                app:civ_border_width="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/feed_post_username_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/feed_post_profile_picture_image_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/feed_post_profile_picture_image_view"
+                app:layout_constraintTop_toTopOf="@+id/feed_post_profile_picture_image_view"
+                tools:text="Bradley Hunter" />
+
+            <TextView
+                android:id="@+id/feed_post_time_posted_text_view"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="1dp"
+                android:text="TextView"
+                app:layout_constraintBottom_toBottomOf="@+id/feed_post_profile_picture_image_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/feed_post_username_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_username_text_view"
+                tools:text="22 hours ago" />
+
+            <ImageView
+                android:id="@+id/feed_post_image_image_view"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/colorPrimary"
+                android:padding="1dp"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_description_text_view"
+                app:srcCompat="@color/colorPrimaryDark" />
+
+            <TextView
+                android:id="@+id/feed_post_description_text_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="16dp"
+                android:text="TextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/feed_post_profile_picture_image_view"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_time_posted_text_view"
+                tools:text="This is a description on my post." />
+
+            <Button
+                android:id="@+id/feed_post_like_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_thumb_up"
+                android:drawablePadding="5dp"
+                android:text="@string/feed_post_like_button_text"
+                android:textAllCaps="false"
+                android:textColor="@color/cardview_dark_background"
+                app:layout_constraintEnd_toStartOf="@+id/feed_post_comment_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view"
+                tools:text="Like" />
+
+            <Button
+                android:id="@+id/feed_post_comment_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_comment_icon"
+                android:drawablePadding="5dp"
+                android:text="@string/feed_post_comment_button_text"
+                android:textAllCaps="false"
+                android:textColor="@color/cardview_dark_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/feed_post_share_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/feed_post_like_button"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view"
+                tools:text="Comment" />
+
+            <Button
+                android:id="@+id/feed_post_share_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ic_share_icon"
+                android:drawablePadding="5dp"
+                android:text="@string/feed_post_share_button_text"
+                android:textAllCaps="false"
+                android:textColor="@color/cardview_dark_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/feed_post_comment_button"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view"
+                tools:text="Share" />
+
+            <TextView
+                android:id="@+id/feed_post_likes_count_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="TextView"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_image_image_view" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.v7.widget.CardView>
+
+</android.support.v7.widget.LinearLayoutCompat>

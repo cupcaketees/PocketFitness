@@ -2,24 +2,16 @@ package uk.ac.tees.cupcake.login;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
-import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Register Activity
@@ -28,140 +20,98 @@ import uk.ac.tees.cupcake.home.MainActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private ConstraintLayout mRegisterBackground;
-    private AnimationDrawable mBackgroundAnimation;
-
-    private EditText mEmailEditText, mPasswordEditText, mConfirmPasswordEditText;
-    private Button mSignUpButton, mSignInButton;
-
-    private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener mAuthListener;
-
-    @Override
-    protected void onStart(){
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        // Initialise Fields.
-        mAuth = FirebaseAuth.getInstance();
-
-        mEmailEditText = findViewById(R.id.register_email_edit_text);
-        mPasswordEditText = findViewById(R.id.register_password_edit_text);
-        mConfirmPasswordEditText = findViewById(R.id.register_confirm_password);
-
-        mSignInButton = findViewById(R.id.register_sign_in_button);
-        mSignUpButton = findViewById(R.id.register_sign_up_button);
-
-        // Call method to start background animation.
+        //Method call to start background animation.
         initBackground();
-
-        /*
-         * Checks if user is logged in and updates UI accordingly.
-         */
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(firebaseAuth.getCurrentUser() != null){
-                    sendUserToHomeActivity();
-                }
-            }
-        };
-
-        // Initialise on click listeners.
-
-        /*
-         * Sends user to login activity.
-         */
-        mSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-            }
-        });
-
-        /*
-         * Calls sign up account method
-         */
-        mSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signUpAccount();
-            }
-        });
     }
 
-    /*
-     * Validates user input and creates a new user account.
+    /**
+     * On click method call to send user to login activity when go to login activity is pressed.
+     */
+    public void loginActivityOnClick(View view){
+        sendUserToActivity(LoginActivity.class);
+    }
+
+    /**
+     * On click method call to start sign up account process when sign up button is pressed.
+     */
+    public void signUpAccountOnClick(View view){
+        signUpAccount();
+    }
+
+    /**
+     * Attempts to create a new user account with the input values for email and password.
+     * Prompts user with appropriate message on failure.
+     * Sends user to setup profile page on success.
      */
     private void signUpAccount(){
-        String userInputEmail = mEmailEditText.getText().toString().trim();
-        String userInputPassword = mPasswordEditText.getText().toString().trim();
-        String userInputConfirmPassword = mConfirmPasswordEditText.getText().toString().trim();
+        EditText emailEditText = findViewById(R.id.register_email_edit_text);
+        EditText passwordEditText = findViewById(R.id.register_password_edit_text);
+        EditText confirmPasswordEditText = findViewById(R.id.register_confirm_password);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        // Check input fields are not not empty.
-        if(TextUtils.isEmpty(userInputEmail)){
-            Toast.makeText(RegisterActivity.this, "You must enter your email address", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(userInputPassword)){
-            Toast.makeText(RegisterActivity.this, "You must enter your password", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(userInputConfirmPassword)){
-            Toast.makeText(RegisterActivity.this, "You must enter your confirm password", Toast.LENGTH_SHORT).show();
+        String userInputEmail = emailEditText.getText().toString().trim();
+        String userInputPassword = passwordEditText.getText().toString().trim();
+        String userInputConfirmPassword = confirmPasswordEditText.getText().toString().trim();
+
+        String result = validateUserInput(userInputEmail, userInputPassword, userInputConfirmPassword);
+
+        if(!result.isEmpty()){
+            Toast.makeText(RegisterActivity.this, result, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if(userInputPassword.equals(userInputConfirmPassword)){
+
+            auth.createUserWithEmailAndPassword(userInputEmail, userInputPassword)
+                .addOnSuccessListener(authResult -> sendUserToActivity(SetupProfileActivity.class))
+                .addOnFailureListener(e -> Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
         }else{
-            // Check password and confirm password match.
-            if(userInputPassword.equals(userInputConfirmPassword)){
-                mAuth.createUserWithEmailAndPassword(userInputEmail,userInputPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(RegisterActivity.this, "Account created", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegisterActivity.this, SetupProfileActivity.class));
-                            finish();
-                        }else{
-                            String errorMessage = task.getException().getMessage();
-                            Toast.makeText(RegisterActivity.this, "Sign up failed: " + errorMessage, Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
-            }else{
-                Toast.makeText(RegisterActivity.this, "You password and confirm password must match", Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(RegisterActivity.this, "Your password and confirm password must match.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    /*
-     * Send user to home activity.
+    /**
+     * Helper method to create intent to destination passed through params.
      */
-    private void sendUserToHomeActivity(){
-        Intent homeIntent = new Intent(RegisterActivity.this, MainActivity.class);
-        startActivity(homeIntent);
+    private void sendUserToActivity(Class dest){
+        startActivity(new Intent(RegisterActivity.this, dest));
         finish();
     }
 
-    /*
-     * Send user to login activity.
+    /**
+     * Validates input values passed through params are not empty.
+     * @return empty string or appended message.
      */
-    private void sendUserToLoginActivity(){
-        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-        startActivity(loginIntent);
-        finish();
+    private String validateUserInput(String userInputEmail, String userInputPassword, String userInputNewPassword){
+        StringBuilder sb = new StringBuilder();
+
+        if(TextUtils.isEmpty(userInputEmail)){
+            sb.append("You must enter your email address.\n");
+        }
+        if(TextUtils.isEmpty(userInputPassword)) {
+            sb.append("You must enter a password.\n");
+        }
+        if(TextUtils.isEmpty(userInputNewPassword)) {
+            sb.append("You must enter a new password.");
+        }
+        return sb.toString();
     }
 
-    /*
-     * Starts background animation for register activity.
+    /**
+     * Starts background animation for activity.
      */
     private void initBackground(){
-        // Initialise values.
-        mRegisterBackground = findViewById(R.id.register_background);
-        mBackgroundAnimation = (AnimationDrawable) mRegisterBackground.getBackground();
-        // Set duration.
-        mBackgroundAnimation.setEnterFadeDuration(4500);
-        mBackgroundAnimation.setExitFadeDuration(4500);
-        //Start animation.
-        mBackgroundAnimation.start();
+        ConstraintLayout background = findViewById(R.id.register_background);
+        AnimationDrawable animationDrawable = (AnimationDrawable) background.getBackground();
+
+        // Duration.
+        animationDrawable.setEnterFadeDuration(4500);
+        animationDrawable.setExitFadeDuration(4500);
+        //Start.
+        animationDrawable.start();
     }
 }

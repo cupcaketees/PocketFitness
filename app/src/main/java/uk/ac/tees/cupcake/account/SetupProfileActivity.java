@@ -117,14 +117,14 @@ public class SetupProfileActivity extends AppCompatActivity {
 
     /**
      * Validates input values passed through params are not empty.
-     * @return string with appropriate message.
+     * @return empty string or appended message.
      */
     private String validateUserInput(String userInputFirstName, String userInputLastName){
 
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {
-            sb.append("You must enter your first name. ");
+            sb.append("You must enter your first name.\n");
         }
         if(TextUtils.isEmpty(userInputLastName)) {
             sb.append("You must enter your last name.");

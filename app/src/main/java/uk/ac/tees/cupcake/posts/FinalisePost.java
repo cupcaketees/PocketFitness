@@ -52,8 +52,11 @@ public class FinalisePost extends AppCompatActivity {
     private TextView shareButton;
     private ProgressBar shareProgress;
     private Intent imageIntent;
-
     private Uri uri;
+
+    private final String FIRST_NAME_KEY = "firstName";
+    private final String LAST_NAME_KEY = "lastName";
+    private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,7 +65,6 @@ public class FinalisePost extends AppCompatActivity {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
         mText = findViewById(R.id.finaliseDescription);
         shareButton = findViewById(R.id.postFinalise);
         backArrow = findViewById(R.id.backArrow);
@@ -81,9 +83,7 @@ public class FinalisePost extends AppCompatActivity {
      */
     private void initialise() {
         backArrow.setOnClickListener(v -> finish());
-
         shareButton.setOnClickListener(v -> { setEnabled(false, View.VISIBLE); postImagesToStorage();
-
         });
     }
 
@@ -120,24 +120,40 @@ public class FinalisePost extends AppCompatActivity {
      * If successful returns to {@link MainActivity}
      */
     private void savePost() {
-        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), Post.getCurrentTimeUsingDate());
+        FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(mCurrentUserId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if(documentSnapshot.exists()){
+                        String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
+                        String lastName = documentSnapshot.getString(LAST_NAME_KEY);
+                        String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-        firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(formattedDate()).set(post)
-                .addOnSuccessListener(e -> {
-                    Toast.makeText(FinalisePost.this, "image successfully uploaded", Toast.LENGTH_SHORT).show();
-                    IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class);
-                })
-                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Failed", Toast.LENGTH_SHORT).show());
+                        String id = Post.getCurrentTimeUsingDate();
+                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(),id, firstName, lastName, profilePictureUrl, id);
+
+                        firebaseFirestore.collection("Users")
+                                .document(mCurrentUserId)
+                                .collection("User Posts")
+                                .document(id)
+                                .set(post)
+                                .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
+                                .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+                });
     }
 
     /**
      * This sets the image on the page depending on where it came from
-     */
+     */                            
     private void defineImage() {
         String mAppend = "file:/";
         if (imageIntent.hasExtra("Selected_image")) {
             UniversalImageLoader.setImage(imageIntent.getStringExtra("Selected_image"), imageView, null, mAppend);
         } else {
+            bitmap = intent.getParcelableExtra("selected_bitmap");
+            imageView.setImageBitmap(bitmap);
             imageView.setImageBitmap(getBitmapCamera());
         }
     }

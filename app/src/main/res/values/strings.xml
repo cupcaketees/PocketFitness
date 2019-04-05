@@ -99,4 +99,9 @@
 
     <string name="home_steps_label_text">steps</string>
     <string name="home_steps_distance_label_text">miles</string>
+
+    <string name="feed_post_like_button_text">Like</string>
+    <string name="feed_post_comment_button_text">Comment</string>
+    <string name="feed_post_share_button_text">Share</string>
+    <string name="feed_post_like_header_text_view_text">people liked this post</string>
 </resources>

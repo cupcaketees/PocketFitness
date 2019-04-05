@@ -70,13 +70,13 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
     /**
      * Validates input values passed through params are not empty.
-     * @return string with appropriate message.
+     * @return empty string or appended message.
      */
     private String validateUserInput(String userInputCurrentPassword, String userInputNewPassword){
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputCurrentPassword)) {
-            sb.append("You must enter your current password. ");
+            sb.append("You must enter your current password.\n");
         }
         if(TextUtils.isEmpty(userInputNewPassword)) {
             sb.append("You must enter your new email address.");

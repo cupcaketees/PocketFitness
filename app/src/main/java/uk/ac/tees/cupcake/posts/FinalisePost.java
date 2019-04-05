@@ -16,12 +16,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -49,6 +47,11 @@ public class FinalisePost extends AppCompatActivity {
     TextView shareButton;
 
     Uri uri;
+
+    private final String FIRST_NAME_KEY = "firstName";
+    private final String LAST_NAME_KEY = "lastName";
+    private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +81,6 @@ public class FinalisePost extends AppCompatActivity {
         backArrow.setOnClickListener(v -> finish());
 
         shareButton.setOnClickListener(v -> {
-
 
             backArrow.setEnabled(false);
             shareButton.setClickable(false);
@@ -120,11 +122,28 @@ public class FinalisePost extends AppCompatActivity {
     }
 
     private void savePost() {
-        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), Post.getCurrentTimeUsingDate());
 
-        firebaseFirestore.collection("Users").document(mCurrentUserId).collection("User Posts").document(post.getDate()).set(post)
-                .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
-                .addOnFailureListener(e -> Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show());
+        FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(mCurrentUserId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if(documentSnapshot.exists()){
+                        String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
+                        String lastName = documentSnapshot.getString(LAST_NAME_KEY);
+                        String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
+
+                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(),Post.getCurrentTimeUsingDate(), firstName, lastName, profilePictureUrl);
+
+                        firebaseFirestore.collection("Users")
+                                .document(mCurrentUserId)
+                                .collection("User Posts")
+                                .document(post.getDate())
+                                .set(post)
+                                .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
+                                .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+                });
     }
 
     private void defineImage() {
@@ -135,9 +154,7 @@ public class FinalisePost extends AppCompatActivity {
         } else {
             bitmap = intent.getParcelableExtra("selected_bitmap");
             imageView.setImageBitmap(bitmap);
-
         }
-
     }
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {

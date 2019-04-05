@@ -4,33 +4,37 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by s6065431 on 12/02/2019.
- */
 public class Post  {
 
-    private String username;
-
     private String image;
-    
     private String description;
-
     private String date;
+    private String userUid;
+    private String firstName;
+    private String lastName;
+    private String profilePictureUrl;
 
     public Post() {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String username, String image, String description, String date){
-        this.username = username;
+    public Post(String userUid, String image, String description, String date, String firstName, String lastName, String profilePictureUrl){
+        this.userUid = userUid;
         this.image = image;
         this.description = description;
         this.date = date;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.profilePictureUrl = profilePictureUrl;
     }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getUserUid() { return userUid; }
+
+    public String getFirstName() { return firstName; }
+
+    public String getLastName() { return lastName; }
+
+    public String getProfilePictureUrl() { return profilePictureUrl;}
 
     public String getImage() {
         return image;

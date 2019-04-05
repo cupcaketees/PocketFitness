@@ -14,7 +14,7 @@
         android:background="#ffffff">
 
         <TextView
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/article_title"
             android:text="Article title"
@@ -28,41 +28,40 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/article_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/article_title"
-            android:layout_below="@+id/article_date"
-            android:paddingEnd="5dp"
-            android:layout_toStartOf="@+id/article_image"
-            android:paddingStart="5dp"
-            android:text="Description"
-            android:textColor="#000000"/>
-
-        <TextView
-            android:drawablePadding="5dp"
             android:id="@+id/article_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/article_title"
             android:layout_below="@+id/article_title"
             android:paddingEnd="5dp"
-            android:layout_toStartOf="@+id/post_image"
             android:paddingStart="5dp"
             android:text="Date:  "
             android:paddingTop="0dp"
             android:textSize="12sp"
             android:textColor="#000000"/>
 
-        <ImageView
-            android:id="@+id/article_image"
-            android:layout_width="150dp"
-            android:layout_height="120dp"
-            android:layout_alignParentEnd="true"
-            android:layout_margin="10dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_no_image" />
+        <TextView
+            android:id="@+id/article_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/article_title"
+            android:layout_below="@+id/article_date"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:text="Description"
+            android:textColor="#000000"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/article_url"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/article_desc"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:text="URL"
+            android:textSize="12sp"
+            android:textColor="#000000"/>
 
     </RelativeLayout>
 

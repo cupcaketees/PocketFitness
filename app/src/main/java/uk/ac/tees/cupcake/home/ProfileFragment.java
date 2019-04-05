@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,44 +18,74 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
-import uk.ac.tees.cupcake.adapters.GridImageAdapter;
+import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
 
-    private static final int NUM_GRID_COLUMNS = 4;
-
     private FirebaseAuth mAuth;
 
     private View rootView;
-
     private String currentUserUid;
+    private RecyclerView recyclerView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         rootView = inflater.inflate(R.layout.fragment_profile_page, container, false);
+
         mAuth = FirebaseAuth.getInstance();
-
         currentUserUid = mAuth.getCurrentUser().getUid();
-        Button editProfile = rootView.findViewById(R.id.profile_edit_profile_button);
 
-        editProfile.setOnClickListener(v -> {
-            IntentUtils.invokeBaseView(getContext(), EditProfileActivity.class);
-        });
+        initialise();
+        getPosts();
 
         return rootView;
+    }
+
+    private void initialise() {
+        recyclerView = rootView.findViewById(R.id.my_profile_recycler_view);
+        recyclerView.setHasFixedSize(true);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
+        Button editProfile = rootView.findViewById(R.id.profile_edit_profile_button);
+
+        editProfile.setOnClickListener(v -> IntentUtils.invokeBaseView(getContext(), EditProfileActivity.class));
+
+    }
+
+    private void getPosts() {
+        List<Post> posts = new ArrayList<>();
+        FeedAdapter feedAdapter = new FeedAdapter(posts);
+        recyclerView.setAdapter(feedAdapter);
+
+
+        FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(currentUserUid)
+                .collection("User Posts")
+                .orderBy("date", Query.Direction.DESCENDING).limit(100)
+                .get()
+                .addOnSuccessListener(documentSnapshots -> {
+                    for (DocumentSnapshot imageSnapshots : documentSnapshots) {
+                        Post currentItem = imageSnapshots.toObject(Post.class);
+                        posts.add(currentItem);
+                        feedAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override
@@ -65,7 +96,6 @@ public class ProfileFragment extends Fragment {
                 .collection("Users")
                 .document(currentUserUid)
                 .addSnapshotListener(getActivity(), (documentSnapshot, e) -> {
-                    // In case something went wrong while loading
                     if (e != null) {
                         Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                         return;
@@ -97,42 +127,6 @@ public class ProfileFragment extends Fragment {
                         emailAddressTextView.setText(mAuth.getCurrentUser().getEmail());
                         dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
                     }
-                });
-        setupGridView();
-
-    }
-
-    private void  setupGridView() {
-        ArrayList<Post> list = new ArrayList<>();
-
-        ArrayList<String> imgURLS = new ArrayList<>();
-
-        FirebaseFirestore.getInstance()
-                .collection("Users")
-                .document(currentUserUid)
-                .collection("User Posts")
-                //.orderBy("Date", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-
-                    GridView gridView =  rootView.findViewById(R.id.gridProfileView);
-                    int gridWidth = getResources().getDisplayMetrics().widthPixels;
-                    int imageWidth = gridWidth / NUM_GRID_COLUMNS;
-                    gridView.setColumnWidth(imageWidth);
-
-                    for(DocumentSnapshot imageSnapshots : documentSnapshots){
-                        Post post = imageSnapshots.toObject(Post.class);
-                        System.out.println(post.getDate());
-                        System.out.println(post.getDescription());
-                        list.add(post);
-                        imgURLS.add(post.getImage());
-                    }
-
-                    Collections.reverse(imgURLS);
-
-                    GridImageAdapter adapter = new GridImageAdapter(getActivity(), R.layout.create_post_layout_gridview, "",imgURLS);
-
-                    gridView.setAdapter(adapter);
                 });
     }
 }

@@ -64,7 +64,9 @@
             android:layout_margin="10dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_no_image"
-            android:id="@+id/post_image"/>
+            android:id="@+id/post_image"
+            android:layout_centerInParent="true"
+            />
 
     </RelativeLayout>
 

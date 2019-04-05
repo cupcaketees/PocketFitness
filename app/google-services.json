@@ -31,6 +31,22 @@
           }
         },
         {
+          "client_id": "634048568529-5v9tinmgtjj18n4dcgpc69t4btpu0525.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.tees.cupcake",
+            "certificate_hash": "0e7c1a970afa19c62213850f28012e6fa74c3062"
+          }
+        },
+        {
+          "client_id": "634048568529-od66apiev39v7dm6hsqnf1877qtkkb4g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uk.ac.tees.cupcake",
+            "certificate_hash": "c5d9f524193f4a61ea38341ae82c78b76f37b5a5"
+          }
+        },
+        {
           "client_id": "634048568529-qvvkhb0co0cn9d7llji646v8jcen0mfi.apps.googleusercontent.com",
           "client_type": 3
         }

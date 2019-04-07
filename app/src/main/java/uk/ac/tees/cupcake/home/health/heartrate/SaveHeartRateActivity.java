@@ -110,7 +110,8 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         TextView graphText = findViewById(R.id.graph_heart_rate);
         
         float average = 0;
-        for (Entry e : entries) {
+        for (int index = 0; index < entries.size(); index++) {
+            Entry e = entries.get(index);
             average += e.getY();
         }
         

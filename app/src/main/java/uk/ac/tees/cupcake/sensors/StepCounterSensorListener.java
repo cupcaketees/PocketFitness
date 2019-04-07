@@ -39,8 +39,7 @@ public class StepCounterSensorListener implements SensorEventListener {
             firstEvent = false;
         }
     
-        Intent intent = new Intent(ApplicationConstants.BROADCAST_INTENT_ACTION);
-        context.sendBroadcast(intent);
+        context.sendBroadcast(new Intent(ApplicationConstants.STEP_COUNT_BROADCAST_INTENT_ACTION));
         
         referenceStepCount = eventValue;
     }

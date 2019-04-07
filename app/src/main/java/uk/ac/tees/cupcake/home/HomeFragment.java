@@ -35,7 +35,6 @@ import uk.ac.tees.cupcake.ApplicationConstants;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
 import uk.ac.tees.cupcake.home.steps.StepCountMeasurement;
-import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
 
 public final class HomeFragment extends OnChangeFragment {
     
@@ -76,7 +75,7 @@ public final class HomeFragment extends OnChangeFragment {
     
         updateStepCount();
         
-        IntentFilter intentFilter = new IntentFilter(ApplicationConstants.BROADCAST_INTENT_ACTION);
+        IntentFilter intentFilter = new IntentFilter(ApplicationConstants.STEP_COUNT_BROADCAST_INTENT_ACTION);
         getActivity().registerReceiver(updateStepCountBroadcastReceiver, intentFilter);
         
         getStepsData(barChart);
@@ -187,11 +186,6 @@ public final class HomeFragment extends OnChangeFragment {
     };
     
     /**
-     * The number of steps per mile based on average.
-     */
-    private static final double STEPS_PER_MILE = 5280 / 2.5d;
-    
-    /**
      * Updates the step count text views with the stored step count information.
      */
     private void updateStepCount() {
@@ -200,8 +194,8 @@ public final class HomeFragment extends OnChangeFragment {
         String stepsText = Integer.toString(storedSteps);
         TextView steps = stepsCard.findViewById(R.id.home_steps_text);
         steps.setText(stepsText);
-    
-        String dist = String.format(Locale.UK, "%.2f", storedSteps / STEPS_PER_MILE);
+
+        String dist = String.format(Locale.UK, "%.2f", storedSteps / ApplicationConstants.STEPS_PER_MILE);
         TextView distance = stepsCard.findViewById(R.id.home_steps_distance);
         distance.setText(dist);
     }

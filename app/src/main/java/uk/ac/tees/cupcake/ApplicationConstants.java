@@ -19,6 +19,11 @@ public final class ApplicationConstants {
     
     public static final SimpleDateFormat DATE_TIME_FORMAT = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.UK);
     
-    public static final String BROADCAST_INTENT_ACTION = "uk.ac.tees.cupcake.home.steps.StepCountUpdate";
+    public static final String STEP_COUNT_BROADCAST_INTENT_ACTION = "uk.ac.tees.cupcake.home.steps.StepCountUpdate";
+    
+    /**
+     * The number of steps per mile based on average.
+     */
+    public static final double STEPS_PER_MILE = 5280 / 2.5d;
     
 }

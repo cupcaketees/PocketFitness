@@ -25,7 +25,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <receiver android:name=".home.steps.StepCounterResetReceiver" android:enabled="true" />
+        <receiver android:name=".home.steps.StepCounterResetReceiver" android:enabled="true" android:process=":remote" />
 
         <service android:name=".home.steps.StepCounterService" />
 

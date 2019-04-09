@@ -28,11 +28,19 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     
     public CheckableConstraintView(Context context) {
         super(context);
+        
         inflateView();
     }
     
     public CheckableConstraintView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        inflateView();
+    }
+    
+    public CheckableConstraintView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        
         inflateView();
     }
     
@@ -71,9 +79,7 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     
     @Override
     public void toggle() {
-        if (!checked) {
-            setChecked(!checked);
-        }
+        setChecked(!checked);
     }
     
     @Override

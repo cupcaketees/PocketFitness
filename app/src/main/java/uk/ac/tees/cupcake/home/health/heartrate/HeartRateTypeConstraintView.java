@@ -12,18 +12,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.utils.ColourUtility;
 import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
+import uk.ac.tees.cupcake.utils.views.CheckableImageConstraintView;
 
 /**
- * An implementation of {@link CheckableConstraintView} specifically for heart rate measurement selection.
+ * An implementation of {@link CheckableImageConstraintView} specifically for heart rate measurement selection.
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public class HeartRateTypeConstraintView extends CheckableConstraintView {
-    
-    /**
-     * The {@CircleImageView} part of the layout.
-     */
-    private CircleImageView imageView;
+public class HeartRateTypeConstraintView extends CheckableImageConstraintView<CircleImageView> {
     
     /**
      * A reference of {@link CheckableConstraintView.OnCheckedListener} called when this view is checked.
@@ -63,7 +59,6 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
     
         try {
             label.setText(a.getString(R.styleable.HeartRateTypeConstraintViewAttrs_label_text));
-            imageView.setImageDrawable(a.getDrawable(R.styleable.HeartRateTypeConstraintViewAttrs_image_src));
         } finally {
             a.recycle();
         }

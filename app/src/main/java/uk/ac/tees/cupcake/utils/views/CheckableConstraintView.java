@@ -63,12 +63,6 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
             }
             
             this.checked = checked;
-            
-            if (checked && getParent() instanceof CheckableLinearViewGroup) {
-                CheckableLinearViewGroup parent = (CheckableLinearViewGroup) getParent();
-        
-                parent.childClicked(getId());
-            }
         }
     }
     
@@ -79,7 +73,13 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     
     @Override
     public void toggle() {
-        setChecked(!checked);
+        if (getParent() instanceof CheckableLinearViewGroup) {
+            CheckableLinearViewGroup parent = (CheckableLinearViewGroup) getParent();
+            parent.childClicked(getId());
+            
+        } else {
+            setChecked(!checked);
+        }
     }
     
     @Override

@@ -96,8 +96,8 @@
         <activity android:name=".dietplan.DietActivity" />
         <activity android:name=".dietplan.DietDetailsActivity"
             android:parentActivityName=".dietplan.DietActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />/>
-
+            android:theme="@style/AppTheme.BasicActionBar" />
+        
         <activity android:name=".workouts.BodybuildingListActivity" />
         <activity android:name=".workouts.BodybuildingArmsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
@@ -118,6 +118,8 @@
         <activity android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar"/>
+
+        <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
 
     </application>
 </manifest>

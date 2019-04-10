@@ -99,4 +99,12 @@
 
     <string name="home_steps_label_text">steps</string>
     <string name="home_steps_distance_label_text">miles</string>
+    <string name="health_stats_setup_heading">Accurately tracking your health requires some stats.</string>
+    <string name="health_stats_setup_subheading">These are optional and will not be displayed on your profile.</string>
+    <string name="health_stats_setup_height_label">What is your height?</string>
+    <string name="health_stats_setup_weight_label">What is your weight?</string>
+    <string name="health_stats_height_check_text">Record my height</string>
+    <string name="health_stats_weight_check_text">Record my weight</string>
+    <string name="health_stats_age_label">How old are you?</string>
+    <string name="health_stats_sex_label">What is your sex?</string>
 </resources>

@@ -1,24 +1,16 @@
 package uk.ac.tees.cupcake.home;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.TextView;
-
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
-import com.squareup.picasso.Picasso;
-
 import java.util.Arrays;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
-import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
@@ -42,46 +34,44 @@ public class MainActivity extends NavigationBarActivity {
             Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment()));
     
     /**
-     * Sends user to login page if current user is null.
+     * Sends user to login page if they are not logged in.
      * Sends user to setup profile if account does not exist in firestore collection.
-     * if it does exist it sets nav bar name text view and profile picture image view to users values.
      */
-    private final FirebaseAuth.AuthStateListener authListener = firebaseAuth -> {
-        if (firebaseAuth.getCurrentUser() == null) {
-            IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
-        } else {
-            String currentUserId = auth.getCurrentUser().getUid();
-            firestore.collection("Users")
-                    .document(currentUserId)
-                    .get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if (documentSnapshot.exists()) {
-                                TextView navBarProfileNameTextView = findViewById(R.id.nav_bar_name_text_view);
-                                CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
-                                UserProfile profile = documentSnapshot.toObject(UserProfile.class);
-
-                                navBarProfileNameTextView.setText(profile.getFirstName() + " " + profile.getLastName());
-
-                                if (profile.getProfilePictureUrl() != null) {
-                                    Picasso.with(MainActivity.this)
-                                            .load(profile.getProfilePictureUrl())
-                                            .into(profilePictureImageView);
-                                }
-                            } else {
-                                IntentUtils.invokeBaseView(MainActivity.this, SetupProfileActivity.class);
-                                finish();
-                            }
-                        }
-                    });
+    private FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            // if current user is null. user send to login activity.
+            if(firebaseAuth.getCurrentUser() == null){
+                IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
+            }else{
+                String currentUserUid = firebaseAuth.getCurrentUser().getUid();
+                // If user document is not found they are sent to setup profile activity.
+                firestore.collection("Users")
+                         .document(currentUserUid)
+                         .get()
+                         .addOnFailureListener(e -> {
+                             IntentUtils.invokeBaseView(MainActivity.this, SetupProfileActivity.class);
+                             finish();
+                         });
+            }
         }
     };
-    
-    @Override
+
+    /**
+     * Adds auth listener on activity
+     */
     protected void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+    }
+
+    /**
+     * Removes auth listener on activity
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        auth.removeAuthStateListener(authListener);
     }
 
     @Override

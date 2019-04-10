@@ -27,18 +27,14 @@ public class NewsActivity extends NavigationBarActivity {
         RecyclerView newsRecycler = findViewById(R.id.news_articles_list);
 
         newsArticles.add(new NewsArticle("World's Strongest Man 2019 Winner",
-                "Thor Bjornson declared world's strongest man 2019 after a close competition.",
-                R.drawable.temp_man_running, "12/03/2019",
-                "https://www.menshealth.com/uk/building-muscle/a759056/5-finalists-to-watch-at-the-2018-worlds-strongest-man/"));
+                "Thor Bjornson declared world's strongest man 2019 after a close competition.","12/03/2019", "'https://www.menshealth.com/uk/building-muscle/a759056/5-finalists-to-watch-at-the-2018-worlds-strongest-man/'"));
 
         newsArticles.add(new NewsArticle("Larry Wheels talks steroids",
-                "Larry Wheels describes his first experience with a steroid cycle as rats eating away at his intestines.",
-                R.drawable.temp_man_running, "11/02/2019","https://barbend.com/larry-wheels-steroids/"));
+                "Larry Wheels describes his first experience with a steroid cycle as rats eating away at his intestines.", "11/02/2019", "'https://barbend.com/larry-wheels-steroids/'"));
 
         newsArticles.add(new NewsArticle("New superfood",
                 "Golden berries, these are deliciously sweet options are solid sources of fiber," +
-                        " plus they’re rich in antioxidants and heart-healthy fatty acids. ",
-                R.drawable.temp_man_running, "24/01/2019","https://www.cookinglight.com/news/best-superfoods-for-health"));
+                        " plus they’re rich in antioxidants and heart-healthy fatty acids. ", "24/01/2019", "'https://www.cookinglight.com/news/best-superfoods-for-health'"));
 
         newsRecycler.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

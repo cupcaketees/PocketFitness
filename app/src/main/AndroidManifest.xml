@@ -97,7 +97,6 @@
         <activity android:name=".dietplan.DietDetailsActivity"
             android:parentActivityName=".dietplan.DietActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-        
         <activity android:name=".workouts.BodybuildingListActivity" />
         <activity android:name=".workouts.BodybuildingArmsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"

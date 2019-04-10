@@ -30,9 +30,9 @@ public class IntentUtils {
         invokeViewWithExtras(context, selectedClass, extras);
     }
 
-    public static void invokePhotoView(Context context, Class<?> selectedClass, Bitmap bitmap) {
+    public static void invokePhotoView(Context context, Class<?> selectedClass, Uri uri) {
         Intent intent = new Intent(context, selectedClass);
-        intent.putExtra("selected_bitmap", bitmap);
+        intent.putExtra("selected_uri", uri);
         context.startActivity(intent);
     }
 

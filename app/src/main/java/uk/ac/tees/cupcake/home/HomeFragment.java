@@ -60,12 +60,12 @@ public final class HomeFragment extends OnChangeFragment {
         
         barChart = view.findViewById(R.id.home_steps_bar_chart);
         setupBarChart(barChart);
-
+        
         stepsCard = view.findViewById(R.id.home_steps_card);
         lastMeasurement = view.findViewById(R.id.home_heart_last_measurement);
         lastMeasurementDate = view.findViewById(R.id.home_heart_last_measurement_date);
         lastMeasurementType = view.findViewById(R.id.home_heart_last_measurement_type);
-        
+    
         return view;
     }
     

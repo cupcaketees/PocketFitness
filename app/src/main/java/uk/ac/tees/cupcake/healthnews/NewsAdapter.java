@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,13 +32,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     public void onBindViewHolder(NewsAdapter.ViewHolder holder, int position) {
         holder.articleDesc.setText(mNewsArticle.get(position).getArticleDesc());
         holder.articleName.setText(mNewsArticle.get(position).getArticleName());
-        holder.articleImage.setImageResource(mNewsArticle.get(position).getArticleImage());
+        holder.articleURL.setText(mNewsArticle.get(position).getArticleURL());
         holder.articleDate.setText(mNewsArticle.get(position).getArticleDate());
 
-
         holder.itemView.setOnClickListener(v -> IntentUtils.invokeToURL(mContext, mNewsArticle.get(position).getArticleURL()));
-
-
     }
 
     @Override
@@ -51,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
         private TextView articleName;
         private TextView articleDesc;
-        private ImageView articleImage;
+        private TextView articleURL;
         private TextView articleDate;
 
         public ViewHolder(View itemView) {
@@ -60,7 +56,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
             articleName = itemView.findViewById(R.id.article_title);
             articleDesc = itemView.findViewById(R.id.article_desc);
-            articleImage = itemView.findViewById(R.id.article_image);
+            articleURL = itemView.findViewById(R.id.article_url);
             articleDate = itemView.findViewById(R.id.article_date);
         }
     }

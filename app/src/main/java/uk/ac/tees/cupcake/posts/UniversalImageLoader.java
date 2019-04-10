@@ -1,5 +1,7 @@
 package uk.ac.tees.cupcake.posts;
 
+
+
 import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,49 +12,41 @@ import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 /**
- * Created by User on 6/4/2017.
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ * This is used to for static images.
+ * for non static images use {@link SquareImagePostView}
  */
-
 public class UniversalImageLoader {
 
-    /**
-     * this method can be sued to set images that are static. It can't be used if the images
-     * are being changed in the Fragment/Activity - OR if they are being set in a list or
-     * a grid
-     * @param imgURL
-     * @param image
-     * @param mProgressBar
-     * @param append
-     */
-    public static void setImage(String imgURL, ImageView image, final ProgressBar mProgressBar, String append){
+    public static void setImage(String URL, ImageView selectedImage, final ProgressBar mBar, String appendUri){
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.displayImage(append + imgURL, image, new ImageLoadingListener() {
+        imageLoader.displayImage(appendUri + URL, selectedImage, new ImageLoadingListener() {
             @Override
             public void onLoadingStarted(String imageUri, View view) {
-                if(mProgressBar != null){
-                    mProgressBar.setVisibility(View.VISIBLE);
+                if(mBar != null){
+                    mBar.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                if(mProgressBar != null){
-                    mProgressBar.setVisibility(View.GONE);
+                if(mBar != null){
+                    mBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                if(mProgressBar != null){
-                    mProgressBar.setVisibility(View.GONE);
+                if(mBar != null){
+                    mBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onLoadingCancelled(String imageUri, View view) {
-                if(mProgressBar != null){
-                    mProgressBar.setVisibility(View.GONE);
+                if(mBar != null){
+                    mBar.setVisibility(View.GONE);
                 }
             }
         });

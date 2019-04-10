@@ -21,19 +21,9 @@ import uk.ac.tees.cupcake.utils.views.CheckableImageConstraintView;
  */
 public class HeartRateTypeConstraintView extends CheckableImageConstraintView<CircleImageView> {
     
-    /**
-     * A reference of {@link CheckableConstraintView.OnCheckedListener} called when this view is checked.
-     */
-    private final OnCheckedListener checkedListener = new HeartRateTypeCheckedListener();
-    
-    public HeartRateTypeConstraintView(Context context) {
-        super(context);
-        addOnCheckListener(checkedListener);
-    }
-    
     public HeartRateTypeConstraintView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        addOnCheckListener(checkedListener);
+        addOnCheckListener(new HeartRateTypeCheckedListener());
     
         applyAttributes(attrs);
     }
@@ -73,7 +63,7 @@ public class HeartRateTypeConstraintView extends CheckableImageConstraintView<Ci
         @Override
         public void onChecked(boolean isChecked) {
             int colour = isChecked ?
-                    ColourUtility.setAlpha(0xF0, getResources().getColor(R.color.colorPrimary))
+                    ColourUtility.setAlpha(0xF0, getResources().getColor(R.color.colorPrimaryDark))
                     : 0xFFD0D0D0;
             
             imageView.setCircleBackgroundColor(colour);

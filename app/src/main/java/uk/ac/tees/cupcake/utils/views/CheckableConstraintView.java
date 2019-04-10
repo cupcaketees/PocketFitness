@@ -96,6 +96,7 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     @Override
     public boolean performClick() {
         toggle();
+        
         return super.performClick();
     }
     

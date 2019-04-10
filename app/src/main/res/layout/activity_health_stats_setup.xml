@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="uk.ac.tees.cupcake.account.HealthStatsSetupActivity">
+    tools:context="uk.ac.tees.cupcake.account.healthstats.HealthStatsSetupActivity">
 
     <TextView
         android:id="@+id/health_stats_setup_heading"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:text="In order to accurately track your health we require some stats."
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/health_stats_setup_heading"
         android:textAlignment="center"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,91 +29,49 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:text="These are optional and will not be displayed on your profile."
+        android:text="@string/health_stats_setup_subheading"
         android:textAlignment="center"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_heading" />
-
-    <TextView
-        android:id="@+id/health_stats_setup_height_text"
-        android:text="Height"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/health_stats_setup_height_label"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_subheading" />
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_heading"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
 
-    <TextView
-        android:id="@+id/health_stats_setup_height_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="32dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/health_stats_setup_height_text"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_subheading" />
-
-    <uk.ac.tees.cupcake.utils.views.ScaleValuePickerView
-        android:id="@+id/health_stats_height_picker"
+    <ScrollView
+        android:id="@+id/health_stats_setup_content_scroll"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:background="#00000000"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/health_stats_setup_next_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_height_label"
-        app:scale_color="@color/colorPrimaryDark" />
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_subheading">
 
-    <TextView
-        android:id="@+id/health_stats_setup_weight_text"
-        android:text="Weight"
-        android:layout_width="wrap_content"
+        <include
+            layout="@layout/activity_health_stats_setup_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/health_stats_setup_next_button"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/health_stats_setup_weight_label"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:background="@drawable/login_button_shape"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:onClick="onClickNext"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_height_picker" />
-
-    <TextView
-        android:id="@+id/health_stats_setup_weight_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="32dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/health_stats_setup_weight_text"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_height_picker" />
-
-    <uk.ac.tees.cupcake.utils.views.ScaleValuePickerView
-        android:id="@+id/health_stats_weight_picker"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:background="#00000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_weight_label"
-        app:scale_color="@color/colorPrimaryDark" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

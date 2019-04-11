@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.healthnews;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -28,6 +29,9 @@ public class NewsActivity extends NavigationBarActivity {
     private ArrayList<NewsArticle> newsArticles = new ArrayList<>();
     private ProgressBar mProgressBar;
     private TextView mCheckNewsRecieved;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+
     @Override
     protected int layoutResource() {
         return R.layout.news_list_view;
@@ -46,50 +50,61 @@ public class NewsActivity extends NavigationBarActivity {
 
         mProgressBar.setVisibility(View.VISIBLE);
         mCheckNewsRecieved.setVisibility(View.GONE);
+        swipeRefreshLayout = findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(this::setupNews);
+        setupNews();
 
-        NewsApiClient newsApiClient = new NewsApiClient(getString(R.string.news_api_key));
 
-        newsApiClient.getEverything(
-                new EverythingRequest.Builder()
-                        .q("Fitness")
-                        .pageSize(50)
-                        .language("en")
-                        .build(),
-                new NewsApiClient.ArticlesResponseCallback() {
 
-                    @Override
-                    public void onSuccess(ArticleResponse articleResponse) {
+    }
 
-                        for (int i = 0; i < 50; i++) {
-                            newsArticles.add(new NewsArticle(articleResponse.getArticles().get(i).getTitle(),
-                                    articleResponse.getArticles().get(i).getDescription(),
-                                    articleResponse.getArticles().get(i).getPublishedAt(),
-                                    articleResponse.getArticles().get(i).getSource().getName(),
-                                    articleResponse.getArticles().get(i).getUrlToImage(),
-                                    articleResponse.getArticles().get(i).getUrl()));
+    private void setupNews() {
+        if(newsArticles.size() != 50) {
+            NewsApiClient newsApiClient = new NewsApiClient(getString(R.string.news_api_key));
+
+            newsApiClient.getEverything(
+                    new EverythingRequest.Builder()
+                            .q("Fitness")
+                            .pageSize(50)
+                            .language("en")
+                            .build(),
+                    new NewsApiClient.ArticlesResponseCallback() {
+
+                        @Override
+                        public void onSuccess(ArticleResponse articleResponse) {
+
+                            for (int i = 0; i < 50; i++) {
+                                newsArticles.add(new NewsArticle(articleResponse.getArticles().get(i).getTitle(),
+                                        articleResponse.getArticles().get(i).getDescription(),
+                                        articleResponse.getArticles().get(i).getPublishedAt(),
+                                        articleResponse.getArticles().get(i).getSource().getName(),
+                                        articleResponse.getArticles().get(i).getUrlToImage(),
+                                        articleResponse.getArticles().get(i).getUrl()));
+                            }
+
+                            RecyclerView newsRecycler = findViewById(R.id.news_articles_list);
+                            Log.d(TAG, "setup: " + newsArticles.size());
+                            newsRecycler.setHasFixedSize(true);
+                            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                            RecyclerView.Adapter adapter = new NewsAdapter(newsArticles, getApplicationContext());
+                            newsRecycler.setLayoutManager(layoutManager);
+                            newsRecycler.setAdapter(adapter);
+                            mProgressBar.setVisibility(View.GONE);
+
                         }
 
-                        RecyclerView newsRecycler = findViewById(R.id.news_articles_list);
-                        Log.d(TAG, "setup: " + newsArticles.size());
-                        newsRecycler.setHasFixedSize(true);
-                        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                        RecyclerView.Adapter adapter = new NewsAdapter(newsArticles, getApplicationContext());
-                        newsRecycler.setLayoutManager(layoutManager);
-                        newsRecycler.setAdapter(adapter);
-                        mProgressBar.setVisibility(View.GONE);
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            Log.d(TAG, "onFailure: " + throwable);
+                            System.out.println(throwable.getMessage());
+                            mProgressBar.setVisibility(View.GONE);
+                            mCheckNewsRecieved.setVisibility(View.VISIBLE);
+
+                        }
 
                     }
-
-                    @Override
-                    public void onFailure(Throwable throwable) {
-                        Log.d(TAG, "onFailure: " + throwable);
-                        System.out.println(throwable.getMessage());
-                        mProgressBar.setVisibility(View.GONE);
-                        mCheckNewsRecieved.setVisibility(View.VISIBLE);
-
-                    }
-                }
-        );
-
+            );
+        }
+        swipeRefreshLayout.setRefreshing(false);
     }
 }

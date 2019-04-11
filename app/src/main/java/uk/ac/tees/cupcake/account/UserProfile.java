@@ -1,16 +1,25 @@
 package uk.ac.tees.cupcake.account;
 
+import java.io.Serializable;
+
 /**
  * User Profile class
  * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
-public class UserProfile {
+public class UserProfile implements Serializable {
+    
     private String firstName;
     private String lastName;
+    
     private String profilePictureUrl;
     private String coverPhotoUrl;
+    
     private String accountCreated;
     private String bio;
+    
+    private int height;
+    private int weight;
+    private Sex sex;
 
     public UserProfile(){
         //  empty constructor required for fire base.
@@ -42,5 +51,28 @@ public class UserProfile {
     public String getAccountCreated() {
         return accountCreated;
     }
-
+    
+    public void setHeight(int height) {
+        this.height = height;
+    }
+    
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+    
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+    
+    public int getHeight() {
+        return height;
+    }
+    
+    public int getWeight() {
+        return weight;
+    }
+    
+    public Sex getSex() {
+        return sex;
+    }
 }

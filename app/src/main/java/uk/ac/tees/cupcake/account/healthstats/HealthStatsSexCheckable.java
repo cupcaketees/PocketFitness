@@ -4,6 +4,10 @@ import android.content.Context;
 import android.graphics.PorterDuff;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import uk.ac.tees.cupcake.R;
@@ -31,11 +35,23 @@ public class HealthStatsSexCheckable extends CheckableImageConstraintView<ImageV
         root.setClickable(true);
         
         imageView = root.findViewById(R.id.health_stats_image_sex);
+        imageView.setColorFilter(0xFFD0D0D0, PorterDuff.Mode.SRC_ATOP);
     }
 
     private final OnCheckedListener checkedListener = isChecked -> {
         int primaryDark = getResources().getColor(R.color.colorPrimaryDark);
         int colour = isChecked ? ColourUtility.setAlpha(255, primaryDark) : 0xFFD0D0D0;
+        
+        if (isChecked) {
+            Animation animation = new ScaleAnimation(
+                    1.2f, 1f, 1.2f, 1f,
+                    ScaleAnimation.RELATIVE_TO_SELF, .5f,
+                    ScaleAnimation.RELATIVE_TO_SELF, .5f);
+            animation.setInterpolator(t -> (float) -(Math.pow(Math.E, -t*5) * Math.cos(20 * t)) + 1);
+            animation.setDuration(1500);
+            
+            startAnimation(animation);
+        }
         
         imageView.setColorFilter(colour, PorterDuff.Mode.SRC_ATOP);
     };

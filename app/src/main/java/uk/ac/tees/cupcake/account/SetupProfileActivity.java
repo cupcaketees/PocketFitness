@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -20,7 +19,7 @@ import java.text.DateFormat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.account.healthstats.HealthStatsSetupActivity;
 
 /**
  * Setup Profile Activity
@@ -29,13 +28,10 @@ import uk.ac.tees.cupcake.home.MainActivity;
 public class SetupProfileActivity extends AppCompatActivity {
 
     private CircleImageView mProfilePictureImageView;
-    private EditText mFirstNameEditText;
-    private EditText mLastNameEditText;
     private String mProfileImageUrl;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage mStorage;
-    private FirebaseFirestore mFireStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +40,8 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        mFireStore = FirebaseFirestore.getInstance();
-
+        
         mProfilePictureImageView = findViewById(R.id.setup_profile_profile_picture_image_view);
-        mFirstNameEditText = findViewById(R.id.setup_profile_first_name_edit_text);
-        mLastNameEditText = findViewById(R.id.setup_profile_last_name_edit_text);
     }
 
     public void addPhotoOnClick(View view){
@@ -85,34 +78,30 @@ public class SetupProfileActivity extends AppCompatActivity {
             }
         }
     }
-
-    public void finishSetupOnClick(View view){
-        saveData();
-    }
-
-    private void saveData(){
-        String firstNameUserInput = mFirstNameEditText.getText().toString().trim();
-        String lastNameUserInput = mLastNameEditText.getText().toString().trim();
-
+    
+    /**
+     * Invoked upon clicking the next button.
+     */
+    public void nextOnClick(View view) {
+        EditText firstName = findViewById(R.id.setup_profile_first_name_edit_text);
+        EditText lastName = findViewById(R.id.setup_profile_last_name_edit_text);
+        
+        String firstNameUserInput = firstName.getText().toString().trim();
+        String lastNameUserInput = lastName.getText().toString().trim();
+    
         String result = validateUserInput(firstNameUserInput, lastNameUserInput);
-
+    
         if(!result.isEmpty()){
             Toast.makeText(SetupProfileActivity.this, result, Toast.LENGTH_SHORT).show();
             return;
         }
-
+    
         String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
-
+    
         UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
-
-        mFireStore.collection("Users")
-                  .document(mAuth.getCurrentUser().getUid())
-                  .set(profile)
-                  .addOnSuccessListener(aVoid -> {
-                      Toast.makeText(SetupProfileActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
-                      startActivity(new Intent(SetupProfileActivity.this, MainActivity.class));
-                  })
-                  .addOnFailureListener(e -> Toast.makeText(SetupProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
+    
+        startActivity(new Intent(SetupProfileActivity.this, HealthStatsSetupActivity.class)
+                .putExtra("user_profile", profile));
     }
 
     /**
@@ -120,7 +109,6 @@ public class SetupProfileActivity extends AppCompatActivity {
      * @return empty string or appended message.
      */
     private String validateUserInput(String userInputFirstName, String userInputLastName){
-
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {

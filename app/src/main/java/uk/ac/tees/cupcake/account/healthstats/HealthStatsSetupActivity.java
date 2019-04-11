@@ -1,11 +1,20 @@
 package uk.ac.tees.cupcake.account.healthstats;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.Sex;
+import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;
 import uk.ac.tees.cupcake.utils.views.OneSelectedOnCheckStrategy;
 import uk.ac.tees.cupcake.utils.views.ScaleValuePickerView;
@@ -40,37 +49,47 @@ public class HealthStatsSetupActivity extends AppCompatActivity {
         addWeightPicker();
     }
     
-    public enum Sex {
+    public void onClickSkip(View view) {
+        UserProfile profile = (UserProfile) getIntent().getSerializableExtra("user_profile");
         
-        MALE, FEMALE;
-        
-        static Sex get(int resourceId) {
-            switch (resourceId) {
-                case R.id.health_stats_sex_male:
-                    return MALE;
-                    
-                case R.id.health_stats_sex_female:
-                    return FEMALE;
-                    
-                default:
-                    throw new NullPointerException();
-            }
-        }
+        persistProfile(profile);
     }
     
     public void onClickFinish(View view) {
+        UserProfile profile = (UserProfile) getIntent().getSerializableExtra("user_profile");
         
         if (!checkableGroup.getChecked().isEmpty()) {
-            Sex selected = Sex.get(checkableGroup.getChecked().get(0));
+            Sex sex = Sex.get(checkableGroup.getChecked().get(0));
+            profile.setSex(sex);
         }
         
         if (recordHeight) {
-            heightPicker.getCurrentValue();
+            profile.setHeight((int) heightPicker.getCurrentValue());
         }
         
         if (recordWeight) {
-            weightPicker.getCurrentValue();
+            profile.setWeight((int) weightPicker.getCurrentValue());
         }
+    
+        persistProfile(profile);
+    }
+    
+    private void persistProfile(UserProfile profile) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    
+        if (user == null) {
+            throw new NullPointerException("User doesn't exist");
+        }
+        
+        FirebaseFirestore.getInstance()
+                .collection("Users")
+                .document(user.getUid())
+                .set(profile)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(HealthStatsSetupActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(HealthStatsSetupActivity.this, MainActivity.class));
+                })
+                .addOnFailureListener(e -> Toast.makeText(HealthStatsSetupActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }
     
     public void onHeightCheckBoxClick(View view) {

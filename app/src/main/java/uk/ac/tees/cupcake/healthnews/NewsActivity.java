@@ -3,6 +3,9 @@ package uk.ac.tees.cupcake.healthnews;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.kwabenaberko.newsapilib.NewsApiClient;
 import com.kwabenaberko.newsapilib.models.request.EverythingRequest;
@@ -23,7 +26,8 @@ import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 public class NewsActivity extends NavigationBarActivity {
     private static final String TAG = "NewsActivity";
     private ArrayList<NewsArticle> newsArticles = new ArrayList<>();
-
+    private ProgressBar mProgressBar;
+    private TextView mCheckNewsRecieved;
     @Override
     protected int layoutResource() {
         return R.layout.news_list_view;
@@ -36,6 +40,12 @@ public class NewsActivity extends NavigationBarActivity {
      */
     @Override
     public void setup() {
+
+        mProgressBar = findViewById(R.id.news_progressbar);
+        mCheckNewsRecieved = findViewById(R.id.news_availability);
+
+        mProgressBar.setVisibility(View.VISIBLE);
+        mCheckNewsRecieved.setVisibility(View.GONE);
 
         NewsApiClient newsApiClient = new NewsApiClient(getString(R.string.news_api_key));
 
@@ -66,12 +76,17 @@ public class NewsActivity extends NavigationBarActivity {
                         RecyclerView.Adapter adapter = new NewsAdapter(newsArticles, getApplicationContext());
                         newsRecycler.setLayoutManager(layoutManager);
                         newsRecycler.setAdapter(adapter);
+                        mProgressBar.setVisibility(View.GONE);
+
                     }
 
                     @Override
                     public void onFailure(Throwable throwable) {
                         Log.d(TAG, "onFailure: " + throwable);
                         System.out.println(throwable.getMessage());
+                        mProgressBar.setVisibility(View.GONE);
+                        mCheckNewsRecieved.setVisibility(View.VISIBLE);
+
                     }
                 }
         );

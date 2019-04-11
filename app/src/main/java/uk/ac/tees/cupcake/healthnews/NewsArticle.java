@@ -17,6 +17,7 @@ public class NewsArticle {
      * @param articleURLLink  - Article URL
      * @param articleDate     - Article date
      * @param articleImageURL - Link to Article Image URL
+     * @param articleURLName  - Name of Website
      */
     public NewsArticle(String articleName, String articleDesc, String articleDate, String articleURLName, String articleImageURL, String articleURLLink) {
         this.articleName = articleName;

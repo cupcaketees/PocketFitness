@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -138,7 +139,10 @@ public class FinalisePost extends AppCompatActivity {
                                 .collection("User Posts")
                                 .document(id)
                                 .set(post)
-                                .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Post Successful", Toast.LENGTH_SHORT).show();
+                                    IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class);
+                                })
                                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                     }
                 });

@@ -14,7 +14,8 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
 /**
- * Bodybuilding Workout Activity Class
+ * News Activity
+ * Show user relevant fitness/health news
  *
  * @author Michael Small <s6065431@tees.ac.uk>
  * @author Hugo Tomas <s6006225@tees.ac.uk> - News API

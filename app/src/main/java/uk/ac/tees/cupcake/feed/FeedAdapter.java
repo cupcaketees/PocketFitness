@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import uk.ac.tees.cupcake.R;
 
@@ -43,18 +47,23 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
         Post post = posts.get(position);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String currentUserUid = auth.getCurrentUser().getUid();
 
         // Path to current post likes
         CollectionReference collectionRef = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        String currentUserUid = auth.getCurrentUser().getUid();
-
-        // Set values
-        holder.postDescriptionTextView.setText(post.getDescription());
-        holder.postDateTextView.setText(post.getDate());
+        // calc time ago
+        long time = post.getTimeStamp().getTime();
+        long now = System.currentTimeMillis();
+        CharSequence ago = DateUtils.getRelativeTimeSpanString(time,now , DateUtils.SECOND_IN_MILLIS);
 
         String profileName = post.getFirstName() + " " + post.getLastName();
+
+        // Set values
+
+        holder.postDescriptionTextView.setText(post.getDescription());
+        holder.postDateTextView.setText(ago);
         holder.postProfileNameTextView.setText(profileName);
 
         if(post.getProfilePictureUrl() != null){

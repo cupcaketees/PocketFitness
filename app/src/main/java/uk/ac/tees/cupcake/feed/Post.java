@@ -1,8 +1,8 @@
 package uk.ac.tees.cupcake.feed;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
+
 
 public class Post  {
 
@@ -15,11 +15,14 @@ public class Post  {
     private String profilePictureUrl;
     private String postId;
 
+    @ServerTimestamp
+    private Date timeStamp;
+
     public Post() {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String userUid, String image, String description, String date, String firstName, String lastName, String profilePictureUrl, String id){
+    public Post(String userUid, String image, String description, String firstName, String lastName, String profilePictureUrl, String id){
         this.postId = id;
         this.userUid = userUid;
         this.image = image;
@@ -48,13 +51,12 @@ public class Post  {
         return description;
     }
 
-    public String getDate() { return date; }
-
-    public static String getCurrentTimeUsingDate() {
-        Date date = new Date();
-        String strDateFormat = "E, dd MMM yyyy HH:mm";
-        DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
-        String formattedDate = dateFormat.format(date);
-        return formattedDate;
+    public void setTimeStamp(Date timeStamp){
+        this.timeStamp = timeStamp;
     }
+
+    public Date getTimeStamp(){
+        return timeStamp;
+    }
+
 }

@@ -3,9 +3,7 @@ package uk.ac.tees.cupcake.feed;
 import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
-
 public class Post  {
-
     private String image;
     private String description;
     private String date;
@@ -37,9 +35,13 @@ public class Post  {
 
     public String getPostId() { return postId;}
 
-    public String getFirstName() { return firstName; }
+    public String getFirstName() {
+        return firstName.substring(0,1).toUpperCase() + firstName.substring(1);
+    }
 
-    public String getLastName() { return lastName; }
+    public String getLastName() {
+        return lastName.substring(0,1).toUpperCase() + lastName.substring(1);
+    }
 
     public String getProfilePictureUrl() { return profilePictureUrl;}
 
@@ -58,5 +60,4 @@ public class Post  {
     public Date getTimeStamp(){
         return timeStamp;
     }
-
 }

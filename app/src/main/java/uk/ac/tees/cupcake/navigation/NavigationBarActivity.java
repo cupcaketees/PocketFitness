@@ -144,7 +144,8 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
                           UserProfile profile = documentSnapshot.toObject(UserProfile.class);
 
                           // Set Values
-                          profileNameTextView.setText(profile.getFirstName() + " " + profile.getLastName());
+                          String profileName = profile.getFirstName() + " " + profile.getLastName();
+                          profileNameTextView.setText(profileName);
 
                           if (profile.getProfilePictureUrl() != null) {
 

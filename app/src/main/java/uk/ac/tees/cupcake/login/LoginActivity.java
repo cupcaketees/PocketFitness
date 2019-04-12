@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.login;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +17,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
@@ -41,18 +46,41 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Initialise
         mAuth = FirebaseAuth.getInstance();
         SignInButton googleSignInButton = findViewById(R.id.sign_in_google_button);
 
-        //Method call to start background animation.
-        initBackground();
+        //Auth listener listening for any changes in auth state. On change directs user them to appropriate activity.
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() != null){
 
-        //When auth is not null send user to main activity.
-        mAuthListener = firebaseAuth -> {
-            if(firebaseAuth.getCurrentUser() != null){
-                sendUserToActivity(MainActivity.class);
+                    FirebaseFirestore.getInstance()
+                                     .collection("Users")
+                                     .document(firebaseAuth.getCurrentUser().getUid())
+                                     .get()
+                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                         @Override
+                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                             if(documentSnapshot.exists()){
+                                                 // Account that does not require to be setup.
+                                                 sendUserToActivity(MainActivity.class);
+                                                 finish();
+                                             }else{
+                                                 // New account that requires setup
+                                                 sendUserToActivity(SetupProfileActivity.class);
+                                                 finish();
+                                             }
+                                         }
+                                     })
+                                     .addOnFailureListener(e -> Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                }
             }
         };
+
+        //Method call to start background animation.
+        initBackground();
 
         //Configures google sign in.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -115,7 +143,6 @@ public class LoginActivity extends AppCompatActivity {
      */
     private void sendUserToActivity(Class dest){
         startActivity(new Intent(LoginActivity.this, dest));
-        finish();
     }
 
     /**

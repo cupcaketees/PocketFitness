@@ -1,8 +1,10 @@
 package uk.ac.tees.cupcake.navigation;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewStub;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
@@ -21,8 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import uk.ac.tees.cupcake.R;
 
+import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.food.SearchFoodActivity;
@@ -33,13 +35,11 @@ import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
 import uk.ac.tees.cupcake.posts.PostActivity;
-import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.videoplayer.VideoListActivity;
 import uk.ac.tees.cupcake.workouts.BodybuildingListActivity;
 
 /**
  * An {@link Activity} that includes a navigation bar.
- *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
 public abstract class NavigationBarActivity extends AppCompatActivity {
@@ -52,47 +52,9 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
     
     public static final Map<Integer, NavigationItemOnClickAction> NAV_BAR_ACTIONS = new HashMap<>();
 
-    private final FirebaseAuth auth = FirebaseAuth.getInstance();
-
-    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-    private final FirebaseAuth.AuthStateListener authListener = firebaseAuth -> {
-        if (firebaseAuth.getCurrentUser() == null) {
-            IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
-        } else {
-            String currentUserId = auth.getCurrentUser().getUid();
-            firestore.collection("Users")
-                    .document(currentUserId)
-                    .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            TextView navBarProfileNameTextView = findViewById(R.id.nav_bar_name_text_view);
-                            CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
-                            UserProfile profile = documentSnapshot.toObject(UserProfile.class);
-
-                            navBarProfileNameTextView.setText(profile.getFirstName() + " " + profile.getLastName());
-
-                            if (profile.getProfilePictureUrl() != null) {
-                                Picasso.with(NavigationBarActivity.this)
-                                        .load(profile.getProfilePictureUrl())
-                                        .into(profilePictureImageView);
-                            }
-                        }
-                    });
-        }
-    };
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        auth.removeAuthStateListener(authListener);
-    }
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     static {
         NAV_BAR_ACTIONS.put(R.id.nav_home, new StartIntentNavigationItemAction(MainActivity.class));
@@ -113,7 +75,25 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
 
         NAV_BAR_ACTIONS.put(R.id.nav_signout, c -> FirebaseAuth.getInstance().signOut());
     }
-    
+
+    /**
+     * Adds listener on activity
+     */
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    /**
+     * Removes listener on activity
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
+    }
+
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,15 +102,61 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         stub = findViewById(R.id.layout_stub);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
-        
+
         addNavigationView();
 
         stub.setLayoutResource(layoutResource());
         stub.inflate();
 
         setup();
+
+        mAuth = FirebaseAuth.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    startActivity(new Intent(NavigationBarActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
+
+        setNameAndImage();
     }
-    
+    /**
+     * Creates path to current user document. (User Uid is key.)
+     * On success if the document snapshot exists gets users profile name, last name and image url values and sets them to textView and ImageView on nav bar.
+     */
+    private void setNameAndImage() {
+
+        mFirestore.collection("Users")
+                  .document(mAuth.getCurrentUser().getUid())
+                  .get()
+                  .addOnSuccessListener(documentSnapshot -> {
+                      if(documentSnapshot.exists()){
+                          // Initialise
+                          TextView profileNameTextView = findViewById(R.id.nav_bar_name_text_view);
+                          CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
+
+                          // Get Values
+                          UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+
+                          // Set Values
+                          profileNameTextView.setText(profile.getFirstName() + " " + profile.getLastName());
+
+                          if (profile.getProfilePictureUrl() != null) {
+
+                              Picasso.with(NavigationBarActivity.this)
+                                     .load(profile.getProfilePictureUrl())
+                                     .into(profilePictureImageView);
+                          }
+                      }
+                  })
+                  .addOnFailureListener(e -> Toast.makeText(NavigationBarActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
     @LayoutRes
     protected abstract int layoutResource();
 
@@ -172,5 +198,4 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
             onBack();
         }
     }
-    
 }

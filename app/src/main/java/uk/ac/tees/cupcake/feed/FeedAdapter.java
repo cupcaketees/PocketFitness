@@ -6,7 +6,6 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +15,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -75,28 +76,36 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                    .into(holder.postImageImageView);
         }
 
-        // On click checks checks if current user uid document exists within selected post likes collection.
-        holder.postLikeButton.setOnClickListener(v -> collectionRef.document(currentUserUid)
+        // Set like button to correct value
+        collectionRef.document(currentUserUid)
                      .get()
                      .addOnSuccessListener(documentSnapshot -> {
+                         boolean value = documentSnapshot.exists();
+                         holder.postLikeButton.setLiked(value);
+                     });
 
-                         if(documentSnapshot.exists()){
-                             // Deletes document if it already exists.
-                             collectionRef.document(currentUserUid)
-                                          .delete()
-                                          .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
-                                          .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-                         }else{
-                             // Creates new document entry "like" with server timestamp if a document does not already exist.
-                             Map<String, Object> likeTimeStamp = new HashMap<>();
-                             likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
+        holder.postLikeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                // Creates new document entry "like" with server timestamp if a document does not already exist.
+                Map<String, Object> likeTimeStamp = new HashMap<>();
+                likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
 
-                             collectionRef.document(currentUserUid)
-                                          .set(likeTimeStamp)
-                                          .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
-                                          .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-                         }
-                     }));
+                collectionRef.document(currentUserUid)
+                             .set(likeTimeStamp)
+                             .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                // Deletes document removing like
+                collectionRef.document(currentUserUid)
+                             .delete()
+                             .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+            }
+        });
 
         // Updates Like button Text
         collectionRef.document(currentUserUid)
@@ -106,7 +115,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                          }
 
                          String likeValue = documentSnapshot.exists() ? "Unlike" : "Like";
-                         holder.postLikeButton.setText(likeValue);
+                         holder.postLikeButtonTextView.setText(likeValue);
                      });
 
         // Gets total amount of likes
@@ -131,11 +140,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private TextView postDateTextView;
         private TextView postProfileNameTextView;
         private TextView postLikesCountTextView;
+        private TextView postLikeButtonTextView;
 
         private ImageView postImageImageView;
         private ImageView postProfilePictureImageView;
 
-        private Button postLikeButton;
+        private LikeButton postLikeButton;
 
         public FeedViewHolder(View postView) {
             super(postView);
@@ -144,11 +154,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             postDescriptionTextView = postView.findViewById(R.id.feed_post_description_text_view);
             postDateTextView = postView.findViewById(R.id.feed_post_time_posted_text_view);
             postLikesCountTextView = postView.findViewById(R.id.feed_post_likes_count_text_view);
+            postLikeButtonTextView = postView.findViewById(R.id.feed_post_like_button_text_view);
+
+            postLikeButton = postView.findViewById(R.id.post_like_button);
 
             postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
             postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
-
-            postLikeButton = postView.findViewById(R.id.feed_post_like_button);
         }
 
         /**

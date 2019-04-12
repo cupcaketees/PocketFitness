@@ -1,6 +1,7 @@
 package uk.ac.tees.cupcake.account;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,14 +25,26 @@ import uk.ac.tees.cupcake.login.LoginActivity;
 public class DeleteAccountActivity extends AppCompatActivity {
 
     private EditText mPasswordEditText;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_account);
         setTitle("Delete My Account");
 
         mPasswordEditText = findViewById(R.id.delete_account_password_edit_text);
+        mAuth = FirebaseAuth.getInstance();
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if(firebaseAuth.getCurrentUser() == null){
+                    startActivity(new Intent(DeleteAccountActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
     }
 
     /**
@@ -46,14 +59,16 @@ public class DeleteAccountActivity extends AppCompatActivity {
             Toast.makeText(DeleteAccountActivity.this, "You must enter your current password.", Toast.LENGTH_SHORT).show();
             return;
         }
+
         FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
         AuthCredential credential = EmailAuthProvider.getCredential(currentUser.getEmail(), userInputCurrentPassword);
 
         firestore.collection("Users")
                  .document(currentUser.getUid())
                  .delete()
-                 .addOnSuccessListener(aVoid -> Toast.makeText(DeleteAccountActivity.this, "Data stored has been deleted", Toast.LENGTH_SHORT).show())
+                 .addOnSuccessListener(aVoid -> Toast.makeText(DeleteAccountActivity.this, "User stored data has been deleted", Toast.LENGTH_SHORT).show())
                  .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
 
         currentUser.reauthenticate(credential)
@@ -61,12 +76,28 @@ public class DeleteAccountActivity extends AppCompatActivity {
                        currentUser.delete()
                                   .addOnSuccessListener(aVoid1 -> {
                                       Toast.makeText(DeleteAccountActivity.this, "Your account deleted successfully", Toast.LENGTH_SHORT).show();
-                                      startActivity(new Intent(DeleteAccountActivity.this, LoginActivity.class));
-                                      finish();
                                   })
                                   .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
                    })
                    .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
+    }
+
+    /**
+     * Adds listener on activity
+     */
+    @Override
+    protected void onStart(){
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    /**
+     * Removes listener on activity
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mAuth.removeAuthStateListener(mAuthListener);
     }
 }
 

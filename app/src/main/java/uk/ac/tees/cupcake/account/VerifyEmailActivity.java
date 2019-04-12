@@ -36,6 +36,7 @@ public class VerifyEmailActivity extends AppCompatActivity {
                    .addOnSuccessListener(aVoid -> {
                        Toast.makeText(VerifyEmailActivity.this, "Instructions have been sent to your registered email address", Toast.LENGTH_SHORT).show();
                        startActivity(new Intent(VerifyEmailActivity.this, MainActivity.class));
+                       finish();
                    })
                    .addOnFailureListener(e -> Toast.makeText(VerifyEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }

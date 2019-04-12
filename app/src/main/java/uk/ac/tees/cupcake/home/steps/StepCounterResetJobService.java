@@ -1,5 +1,7 @@
 package uk.ac.tees.cupcake.home.steps;
 
+import android.app.job.JobParameters;
+import android.app.job.JobService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,19 +22,19 @@ import uk.ac.tees.cupcake.ApplicationConstants;
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public class StepCounterResetReceiver extends BroadcastReceiver {
+public class StepCounterResetJobService extends JobService {
     
     @Override
-    public void onReceive(Context context, Intent intent) {
-        SharedPreferences preferences = context.getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE);
-        
-        final int steps = preferences.getInt(ApplicationConstants.STEPS_PREFERENCE_KEY, 0);
+    public boolean onStartJob(JobParameters params) {
+        SharedPreferences preferences = getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE);
     
+        final int steps = preferences.getInt(ApplicationConstants.STEPS_PREFERENCE_KEY, 0);
+
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, -1);
-        
+    
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        
+    
         if (user != null) {
             FirebaseFirestore.getInstance()
                     .collection("UserStats")
@@ -42,8 +44,14 @@ public class StepCounterResetReceiver extends BroadcastReceiver {
                     .addOnFailureListener(x -> Log.e("StepCounterResetReceive", "onReceive: Failed to add step count to database", x));
         }
     
-        context.sendBroadcast(new Intent(ApplicationConstants.STEP_COUNT_BROADCAST_INTENT_ACTION));
+        sendBroadcast(new Intent(ApplicationConstants.STEP_COUNT_BROADCAST_INTENT_ACTION));
         preferences.edit().putInt("steps", 0).apply();
+        return false;
+    }
+    
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        return false;
     }
     
 }

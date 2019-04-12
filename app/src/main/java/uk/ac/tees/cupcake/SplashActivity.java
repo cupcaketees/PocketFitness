@@ -1,7 +1,8 @@
 package uk.ac.tees.cupcake;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,18 +10,15 @@ import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import java.util.Calendar;
-
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Calendar;
+
 import uk.ac.tees.cupcake.home.MainActivity;
-import uk.ac.tees.cupcake.login.LoginActivity;
-import uk.ac.tees.cupcake.posts.PostActivity;
-import uk.ac.tees.cupcake.utils.IntentUtils;
-import uk.ac.tees.cupcake.utils.PermissionCheck;
-import uk.ac.tees.cupcake.utils.Permissions;
-import uk.ac.tees.cupcake.home.steps.StepCounterResetReceiver;
+import uk.ac.tees.cupcake.home.steps.StepCounterResetStarterJobService;
 import uk.ac.tees.cupcake.home.steps.StepCounterService;
+import uk.ac.tees.cupcake.login.LoginActivity;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 /**
  * Created by HugoT on 13/02/2019.
@@ -29,8 +27,6 @@ import uk.ac.tees.cupcake.home.steps.StepCounterService;
 public class SplashActivity extends AppCompatActivity {
     
     private static final String TAG = "SplashActivity";
-    
-    private AlarmManager alarmManager;
 
     /**
      * Starts LoginActivity depending on user SystemClock.sleep runs the activity but
@@ -48,24 +44,32 @@ public class SplashActivity extends AppCompatActivity {
         }
         
         startService(new Intent(getApplicationContext(), StepCounterService.class));
-        startStepCounterAlarm();
+        scheduleStepCounterResetJob();
         
         SystemClock.sleep(1000);
         finish();
         Log.d(TAG, "onCreate: onEnd");
     }
     
-    private void startStepCounterAlarm() {
-        alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(SplashActivity.this, StepCounterResetReceiver.class);
-        PendingIntent pending = PendingIntent.getBroadcast(SplashActivity.this, 0, intent, 0);
+    private void scheduleStepCounterResetJob() {
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(System.currentTimeMillis());
+        c.add(Calendar.DATE, 1);
+        c.set(Calendar.HOUR, 0);
+        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.SECOND, 0);
     
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        calendar.add(Calendar.DATE, 1);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pending);
+        final long initialDelay = c.getTimeInMillis() - System.currentTimeMillis();
+        
+        JobScheduler jobScheduler = (JobScheduler) getApplicationContext().getSystemService(Context.JOB_SCHEDULER_SERVICE);
+        ComponentName componentName = new ComponentName(getApplicationContext(), StepCounterResetStarterJobService.class);
+    
+        JobInfo.Builder builder = new JobInfo.Builder(ApplicationConstants.STEP_COUNT_RESET_STARTER_JOB_ID, componentName)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
+                .setMinimumLatency(initialDelay)
+                .setOverrideDeadline((int) (initialDelay * 1.01));
+        
+        jobScheduler.schedule(builder.build());
     }
-    
+
 }

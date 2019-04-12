@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <supports-screens
         android:anyDensity="true"
@@ -25,7 +26,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <receiver android:name=".home.steps.StepCounterResetReceiver" android:enabled="true" android:process=":remote" />
+        <service
+            android:name=".home.steps.StepCounterResetStarterJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true" />
+
+        <service
+            android:name=".home.steps.StepCounterResetJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true" />
 
         <service android:name=".home.steps.StepCounterService" />
 

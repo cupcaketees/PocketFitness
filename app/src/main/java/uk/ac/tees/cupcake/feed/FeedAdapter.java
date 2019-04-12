@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -42,68 +43,74 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
         Post post = posts.get(position);
+
+        // Path to current post likes
+        CollectionReference collectionRef = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
         FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        String currentUserUid = auth.getCurrentUser().getUid();
+
+        // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(post.getDate());
-        holder.postProfileNameTextView.setText(post.getFirstName() + " " + post.getLastName());
-        CollectionReference path = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
+
+        String profileName = post.getFirstName() + " " + post.getLastName();
+        holder.postProfileNameTextView.setText(profileName);
 
         if(post.getProfilePictureUrl() != null){
             Picasso.with(holder.itemView.getContext())
-                    .load(post.getProfilePictureUrl())
-                    .into(holder.postProfilePictureImageView);
+                   .load(post.getProfilePictureUrl())
+                   .into(holder.postProfilePictureImageView);
         }
 
         if(post.getImage() != null) {
             Picasso.with(holder.itemView.getContext())
-                    .load(post.getImage())
-                    .into(holder.postImageImageView);
+                   .load(post.getImage())
+                   .into(holder.postImageImageView);
         }
 
-        holder.postLikeButton.setOnClickListener(v -> {
+        // On click checks checks if current user uid document exists within selected post likes collection.
+        holder.postLikeButton.setOnClickListener(v -> collectionRef.document(currentUserUid)
+                     .get()
+                     .addOnSuccessListener(documentSnapshot -> {
 
-            path.document(auth.getCurrentUser().getUid())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
+                         if(documentSnapshot.exists()){
+                             // Deletes document if it already exists.
+                             collectionRef.document(currentUserUid)
+                                          .delete()
+                                          .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
+                                          .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+                         }else{
+                             // Creates new document entry "like" with server timestamp if a document does not already exist.
+                             Map<String, Object> likeTimeStamp = new HashMap<>();
+                             likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
 
-                    if(documentSnapshot.exists()){
-                        path.document(auth.getCurrentUser().getUid())
-                            .delete()
-                            .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You remove your like", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }else{
-                        Map<String, Object> likeTimeStamp = new HashMap<>();
-                        likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
+                             collectionRef.document(currentUserUid)
+                                          .set(likeTimeStamp)
+                                          .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
+                                          .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+                         }
+                     }));
 
-                        path.document(auth.getCurrentUser().getUid())
-                            .set(likeTimeStamp)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }
-                });
-        });
+        // Updates Like button Text
+        collectionRef.document(currentUserUid)
+                     .addSnapshotListener((documentSnapshot, e) -> {
+                         if(documentSnapshot == null){
+                             return;
+                         }
 
-        path.document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-            if(documentSnapshot == null){
-                return;
-            }
-            if(documentSnapshot.exists()){
-                holder.postLikeButton.setText("Unlike");
-            }else{
-                holder.postLikeButton.setText("Like");
-            }
-        });
+                         String likeValue = documentSnapshot.exists() ? "Unlike" : "Like";
+                         holder.postLikeButton.setText(likeValue);
+                     });
 
-        path.addSnapshotListener((documentSnapshots, e) -> {
+        // Gets total amount of likes
+        collectionRef.addSnapshotListener((documentSnapshots, e) -> {
             if(documentSnapshots == null){
                 return;
             }
 
-            if(documentSnapshots.isEmpty()){
-                holder.setPostLikesCount(0);
-            }else{
-                holder.setPostLikesCount(documentSnapshots.size());
-            }
+            int totalLikes = documentSnapshots.isEmpty() ? 0 : documentSnapshots.size();
+            holder.setPostLikesCount(totalLikes);
         });
     }
 
@@ -117,9 +124,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private TextView postDescriptionTextView;
         private TextView postDateTextView;
         private TextView postProfileNameTextView;
+        private TextView postLikesCountTextView;
+
         private ImageView postImageImageView;
         private ImageView postProfilePictureImageView;
-        private TextView postLikesCountTextView;
 
         private Button postLikeButton;
 
@@ -128,19 +136,22 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
             postProfileNameTextView = postView.findViewById(R.id.feed_post_username_text_view);
             postDescriptionTextView = postView.findViewById(R.id.feed_post_description_text_view);
-            postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
             postDateTextView = postView.findViewById(R.id.feed_post_time_posted_text_view);
-            postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
             postLikesCountTextView = postView.findViewById(R.id.feed_post_likes_count_text_view);
+
+            postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
+            postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
+
             postLikeButton = postView.findViewById(R.id.feed_post_like_button);
         }
 
+        /**
+         * Sets likes text view to appropriate output.
+         * @param value total likes
+         */
         public void setPostLikesCount(int value){
-            if(value == 1){
-                postLikesCountTextView.setText(value + " person liked this post");
-            }else{
-                postLikesCountTextView.setText(value + " people liked this post");
-            }
+            String output = (value == 1) ? "1 person liked this post" : value + " people liked this post";
+            postLikesCountTextView.setText(output);
         }
     }
 

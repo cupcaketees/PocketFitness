@@ -17,6 +17,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
@@ -80,8 +81,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                                   .addOnFailureListener(e -> Toast.makeText(SetupProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
 
             }  else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                String error = result.getError().getMessage();
-                Toast.makeText(SetupProfileActivity.this, error, Toast.LENGTH_LONG).show();
+                Toast.makeText(SetupProfileActivity.this, result.getError().getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -101,9 +101,10 @@ public class SetupProfileActivity extends AppCompatActivity {
             return;
         }
 
-        String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
 
-        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
+        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, currentDate);
 
         mFireStore.collection("Users")
                   .document(mAuth.getCurrentUser().getUid())
@@ -111,6 +112,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                   .addOnSuccessListener(aVoid -> {
                       Toast.makeText(SetupProfileActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
                       startActivity(new Intent(SetupProfileActivity.this, MainActivity.class));
+                      finish();
                   })
                   .addOnFailureListener(e -> Toast.makeText(SetupProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }

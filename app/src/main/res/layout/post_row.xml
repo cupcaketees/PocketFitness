@@ -35,7 +35,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
                 android:layout_marginStart="8dp"
-                android:text="TextView"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/feed_post_profile_picture_image_view"
                 app:layout_constraintEnd_toStartOf="@+id/feed_post_settings_button"
@@ -47,9 +46,9 @@
                 android:id="@+id/feed_post_time_posted_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:layout_marginTop="24dp"
-                android:text="TextView"
-                app:layout_constraintEnd_toStartOf="@+id/feed_post_settings_button"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/feed_post_username_text_view"
                 app:layout_constraintTop_toTopOf="@+id/feed_post_username_text_view"
                 tools:text="22 hours ago" />
@@ -57,7 +56,7 @@
             <ImageView
                 android:id="@+id/feed_post_image_image_view"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="false"
                 android:background="@color/cardview_dark_background"
@@ -73,7 +72,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
                 android:textAlignment="viewStart"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -89,7 +87,7 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ic_comment_icon"
+                android:drawableStart="@drawable/ic_comment_icon"
                 android:drawablePadding="5dp"
                 android:text="@string/feed_post_comment_button_text"
                 android:textAllCaps="false"
@@ -109,7 +107,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:background="#7F000000"
-                android:text="TextView"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="16sp"
@@ -164,8 +161,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view">
-            </com.like.LikeButton>
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view"/>
 
             <TextView
                 android:id="@+id/feed_post_like_button_text_view"

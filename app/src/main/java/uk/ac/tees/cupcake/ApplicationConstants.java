@@ -21,13 +21,10 @@ public final class ApplicationConstants {
     
     public static final String STEP_COUNT_BROADCAST_INTENT_ACTION = "uk.ac.tees.cupcake.home.steps.StepCountUpdate";
     
-    /**
-     * The number of steps per mile based on average.
-     */
-    public static final double STEPS_PER_MILE = 5280 / 2.5d;
-    
     public static final int STEP_COUNT_RESET_JOB_ID = 1;
     
     public static final int STEP_COUNT_RESET_STARTER_JOB_ID = 2;
+    
+    public static final int STEP_COUNTING_EVENT_START_THRESHOLD = 5;
     
 }

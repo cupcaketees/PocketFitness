@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -148,8 +151,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
                     optionOne = layout.findViewById(R.id.feed_more_option_remove_active);
 
+                    // option one to remove post
                     optionOne.setOnClickListener(v1 -> {
-                        Toast.makeText(holder.itemView.getContext(), "Option remove selected, users post", Toast.LENGTH_SHORT).show();
+                        holder.deletePost(post.getPostId());
                         mDropdown.dismiss();
                     });
 
@@ -190,6 +194,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private TextView postProfileNameTextView;
         private TextView postLikesCountTextView;
         private TextView postLikeButtonTextView;
+        private Context context;
 
         private ImageView postImageImageView;
         private ImageView postProfilePictureImageView;
@@ -215,15 +220,35 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             postLikeButton = postView.findViewById(R.id.post_like_button);
 
             mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+            context = postView.getContext();
         }
 
         /**
          * Sets likes text view to appropriate output.
          * @param value total likes
          */
-        public void setPostLikesCount(int value){
+        private void setPostLikesCount(int value){
             String output = (value == 1) ? "1 person liked this post" : value + " people liked this post";
             postLikesCountTextView.setText(output);
+        }
+
+        private void deletePost(String postId){
+
+            DocumentReference documentRef = FirebaseFirestore.getInstance()
+                                                             .collection("Users")
+                                                             .document(mCurrentUser.getUid() + "/User Posts/" + postId);
+            // First deletes all likes from a users post.
+            documentRef.collection("Likes")
+                       .get()
+                       .addOnSuccessListener(documentSnapshots -> {
+                           for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                               documentSnapshot.getReference().delete();
+                           }
+                       });
+            // Deletes Post
+            documentRef.delete()
+                             .addOnSuccessListener(aVoid -> Toast.makeText(context, "Post has been removed.", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 

@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.view.ViewStub;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -158,6 +159,16 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
                       }
                   })
                   .addOnFailureListener(e -> Toast.makeText(NavigationBarActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
+    /**
+     * Sends user to profile fragment.
+     */
+    public void navProfileNameOnClick(View view){
+
+        Intent intent = new Intent(view.getContext(), MainActivity.class);
+        intent.putExtra("fragmentChoice", 2);
+        startActivity(intent);
     }
 
     @LayoutRes

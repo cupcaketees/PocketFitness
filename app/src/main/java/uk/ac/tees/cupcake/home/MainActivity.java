@@ -1,11 +1,15 @@
 package uk.ac.tees.cupcake.home;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
 import java.util.Arrays;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
@@ -33,9 +37,16 @@ public class MainActivity extends NavigationBarActivity {
         if (!PermissionCheck.checkPermissionsList(Permissions.PERMISSIONS, getApplicationContext())) {
             PermissionCheck.verifyPermissions(Permissions.PERMISSIONS, MainActivity.this);
         }
+
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
-        
+        Bundle extras = getIntent().getExtras();
+        // Checks if the fragment choice is specified and sends user to that page.
+        if (extras != null) {
+            int pageId = extras.getInt("fragmentChoice");
+            viewPager.setCurrentItem(pageId, true);
+        }
+
         BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_bar);
         bottomNavigationView.setupWithViewPager(viewPager);
     }

@@ -51,12 +51,8 @@ public class ProfileFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_profile_page, container, false);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-
-        mCurrentUser = auth.getCurrentUser();
-
-        mDocumentRef = firestore.collection("Users/").document(mCurrentUser.getUid());
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mDocumentRef = FirebaseFirestore.getInstance().collection("Users/").document(mCurrentUser.getUid());
 
         initialise();
         getPosts();
@@ -81,7 +77,7 @@ public class ProfileFragment extends Fragment {
         recyclerView.setAdapter(feedAdapter);
 
         mDocumentRef.collection("User Posts")
-                    .orderBy("date", Query.Direction.DESCENDING).limit(100)
+                    .orderBy("timeStamp", Query.Direction.DESCENDING).limit(100)
                     .get()
                     .addOnSuccessListener(documentSnapshots -> {
                         for(DocumentSnapshot documentSnapshot : documentSnapshots){

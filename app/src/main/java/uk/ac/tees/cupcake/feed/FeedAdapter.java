@@ -1,16 +1,21 @@
 package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +33,7 @@ import uk.ac.tees.cupcake.R;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
     private final List<Post> posts;
+    private PopupWindow mDropdown;
 
     public FeedAdapter(List<Post> posts) {
         this.posts = posts;
@@ -127,6 +133,49 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             int totalLikes = documentSnapshots.isEmpty() ? 0 : documentSnapshots.size();
             holder.setPostLikesCount(totalLikes);
         });
+
+        // More options on click . creates popup window
+        holder.postMoreOptionsImageButton.setOnClickListener(v -> {
+
+            try {
+                LayoutInflater inflater = (LayoutInflater) holder.itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View layout;
+                TextView optionOne;
+
+                if(holder.mCurrentUser.getUid().equals(post.getUserUid())){
+                    // Post is by current user
+                     layout = inflater.inflate(R.layout.feed_more_option_menu_active_user, null);
+
+                    optionOne = layout.findViewById(R.id.feed_more_option_remove_active);
+
+                    optionOne.setOnClickListener(v1 -> {
+                        Toast.makeText(holder.itemView.getContext(), "Option remove selected, users post", Toast.LENGTH_SHORT).show();
+                        mDropdown.dismiss();
+                    });
+
+                }else{
+                    // Post is not by current user
+                    layout = inflater.inflate(R.layout.feed_more_option_menu_user, null);
+                    optionOne = layout.findViewById(R.id.feed_more_option_one);
+
+                    optionOne.setOnClickListener(v1 -> {
+                        Toast.makeText(holder.itemView.getContext(), "Option one selected, not user post", Toast.LENGTH_SHORT).show();
+                        mDropdown.dismiss();
+                    });
+                }
+
+                layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                mDropdown = new PopupWindow(layout, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+
+                Drawable background = holder.itemView.getResources().getDrawable(android.R.drawable.editbox_background_normal);
+                mDropdown.setBackgroundDrawable(background);
+
+                mDropdown.showAsDropDown(holder.postMoreOptionsImageButton, -300 ,-30);
+
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        });
     }
 
     @Override
@@ -145,7 +194,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private ImageView postImageImageView;
         private ImageView postProfilePictureImageView;
 
+        private ImageButton postMoreOptionsImageButton;
         private LikeButton postLikeButton;
+
+        private FirebaseUser mCurrentUser;
 
         public FeedViewHolder(View postView) {
             super(postView);
@@ -156,10 +208,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             postLikesCountTextView = postView.findViewById(R.id.feed_post_likes_count_text_view);
             postLikeButtonTextView = postView.findViewById(R.id.feed_post_like_button_text_view);
 
-            postLikeButton = postView.findViewById(R.id.post_like_button);
-
             postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
             postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
+
+            postMoreOptionsImageButton = postView.findViewById(R.id.feed_more_options_image_button);
+            postLikeButton = postView.findViewById(R.id.post_like_button);
+
+            mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         }
 
         /**

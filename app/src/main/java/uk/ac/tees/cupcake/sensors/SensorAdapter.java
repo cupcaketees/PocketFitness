@@ -51,6 +51,10 @@ public final class SensorAdapter {
      * @return {@code true} fi the sensor is added.
      */
     public boolean addSensor(int type) {
+        if (sensors.containsKey(type)) {
+            return false;
+        }
+        
         Sensor s = sensorManager.getDefaultSensor(type);
 
         if (s == null) {
@@ -63,9 +67,7 @@ public final class SensorAdapter {
             s = sensorList.get(0);
         }
 
-        if (!sensors.containsKey(type)) {
-            sensors.put(type, s);
-        }
+        sensors.put(type, s);
         return true;
     }
     

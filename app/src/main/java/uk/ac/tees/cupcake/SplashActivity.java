@@ -4,11 +4,13 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -16,8 +18,9 @@ import java.util.Calendar;
 
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.home.steps.StepCounterResetStarterJobService;
-import uk.ac.tees.cupcake.home.steps.StepCounterService;
 import uk.ac.tees.cupcake.login.LoginActivity;
+import uk.ac.tees.cupcake.sensors.SensorAdapter;
+import uk.ac.tees.cupcake.sensors.StepCounterSensorListener;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 /**
@@ -28,6 +31,8 @@ public class SplashActivity extends AppCompatActivity {
     
     private static final String TAG = "SplashActivity";
 
+    private SensorAdapter sensorAdapter;
+    
     /**
      * Starts LoginActivity depending on user SystemClock.sleep runs the activity but
      * only opens it after 1 second gives everything time to load.
@@ -42,8 +47,13 @@ public class SplashActivity extends AppCompatActivity {
         } else {
             IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class);
         }
+        StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
         
-        startService(new Intent(getApplicationContext(), StepCounterService.class));
+        if (sensorAdapter == null)
+            sensorAdapter = new SensorAdapter(getApplicationContext());
+    
+        boolean success = sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
+        Toast.makeText(this, "" + success, Toast.LENGTH_SHORT).show();
         scheduleStepCounterResetJob();
         
         SystemClock.sleep(1000);
@@ -54,9 +64,8 @@ public class SplashActivity extends AppCompatActivity {
     private void scheduleStepCounterResetJob() {
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(System.currentTimeMillis());
-        c.add(Calendar.DATE, 1);
-        c.set(Calendar.HOUR, 0);
-        c.set(Calendar.MINUTE, 0);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
         c.set(Calendar.SECOND, 0);
     
         final long initialDelay = c.getTimeInMillis() - System.currentTimeMillis();

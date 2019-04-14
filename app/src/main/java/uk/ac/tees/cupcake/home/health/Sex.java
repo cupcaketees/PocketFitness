@@ -40,15 +40,15 @@ public enum Sex {
     /**
      * Gets an instance of {@link Sex} for the given resource Id.
      *
-     * @param resourceId the resource id associated with the desired {@link Sex}
+     * @param resourceName the resource id associated with the desired {@link Sex}
      * @return {@link #MALE} or {@link #FEMALE}
      */
-    public static Sex get(@IdRes int resourceId) {
-        switch (resourceId) {
-            case R.id.health_stats_sex_male:
+    public static Sex get(String resourceName) {
+        switch (resourceName) {
+            case "health_stats_sex_male":
                 return MALE;
             
-            case R.id.health_stats_sex_female:
+            case "health_stats_sex_female":
                 return FEMALE;
             
             default:

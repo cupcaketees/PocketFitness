@@ -59,8 +59,9 @@ public class HealthStatsSetupActivity extends AppCompatActivity {
         UserProfile profile = (UserProfile) getIntent().getSerializableExtra("user_profile");
         
         if (!checkableGroup.getChecked().isEmpty()) {
-            Sex sex = Sex.get(checkableGroup.getChecked().get(0));
-            profile.setSex(sex);
+            String resName = getResources().getResourceEntryName(checkableGroup.getChecked().get(0));
+            
+            profile.setSex(Sex.get(resName));
         }
         
         if (recordHeight) {

@@ -231,9 +231,15 @@ public final class HomeFragment extends OnChangeFragment {
         float weight = sex.getAverageWeight();
         
         if (userProfile != null) {
-            sex = userProfile.getSex();
-            height = userProfile.getHeight();
-            weight = userProfile.getWeight();
+            if (userProfile.getSex() != null) {
+                sex = userProfile.getSex();
+            }
+            if (userProfile.getHeight() > 0) {
+                height = userProfile.getHeight();
+            }
+            if (userProfile.getWeight() > 0) {
+                weight = userProfile.getWeight();
+            }
         }
     
         float distance = storedSteps * height * sex.getStrideMultiplier();

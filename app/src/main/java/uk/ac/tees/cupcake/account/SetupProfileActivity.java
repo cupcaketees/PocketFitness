@@ -6,7 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,7 +57,11 @@ public class SetupProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+    
+        ProgressBar progressBar = findViewById(R.id.setup_profile_loading_view);
+        progressBar.setVisibility(View.VISIBLE);
+        mProfilePictureImageView.setVisibility(View.INVISIBLE);
+        
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
@@ -66,6 +73,11 @@ public class SetupProfileActivity extends AppCompatActivity {
                                                               .child(mAuth.getCurrentUser().getUid());
                 profilePicturesRef.putFile(resultUri)
                                   .addOnSuccessListener(taskSnapshot -> {
+                                      progressBar.setVisibility(View.GONE);
+                                      mProfilePictureImageView.setVisibility(View.VISIBLE);
+                                      AlphaAnimation alphaAnim = new AlphaAnimation(0, 1);
+                                      alphaAnim.setDuration(1000);
+                                      mProfilePictureImageView.startAnimation(alphaAnim);
                                       mProfilePictureImageView.setImageURI(resultUri);
                                       mProfileImageUrl = taskSnapshot.getDownloadUrl().toString();
                                       Toast.makeText(SetupProfileActivity.this, "Your profile picture has been saved successfully.", Toast.LENGTH_SHORT).show();

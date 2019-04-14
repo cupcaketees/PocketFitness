@@ -2,7 +2,6 @@ package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -54,10 +53,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
         Post post = posts.get(position);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        String currentUserUid = auth.getCurrentUser().getUid();
 
-        // Path to current post likes
+        String currentUserUid = FirebaseAuth.getInstance()
+                                            .getCurrentUser()
+                                            .getUid();
+
+        // Reference to current post likes collection
         CollectionReference collectionRef = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
 
         // calc time ago
@@ -68,7 +69,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         String profileName = post.getFirstName() + " " + post.getLastName();
 
         // Set values
-
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
         holder.postProfileNameTextView.setText(profileName);
@@ -129,7 +129,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         // Gets total amount of likes
         collectionRef.addSnapshotListener((documentSnapshots, e) -> {
-            if(documentSnapshots == null){
+            if(e != null){
                 return;
             }
 
@@ -241,6 +241,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             documentRef.collection("Likes")
                        .get()
                        .addOnSuccessListener(documentSnapshots -> {
+
                            for(DocumentSnapshot documentSnapshot : documentSnapshots){
                                documentSnapshot.getReference().delete();
                            }

@@ -35,6 +35,7 @@ public class SplashActivity extends AppCompatActivity {
         if(currentUser == null){
             // not logged in
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            finish();
         }else{
             FirebaseFirestore.getInstance()
                              .collection("Users")

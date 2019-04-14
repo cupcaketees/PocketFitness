@@ -2,6 +2,8 @@ package uk.ac.tees.cupcake.account;
 
 import java.io.Serializable;
 
+import uk.ac.tees.cupcake.home.health.Sex;
+
 /**
  * User Profile class
  * @author Bradley Hunter <s6263464@live.tees.ac.uk>

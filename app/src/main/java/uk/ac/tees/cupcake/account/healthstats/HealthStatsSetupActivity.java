@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.account.Sex;
+import uk.ac.tees.cupcake.home.health.Sex;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;

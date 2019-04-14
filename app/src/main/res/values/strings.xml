@@ -98,7 +98,7 @@
     <string name="search_food_row_label_header_text_view">Name</string>
 
     <string name="home_steps_label_text">steps</string>
-    <string name="home_steps_distance_label_text">miles</string>
+    <string name="home_steps_distance_label_text">km</string>
 
     <string name="feed_post_like_button_text">Like</string>
     <string name="feed_post_comment_button_text">Comment</string>
@@ -114,4 +114,6 @@
     <string name="health_stats_weight_check_text">Record my weight</string>
     <string name="health_stats_age_label">How old are you?</string>
     <string name="health_stats_sex_label">What is your sex?</string>
+    <string name="home_heart_measure_label">Tap to measure</string>
+    <string name="home_heart_rate_label">Heart Rate</string>
 </resources>

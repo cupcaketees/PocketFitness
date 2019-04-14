@@ -46,6 +46,7 @@ public class StepCounterResetJobService extends JobService {
     
         sendBroadcast(new Intent(ApplicationConstants.STEP_COUNT_BROADCAST_INTENT_ACTION));
         preferences.edit().putInt("steps", 0).apply();
+        preferences.edit().putInt("steps_time", 0).apply();
         return false;
     }
     

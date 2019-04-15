@@ -40,10 +40,11 @@ public class MainActivity extends NavigationBarActivity {
 
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
+
         Bundle extras = getIntent().getExtras();
         // Checks if the fragment choice is specified and sends user to that page.
         if (extras != null) {
-            int pageId = extras.getInt("fragmentChoice");
+            int pageId = extras.getInt("index");
             viewPager.setCurrentItem(pageId, true);
         }
 

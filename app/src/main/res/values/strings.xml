@@ -101,9 +101,16 @@
     <string name="home_steps_distance_label_text">miles</string>
 
     <string name="feed_more_option_remove_active">Remove Post</string>
-
     <string name="feed_post_like_button_text">Like</string>
     <string name="feed_post_comment_button_text">Comment</string>
     <string name="feed_post_share_button_text">Share</string>
     <string name="feed_post_like_header_text_view_text">people liked this post</string>
+
+    <string name="login_title_text_view_text">Pocket Fitness</string>
+    <string name="login_edit_text_email_hint">Email Address</string>
+    <string name="login_default_sign_in_button_text">Sign in</string>
+    <string name="login_google_sign_in_button_text">Sign in with Google+</string>
+    <string name="login_sign_up_text_view_text">Don\'t have an account? Register</string>
+    <string name="login_sign_up_2_text_view_text">Register</string>
+    <string name="login_check_box_text">Disable background</string>
 </resources>

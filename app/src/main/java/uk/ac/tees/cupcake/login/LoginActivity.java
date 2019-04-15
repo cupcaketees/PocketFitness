@@ -1,15 +1,17 @@
 package uk.ac.tees.cupcake.login;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,7 +32,7 @@ import uk.ac.tees.cupcake.home.MainActivity;
 
 /**
  * Login Activity
- * @author Bradley Hunter <s6263464@tees.ac.uk>
+ * @author Bradley Hunter <s6263464@tees.ac.uk>1
  */
 
 public class LoginActivity extends AppCompatActivity {
@@ -40,6 +42,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private VideoView mBackgroundVideoView;
+    private MediaPlayer mMediaPlayer;
+    private int mCurrentVideoPos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +53,26 @@ public class LoginActivity extends AppCompatActivity {
 
         // Initialise
         mAuth = FirebaseAuth.getInstance();
-        SignInButton googleSignInButton = findViewById(R.id.sign_in_google_button);
+        mBackgroundVideoView = findViewById(R.id.login_video_view);
+        CheckBox backgroundCheckBox = findViewById(R.id.login_check_box);
+
+        // Uri path to mp4 file
+        Uri uri = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.running_video);
+
+        //Set
+        mBackgroundVideoView.setVideoURI(uri);
+        mBackgroundVideoView.start();
+
+        mBackgroundVideoView.setOnPreparedListener(mp -> {
+            mMediaPlayer = mp;
+            mMediaPlayer.setLooping(true);
+            if(mCurrentVideoPos != 0){
+                // goes to prev pos
+                mMediaPlayer.seekTo(mCurrentVideoPos);
+                mMediaPlayer.start();
+            }
+        });
+
 
         //Auth listener listening for any changes in auth state. On change directs user them to appropriate activity.
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -79,9 +103,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        //Method call to start background animation.
-        initBackground();
-
         //Configures google sign in.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                                                          .requestIdToken(getString(R.string.default_web_client_id))
@@ -95,8 +116,17 @@ public class LoginActivity extends AppCompatActivity {
                                               .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                                               .build();
 
-        //On click method call to start sign in process with Google account.
-        googleSignInButton.setOnClickListener(v -> signInGoogle());
+
+        // pauses or plays video depending on value of checkbox.
+        backgroundCheckBox.setOnClickListener(v -> {
+            boolean checked = ((CheckBox) v).isChecked();
+
+            if(checked){
+                mBackgroundVideoView.pause();
+            }else{
+                mBackgroundVideoView.start();
+            }
+        });
     }
 
     /**
@@ -117,10 +147,39 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mCurrentVideoPos = mMediaPlayer.getCurrentPosition();
+        mBackgroundVideoView.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mBackgroundVideoView.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMediaPlayer.release();
+        mMediaPlayer = null;
+    }
+
+
+
+    /**
+     * On click method call to start sign in process with Google account.
+     */
+    public void googleSignInOnClick(View view){
+        signInGoogle();
+    }
+
     /**
      * On click call method call to start sign in process with email and password.
      */
-    public void emailPasswordSignInOnClick(View view){
+    public void emailSignInOnClick(View view){
         signInUserEmailAndPassword();
     }
 
@@ -209,25 +268,11 @@ public class LoginActivity extends AppCompatActivity {
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputEmailAddress)) {
-            sb.append("You must enter your email address. ");
+            sb.append("You must enter your email address.\n");
         }
         if(TextUtils.isEmpty(userInputPassword)) {
             sb.append("You must enter your password.");
         }
         return sb.toString();
-    }
-
-    /**
-     * Starts background animation for activity.
-     */
-    private void initBackground(){
-        ConstraintLayout background = findViewById(R.id.login_background);
-        AnimationDrawable animationDrawable = (AnimationDrawable) background.getBackground();
-
-        // Duration.
-        animationDrawable.setEnterFadeDuration(4500);
-        animationDrawable.setExitFadeDuration(4500);
-        //Start.
-        animationDrawable.start();
     }
 }

@@ -165,9 +165,9 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
      * Sends user to profile fragment.
      */
     public void navProfileNameOnClick(View view){
-
+        // todo crashes when going to the same fragment.
         Intent intent = new Intent(view.getContext(), MainActivity.class);
-        intent.putExtra("fragmentChoice", 2);
+        intent.putExtra("index", 2);
         startActivity(intent);
     }
 

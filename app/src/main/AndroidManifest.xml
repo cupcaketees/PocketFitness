@@ -3,11 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="uk.ac.tees.cupcake">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <supports-screens
         android:anyDensity="true"
@@ -24,19 +33,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".maps.UserPostLocationActivity"
+            android:label="@string/title_activity_user_post_location"
+            >
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+        <activity
+            android:name=".maps.GymMapActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
-
-        <activity android:name=".home.health.heartrate.HeartRateActivity"
+        <activity
+            android:name=".home.health.heartrate.HeartRateActivity"
             android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -80,38 +115,42 @@
         <activity android:name=".posts.PostActivity" />
         <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
-        <activity android:name=".food.SearchFoodActivity"
+        <activity
+            android:name=".food.SearchFoodActivity"
             android:parentActivityName=".home.MainActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-        <activity android:name=".home.health.heartrate.SaveHeartRateActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".home.health.heartrate.SaveHeartRateActivity"
             android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".home.MainActivity" />
         <activity android:name=".healthnews.NewsActivity" />
         <activity android:name=".dietplan.DietActivity" />
-        <activity android:name=".dietplan.DietDetailsActivity"
+        <activity
+            android:name=".dietplan.DietDetailsActivity"
             android:parentActivityName=".dietplan.DietActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".workouts.BodybuildingListActivity" />
-        <activity android:name=".workouts.BodybuildingArmsActivity"
+        <activity
+            android:name=".workouts.BodybuildingArmsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
-        <activity android:name=".workouts.BodybuildingBackActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".workouts.BodybuildingBackActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
-        <activity android:name=".workouts.BodybuildingChestActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".workouts.BodybuildingChestActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
-        <activity android:name=".workouts.BodybuildingLegsActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".workouts.BodybuildingLegsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
-        <activity android:name=".workouts.BodybuildingShouldersActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
+            android:theme="@style/AppTheme.BasicActionBar" />
     </application>
+
 </manifest>

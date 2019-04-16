@@ -146,7 +146,11 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
     }
 
     String getSelectedItem() {
-        return selectedItem;
+        if(selectedItem != null) {
+            return selectedItem;
+        } else {
+            return null;
+        }
     }
 
     private void setSelectedItem(String selectedItem) {

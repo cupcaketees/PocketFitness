@@ -47,7 +47,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".maps.UserPostLocationActivity"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="50dp"
+        >
 
 
         <Button
@@ -57,8 +58,6 @@
             android:background="@drawable/rounded_grey_border_button"
             android:layout_gravity="center|bottom"
             android:text="Submit"
-            android:padding="10dp"
-            android:paddingBottom="30dp"
             />
 
     </fragment>

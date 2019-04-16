@@ -78,8 +78,8 @@ public class FinalisePost extends AppCompatActivity {
         imageView = findViewById(R.id.imageShare);
         imageIntent = getIntent();
         textView = findViewById(R.id.textLocation);
-        initialise();
         defineImage();
+        initialise();
 
         Log.d(TAG, "onCreate: got the chosen image" + getIntent().getStringExtra("Selected_image"));
     }

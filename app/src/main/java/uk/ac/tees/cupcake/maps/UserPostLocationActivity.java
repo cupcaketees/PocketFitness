@@ -43,7 +43,7 @@ import uk.ac.tees.cupcake.utils.IntentUtils;
 public class UserPostLocationActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         android.location.LocationListener {
-
+    private static final String TAG = "UserPostLocationActivit";
     private GoogleMap mMap;
     private LocationManager mLocationManager;
     private Marker currentUserLocationMarker;
@@ -59,6 +59,7 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
             checkUserLocationPermission();
         }
 
+        getCloseGyms = new GetCloseGyms();
         initialise();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -86,12 +87,14 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
      */
     private void submitLocation() {
         if (getCloseGyms.getSelectedItem() != null) {
+            Log.d(TAG, "submitLocation: ");
             Intent intent = new Intent();
             intent.putExtra("Location", getCloseGyms.getSelectedItem());
             setResult(RESULT_OK, intent);
             finish();
         } else {
             Toast.makeText(this, "No Option Selected", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 
@@ -144,7 +147,7 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
 
     /**
      * @param location - current location
-     * takes camera to current location
+     *                 takes camera to current location
      */
     @Override
     public void onLocationChanged(Location location) {
@@ -161,19 +164,26 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
 
         mMap.animateCamera(cameraUpdate);
         mLocationManager.removeUpdates(this);
+        Toast.makeText(this, "Moving to current location", Toast.LENGTH_SHORT).show();
+
     }
 
 
     /**
      * @param input - the user entered location
-     * creates a URL string which leads to a page with json data to retrieve.
+     *              creates a URL string which leads to a page with json data to retrieve.
      */
     private void showData(String input) {
         Object transferData[] = new Object[2];
-        StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?");
-        googleURL.append("&input=").append(input);
-        googleURL.append("&inputtype=textquery&fields=name,geometry,reference&locationbias=circle:2000@" + lat + "," + lng + "&");
-        googleURL.append("&key=").append(getString(R.string.google_places_key));
+        StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?")
+                .append("&input=").append(input)
+                .append("&inputtype=textquery&fields=name,geometry,reference&locationbias=circle:2000@")
+                .append(lat)
+                .append(",")
+                .append(lng)
+                .append("&")
+                .append("&key=")
+                .append(getString(R.string.google_places_key));
 
         Log.d("GoogleMapsActivity", "url = " + googleURL.toString());
 

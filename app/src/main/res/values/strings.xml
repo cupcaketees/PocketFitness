@@ -155,4 +155,7 @@
     <string name="navbar_item_body_building_text">Bodybuilding Workouts</string>
     <string name="navbar_item_news_articles_text">News Articles</string>
     <string name="navbar_item_workout_videos_text">Workout videos</string>
+    <string name="recipe_row_calories_text_view_text">calories placeholder</string>
+    <string name="recipe_row_source_text_view_text">source placeholder</string>
+    <string name="recipe_row_name_text_view_text">name placeholder</string>
 </resources>

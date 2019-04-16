@@ -119,7 +119,11 @@
             android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-        <activity android:name=".recipes.SearchRecipesActivity"
+        <activity
+            android:name=".recipes.SearchRecipesActivity" />
+        <activity android:name=".recipes.RecipeSearchResultsActivity"
+            android:parentActivityName=".recipes.SearchRecipesActivity"
+            android:theme="@style/AppTheme.BasicActionBar"
             android:configChanges="orientation"
             android:screenOrientation="portrait"/>
     </application>

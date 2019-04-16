@@ -81,6 +81,9 @@ public final class HomeFragment extends OnChangeFragment {
         
         ImageView heartImage = view.findViewById(R.id.home_heart_image);
         heartImage.getDrawable().setColorFilter(0xFFD0D0D0, PorterDuff.Mode.SRC_ATOP);
+    
+        ImageView exerciseImage = view.findViewById(R.id.home_exercise_image);
+        exerciseImage.getDrawable().setColorFilter(0xFFD0D0D0, PorterDuff.Mode.SRC_ATOP);
         
         return view;
     }

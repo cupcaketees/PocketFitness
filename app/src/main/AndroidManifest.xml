@@ -129,5 +129,9 @@
 
         <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
 
+        <activity android:name=".home.health.ExerciseSelectionActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
     </application>
 </manifest>

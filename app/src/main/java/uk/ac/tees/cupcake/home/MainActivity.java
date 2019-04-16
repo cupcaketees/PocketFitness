@@ -9,6 +9,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 import java.util.Arrays;
+
+import uk.ac.tees.cupcake.home.health.ExerciseSelectionActivity;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
@@ -122,10 +124,13 @@ public class MainActivity extends NavigationBarActivity {
     }
 
     public void goToHeartRate(View view) {
-        Intent intent = new Intent(view.getContext(), HeartRateActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        
-        view.getContext().startActivity(intent);
+        startActivity(new Intent(view.getContext(), HeartRateActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        finish();
+    }
+    
+    public void goToExerciseSelection(View view) {
+        startActivity(new Intent(view.getContext(), ExerciseSelectionActivity.class));
+        finish();
     }
 
 }

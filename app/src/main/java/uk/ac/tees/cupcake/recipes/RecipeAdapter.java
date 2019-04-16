@@ -21,6 +21,16 @@ import uk.ac.tees.cupcake.R;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener newListener){
+        mListener = newListener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView recipeNameTextView;
@@ -28,13 +38,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         private TextView recipeCaloriesTextView;
         private ImageView recipeImageView;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, final OnItemClickListener listener) {
             super(itemView);
 
             recipeNameTextView = itemView.findViewById(R.id.recipe_name_text_view);
             recipeSourceTextView = itemView.findViewById(R.id.recipe_source_text_view);
             recipeCaloriesTextView = itemView.findViewById(R.id.recipe_calories_text_view);
             recipeImageView = itemView.findViewById(R.id.recipe_image_image_view);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -50,7 +72,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View recipeView = inflater.inflate(R.layout.recipe_row_rv, parent, false);
-        ViewHolder viewHolder = new ViewHolder(recipeView);
+        ViewHolder viewHolder = new ViewHolder(recipeView, mListener);
 
         return viewHolder;
     }

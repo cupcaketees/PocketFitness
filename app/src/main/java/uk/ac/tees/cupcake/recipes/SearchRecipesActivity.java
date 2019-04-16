@@ -10,15 +10,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -108,10 +99,8 @@ public class SearchRecipesActivity extends AppCompatActivity {
                     // appends type and corresponding api parameter to string
                     bldr.append("&")
                         .append(type)
-                        .append("=");
-
-                    URLEncoder.encode(apiParam, "utf-8");
-                    bldr.append(apiParam);
+                        .append("=")
+                        .append(apiParam);
                 }
             }
         }catch(UnsupportedEncodingException e){

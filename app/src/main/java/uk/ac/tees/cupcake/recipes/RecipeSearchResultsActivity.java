@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.recipes;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -60,6 +61,17 @@ public class RecipeSearchResultsActivity extends AppCompatActivity {
                 recipes = Recipe.fromJSONArray(response);
 
                 mRecipeAdapter = new RecipeAdapter(recipes);
+
+                mRecipeAdapter.setOnItemClickListener(new RecipeAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Intent intent = new Intent(RecipeSearchResultsActivity.this, RecipeItemActivity.class);
+                        Recipe selected = recipes.get(position);
+                        intent.putExtra("recipe", selected);
+                        intent.putExtra("title", selected.getLabel());
+                        startActivity(intent);
+                    }
+                });
                 rvRecipes.setAdapter(mRecipeAdapter);
                 rvRecipes.setLayoutManager(new GridLayoutManager(RecipeSearchResultsActivity.this,2));
 

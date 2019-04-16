@@ -119,13 +119,20 @@
             android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+        <activity android:name=".recipes.SearchRecipesActivity" />
         <activity
-            android:name=".recipes.SearchRecipesActivity" />
-        <activity android:name=".recipes.RecipeSearchResultsActivity"
-            android:parentActivityName=".recipes.SearchRecipesActivity"
-            android:theme="@style/AppTheme.BasicActionBar"
+            android:name=".recipes.RecipeSearchResultsActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".recipes.SearchRecipesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
+        <activity android:name=".recipes.RecipeItemActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".recipes.RecipeSearchResultsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
     </application>
 
 </manifest>

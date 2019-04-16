@@ -30,7 +30,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
-        android:textCursorDrawable="@drawable/black_curser"
+        android:textCursorDrawable="@drawable/black_cursor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_title_text_view" />
@@ -48,7 +48,7 @@
         android:inputType="textPassword"
         android:textColor="@android:color/background_light"
         android:textColorHint="@android:color/background_light"
-        android:textCursorDrawable="@drawable/black_curser"
+        android:textCursorDrawable="@drawable/black_cursor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_email_edit_text" />
@@ -98,7 +98,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/login_logo_image_view" />
-
 
     <Button
         android:id="@+id/login_google_sign_in_button"

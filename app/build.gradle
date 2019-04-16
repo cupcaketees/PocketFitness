@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer:r2.5.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'q.rorbin:badgeview:1.1.0'
-    implementation  'com.github.jd-alexander:LikeButton:0.2.3'
+    implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'
     implementation 'com.github.devlight.pulseview:library:1.0.2'
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
@@ -51,6 +51,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
+
 
 
 apply plugin: 'com.google.gms.google-services'

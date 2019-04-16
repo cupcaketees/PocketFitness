@@ -113,4 +113,46 @@
     <string name="login_sign_up_text_view_text">Don\'t have an account? Register</string>
     <string name="login_sign_up_2_text_view_text">Register</string>
     <string name="login_check_box_text">Disable background</string>
+
+    <string name="search_recipe_search_hint">Search for a recipe</string>
+    <string name="search_recipe_filter_search_button_text">Filter search</string>
+
+    <string name="refine_search_allergies_text_view_text">Allergies</string>
+    <string name="refine_search_calories_from_text_view_text">From</string>
+    <string name="refine_search_calories_to_text_view_text">To</string>
+    <string name="refine_search_calories_text_view_text">Calories</string>
+
+    <string name="refine_search_done_button_text">Done</string>
+
+    <string name="refine_search_diet_text_view_text">Diet</string>
+    <string name="refine_search_diet_balanced_check_box_text">Balanced</string>
+    <string name="refine_search_diet_high_fiber_check_box_text">High Fiber</string>
+    <string name="refine_search_diet_high_protein_check_box_text">High Protein</string>
+    <string name="refine_search_diet_low_carb_check_box_text">Low Carb</string>
+    <string name="refine_search_diet_low_fat_check_box_text">Low Fat</string>
+    <string name="refine_search_diet_low_sodium_check_box_text">Low Sodium</string>
+
+    <string name="refine_search_health_gluten_free_check_box_text">Gluten</string>
+    <string name="refine_search_health_fish_free_check_box_text">Fish</string>
+    <string name="refine_search_health_eggs_free_check_box_text">Eggs</string>
+    <string name="refine_search_health_dairy_free_check_box_text">Dairy</string>
+    <string name="refine_search_health_peanuts_free_check_box_text">Peanuts</string>
+    <string name="refine_search_health_soy_free_check_box_text">Soy</string>
+    <string name="refine_search_health_vegetarian_check_box_text">Vegetarian</string>
+    <string name="refine_search_health_vegan_check_box_text">Vegan</string>
+    <string name="refine_search_health_paleo_check_box_text">Paleo</string>
+    <string name="refine_search_health_alcohol_free_check_box_text">Alcohol-Free</string>
+    <string name="refine_search_health_kosher_check_box_text">Kosher</string>
+
+    <string name="navbar_item_search_recipe_text">Search Recipes</string>
+    <string name="navbar_item_search_food_text">Search Food</string>
+    <string name="navbar_item_30_day_diet_text">30 Day Diet</string>
+    <string name="navbar_item_posts_text">Posts</string>
+    <string name="navbar_item_home_text">Home</string>
+    <string name="navbar_item_settings_text">Settings</string>
+    <string name="navbar_item_log_out_text">Log Out</string>
+    <string name="navbar_item_communicate_text">Communicate</string>
+    <string name="navbar_item_body_building_text">Bodybuilding Workouts</string>
+    <string name="navbar_item_news_articles_text">News Articles</string>
+    <string name="navbar_item_workout_videos_text">Workout videos</string>
 </resources>

@@ -38,6 +38,7 @@ import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
 import uk.ac.tees.cupcake.posts.PostActivity;
+import uk.ac.tees.cupcake.recipes.SearchRecipesActivity;
 import uk.ac.tees.cupcake.videoplayer.VideoListActivity;
 import uk.ac.tees.cupcake.workouts.BodybuildingListActivity;
 
@@ -71,6 +72,8 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_30diet, new StartIntentNavigationItemAction(DietActivity.class));
+
+        NAV_BAR_ACTIONS.put(R.id.nav_search_recipe, new StartIntentNavigationItemAction(SearchRecipesActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_settings, new StartIntentNavigationItemAction(SettingsActivity.class));
 

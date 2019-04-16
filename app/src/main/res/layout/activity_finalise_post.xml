@@ -75,6 +75,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relayout3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/relFinalise2"
@@ -94,8 +95,26 @@
                 android:maxLines="6"
                 android:padding="5dp" />
 
+            <TextView
+                android:id="@+id/textLocation"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/finaliseDescription"
+                android:background="@null"
+                android:text="Select Location"
+                />
+
+            <Button
+                android:id="@+id/select_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/finaliseDescription"
+                android:layout_toRightOf="@id/textLocation"
+                android:text="hello"/>
+
 
         </RelativeLayout>
+
 
 
     </RelativeLayout>

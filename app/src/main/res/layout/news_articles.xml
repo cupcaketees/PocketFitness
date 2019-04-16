@@ -13,7 +13,15 @@
         android:layout_height="match_parent"
         android:background="#ffffff">
 
+        <ImageView
+            android:id="@+id/article_image"
+            android:layout_marginLeft="3dp"
+            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_height="200dp" />
+
         <TextView
+            android:layout_below="@id/article_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/article_title"
@@ -61,7 +69,8 @@
             android:paddingStart="5dp"
             android:text="URL"
             android:textSize="12sp"
-            android:textColor="#000000"/>
+            android:textColor="#000000"
+            android:padding="15dp"/>
 
     </RelativeLayout>
 

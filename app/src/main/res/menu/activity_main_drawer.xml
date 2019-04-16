@@ -34,6 +34,10 @@
             android:id="@+id/nav_bodybuilding"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Bodybuilding Workouts" />
+
+        <item android:id="@+id/nav_localGyms"
+            android:icon="@drawable/ic_add_location_black_24dp"
+            android:title="Local Gyms"/>
     </group>
 
     <item android:title="Communicate">

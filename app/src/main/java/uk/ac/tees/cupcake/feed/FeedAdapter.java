@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -160,10 +163,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                 }else{
                     // Post is not by current user
                     layout = inflater.inflate(R.layout.feed_more_option_menu_user, null);
-                    optionOne = layout.findViewById(R.id.feed_more_option_one);
+                    optionOne = layout.findViewById(R.id.feed_more_option_report);
 
                     optionOne.setOnClickListener(v1 -> {
-                        Toast.makeText(holder.itemView.getContext(), "Option one selected, not user post", Toast.LENGTH_SHORT).show();
+                        holder.reportPost(post.getPostId());
                         mDropdown.dismiss();
                     });
                 }
@@ -249,6 +252,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             // Deletes Post
             documentRef.delete()
                              .addOnSuccessListener(aVoid -> Toast.makeText(context, "Post has been removed.", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
+
+
+        private void reportPost(String postId){
+            Map<String, Object> reportTimeStamp = new HashMap<>();
+            reportTimeStamp.put("timestamp", FieldValue.serverTimestamp());
+
+            FirebaseFirestore.getInstance()
+                             .collection("Reports")
+                             .document(postId)
+                             .collection("Reporters")
+                             .document(mCurrentUser.getUid())
+                             .set(reportTimeStamp)
+                             .addOnSuccessListener(aVoid -> Toast.makeText(context, "You have reported the post.", Toast.LENGTH_SHORT).show())
                              .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }

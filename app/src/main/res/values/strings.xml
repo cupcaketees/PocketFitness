@@ -158,4 +158,5 @@
     <string name="recipe_row_calories_text_view_text">calories placeholder</string>
     <string name="recipe_row_source_text_view_text">source placeholder</string>
     <string name="recipe_row_name_text_view_text">name placeholder</string>
+    <string name="feed_more_options_menu_report_option_text">Report post</string>
 </resources>

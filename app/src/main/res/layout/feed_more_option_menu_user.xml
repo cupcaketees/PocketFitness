@@ -11,11 +11,11 @@
     android:paddingTop="8dp">
 
     <TextView
-        android:id="@+id/feed_more_option_one"
+        android:id="@+id/feed_more_option_report"
         android:layout_width="110dp"
         android:layout_height="30dp"
         android:background="@android:color/white"
-        android:text="Option one"
+        android:text="@string/feed_more_options_menu_report_option_text"
         android:textAlignment="viewStart"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feed_more_option_one" />
+        app:layout_constraintTop_toBottomOf="@+id/feed_more_option_report" />
 
     <TextView
         android:id="@+id/feed_more_option_three"

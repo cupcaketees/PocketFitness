@@ -94,7 +94,6 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
             finish();
         } else {
             Toast.makeText(this, "No Option Selected", Toast.LENGTH_SHORT).show();
-            finish();
         }
     }
 

@@ -14,12 +14,23 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+
+/**
+ * getCloseGyms - Places markers on the requested location
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class GetCloseGyms extends AsyncTask<Object, String, String> implements GoogleMap.OnMarkerClickListener {
     private static final String TAG = "GetCloseGyms";
-    private String googleplaceData;
+    private String googlePlaceData;
     private GoogleMap mMap;
     private String selectedItem;
 
+    /**
+     * @param objects - Retrieves the map location and the url to make the api call.
+     *                It calls {@link DownloadURL} to retrieve the json data from the url.
+     * @return - returns the JSON data from the URL
+     */
     @Override
     protected String doInBackground(Object... objects) {
         mMap = (GoogleMap) objects[0];
@@ -27,15 +38,20 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
 
         DownloadURL downloadUrl = new DownloadURL();
         try {
-            googleplaceData = downloadUrl.ReadURL(url);
+            googlePlaceData = downloadUrl.ReadURL(url);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return googleplaceData;
+        return googlePlaceData;
     }
 
 
+    /**
+     * @param s - Retrieved JSON Data
+     *          val - refers to which API call was made.
+     *          stores the results in nearByPlaces and then calls the method depending on the API call
+     */
     @Override
     protected void onPostExecute(String s) {
         String val = "results";
@@ -57,11 +73,14 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
     }
 
 
+    /**
+     * @param nearByGymList - all the map locations
+     *                      used with {@link GymMapActivity} - placing markers with gym locations nearby
+     */
     private void DisplayNearbyGyms(List<HashMap<String, String>> nearByGymList) {
         if (nearByGymList.size() != 0) {
             for (int i = 0; i < nearByGymList.size(); i++) {
                 MarkerOptions markerOptions = new MarkerOptions();
-
                 HashMap<String, String> googleNearbyPlace = nearByGymList.get(i);
                 String nameOfPlace = googleNearbyPlace.get("place_name");
                 String vicinity = googleNearbyPlace.get("vicinity");
@@ -82,7 +101,10 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
 
     }
 
-
+    /**
+     * @param nearByGymList - all the map locations
+     *                      used with {@link UserPostLocationActivity} - placing markers from the results searched for.
+     */
     private void DisplaySearchedLocation(List<HashMap<String, String>> nearByGymList) {
         if (nearByGymList.size() != 0) {
             for (int i = 0; i < nearByGymList.size(); i++) {
@@ -110,6 +132,11 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
 
     }
 
+    /**
+     * sets the selected item so it can be retrieved for the post.
+     *
+     * @param marker - the marker selected
+     */
     @Override
     public boolean onMarkerClick(Marker marker) {
         setSelectedItem(marker.getTitle());
@@ -117,7 +144,6 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
         Log.d(TAG, "onMarkerClick - selected Item: " + marker.getTitle());
         return false;
     }
-
 
     String getSelectedItem() {
         return selectedItem;

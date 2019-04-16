@@ -12,9 +12,18 @@ import java.util.List;
 
 import static com.android.volley.VolleyLog.TAG;
 
+/**
+ * Data Parser - parses the json data to HashMap.
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 class DataParser {
 
 
+    /**
+     * @param googleSingleLocationJSON - retrieves a single location to be stored in a object
+     * @return - the Hashmap with name,vicinity, lat,lng,ref stored.
+     */
     private HashMap<String, String> singleLocation(JSONObject googleSingleLocationJSON) {
         MapLocation mapLocation = new MapLocation();
 
@@ -37,6 +46,11 @@ class DataParser {
     }
 
 
+    /**
+     * @param jsonArray - Retrieves all locations into an array
+     *                  it calls method above retrieving the data of each individual location and storing it in a variable
+     * @return the list of all locations but location data stored in hashmaps
+     */
     private List<HashMap<String, String>> getAllNearbyGyms(JSONArray jsonArray) {
         int totalGyms = jsonArray.length();
 
@@ -59,6 +73,11 @@ class DataParser {
     }
 
 
+    /**
+     * @param JSONData - All the information retrieved from the URL
+     * @param type     - due to the retrieval of the two apis returning different object names it passes the name so it knows what json array to retrieve.
+     * @return if empty return null otherwise passes to method to start retrieving the data.
+     */
     List<HashMap<String, String>> parse(String JSONData, String type) {
         JSONArray jsonArray = null;
         JSONObject jsonObject;

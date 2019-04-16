@@ -8,7 +8,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -22,9 +21,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,12 +34,17 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
+
+/**
+ * UserPostLocationActivity - Shows requested location
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class UserPostLocationActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         android.location.LocationListener {
 
     private GoogleMap mMap;
-    private static final String TAG = "GymMapActivity";
     private LocationManager mLocationManager;
     private Marker currentUserLocationMarker;
     private GetCloseGyms getCloseGyms;
@@ -60,21 +61,16 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
 
         initialise();
 
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (mLocationManager != null) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1000, this);
-            }
-        }
-
-
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * Initialise all onClickListeners
+     */
     private void initialise() {
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ImageButton backButton = findViewById(R.id.backArrow);
         EditText address = findViewById(R.id.search_location);
         ImageButton shareText = findViewById(R.id.search_address);
@@ -84,6 +80,10 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
         submit.setOnClickListener(v -> submitLocation());
     }
 
+    /**
+     * When user clicks submit it'll check if they've selected an area and
+     * if they have it'll pass it through as a putExtra so it can be retrieved in the post class.
+     */
     private void submitLocation() {
         if (getCloseGyms.getSelectedItem() != null) {
             Intent intent = new Intent();
@@ -142,6 +142,10 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
 
     }
 
+    /**
+     * @param location - current location
+     * takes camera to current location
+     */
     @Override
     public void onLocationChanged(Location location) {
 
@@ -155,12 +159,15 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
         LatLng latLng = new LatLng(lat, lng);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 13);
 
-
         mMap.animateCamera(cameraUpdate);
         mLocationManager.removeUpdates(this);
     }
 
 
+    /**
+     * @param input - the user entered location
+     * creates a URL string which leads to a page with json data to retrieve.
+     */
     private void showData(String input) {
         Object transferData[] = new Object[2];
         StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?");
@@ -193,25 +200,16 @@ public class UserPostLocationActivity extends FragmentActivity implements OnMapR
 
     }
 
-    LocationCallback mLocationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            for (Location location : locationResult.getLocations()) {
-                Log.i(TAG, "onLocationResult: " + location.getLatitude() + " " + location.getLongitude());
-            }
-        }
-    };
-
+    /**
+     * On connection it'll request the location update to be called.
+     */
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        LocationRequest locationRequest = new LocationRequest();
 
-        locationRequest.setInterval(1100);
-        locationRequest.setFastestInterval(1100);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, mLocationCallback, Looper.myLooper());
+        if (mLocationManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1000, this);
+            }
         }
     }
 

@@ -7,7 +7,6 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -21,9 +20,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,12 +35,15 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
+/**
+ * GymMapActivity - shows nearby gyms within their area.
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class GymMapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        android.location.LocationListener, GoogleMap.OnMarkerClickListener {
+        android.location.LocationListener{
 
-
-    private static final String TAG = "GymMapActivity";
     private GoogleMap mMap;
     private LocationManager mLocationManager;
     private Marker currentUserLocationMarker;
@@ -59,21 +58,18 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkUserLocationPermission();
         }
-
         initialise();
-
-        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (mLocationManager != null) {
-            mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1000, this);
-        }
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * Initialises XML variables and their onClickListeners
+     */
     private void initialise() {
+        mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ImageView backButton = findViewById(R.id.backArrow);
         TextView shareText = findViewById(R.id.postFinalise);
         shareText.setVisibility(View.GONE);
@@ -122,11 +118,15 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
             mMap.setMyLocationEnabled(true);
         } else {
             Toast.makeText(this, "Permissions Not enabled change in settings", Toast.LENGTH_SHORT).show();
-//            IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class);
+            IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class);
         }
 
     }
 
+    /**
+     * @param location - the location change
+     *                 when the location is changed the user marker will be moved
+     */
     @Override
     public void onLocationChanged(Location location) {
 
@@ -151,11 +151,14 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
         findGyms();
     }
 
+    /**
+     * Retrieves mMap and API URL to be passed to other class to be read.
+     */
     private void findGyms() {
         Object transferData[] = new Object[2];
         GetCloseGyms getCloseGyms = new GetCloseGyms();
 
-        String url = showData(lat, lng);
+        String url = showData();
         transferData[0] = mMap;
         transferData[1] = url;
 
@@ -163,21 +166,17 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
         Toast.makeText(this, "Showing nearby gyms", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-
-        Toast.makeText(this, marker.getTitle() + "hi", Toast.LENGTH_SHORT).show();
-        return false;
-    }
-
-    private String showData(double lat, double lng) {
+    /**
+     * creates a URL string which leads to a page with json data to retrieve.
+     */
+    private String showData() {
 //        https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
-        StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?");
-        googleURL.append("location=").append(lat).append(",").append(lng);
-        googleURL.append("&radius=" + 5000);
-        googleURL.append("&type=gym");
-        googleURL.append("&sensor=true");
-        googleURL.append("&key=").append(getString(R.string.google_places_key));
+        StringBuilder googleURL = new StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?")
+            .append("location=").append(lat).append(",").append(lng)
+            .append("&radius=" + 5000)
+            .append("&type=gym")
+            .append("&sensor=true")
+            .append("&key=").append(getString(R.string.google_places_key));
 
         Log.d("GoogleMapsActivity", "url = " + googleURL.toString());
 
@@ -199,25 +198,13 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
 
     }
 
-    LocationCallback mLocationCallback = new LocationCallback() {
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            for (Location location : locationResult.getLocations()) {
-                Log.i(TAG, "onLocationResult: " + location.getLatitude() + " " + location.getLongitude());
-            }
-        }
-    };
-
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        LocationRequest locationRequest = new LocationRequest();
 
-        locationRequest.setInterval(1100);
-        locationRequest.setFastestInterval(1100);
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            LocationServices.getFusedLocationProviderClient(this).requestLocationUpdates(locationRequest, mLocationCallback, Looper.myLooper());
+        if (mLocationManager != null) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 400, 1000, this);
+            }
         }
     }
 

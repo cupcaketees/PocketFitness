@@ -2,6 +2,12 @@ package uk.ac.tees.cupcake.maps;
 
 import java.util.HashMap;
 
+
+/**
+ * MapLocation - Stores all variables related to a map location.
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 class MapLocation {
 
     private HashMap<String, String> googlePlaceMap;

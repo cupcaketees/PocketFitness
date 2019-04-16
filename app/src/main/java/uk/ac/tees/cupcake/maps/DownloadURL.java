@@ -10,6 +10,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+
+/**
+ * DownloadURL - Turns JSON Information to string
+ *
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 class DownloadURL {
 
     private static final String TAG = "DownloadURL";
@@ -42,8 +48,6 @@ class DownloadURL {
 
             info = stringBuffer.toString();
             bufferedReader.close();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

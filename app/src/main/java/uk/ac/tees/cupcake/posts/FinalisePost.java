@@ -34,6 +34,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
+import javax.xml.transform.Result;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.home.MainActivity;
@@ -102,9 +104,13 @@ public class FinalisePost extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String result = data.getStringExtra("Location");
-        textView.setText(result);
-        Log.d(TAG, "onActivityResult: " + result);
+        if(resultCode == RESULT_OK) {
+            String result = data.getStringExtra("Location");
+            textView.setText(result);
+            Log.d(TAG, "onActivityResult: " + result);
+        } else {
+            Toast.makeText(this, "No Location Selected", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**

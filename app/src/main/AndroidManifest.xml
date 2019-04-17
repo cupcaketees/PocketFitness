@@ -2,12 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="uk.ac.tees.cupcake">
-
+    
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
     <supports-screens
         android:anyDensity="true"
@@ -24,6 +28,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".maps.UserPostLocationActivity"
+            android:label="@string/title_activity_user_post_location"
+            >
+        </activity>
+        <activity
+            android:name=".maps.GymMapActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".videoplayer.VideoPlayerActivity"
             android:configChanges="orientation|screenSize" />
@@ -126,13 +143,11 @@
             android:parentActivityName=".recipes.SearchRecipesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BasicActionBar" />
-
         <activity android:name=".recipes.RecipeItemActivity"
             android:configChanges="orientation"
             android:parentActivityName=".recipes.RecipeSearchResultsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BasicActionBar"/>
-
     </application>
 
 </manifest>

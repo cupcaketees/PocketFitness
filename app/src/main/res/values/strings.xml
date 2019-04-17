@@ -155,8 +155,14 @@
     <string name="navbar_item_body_building_text">Bodybuilding Workouts</string>
     <string name="navbar_item_news_articles_text">News Articles</string>
     <string name="navbar_item_workout_videos_text">Workout videos</string>
+
     <string name="recipe_row_calories_text_view_text">calories placeholder</string>
     <string name="recipe_row_source_text_view_text">source placeholder</string>
     <string name="recipe_row_name_text_view_text">name placeholder</string>
     <string name="feed_more_options_menu_report_option_text">Report post</string>
+
+    <string name="news_api_key">f2d903eb3c814a7aa90b22c8f480d14f</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA7E0Z77NDwUTFXhl9trUE7s9XhGWXuZjk</string>
+    <string name="google_places_key">"AIzaSyBWGQQuG0IGIcdnBjr1DdcM_23LeFTXOSc"</string>
+    <string name="title_activity_user_post_location">Map</string>
 </resources>

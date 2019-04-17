@@ -35,6 +35,7 @@ import uk.ac.tees.cupcake.dietplan.DietActivity;
 import uk.ac.tees.cupcake.healthnews.NewsActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
+import uk.ac.tees.cupcake.maps.GymMapActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
 import uk.ac.tees.cupcake.posts.PostActivity;
@@ -79,7 +80,10 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
 
         NAV_BAR_ACTIONS.put(R.id.nav_search_food, new StartIntentNavigationItemAction(SearchFoodActivity.class));
 
+        NAV_BAR_ACTIONS.put(R.id.nav_localGyms, new StartIntentNavigationItemAction(GymMapActivity.class));
+
         NAV_BAR_ACTIONS.put(R.id.nav_signout, c -> FirebaseAuth.getInstance().signOut());
+
     }
 
     /**

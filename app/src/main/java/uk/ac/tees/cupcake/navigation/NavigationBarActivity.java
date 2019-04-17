@@ -154,7 +154,6 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
                           profileNameTextView.setText(profileName);
 
                           if (profile.getProfilePictureUrl() != null) {
-
                               Picasso.with(NavigationBarActivity.this)
                                      .load(profile.getProfilePictureUrl())
                                      .into(profilePictureImageView);
@@ -168,10 +167,14 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
      * Sends user to profile fragment.
      */
     public void navProfileNameOnClick(View view){
-        // todo crashes when going to the same fragment.
-        Intent intent = new Intent(view.getContext(), MainActivity.class);
-        intent.putExtra("index", 2);
-        startActivity(intent);
+        if (this instanceof MainActivity) {
+            MainActivity mainActivity = (MainActivity) this;
+            mainActivity.setPage(2);
+        } else {
+            Intent intent = new Intent(NavigationBarActivity.this, MainActivity.class);
+            intent.putExtra("index", 2);
+            startActivity(intent);
+        }
     }
 
     @LayoutRes

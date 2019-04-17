@@ -1,19 +1,32 @@
 package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -25,6 +38,7 @@ import uk.ac.tees.cupcake.R;
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
     private final List<Post> posts;
+    private PopupWindow mDropdown;
 
     public FeedAdapter(List<Post> posts) {
         this.posts = posts;
@@ -42,67 +56,131 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
     @Override
     public void onBindViewHolder(FeedViewHolder holder, int position) {
         Post post = posts.get(position);
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        String currentUserUid = FirebaseAuth.getInstance()
+                                            .getCurrentUser()
+                                            .getUid();
+
+        // Reference to current post likes collection
+        CollectionReference collectionRef = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
+
+        // calc time ago
+        long time = post.getTimeStamp().getTime();
+        long now = System.currentTimeMillis();
+        CharSequence ago = DateUtils.getRelativeTimeSpanString(time,now , DateUtils.SECOND_IN_MILLIS);
+
+        String profileName = post.getFirstName() + " " + post.getLastName();
+
+        // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
-        holder.postDateTextView.setText(post.getDate());
-        holder.postProfileNameTextView.setText(post.getFirstName() + " " + post.getLastName());
-        CollectionReference path = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
+        holder.postDateTextView.setText(ago);
+        holder.postProfileNameTextView.setText(profileName);
 
         if(post.getProfilePictureUrl() != null){
             Picasso.with(holder.itemView.getContext())
-                    .load(post.getProfilePictureUrl())
-                    .into(holder.postProfilePictureImageView);
+                   .load(post.getProfilePictureUrl())
+                   .into(holder.postProfilePictureImageView);
         }
 
         if(post.getImage() != null) {
             Picasso.with(holder.itemView.getContext())
-                    .load(post.getImage())
-                    .into(holder.postImageImageView);
+                   .load(post.getImage())
+                   .into(holder.postImageImageView);
         }
 
-        holder.postLikeButton.setOnClickListener(v -> {
+        // Set like button to correct value
+        collectionRef.document(currentUserUid)
+                     .get()
+                     .addOnSuccessListener(documentSnapshot -> {
+                         boolean value = documentSnapshot.exists();
+                         holder.postLikeButton.setLiked(value);
+                     });
 
-            path.document(auth.getCurrentUser().getUid())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
+        holder.postLikeButton.setOnLikeListener(new OnLikeListener() {
+            @Override
+            public void liked(LikeButton likeButton) {
+                // Creates new document entry "like" with server timestamp if a document does not already exist.
+                Map<String, Object> likeTimeStamp = new HashMap<>();
+                likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
 
-                    if(documentSnapshot.exists()){
-                        path.document(auth.getCurrentUser().getUid())
-                            .delete()
-                            .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You remove your like", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }else{
-                        Map<String, Object> likeTimeStamp = new HashMap<>();
-                        likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-
-                        path.document(auth.getCurrentUser().getUid())
-                            .set(likeTimeStamp)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }
-                });
-        });
-
-        path.document(auth.getCurrentUser().getUid()).addSnapshotListener((documentSnapshot, e) -> {
-            if(documentSnapshot == null){
-                return;
+                collectionRef.document(currentUserUid)
+                             .set(likeTimeStamp)
+                             .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
             }
-            if(documentSnapshot.exists()){
-                holder.postLikeButton.setText("Unlike");
-            }else{
-                holder.postLikeButton.setText("Like");
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                // Deletes document removing like
+                collectionRef.document(currentUserUid)
+                             .delete()
+                             .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
 
-        path.addSnapshotListener((documentSnapshots, e) -> {
-            if(documentSnapshots == null){
+        // Updates Like button Text
+        collectionRef.document(currentUserUid)
+                     .addSnapshotListener((documentSnapshot, e) -> {
+                         if(documentSnapshot == null){
+                             return;
+                         }
+
+                         String likeValue = documentSnapshot.exists() ? "Unlike" : "Like";
+                         holder.postLikeButtonTextView.setText(likeValue);
+                     });
+
+        // Gets total amount of likes
+        collectionRef.addSnapshotListener((documentSnapshots, e) -> {
+            if(e != null){
                 return;
             }
 
-            if(documentSnapshots.isEmpty()){
-                holder.setPostLikesCount(0);
-            }else{
-                holder.setPostLikesCount(documentSnapshots.size());
+            int totalLikes = documentSnapshots.isEmpty() ? 0 : documentSnapshots.size();
+            holder.setPostLikesCount(totalLikes);
+        });
+
+        // More options on click . creates popup window
+        holder.postMoreOptionsImageButton.setOnClickListener(v -> {
+
+            try {
+                LayoutInflater inflater = (LayoutInflater) holder.itemView.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View layout;
+                TextView optionOne;
+
+                if(holder.mCurrentUser.getUid().equals(post.getUserUid())){
+                    // Post is by current user
+                     layout = inflater.inflate(R.layout.feed_more_option_menu_active_user, null);
+
+                    optionOne = layout.findViewById(R.id.feed_more_option_remove_active);
+
+                    // option one to remove post
+                    optionOne.setOnClickListener(v1 -> {
+                        holder.deletePost(post.getPostId());
+                        mDropdown.dismiss();
+                    });
+
+                }else{
+                    // Post is not by current user
+                    layout = inflater.inflate(R.layout.feed_more_option_menu_user, null);
+                    optionOne = layout.findViewById(R.id.feed_more_option_report);
+
+                    optionOne.setOnClickListener(v1 -> {
+                        holder.reportPost(post.getPostId());
+                        mDropdown.dismiss();
+                    });
+                }
+
+                layout.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+                mDropdown = new PopupWindow(layout, FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, true);
+
+                Drawable background = holder.itemView.getResources().getDrawable(android.R.drawable.editbox_background_normal);
+                mDropdown.setBackgroundDrawable(background);
+
+                mDropdown.showAsDropDown(holder.postMoreOptionsImageButton, -300 ,-30);
+
+            }catch(Exception e){
+                e.printStackTrace();
             }
         });
     }
@@ -117,30 +195,79 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private TextView postDescriptionTextView;
         private TextView postDateTextView;
         private TextView postProfileNameTextView;
+        private TextView postLikesCountTextView;
+        private TextView postLikeButtonTextView;
+        private Context context;
+
         private ImageView postImageImageView;
         private ImageView postProfilePictureImageView;
-        private TextView postLikesCountTextView;
 
-        private Button postLikeButton;
+        private ImageButton postMoreOptionsImageButton;
+        private LikeButton postLikeButton;
+
+        private FirebaseUser mCurrentUser;
 
         public FeedViewHolder(View postView) {
             super(postView);
 
             postProfileNameTextView = postView.findViewById(R.id.feed_post_username_text_view);
             postDescriptionTextView = postView.findViewById(R.id.feed_post_description_text_view);
-            postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
             postDateTextView = postView.findViewById(R.id.feed_post_time_posted_text_view);
-            postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
             postLikesCountTextView = postView.findViewById(R.id.feed_post_likes_count_text_view);
-            postLikeButton = postView.findViewById(R.id.feed_post_like_button);
+            postLikeButtonTextView = postView.findViewById(R.id.feed_post_like_button_text_view);
+
+            postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
+            postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
+
+            postMoreOptionsImageButton = postView.findViewById(R.id.feed_more_options_image_button);
+            postLikeButton = postView.findViewById(R.id.post_like_button);
+
+            mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+            context = postView.getContext();
         }
 
-        public void setPostLikesCount(int value){
-            if(value == 1){
-                postLikesCountTextView.setText(value + " person liked this post");
-            }else{
-                postLikesCountTextView.setText(value + " people liked this post");
-            }
+        /**
+         * Sets likes text view to appropriate output.
+         * @param value total likes
+         */
+        private void setPostLikesCount(int value){
+            String output = (value == 1) ? "1 person liked this post" : value + " people liked this post";
+            postLikesCountTextView.setText(output);
+        }
+
+        private void deletePost(String postId){
+
+            DocumentReference documentRef = FirebaseFirestore.getInstance()
+                                                             .collection("Users")
+                                                             .document(mCurrentUser.getUid() + "/User Posts/" + postId);
+            // First deletes all likes from a users post.
+            documentRef.collection("Likes")
+                       .get()
+                       .addOnSuccessListener(documentSnapshots -> {
+
+                           for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                               documentSnapshot.getReference().delete();
+                           }
+                       });
+            // Deletes Post
+            documentRef.delete()
+                             .addOnSuccessListener(aVoid -> Toast.makeText(context, "Post has been removed.", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
+        }
+
+
+        private void reportPost(String postId){
+            Map<String, Object> reportTimeStamp = new HashMap<>();
+            reportTimeStamp.put("timestamp", FieldValue.serverTimestamp());
+
+            FirebaseFirestore.getInstance()
+                             .collection("Reports")
+                             .document(postId)
+                             .collection("Reporters")
+                             .document(mCurrentUser.getUid())
+                             .set(reportTimeStamp)
+                             .addOnSuccessListener(aVoid -> Toast.makeText(context, "You have reported the post.", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 

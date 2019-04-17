@@ -76,7 +76,7 @@ public class LostPasswordActivity extends AppCompatActivity {
      * Starts background animation for activity.
      */
     private void initBackground(){
-        ConstraintLayout background = findViewById(R.id.login_background);
+        ConstraintLayout background = findViewById(R.id.lost_password_background);
         AnimationDrawable animationDrawable = (AnimationDrawable) background.getBackground();
 
         // Duration.

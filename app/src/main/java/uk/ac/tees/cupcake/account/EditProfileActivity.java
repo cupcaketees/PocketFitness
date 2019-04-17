@@ -185,7 +185,10 @@ public class EditProfileActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> Toast.makeText(EditProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }
-
+    /**
+     * Validates input values passed through params are not empty.
+     * @return empty string or appended message.
+     */
     private String validateUserInput(String userInputFirstName, String userInputLastName, String userInputBio){
         StringBuilder sb = new StringBuilder();
 

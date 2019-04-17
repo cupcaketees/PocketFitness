@@ -3,40 +3,58 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_header_better"
-
-    android:layout_width="match_parent"
-    android:layout_height="82dp">
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:paddingTop="30dp">
 
 
     <de.hdodenhof.circleimageview.CircleImageView
 
         android:id="@+id/nav_bar_profile_picture_image_view"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        app:civ_border_color="@android:color/darker_gray"
-        app:civ_border_width="1dp"
+        android:layout_marginTop="8dp"
         android:src="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:color/darker_gray" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nav_bar_name_text_view"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Bradley Hunter"
-        android:textColor="@color/darker_grey2"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:onClick="navProfileNameOnClick"
+        android:textAlignment="viewStart"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="@+id/nav_bar_profile_picture_image_view"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/nav_bar_profile_picture_image_view"
         app:layout_constraintTop_toTopOf="@+id/nav_bar_profile_picture_image_view"
         tools:text="Bradley Hunter" />
+
+    <View
+        android:id="@+id/View1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/View2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nav_bar_profile_picture_image_view" />
 
 
 </android.support.constraint.ConstraintLayout>

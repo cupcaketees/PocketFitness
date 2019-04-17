@@ -88,7 +88,7 @@ public class TextFragment extends Fragment {
                             String formattedDate = dateFormat.format(date);
 
                             String id = formattedDate;
-                            Post post = new Post(mCurrentUserId, null, text.getText().toString(),id, firstName, lastName, profilePictureUrl, id);
+                            Post post = new Post(mCurrentUserId, null, text.getText().toString(), firstName, lastName, profilePictureUrl, id);
 
                             firebaseFirestore.collection("Users")
                                     .document(mCurrentUserId)
@@ -138,5 +138,4 @@ public class TextFragment extends Fragment {
 
         });
     }
-
 }

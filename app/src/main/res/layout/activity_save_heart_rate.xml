@@ -50,7 +50,7 @@
         android:textSize="72sp"
         app:layout_constraintBottom_toTopOf="@+id/heart_rate_chart"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/login_signup_button_text_view"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,12 +61,12 @@
         android:layout_height="30dp"
         android:layout_marginBottom="42dp"
         app:layout_constraintBottom_toBottomOf="@+id/save_heart_rate_bpm"
-        app:layout_constraintEnd_toEndOf="@+id/textView4"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="@+id/login_signup_button_text_view"
+        app:layout_constraintStart_toStartOf="@+id/login_signup_button_text_view"
         app:srcCompat="@drawable/ic_heart" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/login_signup_button_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"

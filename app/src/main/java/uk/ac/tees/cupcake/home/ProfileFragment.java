@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -96,13 +95,7 @@ public class ProfileFragment extends Fragment {
         super.onStart();
 
         profileListener = mDocumentRef.addSnapshotListener((documentSnapshot, e) -> {
-
-            if(e != null){
-                Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if(documentSnapshot.exists()){
+            if (e == null && documentSnapshot.exists()){
                 // Initialise
                 TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
                 TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);

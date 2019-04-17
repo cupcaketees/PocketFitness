@@ -24,6 +24,8 @@ public class MainActivity extends NavigationBarActivity {
 
     private ViewPager viewPager;
 
+    private BottomNavigationViewEx bottomNavigationView;
+
     private final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager(),
             Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment()));
 
@@ -41,15 +43,26 @@ public class MainActivity extends NavigationBarActivity {
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
 
+        bottomNavigationView = findViewById(R.id.bottom_bar);
+        bottomNavigationView.setupWithViewPager(viewPager);
+
         Bundle extras = getIntent().getExtras();
+
         // Checks if the fragment choice is specified and sends user to that page.
         if (extras != null) {
-            int pageId = extras.getInt("index");
-            viewPager.setCurrentItem(pageId, true);
+            setPage(extras.getInt("index"));
         }
+    }
 
-        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_bar);
-        bottomNavigationView.setupWithViewPager(viewPager);
+    /**
+     * Sets the current page to the page associated with the given id.
+     *
+     * @param pageId the page id to go to.
+     */
+    public void setPage(int pageId) {
+        viewPager.setCurrentItem(pageId, true);
+        bottomNavigationView.setCurrentItem(pageId);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     /**
@@ -59,7 +72,7 @@ public class MainActivity extends NavigationBarActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        
+
         navigationView.getMenu().getItem(0).setChecked(true);
         drawerLayout.closeDrawer(GravityCompat.START);
         viewPager.addOnPageChangeListener(adapter);

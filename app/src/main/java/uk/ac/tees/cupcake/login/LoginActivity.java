@@ -17,7 +17,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
@@ -72,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
                 mMediaPlayer.start();
             }
         });
-
 
         //Auth listener listening for any changes in auth state. On change directs user them to appropriate activity.
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -166,8 +164,6 @@ public class LoginActivity extends AppCompatActivity {
         mMediaPlayer.release();
         mMediaPlayer = null;
     }
-
-
 
     /**
      * On click method call to start sign in process with Google account.

@@ -35,8 +35,8 @@ public class DeleteAccountActivity extends AppCompatActivity {
     private EditText mPasswordEditText;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    FirebaseUser mCurrentUser;
-    String mProvider;
+    private FirebaseUser mCurrentUser;
+    private String mProvider;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,8 @@ public class DeleteAccountActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if(firebaseAuth.getCurrentUser() == null){
-                    startActivity(new Intent(DeleteAccountActivity.this, LoginActivity.class));
+                    Intent intent = new Intent(DeleteAccountActivity.this, LoginActivity.class);
+                    startActivity(intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     finish();
                 }
             }
@@ -155,7 +156,7 @@ public class DeleteAccountActivity extends AppCompatActivity {
                 }
 
                 break;
-            case "email":
+            case "password":
                 String userInputCurrentPassword = mPasswordEditText.getText().toString().trim();
 
                 if(TextUtils.isEmpty(userInputCurrentPassword)) {
@@ -200,4 +201,3 @@ public class DeleteAccountActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(mAuthListener);
     }
 }
-

@@ -18,7 +18,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -153,22 +155,23 @@ public class FinalisePost extends AppCompatActivity {
                 .document(mCurrentUserId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    if(documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
                         String lastName = documentSnapshot.getString(LAST_NAME_KEY);
                         String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-                        String postId = formattedDate();
-
-                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), firstName, lastName, profilePictureUrl, postId);
+                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), firstName, lastName, profilePictureUrl);
 
                         firebaseFirestore.collection("Users")
-                                         .document(mCurrentUserId)
-                                         .collection("User Posts")
-                                         .document(postId)
-                                         .set(post)
-                                         .addOnSuccessListener(aVoid -> IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class))
-                                         .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                                .document(mCurrentUserId)
+                                .collection("User Posts")
+                                .add(post)
+                                .addOnSuccessListener(documentReference -> {
+                                    Intent intent = new Intent(FinalisePost.this, MainActivity.class);
+                                    intent.putExtra("index", 1);
+                                    startActivity(intent);
+                                })
+                                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                     }
                 });
     }

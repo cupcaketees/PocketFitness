@@ -1,16 +1,20 @@
 package uk.ac.tees.cupcake.feed;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
+import java.util.Objects;
 
 public class Post  {
+
     private String image;
     private String description;
-    private String date;
     private String userUid;
     private String firstName;
     private String lastName;
     private String profilePictureUrl;
+
+    @Exclude
     private String postId;
 
     @ServerTimestamp
@@ -20,12 +24,10 @@ public class Post  {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String userUid, String image, String description, String firstName, String lastName, String profilePictureUrl, String id){
-        this.postId = id;
+    public Post(String userUid, String image, String description, String firstName, String lastName, String profilePictureUrl){
         this.userUid = userUid;
         this.image = image;
         this.description = description;
-        this.date = date;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePictureUrl = profilePictureUrl;
@@ -33,7 +35,7 @@ public class Post  {
 
     public String getUserUid() { return userUid; }
 
-    public String getPostId() { return postId;}
+    public String getPostId() { return postId; }
 
     public String getFirstName() {
         return firstName.substring(0,1).toUpperCase() + firstName.substring(1);
@@ -53,11 +55,16 @@ public class Post  {
         return description;
     }
 
+    public Date getTimeStamp(){
+        return timeStamp;
+    }
+
+    public void setId(String id) {
+        this.postId = id;
+    }
+
     public void setTimeStamp(Date timeStamp){
         this.timeStamp = timeStamp;
     }
 
-    public Date getTimeStamp(){
-        return timeStamp;
-    }
 }

@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.posts;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
@@ -82,22 +84,16 @@ public class TextFragment extends Fragment {
                             String lastName = documentSnapshot.getString(LAST_NAME_KEY);
                             String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-                            Date date = new Date();
-                            String strDateFormat = "yyyy-MM-dd HH:mm:ss";
-                            DateFormat dateFormat = new SimpleDateFormat(strDateFormat, Locale.UK);
-                            String formattedDate = dateFormat.format(date);
-
-                            String id = formattedDate;
-                            Post post = new Post(mCurrentUserId, null, text.getText().toString(), firstName, lastName, profilePictureUrl, id);
+                            Post post = new Post(mCurrentUserId, null, text.getText().toString(), firstName, lastName, profilePictureUrl);
 
                             firebaseFirestore.collection("Users")
                                     .document(mCurrentUserId)
                                     .collection("User Posts")
-                                    .document(id)
-                                    .set(post)
+                                    .add(post)
                                     .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(getContext(), "Successfully Posted", Toast.LENGTH_SHORT).show();
-                                        IntentUtils.invokeBaseView(getActivity(), MainActivity.class);
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
+                                        intent.putExtra("index", 1);
+                                        startActivity(intent);
                                     })
                                     .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
                         }

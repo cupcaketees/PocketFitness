@@ -7,47 +7,54 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
-            android:title="Home" />
+            android:title="@string/navbar_item_home_text" />
         <item
             android:id="@+id/nav_post"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Posts" />
+            android:title="@string/navbar_item_posts_text" />
         <item
             android:id="@+id/nav_30diet"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="30 Day Diet" />
+            android:title="@string/navbar_item_30_day_diet_text" />
         <item
             android:id="@+id/nav_search_food"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Search Food" />
+            android:title="@string/navbar_item_search_food_text" />
+
+        <item
+            android:id="@+id/nav_search_recipe"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/navbar_item_search_recipe_text" />
         <item
             android:id="@+id/nav_workout_videos"
             android:icon="@drawable/ic_workout_videos"
-            android:title="Workout videos" />
+            android:title="@string/navbar_item_workout_videos_text" />
 
         <item
             android:id="@+id/news_list_view"
             android:icon="@drawable/ic_workout_videos"
-            android:title="News Articles" />
+            android:title="@string/navbar_item_news_articles_text" />
 
         <item
             android:id="@+id/nav_bodybuilding"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Bodybuilding Workouts" />
+            android:title="@string/navbar_item_body_building_text" />
+
+        <item android:id="@+id/nav_localGyms"
+            android:icon="@drawable/ic_add_location_black_24dp"
+            android:title="Local Gyms"/>
     </group>
-
-    <item android:title="Communicate">
+  
+    <item android:title="@string/navbar_item_communicate_text">
         <menu>
-
             <item
                 android:id="@+id/nav_settings"
                 android:icon="@drawable/ic_nav_settings"
-                android:title="Settings"/>
-
+                android:title="@string/navbar_item_settings_text"/>
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="Log Out" />
+                android:title="@string/navbar_item_log_out_text" />
         </menu>
     </item>
 

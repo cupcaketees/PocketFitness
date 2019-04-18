@@ -62,6 +62,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
                                     .addOnSuccessListener(aVoid1 -> {
                                         Toast.makeText(ChangeEmailActivity.this, "Your email has been changed successfully", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(ChangeEmailActivity.this, MainActivity.class));
+                                        finish();
                                     })
                                     .addOnFailureListener(e -> Toast.makeText(ChangeEmailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
                     })

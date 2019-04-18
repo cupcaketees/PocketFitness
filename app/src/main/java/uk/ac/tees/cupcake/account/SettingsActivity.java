@@ -23,5 +23,8 @@ public class SettingsActivity extends AppCompatActivity {
     /**
      * Intent to account settings activity
      */
-    public void accountSettingsOnClick(View view){startActivity(new Intent(SettingsActivity.this, AccountSettingsActivity.class));}
+    public void accountSettingsOnClick(View view){
+        startActivity(new Intent(SettingsActivity.this, AccountSettingsActivity.class));
+        finish();
+    }
 }

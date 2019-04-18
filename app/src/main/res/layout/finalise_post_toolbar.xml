@@ -4,7 +4,7 @@
     <android.support.design.widget.AppBarLayout
         android:background="@drawable/finalise_post_toolbar_background"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="56dp"
         >
 
         <android.support.v7.widget.Toolbar
@@ -12,6 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:fitsSystemWindows="true"
+            android:background="@color/colorPrimary"
             >
 
             <RelativeLayout

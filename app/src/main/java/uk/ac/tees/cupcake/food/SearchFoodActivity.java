@@ -72,7 +72,7 @@ public class SearchFoodActivity extends AppCompatActivity {
                 }
 
                 mRecyclerView.setAdapter(new FoodAdapter(foods));
-            }, error -> Toast.makeText(SearchFoodActivity.this, error.getMessage().toString(), Toast.LENGTH_LONG).show());
+            }, error -> Toast.makeText(SearchFoodActivity.this, error.getMessage(), Toast.LENGTH_LONG).show());
 
             queue.add(stringRequest);
 

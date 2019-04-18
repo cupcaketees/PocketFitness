@@ -1,13 +1,15 @@
 package uk.ac.tees.cupcake.home;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
+import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
+
 import java.util.Arrays;
 
 import uk.ac.tees.cupcake.home.health.ExerciseSelectionActivity;
@@ -28,53 +30,10 @@ public class MainActivity extends NavigationBarActivity {
 
     private ViewPager viewPager;
 
-    private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private BottomNavigationViewEx bottomNavigationView;
 
-    private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    
     private final SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager(),
             Arrays.asList(new HomeFragment(), new NewsFeedFragment(), new ProfileFragment()));
-    
-    /**
-     * Sends user to login page if they are not logged in.
-     * Sends user to setup profile if account does not exist in firestore collection.
-     */
-    private FirebaseAuth.AuthStateListener authListener = new FirebaseAuth.AuthStateListener() {
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            // if current user is null. user send to login activity.
-            if(firebaseAuth.getCurrentUser() == null){
-                IntentUtils.invokeBaseView(getApplicationContext(), LoginActivity.class);
-            }else{
-                String currentUserUid = firebaseAuth.getCurrentUser().getUid();
-                // If user document is not found they are sent to setup profile activity.
-                firestore.collection("Users")
-                         .document(currentUserUid)
-                         .get()
-                         .addOnFailureListener(e -> {
-                             IntentUtils.invokeBaseView(MainActivity.this, SetupProfileActivity.class);
-                             finish();
-                         });
-            }
-        }
-    };
-
-    /**
-     * Adds auth listener on activity
-     */
-    protected void onStart() {
-        super.onStart();
-        auth.addAuthStateListener(authListener);
-    }
-
-    /**
-     * Removes auth listener on activity
-     */
-    @Override
-    protected void onStop() {
-        super.onStop();
-        auth.removeAuthStateListener(authListener);
-    }
 
     @Override
     protected int layoutResource() {
@@ -89,9 +48,27 @@ public class MainActivity extends NavigationBarActivity {
 
         viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(adapter);
-        
-        BottomNavigationViewEx bottomNavigationView = findViewById(R.id.bottom_bar);
+
+        bottomNavigationView = findViewById(R.id.bottom_bar);
         bottomNavigationView.setupWithViewPager(viewPager);
+
+        Bundle extras = getIntent().getExtras();
+
+        // Checks if the fragment choice is specified and sends user to that page.
+        if (extras != null) {
+            setPage(extras.getInt("index"));
+        }
+    }
+
+    /**
+     * Sets the current page to the page associated with the given id.
+     *
+     * @param pageId the page id to go to.
+     */
+    public void setPage(int pageId) {
+        viewPager.setCurrentItem(pageId, true);
+        bottomNavigationView.setCurrentItem(pageId);
+        drawerLayout.closeDrawer(GravityCompat.START);
     }
     
     /**

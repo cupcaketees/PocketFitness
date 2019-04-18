@@ -19,6 +19,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.text.DateFormat;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
@@ -85,8 +86,7 @@ public class SetupProfileActivity extends AppCompatActivity {
                                   .addOnFailureListener(e -> Toast.makeText(SetupProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
 
             }  else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                String error = result.getError().getMessage();
-                Toast.makeText(SetupProfileActivity.this, error, Toast.LENGTH_LONG).show();
+                Toast.makeText(SetupProfileActivity.this, result.getError().getMessage(), Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -102,13 +102,13 @@ public class SetupProfileActivity extends AppCompatActivity {
         String lastNameUserInput = lastName.getText().toString().trim();
     
         String result = validateUserInput(firstNameUserInput, lastNameUserInput);
-    
+
         if(!result.isEmpty()){
             Toast.makeText(SetupProfileActivity.this, result, Toast.LENGTH_SHORT).show();
             return;
         }
     
-        String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(mAuth.getCurrentUser().getMetadata().getCreationTimestamp());
+        String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Calendar.getInstance().getTime());
     
         UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
     
@@ -121,6 +121,7 @@ public class SetupProfileActivity extends AppCompatActivity {
      * @return empty string or appended message.
      */
     private String validateUserInput(String userInputFirstName, String userInputLastName){
+
         StringBuilder sb = new StringBuilder();
 
         if(TextUtils.isEmpty(userInputFirstName)) {

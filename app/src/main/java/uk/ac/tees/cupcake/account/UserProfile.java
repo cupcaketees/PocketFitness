@@ -24,7 +24,7 @@ public class UserProfile implements Serializable {
     private Sex sex;
 
     public UserProfile(){
-        //  empty constructor required for fire base.
+        // required empty constructor for fire base reflection.
     }
 
     public UserProfile(String firstName, String lastName, String profilePictureUrl, String accountCreated){
@@ -36,12 +36,12 @@ public class UserProfile implements Serializable {
 
     public String getBio() { return bio; }
 
-    public String getFirstName(){
-        return firstName;
+    public String getFirstName() {
+        return firstName.substring(0,1).toUpperCase() + firstName.substring(1);
     }
 
-    public String getLastName(){
-        return lastName;
+    public String getLastName() {
+        return lastName.substring(0,1).toUpperCase() + lastName.substring(1);
     }
 
     public String getProfilePictureUrl(){

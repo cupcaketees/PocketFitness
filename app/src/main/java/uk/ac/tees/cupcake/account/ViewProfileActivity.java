@@ -171,7 +171,7 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         setTitle(profileName);
         profileNameTextView.setText(profileName);
-        emailAddressTextView.setText("Todo@example.com");
+        emailAddressTextView.setText(profile.getEmailAddress());
         dateJoinedTextView.setText(dateJoined);
     }
 }

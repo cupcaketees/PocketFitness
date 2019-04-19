@@ -108,7 +108,6 @@ public class TextFragment extends Fragment {
                     }
                 }
             }
-
         });
     }
 }

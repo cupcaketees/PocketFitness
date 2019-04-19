@@ -104,7 +104,7 @@ public class SetupProfileActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
 
-        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, currentDate);
+        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, currentDate, mAuth.getCurrentUser().getEmail());
 
         mFireStore.collection("Users")
                   .document(mAuth.getCurrentUser().getUid())

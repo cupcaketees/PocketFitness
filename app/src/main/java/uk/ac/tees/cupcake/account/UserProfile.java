@@ -11,16 +11,18 @@ public class UserProfile {
     private String coverPhotoUrl;
     private String accountCreated;
     private String bio;
+    private String emailAddress;
 
     public UserProfile(){
         // required empty constructor for fire base reflection.
     }
 
-    public UserProfile(String firstName, String lastName, String profilePictureUrl, String accountCreated){
+    public UserProfile(String firstName, String lastName, String profilePictureUrl, String accountCreated, String email){
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
+        this.emailAddress = email;
     }
 
     public String getBio() { return bio; }
@@ -31,6 +33,10 @@ public class UserProfile {
 
     public String getLastName() {
         return lastName.substring(0,1).toUpperCase() + lastName.substring(1);
+    }
+
+    public String getEmailAddress(){
+        return emailAddress;
     }
 
     public String getProfilePictureUrl(){

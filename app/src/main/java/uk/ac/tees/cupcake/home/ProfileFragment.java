@@ -147,7 +147,7 @@ public class ProfileFragment extends Fragment {
         String dateJoined = "Joined " + profile.getAccountCreated();
 
         profileNameTextView.setText(profileName);
-        emailAddressTextView.setText(mCurrentUser.getEmail());
+        emailAddressTextView.setText(profile.getEmailAddress());
         dateJoinedTextView.setText(dateJoined);
     }
 }

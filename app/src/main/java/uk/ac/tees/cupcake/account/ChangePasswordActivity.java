@@ -61,6 +61,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                   .addOnSuccessListener(aVoid1 -> {
                                       Toast.makeText(ChangePasswordActivity.this, "Your password has been changed successfully", Toast.LENGTH_SHORT).show();
                                       startActivity(new Intent(ChangePasswordActivity.this, MainActivity.class));
+                                      finish();
                                   })
                                   .addOnFailureListener(e -> Toast.makeText(ChangePasswordActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
                    })

@@ -18,7 +18,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -58,6 +61,7 @@ public class FinalisePost extends AppCompatActivity {
     private Intent imageIntent;
     private Uri uri;
     private TextView textView;
+  
     private final String FIRST_NAME_KEY = "firstName";
     private final String LAST_NAME_KEY = "lastName";
     private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
@@ -151,22 +155,21 @@ public class FinalisePost extends AppCompatActivity {
                 .document(mCurrentUserId)
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    if(documentSnapshot.exists()){
+                    if (documentSnapshot.exists()) {
                         String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
                         String lastName = documentSnapshot.getString(LAST_NAME_KEY);
                         String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-                        String id = formattedDate();
-                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(),id, firstName, lastName, profilePictureUrl, id);
+                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), firstName, lastName, profilePictureUrl);
 
                         firebaseFirestore.collection("Users")
                                 .document(mCurrentUserId)
                                 .collection("User Posts")
-                                .document(id)
-                                .set(post)
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(this, "Post Successful", Toast.LENGTH_SHORT).show();
-                                    IntentUtils.invokeBaseView(FinalisePost.this, MainActivity.class);
+                                .add(post)
+                                .addOnSuccessListener(documentReference -> {
+                                    Intent intent = new Intent(FinalisePost.this, MainActivity.class);
+                                    intent.putExtra("index", 1);
+                                    startActivity(intent);
                                 })
                                 .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
                     }
@@ -189,7 +192,6 @@ public class FinalisePost extends AppCompatActivity {
                 e.printStackTrace();
             }
             imageView.setImageBitmap(uri);
-
         }
     }
 

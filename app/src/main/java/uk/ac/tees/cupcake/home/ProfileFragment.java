@@ -1,4 +1,3 @@
-
 package uk.ac.tees.cupcake.home;
 
 import android.os.Bundle;
@@ -13,18 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
@@ -34,11 +37,12 @@ import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
 
-    private FirebaseAuth mAuth;
-
     private View rootView;
-    private String currentUserUid;
     private RecyclerView recyclerView;
+
+    private FirebaseUser mCurrentUser;
+    private DocumentReference mDocumentRef;
+    private ListenerRegistration profileListener;
 
     @Nullable
     @Override
@@ -46,8 +50,8 @@ public class ProfileFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.fragment_profile_page, container, false);
 
-        mAuth = FirebaseAuth.getInstance();
-        currentUserUid = mAuth.getCurrentUser().getUid();
+        mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
+        mDocumentRef = FirebaseFirestore.getInstance().collection("Users/").document(mCurrentUser.getUid());
 
         initialise();
         getPosts();
@@ -64,7 +68,6 @@ public class ProfileFragment extends Fragment {
         Button editProfile = rootView.findViewById(R.id.profile_edit_profile_button);
 
         editProfile.setOnClickListener(v -> IntentUtils.invokeBaseView(getContext(), EditProfileActivity.class));
-
     }
 
     private void getPosts() {
@@ -72,61 +75,67 @@ public class ProfileFragment extends Fragment {
         FeedAdapter feedAdapter = new FeedAdapter(posts);
         recyclerView.setAdapter(feedAdapter);
 
-
-        FirebaseFirestore.getInstance()
-                .collection("Users")
-                .document(currentUserUid)
-                .collection("User Posts")
-                .orderBy("date", Query.Direction.DESCENDING).limit(100)
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-                    for (DocumentSnapshot imageSnapshots : documentSnapshots) {
-                        Post currentItem = imageSnapshots.toObject(Post.class);
-                        posts.add(currentItem);
-                        feedAdapter.notifyDataSetChanged();
-                    }
-                });
+        mDocumentRef.collection("User Posts")
+                    .orderBy("timeStamp", Query.Direction.DESCENDING).limit(100)
+                    .get()
+                    .addOnSuccessListener(documentSnapshots -> {
+                        for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                            Post currentItem = documentSnapshot.toObject(Post.class);
+                            posts.add(currentItem);
+                            feedAdapter.notifyDataSetChanged();
+                        }
+                    });
     }
 
+    /**
+     * Add profile listener on start
+     */
     @Override
     public void onStart() {
         super.onStart();
 
-        FirebaseFirestore.getInstance()
-                .collection("Users")
-                .document(currentUserUid)
-                .addSnapshotListener(getActivity(), (documentSnapshot, e) -> {
-                    if (e != null) {
-                        Toast.makeText(rootView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                        return;
-                    }
+        profileListener = mDocumentRef.addSnapshotListener((documentSnapshot, e) -> {
+            if (e == null && documentSnapshot.exists()){
+                // Initialise
+                TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
+                TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);
+                TextView emailAddressTextView = rootView.findViewById(R.id.profile_email_text_view);
+                TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
 
-                    if (documentSnapshot.exists()) {
-                        TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
-                        TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);
-                        TextView emailAddressTextView = rootView.findViewById(R.id.profile_email_text_view);
-                        TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
-                        CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
-                        ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
+                CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
+                ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
 
-                        UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
+                // Set Values
+                UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
 
-                        if (userProfile.getBio() != null) {
-                            bioTextView.setText(userProfile.getBio());
-                        }
+                if (userProfile.getBio() != null) {
+                    bioTextView.setText(userProfile.getBio());
+                }
 
-                        if (userProfile.getProfilePictureUrl() != null) {
-                            Picasso.with(rootView.getContext()).load(userProfile.getProfilePictureUrl()).into(profilePictureImageView);
-                        }
+                if (userProfile.getProfilePictureUrl() != null) {
+                    Picasso.with(rootView.getContext()).load(userProfile.getProfilePictureUrl()).into(profilePictureImageView);
+                }
 
-                        if (userProfile.getCoverPhotoUrl() != null) {
-                            Picasso.with(rootView.getContext()).load(userProfile.getCoverPhotoUrl()).into(coverPhotoImageView);
-                        }
+                if (userProfile.getCoverPhotoUrl() != null) {
+                    Picasso.with(rootView.getContext()).load(userProfile.getCoverPhotoUrl()).into(coverPhotoImageView);
+                }
 
-                        profileNameTextView.setText(userProfile.getFirstName() + " " + userProfile.getLastName());
-                        emailAddressTextView.setText(mAuth.getCurrentUser().getEmail());
-                        dateJoinedTextView.setText("Joined " + userProfile.getAccountCreated());
-                    }
-                });
+                String profileName = userProfile.getFirstName() + " " + userProfile.getLastName();
+                String dateJoined = "Joined " + userProfile.getAccountCreated();
+
+                profileNameTextView.setText(profileName);
+                emailAddressTextView.setText(mCurrentUser.getEmail());
+                dateJoinedTextView.setText(dateJoined);
+            }
+        });
+    }
+
+    /**
+     * Removes profile listener on stop
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        profileListener.remove();
     }
 }

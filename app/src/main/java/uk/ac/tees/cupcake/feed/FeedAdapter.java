@@ -1,8 +1,8 @@
 package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -15,8 +15,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -34,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.ViewProfileActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
@@ -181,6 +181,16 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
             }catch(Exception e){
                 e.printStackTrace();
+            }
+        });
+
+        holder.postProfileNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(v.getContext(), ViewProfileActivity.class);
+                intent.putExtra("profileId", post.getUserUid());
+                v.getContext().startActivity(intent);
             }
         });
     }

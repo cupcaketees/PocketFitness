@@ -103,7 +103,7 @@
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/cardview_dark_background"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/profile_followers_title_text_view"
+            app:layout_constraintTop_toBottomOf="@+id/profile_following_count_text_view"
             tools:text="brad@example.com" />
 
         <TextView
@@ -128,55 +128,29 @@
             android:id="@+id/profile_followers_count_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:text="@string/profile_followers_count_temp_value_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/cardview_dark_background"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/profile_following_title_text_view"
-            app:layout_constraintStart_toEndOf="@+id/profile_following_title_text_view"
-            tools:text="99" />
-
-        <TextView
-            android:id="@+id/profile_followers_title_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/profile_followers_title_text_view_text"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/profile_header_text_view"
-            tools:text="Followers" />
-
-        <TextView
-            android:id="@+id/profile_following_title_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/profile_following_title_text_view_text"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="14sp"
             app:layout_constraintBaseline_toBaselineOf="@+id/profile_following_count_text_view"
             app:layout_constraintStart_toEndOf="@+id/profile_following_count_text_view"
-            tools:text="Following" />
+            tools:text="Following 99" />
 
         <TextView
             android:id="@+id/profile_following_count_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:text="@string/profile_following_count_temp_value_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/cardview_dark_background"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/profile_followers_title_text_view"
-            app:layout_constraintStart_toEndOf="@+id/profile_followers_title_text_view"
-            tools:text="99" />
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/profile_header_text_view"
+            tools:text="Followers 99" />
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline"

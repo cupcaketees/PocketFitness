@@ -33,6 +33,10 @@ public class Post  {
         this.profilePictureUrl = profilePictureUrl;
     }
 
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
+    }
+
     public String getUserUid() { return userUid; }
 
     public String getPostId() { return postId; }

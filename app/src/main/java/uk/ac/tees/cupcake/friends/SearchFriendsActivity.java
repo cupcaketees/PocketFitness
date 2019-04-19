@@ -1,6 +1,5 @@
 package uk.ac.tees.cupcake.friends;
 
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -29,7 +28,7 @@ public class SearchFriendsActivity extends NavigationBarActivity {
     }
 
     @Override
-    public void setup(Bundle savedInstanceState) {
+    public void setup() {
 
         ArrayList<Post> profiles = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("Users").get().addOnSuccessListener(documentSnapshots -> {

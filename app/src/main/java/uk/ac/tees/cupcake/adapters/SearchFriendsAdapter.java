@@ -65,14 +65,8 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
 
 
         holder.mName.setOnClickListener(v -> {
-//            Log.d(TAG, "onBindViewHolder: " + profile.getUserUid());#
-            /*Intent intent = new Intent(context, MainActivity.class);
-            intent.putExtra("index", 2);
-            context.startActivity(intent);*/
-            Map<String, Serializable> extras = new HashMap<>();
-            extras.put("index", 2);
-            IntentUtils.invokeViewWithExtras(context, MainActivity.class, extras);
-//          IntentUtils.invokeVideoView(context, MainActivity.class, "User ID" , profile.getUserUid());
+//            IntentUtils.invokeVideoView(context, FriendsProfileActivity.class, "User ID" , profile.getUserUid());
+
         });
 
 

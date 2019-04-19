@@ -19,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import com.squareup.picasso.Picasso;
@@ -40,10 +39,8 @@ public class ProfileFragment extends Fragment {
 
     private View rootView;
     private RecyclerView recyclerView;
-
     private FirebaseUser mCurrentUser;
     private DocumentReference mDocumentRef;
-    private ListenerRegistration profileListener;
 
     @Nullable
     @Override
@@ -87,60 +84,70 @@ public class ProfileFragment extends Fragment {
                     });
     }
 
-    /**
-     * Add profile listener on start
-     */
     @Override
     public void onStart() {
         super.onStart();
 
-        profileListener = mDocumentRef.addSnapshotListener((documentSnapshot, e) -> {
+        TextView followerCountTextView = rootView.findViewById(R.id.profile_followers_count_text_view);
+        TextView followingCountTextView = rootView.findViewById(R.id.profile_following_count_text_view);
 
+        // Profile information snapshot listener
+        mDocumentRef.addSnapshotListener(getActivity(), (documentSnapshot, e) -> {
             if(e != null){
                 e.printStackTrace();
             }
 
-            if (documentSnapshot.exists()){
-                // Initialise
-                TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
-                TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);
-                TextView emailAddressTextView = rootView.findViewById(R.id.profile_email_text_view);
-                TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
-
-                CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
-                ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
-
-                // Set Values
+            if(documentSnapshot.exists()){
                 UserProfile userProfile = documentSnapshot.toObject(UserProfile.class);
-
-                if (userProfile.getBio() != null) {
-                    bioTextView.setText(userProfile.getBio());
-                }
-
-                if (userProfile.getProfilePictureUrl() != null) {
-                    Picasso.with(rootView.getContext()).load(userProfile.getProfilePictureUrl()).into(profilePictureImageView);
-                }
-
-                if (userProfile.getCoverPhotoUrl() != null) {
-                    Picasso.with(rootView.getContext()).load(userProfile.getCoverPhotoUrl()).into(coverPhotoImageView);
-                }
-
-                String profileName = userProfile.getFirstName() + " " + userProfile.getLastName();
-                String dateJoined = "Joined " + userProfile.getAccountCreated();
-
-                profileNameTextView.setText(profileName);
-                emailAddressTextView.setText(mCurrentUser.getEmail());
-                dateJoinedTextView.setText(dateJoined);
+                initAndSetProfileData(userProfile);
             }
+
         });
+
+        // Followers count snapshot listener.
+        mDocumentRef.collection("Followers")
+                .addSnapshotListener(getActivity(), (documentSnapshots, e12) -> {
+                    String output = "Followers " + documentSnapshots.size();
+                    followerCountTextView.setText(output);
+                });
+
+        // Following count snapshot listener.
+        mDocumentRef.collection("Following")
+                .addSnapshotListener(getActivity(), (documentSnapshots, e1) -> {
+                    String output = "Following " + documentSnapshots.size();
+                    followingCountTextView.setText(output);
+                });
     }
 
-    /**
-     * Removes profile listener on stop
-     */
-    @Override
-    public void onStop() {
-        super.onStop();
-        profileListener.remove();
+    private void initAndSetProfileData(UserProfile profile){
+
+        // Initialise
+        TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
+        TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);
+        TextView emailAddressTextView = rootView.findViewById(R.id.profile_email_text_view);
+        TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
+
+        CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
+        ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
+
+        // Set
+        if (profile.getBio() != null) {
+            bioTextView.setText(profile.getBio());
+        }
+
+        if (profile.getProfilePictureUrl() != null) {
+            Picasso.with(rootView.getContext()).load(profile.getProfilePictureUrl()).into(profilePictureImageView);
+        }
+
+        if (profile.getCoverPhotoUrl() != null) {
+            Picasso.with(rootView.getContext()).load(profile.getCoverPhotoUrl()).into(coverPhotoImageView);
+        }
+
+        String profileName = profile.getFirstName() + " " + profile.getLastName();
+        String dateJoined = "Joined " + profile.getAccountCreated();
+
+        profileNameTextView.setText(profileName);
+        emailAddressTextView.setText(mCurrentUser.getEmail());
+        dateJoinedTextView.setText(dateJoined);
     }
 }

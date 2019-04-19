@@ -95,6 +95,7 @@ public class ProfileFragment extends Fragment {
         mDocumentRef.addSnapshotListener(getActivity(), (documentSnapshot, e) -> {
             if(e != null){
                 e.printStackTrace();
+                return;
             }
 
             if(documentSnapshot.exists()){
@@ -106,14 +107,22 @@ public class ProfileFragment extends Fragment {
 
         // Followers count snapshot listener.
         mDocumentRef.collection("Followers")
-                .addSnapshotListener(getActivity(), (documentSnapshots, e12) -> {
+                .addSnapshotListener(getActivity(), (documentSnapshots, e) -> {
+                    if(e != null){
+                        e.printStackTrace();
+                        return;
+                    }
                     String output = "Followers " + documentSnapshots.size();
                     followerCountTextView.setText(output);
                 });
 
         // Following count snapshot listener.
         mDocumentRef.collection("Following")
-                .addSnapshotListener(getActivity(), (documentSnapshots, e1) -> {
+                .addSnapshotListener(getActivity(), (documentSnapshots, e) -> {
+                    if(e != null){
+                        e.printStackTrace();
+                        return;
+                    }
                     String output = "Following " + documentSnapshots.size();
                     followingCountTextView.setText(output);
                 });

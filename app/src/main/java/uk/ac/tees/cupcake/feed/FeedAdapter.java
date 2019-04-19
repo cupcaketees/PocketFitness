@@ -36,6 +36,7 @@ import java.util.Map;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.account.ViewProfileActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
@@ -199,10 +200,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         holder.postProfileNameTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent = new Intent(v.getContext(), ViewProfileActivity.class);
-                intent.putExtra("profileId", post.getUserUid());
-                v.getContext().startActivity(intent);
+                // User selects their own post in feed. Send to main activity
+                if(post.getUserUid().equalsIgnoreCase(holder.mCurrentUser.getUid())){
+                    MainActivity mainActivity = (MainActivity) v.getContext();
+                    mainActivity.setPage(2);
+                }else{
+                    Intent intent = new Intent(v.getContext(), ViewProfileActivity.class);
+                    intent.putExtra("profileId", post.getUserUid());
+                    v.getContext().startActivity(intent);
+                }
             }
         });
     }

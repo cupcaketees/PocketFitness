@@ -87,8 +87,8 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:drawableStart="@drawable/ic_comment_icon"
                 android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_comment_icon"
                 android:text="@string/feed_post_comment_button_text"
                 android:textAllCaps="false"
                 android:textColor="@color/cardview_dark_background"
@@ -161,7 +161,7 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view"/>
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_likes_count_text_view" />
 
             <TextView
                 android:id="@+id/feed_post_like_button_text_view"

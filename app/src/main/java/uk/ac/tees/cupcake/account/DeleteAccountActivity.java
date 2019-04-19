@@ -123,6 +123,14 @@ public class DeleteAccountActivity extends AppCompatActivity {
                          .addOnSuccessListener(documentSnapshots -> {
                              // Iterate through each follower document and deletes.
                              for(DocumentSnapshot documentSnapshot : documentSnapshots){
+
+                                 // Deletes current user from all users following collections.
+                                 FirebaseFirestore.getInstance()
+                                                  .collection("Users/" + documentSnapshot.getId() + "/Following/")
+                                                  .document(mCurrentUser.getUid())
+                                                  .get()
+                                                  .addOnSuccessListener(documentSnapshot12 -> documentSnapshot12.getReference().delete());
+
                                  documentSnapshot.getReference().delete();
                              }
                          });
@@ -133,6 +141,14 @@ public class DeleteAccountActivity extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshots -> {
                     // Iterate through each following document and deletes.
                     for(DocumentSnapshot documentSnapshot : documentSnapshots){
+
+                        // Deletes current user from all users followers collections.
+                        FirebaseFirestore.getInstance()
+                                .collection("Users/" + documentSnapshot.getId() + "/Followers/")
+                                .document(mCurrentUser.getUid())
+                                .get()
+                                .addOnSuccessListener(documentSnapshot12 -> documentSnapshot12.getReference().delete());
+
                         documentSnapshot.getReference().delete();
                     }
                 });

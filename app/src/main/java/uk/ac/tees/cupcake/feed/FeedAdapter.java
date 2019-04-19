@@ -15,6 +15,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -25,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -32,8 +34,8 @@ import java.util.List;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.account.ViewProfileActivity;
-import uk.ac.tees.cupcake.home.MainActivity;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
@@ -69,18 +71,28 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         long now = System.currentTimeMillis();
         CharSequence ago = DateUtils.getRelativeTimeSpanString(time,now , DateUtils.SECOND_IN_MILLIS);
 
-        String profileName = post.getFirstName() + " " + post.getLastName();
+        FirebaseFirestore.getInstance()
+                         .collection("Users")
+                         .document(post.getUserUid())
+                         .get()
+                         .addOnSuccessListener(documentSnapshot -> {
+                             UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+
+                             String profileName = profile.getFirstName() + " " + profile.getLastName();
+                             holder.postProfileNameTextView.setText(profileName);
+
+                             if(profile.getProfilePictureUrl() != null){
+                                 Picasso.with(holder.itemView.getContext())
+                                        .load(profile.getProfilePictureUrl())
+                                        .into(holder.postProfilePictureImageView);
+                             }
+
+                         });
+
 
         // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
-        holder.postProfileNameTextView.setText(profileName);
-
-        if(post.getProfilePictureUrl() != null){
-            Picasso.with(holder.itemView.getContext())
-                   .load(post.getProfilePictureUrl())
-                   .into(holder.postProfilePictureImageView);
-        }
 
         if(post.getImage() != null) {
             Picasso.with(holder.itemView.getContext())

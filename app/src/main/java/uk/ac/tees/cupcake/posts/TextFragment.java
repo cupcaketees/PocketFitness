@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.feed.Post;
@@ -38,9 +32,6 @@ public class TextFragment extends Fragment {
     private String mCurrentUserId;
     private TextView nextFragment;
     private ImageView shareClose;
-    private final String FIRST_NAME_KEY = "firstName";
-    private final String LAST_NAME_KEY = "lastName";
-    private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
 
     @Nullable
     @Override
@@ -74,30 +65,16 @@ public class TextFragment extends Fragment {
         nextFragment.setOnClickListener(v -> {
             setEnabled(false);
 
-            FirebaseFirestore.getInstance()
-                    .collection("Users")
-                    .document(mCurrentUserId)
-                    .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-                        if(documentSnapshot.exists()){
-                            String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
-                            String lastName = documentSnapshot.getString(LAST_NAME_KEY);
-                            String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
+            Post post = new Post(mCurrentUserId,null, text.getText().toString());
 
-                            Post post = new Post(mCurrentUserId, null, text.getText().toString(), firstName, lastName, profilePictureUrl);
-
-                            firebaseFirestore.collection("Users")
-                                    .document(mCurrentUserId)
-                                    .collection("User Posts")
-                                    .add(post)
-                                    .addOnSuccessListener(aVoid -> {
-                                        Intent intent = new Intent(getContext(), MainActivity.class);
-                                        intent.putExtra("index", 1);
-                                        startActivity(intent);
-                                    })
-                                    .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed", Toast.LENGTH_SHORT).show());
-                        }
-                    });
+            firebaseFirestore.collection("Users/" + mCurrentUserId + "/User Posts/")
+                    .add(post)
+                    .addOnSuccessListener(documentReference -> {
+                        Intent intent = new Intent(getContext(), MainActivity.class);
+                        intent.putExtra("index", 1);
+                        startActivity(intent);
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
 
             setEnabled(true);
         });

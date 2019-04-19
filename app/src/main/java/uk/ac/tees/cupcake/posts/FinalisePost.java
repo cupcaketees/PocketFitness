@@ -18,10 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -37,13 +34,11 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.xml.transform.Result;
-
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.maps.UserPostLocationActivity;
-import uk.ac.tees.cupcake.utils.IntentUtils;
+
 
 /*
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
@@ -61,10 +56,6 @@ public class FinalisePost extends AppCompatActivity {
     private Intent imageIntent;
     private Uri uri;
     private TextView textView;
-  
-    private final String FIRST_NAME_KEY = "firstName";
-    private final String LAST_NAME_KEY = "lastName";
-    private final String PROFILE_PHOTO_KEY = "profilePictureUrl";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,7 +94,6 @@ public class FinalisePost extends AppCompatActivity {
         button.setOnClickListener(v -> startActivityForResult(intent, 1));
 
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -150,30 +140,17 @@ public class FinalisePost extends AppCompatActivity {
      * If successful returns to {@link MainActivity}
      */
     private void savePost() {
-        FirebaseFirestore.getInstance()
-                .collection("Users")
-                .document(mCurrentUserId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String firstName = documentSnapshot.getString(FIRST_NAME_KEY);
-                        String lastName = documentSnapshot.getString(LAST_NAME_KEY);
-                        String profilePictureUrl = documentSnapshot.getString(PROFILE_PHOTO_KEY);
 
-                        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString(), firstName, lastName, profilePictureUrl);
+        Post post = new Post(mCurrentUserId, postPictureURL, mText.getText().toString());
 
-                        firebaseFirestore.collection("Users")
-                                .document(mCurrentUserId)
-                                .collection("User Posts")
-                                .add(post)
-                                .addOnSuccessListener(documentReference -> {
-                                    Intent intent = new Intent(FinalisePost.this, MainActivity.class);
-                                    intent.putExtra("index", 1);
-                                    startActivity(intent);
-                                })
-                                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }
-                });
+        firebaseFirestore.collection("Users/" + mCurrentUserId + "/User Posts/")
+                         .add(post)
+                         .addOnSuccessListener(documentReference -> {
+                             Intent intent = new Intent(FinalisePost.this, MainActivity.class);
+                             intent.putExtra("index", 1);
+                             startActivity(intent);
+                         })
+                         .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     /**

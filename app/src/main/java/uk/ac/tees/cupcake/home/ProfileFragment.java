@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,7 +48,6 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         rootView = inflater.inflate(R.layout.fragment_profile_page, container, false);
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -55,19 +55,19 @@ public class ProfileFragment extends Fragment {
 
         initialise();
         getPosts();
-
         return rootView;
     }
 
     private void initialise() {
         recyclerView = rootView.findViewById(R.id.my_profile_recycler_view);
         recyclerView.setHasFixedSize(true);
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(mLayoutManager);
         Button editProfile = rootView.findViewById(R.id.profile_edit_profile_button);
 
-        editProfile.setOnClickListener(v -> IntentUtils.invokeBaseView(getContext(), EditProfileActivity.class));
+        editProfile.setOnClickListener(v -> IntentUtils.invokeBaseView(rootView.getContext(), EditProfileActivity.class));
     }
 
     private void getPosts() {
@@ -95,7 +95,12 @@ public class ProfileFragment extends Fragment {
         super.onStart();
 
         profileListener = mDocumentRef.addSnapshotListener((documentSnapshot, e) -> {
-            if (e == null && documentSnapshot.exists()){
+
+            if(e != null){
+                e.printStackTrace();
+            }
+
+            if (documentSnapshot.exists()){
                 // Initialise
                 TextView profileNameTextView = rootView.findViewById(R.id.profile_name_text_view);
                 TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);

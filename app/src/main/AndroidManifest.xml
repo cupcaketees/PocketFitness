@@ -148,6 +148,8 @@
             android:parentActivityName=".recipes.RecipeSearchResultsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BasicActionBar"/>
+        <activity android:name=".friends.SearchFriendsActivity" />
+        <activity android:name=".friends.SearchUserFriendsActivity" />
     </application>
 
 </manifest>

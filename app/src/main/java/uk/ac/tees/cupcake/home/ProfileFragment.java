@@ -49,7 +49,6 @@ public class ProfileFragment extends Fragment {
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         mDocumentRef = FirebaseFirestore.getInstance().collection("Users/").document(mCurrentUser.getUid());
-
         initialise();
         getPosts();
         return rootView;

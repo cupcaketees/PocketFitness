@@ -90,7 +90,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         name.setText(recipe.getLabel());
         source.setText(recipe.getSource());
 
-        String caloriesText = recipe.getCalories().intValue() / recipe.getYield() + " kcal / " + recipe.getYield() + " servings";
+        String caloriesText = recipe.getTotalCalories().intValue() / recipe.getYield() + " kcal / " + recipe.getYield() + " servings";
         calories.setText(caloriesText);
 
         Picasso.with(holder.itemView.getContext()).load(recipe.getImageUrl()).into(image);

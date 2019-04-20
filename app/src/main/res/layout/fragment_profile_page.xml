@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <android.support.constraint.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+
+        android:id="@+id/profile_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -79,6 +77,107 @@
             tools:text="Joined May 18 2019" />
 
         <TextView
+            android:id="@+id/profile_email_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:textAppearance="@android:style/TextAppearance.Material"
+            android:textColor="@color/cardview_dark_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/profile_date_joined_text_view"
+            tools:text="brad@example.com" />
+
+        <TextView
+            android:id="@+id/profile_header_text_view"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:text="@string/profile_basic_info_header_text_view_text"
+            android:textAlignment="viewStart"
+            android:textAppearance="@android:style/TextAppearance.Material"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_email_text_view"
+            tools:text="Profile Information" />
+
+        <TextView
+            android:id="@+id/profile_followers_count_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/searchbar_background"
+            android:backgroundTint="#7F203f9f"
+            android:padding="5dp"
+            android:text="@string/profile_followers_count_temp_value_text_view_text"
+            android:textAppearance="@android:style/TextAppearance.Material"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBaseline_toBaselineOf="@+id/profile_following_count_text_view"
+            app:layout_constraintEnd_toEndOf="@+id/profile_cover_photo_image_view"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/profile_following_count_text_view"
+            tools:text="Following 99" />
+
+        <TextView
+            android:id="@+id/profile_following_count_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/searchbar_background"
+            android:backgroundTint="#7F203f9f"
+            android:padding="5dp"
+            android:text="@string/profile_following_count_temp_value_text_view_text"
+            android:textAppearance="@android:style/TextAppearance.Material"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/profile_cover_photo_image_view"
+            app:layout_constraintEnd_toStartOf="@+id/profile_followers_count_text_view"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toEndOf="@+id/profile_profile_picture_image_view"
+            tools:text="Followers 99" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp" />
+
+
+        <TextView
+            android:id="@+id/profile_posts_header_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/colorPrimaryDark"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:text="Posts"
+            android:textAppearance="@android:style/TextAppearance.Material"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_bio_text_view" />
+
+        <TextView
             android:id="@+id/profile_bio_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,90 +189,24 @@
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.625"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/profile_email_text_view"
-            tools:text="Wubba lubba dub dub friends!" />
-
-        <TextView
-            android:id="@+id/profile_email_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/cardview_dark_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/profile_following_count_text_view"
-            tools:text="brad@example.com" />
-
-        <TextView
-            android:id="@+id/profile_header_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/profile_basic_info_header_text_view_text"
-            android:textAlignment="viewStart"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/profile_date_joined_text_view"
-            tools:text="Profile Information" />
-
-        <TextView
-            android:id="@+id/profile_followers_count_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/profile_followers_count_temp_value_text_view_text"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBaseline_toBaselineOf="@+id/profile_following_count_text_view"
-            app:layout_constraintStart_toEndOf="@+id/profile_following_count_text_view"
-            tools:text="Following 99" />
-
-        <TextView
-            android:id="@+id/profile_following_count_text_view"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:text="@string/profile_following_count_temp_value_text_view_text"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="14sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/profile_header_text_view"
-            tools:text="Followers 99" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="20dp" />
+            tools:text="Wubba lubba dub dub friends!" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/my_profile_recycler_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="64dp"
-            android:layout_marginTop="32dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_bio_text_view">
+            app:layout_constraintTop_toBottomOf="@+id/profile_posts_header_text_view">
 
         </android.support.v7.widget.RecyclerView>
 
     </android.support.constraint.ConstraintLayout>
+
+
 
 </android.support.v4.widget.NestedScrollView>

@@ -168,4 +168,7 @@
     <string name="delete_account_info_text_view_text">- Your profile pictures, cover photos and images from our storage.\n- All stored information associated with your account.\n- All posts made by your account.\n- Your account from all users followers and following colletions.</string>
     <string name="delete_account_title_text_view_text">By deleting your account permanentely you will delete:</string>
     <string name="delete_account_warning_text_view_text">Deletion of your accout is final you will not be able to recover your deleted account or data.\n </string>
+    <string name="recipe_item_diet_label_header_text_view_text">Diet Labels</string>
+    <string name="recipe_item_health_label_header_text_view_text">Health Labels</string>
+    <string name="recipe_item_ingredients_header_text_view">Ingredients</string>
 </resources>

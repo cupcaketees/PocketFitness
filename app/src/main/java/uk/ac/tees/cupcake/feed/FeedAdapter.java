@@ -2,7 +2,6 @@ package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -15,8 +14,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -69,22 +66,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         long now = System.currentTimeMillis();
         CharSequence ago = DateUtils.getRelativeTimeSpanString(time,now , DateUtils.SECOND_IN_MILLIS);
 
-        String profileName = post.getFirstName() + " " + post.getLastName();
-
         // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
-        holder.postProfileNameTextView.setText(profileName);
 
-        if(post.getProfilePictureUrl() != null){
+        if(post.getImageUrl() != null) {
             Picasso.with(holder.itemView.getContext())
-                   .load(post.getProfilePictureUrl())
-                   .into(holder.postProfilePictureImageView);
-        }
-
-        if(post.getImage() != null) {
-            Picasso.with(holder.itemView.getContext())
-                   .load(post.getImage())
+                   .load(post.getImageUrl())
                    .into(holder.postImageImageView);
         }
 

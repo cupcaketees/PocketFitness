@@ -174,5 +174,8 @@
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
 
+        <activity android:name=".posts.CreatePostActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
     </application>
 </manifest>

@@ -27,4 +27,8 @@ public final class ApplicationConstants {
     
     public static final int STEP_COUNTING_EVENT_START_THRESHOLD = 5;
     
+    public static final int CREATE_POST_ADD_IMAGE_REQUEST_CODE = 1;
+    
+    public static final int CREATE_POST_ADD_LOCATION_REQUEST_CODE = 2;
+    
 }

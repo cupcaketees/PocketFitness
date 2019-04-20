@@ -4,6 +4,7 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
@@ -36,8 +37,6 @@ public class SplashActivity extends AppCompatActivity {
     
     private static final String TAG = "SplashActivity";
 
-    private SensorAdapter sensorAdapter;
-    
     /**
      * Starts LoginActivity depending on user SystemClock.sleep runs the activity but
      * only opens it after 1 second gives everything time to load.
@@ -77,14 +76,11 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         SystemClock.sleep(1000);
-        
+
         StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
-        if (sensorAdapter == null) {
-            sensorAdapter = new SensorAdapter(getApplicationContext());
-        }
-        
-        boolean success = sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
-        //Toast.makeText(this, "" + success, Toast.LENGTH_SHORT).show();
+        SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
+
+        sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
         scheduleStepCounterResetJob();
         
         SystemClock.sleep(1000);

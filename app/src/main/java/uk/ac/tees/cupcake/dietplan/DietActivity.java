@@ -21,7 +21,7 @@ public class DietActivity extends NavigationBarActivity {
 
     @Override
     protected int layoutResource() {
-        return R.layout.activity_video_list;
+        return R.layout.activity_recycler_view;
     }
 
     @Override

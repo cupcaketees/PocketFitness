@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -33,6 +34,7 @@ import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
+import uk.ac.tees.cupcake.friends.SearchUserFriendsActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
@@ -76,15 +78,15 @@ public class ProfileFragment extends Fragment {
         recyclerView.setAdapter(feedAdapter);
 
         mDocumentRef.collection("User Posts")
-                    .orderBy("timeStamp", Query.Direction.DESCENDING).limit(100)
-                    .get()
-                    .addOnSuccessListener(documentSnapshots -> {
-                        for(DocumentSnapshot documentSnapshot : documentSnapshots){
-                            Post currentItem = documentSnapshot.toObject(Post.class);
-                            posts.add(currentItem);
-                            feedAdapter.notifyDataSetChanged();
-                        }
-                    });
+                .orderBy("timeStamp", Query.Direction.DESCENDING).limit(100)
+                .get()
+                .addOnSuccessListener(documentSnapshots -> {
+                    for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                        Post currentItem = documentSnapshot.toObject(Post.class);
+                        posts.add(currentItem);
+                        feedAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     /**
@@ -101,6 +103,10 @@ public class ProfileFragment extends Fragment {
                 TextView dateJoinedTextView = rootView.findViewById(R.id.profile_date_joined_text_view);
                 TextView emailAddressTextView = rootView.findViewById(R.id.profile_email_text_view);
                 TextView bioTextView = rootView.findViewById(R.id.profile_bio_text_view);
+                TextView textFollowing = rootView.findViewById(R.id.profile_following_count_text_view);
+                TextView textFollowers = rootView.findViewById(R.id.profile_followers_count_text_view);
+                TextView numberFollowers = rootView.findViewById(R.id.profile_followers_title_text_view);
+                TextView numberFollowing = rootView.findViewById(R.id.profile_following_title_text_view);
 
                 CircleImageView profilePictureImageView = rootView.findViewById(R.id.profile_profile_picture_image_view);
                 ImageView coverPhotoImageView = rootView.findViewById(R.id.profile_cover_photo_image_view);
@@ -126,6 +132,33 @@ public class ProfileFragment extends Fragment {
                 profileNameTextView.setText(profileName);
                 emailAddressTextView.setText(mCurrentUser.getEmail());
                 dateJoinedTextView.setText(dateJoined);
+
+                CollectionReference followingPath = FirebaseFirestore.getInstance().collection("Users/" + mCurrentUser.getUid() + "/User Following/");
+                CollectionReference followerPath = FirebaseFirestore.getInstance().collection("Users/" + mCurrentUser.getUid() + "/User Followers/");
+
+                followingPath.addSnapshotListener(((documentSnapshots, t) -> {
+                    if (documentSnapshots == null || documentSnapshots.isEmpty()) {
+                        textFollowing.setText("0");
+                    } else {
+                        textFollowing.setText(String.valueOf(documentSnapshots.size()));
+                    }
+                }));
+
+
+                followerPath.addSnapshotListener(((documentSnapshots, t) -> {
+                    if (documentSnapshots == null || documentSnapshots.isEmpty()) {
+                        textFollowers.setText("0");
+                    } else {
+                        textFollowers.setText(String.valueOf(documentSnapshots.size()));
+                    }
+
+                }));
+
+
+
+                numberFollowers.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",textFollowers.getText().toString(),"Following",textFollowing.getText().toString(),"intent","1"));
+                numberFollowing.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",textFollowers.getText().toString(),"Following",textFollowing.getText().toString(), "intent","0"));
+
             }
         });
     }
@@ -138,4 +171,6 @@ public class ProfileFragment extends Fragment {
         super.onStop();
         profileListener.remove();
     }
+
+
 }

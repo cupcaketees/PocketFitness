@@ -153,7 +153,9 @@
             android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+      
         <activity android:name=".recipes.SearchRecipesActivity" />
+      
         <activity
             android:name=".recipes.RecipeSearchResultsActivity"
             android:configChanges="orientation"
@@ -167,14 +169,17 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BasicActionBar"/>
 
-        <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
+        <activity android:name=".friends.SearchFriendsActivity" />
+        <activity android:name=".friends.SearchUserFriendsActivity" />
 
-        <activity
+        <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
+        <activity 
             android:name=".home.health.ExerciseSelectionActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
 
-        <activity android:name=".posts.CreatePostActivity"
+        <activity 
+            android:name=".posts.CreatePostActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
     </application>

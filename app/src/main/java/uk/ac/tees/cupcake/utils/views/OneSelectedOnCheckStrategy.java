@@ -4,9 +4,6 @@ import android.widget.Checkable;
 
 import java.util.Map;
 
-import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
-import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;
-
 /**
  * An {@link CheckableLinearViewGroup.OnCheckStrategy} where checking is
  * limited to one child.
@@ -18,19 +15,9 @@ public final class OneSelectedOnCheckStrategy implements CheckableLinearViewGrou
         @Override
         public void checked(int checkedId, CheckableLinearViewGroup group) {
             Map<Integer, Checkable> views = group.getCheckableViews();
-            
-            if (!views.containsKey(checkedId)) {
-                CheckableConstraintView view = group.findViewById(checkedId);
-    
-                views.put(checkedId, view);
-            }
     
             for (Map.Entry<Integer, Checkable> e : views.entrySet()) {
-                if (e.getKey() == checkedId) {
-                    continue;
-                }
-        
-                e.getValue().setChecked(false);
+                e.getValue().setChecked(e.getKey() == checkedId);
             }
         }
     }

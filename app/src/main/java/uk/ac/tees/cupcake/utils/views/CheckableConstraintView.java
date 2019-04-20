@@ -28,11 +28,19 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     
     public CheckableConstraintView(Context context) {
         super(context);
+        
         inflateView();
     }
     
     public CheckableConstraintView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        
+        inflateView();
+    }
+    
+    public CheckableConstraintView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        
         inflateView();
     }
     
@@ -55,12 +63,6 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
             }
             
             this.checked = checked;
-            
-            if (checked && getParent() instanceof CheckableLinearViewGroup) {
-                CheckableLinearViewGroup parent = (CheckableLinearViewGroup) getParent();
-        
-                parent.childClicked(getId());
-            }
         }
     }
     
@@ -71,7 +73,11 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     
     @Override
     public void toggle() {
-        if (!checked) {
+        if (getParent() instanceof CheckableLinearViewGroup) {
+            CheckableLinearViewGroup parent = (CheckableLinearViewGroup) getParent();
+            parent.childClicked(getId());
+            
+        } else {
             setChecked(!checked);
         }
     }
@@ -90,6 +96,7 @@ public abstract class CheckableConstraintView extends ConstraintLayout implement
     @Override
     public boolean performClick() {
         toggle();
+        
         return super.performClick();
     }
     

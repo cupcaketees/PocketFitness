@@ -94,7 +94,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         measurementTypes = findViewById(R.id.measurement_types);
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce_anim);
         measurementTypes.startAnimation(bounce);
-        getData().addOnCompleteListener(e -> measurementTypes.setChecked(R.id.general_measurement_type, true));
+        getData().addOnCompleteListener(e -> measurementTypes.childClicked(R.id.general_measurement_type));
         measurementTypes.addOnCheckStrategy(new OneSelectedOnCheckStrategy());
         measurementTypes.addOnCheckStrategy((id, v) -> {
             String resourceId = getResources().getResourceName(id);
@@ -110,7 +110,8 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
         TextView graphText = findViewById(R.id.graph_heart_rate);
         
         float average = 0;
-        for (Entry e : entries) {
+        for (int index = 0; index < entries.size(); index++) {
+            Entry e = entries.get(index);
             average += e.getY();
         }
         

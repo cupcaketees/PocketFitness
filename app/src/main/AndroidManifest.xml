@@ -2,13 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="uk.ac.tees.cupcake">
-    
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
@@ -28,6 +29,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <service
+            android:name=".home.steps.StepCounterResetStarterJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true" />
+
+        <service
+            android:name=".home.steps.StepCounterResetJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true" />
+
+        <service android:name=".home.steps.StepCounterService" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -103,7 +116,7 @@
         <activity
             android:name=".food.SearchFoodActivity"
             android:parentActivityName=".home.MainActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />
+            android:theme="@style/AppTheme.BasicActionBar"/>
         <activity
             android:name=".home.health.heartrate.SaveHeartRateActivity"
             android:parentActivityName=".home.MainActivity"
@@ -119,37 +132,55 @@
         <activity
             android:name=".workouts.BodybuildingArmsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
         <activity
             android:name=".workouts.BodybuildingBackActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
         <activity
             android:name=".workouts.BodybuildingChestActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
         <activity
             android:name=".workouts.BodybuildingLegsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />
+            android:theme="@style/AppTheme.BasicActionBar"/>
+
         <activity
             android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+      
         <activity android:name=".recipes.SearchRecipesActivity" />
+      
         <activity
             android:name=".recipes.RecipeSearchResultsActivity"
             android:configChanges="orientation"
             android:parentActivityName=".recipes.SearchRecipesActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BasicActionBar" />
-        <activity android:name=".recipes.RecipeItemActivity"
+        <activity
+            android:name=".recipes.RecipeItemActivity"
             android:configChanges="orientation"
             android:parentActivityName=".recipes.RecipeSearchResultsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BasicActionBar"/>
+
         <activity android:name=".friends.SearchFriendsActivity" />
         <activity android:name=".friends.SearchUserFriendsActivity" />
-    </application>
 
+        <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
+        <activity 
+            android:name=".home.health.ExerciseSelectionActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
+        <activity 
+            android:name=".posts.CreatePostActivity"
+            android:parentActivityName=".workouts.BodybuildingListActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
+    </application>
 </manifest>

@@ -40,31 +40,24 @@ public class CheckableLinearViewGroup extends LinearLayout {
     }
     
     /**
-     * Called when one of the checkables have been clicked.
+     * Called when one of the checkable children has been clicked.
      *
      * @param id the id of the clicked checkable.
      */
-    protected void childClicked(int id) {
+    public void childClicked(int id) {
+        if (!checkableViews.containsKey(id)) {
+            CheckableConstraintView checkable = findViewById(id);
+    
+            if (checkable == null) {
+                throw new RuntimeException(id + " does not exist in this view group");
+            }
+            
+            checkableViews.put(id, checkable);
+        }
+        
         for (OnCheckStrategy strategy : onCheckStrategies) {
             strategy.checked(id, this);
         }
-    }
-    
-    /**
-     * Sets the {@link Checkable} associated with the specified id to the specified checked value.
-     *
-     * @param id the id of the checkable view
-     * @param checked {@code true} if the checkable should be checked.
-     */
-    public void setChecked(int id, boolean checked) {
-        Checkable checkable = checkableViews.containsKey(id) ? checkableViews.get(id) : findViewById(id);
-        
-        if (checkable == null) {
-            throw new RuntimeException(id + " does not exist in this view group");
-        }
-        
-        checkable.setChecked(checked);
-        childClicked(id);
     }
     
     public Map<Integer, Checkable> getCheckableViews() {

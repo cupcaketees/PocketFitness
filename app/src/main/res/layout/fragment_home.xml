@@ -14,7 +14,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/home_steps_card"
@@ -31,11 +32,22 @@
                     android:layout_height="wrap_content">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/little_one"
+                        android:id="@+id/distance_circle"
                         android:layout_width="110dp"
                         android:layout_height="110dp"
-                        android:layout_marginStart="110dp"
+                        android:layout_marginStart="140dp"
                         android:layout_marginTop="16dp"
+                        android:background="@drawable/circle_shadow"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="@+id/big_one"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/big_one"
+                        android:layout_width="180dp"
+                        android:layout_height="180dp"
+                        android:layout_marginEnd="70dp"
+                        android:layout_marginTop="8dp"
                         android:background="@drawable/circle_shadow"
                         android:scaleType="centerCrop"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -43,16 +55,17 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/big_one"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:layout_marginEnd="55dp"
-                        android:layout_marginTop="16dp"
+                        android:id="@+id/calorie_circle"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginBottom="24dp"
+                        android:layout_marginEnd="16dp"
                         android:background="@drawable/circle_shadow"
                         android:scaleType="centerCrop"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintBottom_toBottomOf="@+id/big_one"
+                        app:layout_constraintEnd_toEndOf="@+id/distance_circle"
+                        app:layout_constraintStart_toStartOf="@+id/distance_circle"
+                        app:layout_constraintTop_toBottomOf="@+id/home_steps_label" />
 
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/home_steps_bar_chart"
@@ -64,9 +77,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/big_one">
-
-                    </com.github.mikephil.charting.charts.BarChart>
+                        app:layout_constraintTop_toBottomOf="@+id/big_one" />
 
                     <TextView
                         android:id="@+id/home_steps_text"
@@ -75,6 +86,10 @@
                         android:layout_marginBottom="8dp"
                         android:textSize="50sp"
                         android:text="0"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
                         app:layout_constraintBottom_toBottomOf="@+id/big_one"
                         app:layout_constraintEnd_toEndOf="@+id/big_one"
                         app:layout_constraintStart_toStartOf="@+id/big_one"
@@ -87,8 +102,13 @@
                         android:layout_marginTop="60dp"
                         android:text="@string/home_steps_label_text"
                         android:textColor="@color/colorPrimaryDark"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
                         app:layout_constraintBottom_toTopOf="@+id/home_steps_text"
                         app:layout_constraintEnd_toEndOf="@+id/home_steps_text"
+                        app:layout_constraintStart_toStartOf="@+id/home_steps_text"
                         app:layout_constraintTop_toBottomOf="@+id/home_steps_text" />
 
                     <TextView
@@ -96,13 +116,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
-                        android:layout_marginStart="8dp"
-                        android:textSize="23sp"
                         android:text="0"
-                        app:layout_constraintBottom_toBottomOf="@+id/little_one"
-                        app:layout_constraintEnd_toEndOf="@+id/little_one"
-                        app:layout_constraintStart_toStartOf="@+id/little_one"
-                        app:layout_constraintTop_toTopOf="@+id/little_one" />
+                        android:textSize="23sp"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
+                        app:layout_constraintBottom_toBottomOf="@+id/distance_circle"
+                        app:layout_constraintEnd_toEndOf="@+id/distance_circle"
+                        app:layout_constraintStart_toStartOf="@+id/distance_circle"
+                        app:layout_constraintTop_toTopOf="@+id/distance_circle" />
 
                     <TextView
                         android:id="@+id/home_steps_distance_label"
@@ -112,10 +135,28 @@
                         android:layout_marginTop="35dp"
                         android:text="@string/home_steps_distance_label_text"
                         android:textColor="@color/colorPrimaryDark"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
                         app:layout_constraintBottom_toTopOf="@+id/home_steps_distance"
                         app:layout_constraintEnd_toEndOf="@+id/home_steps_distance"
                         app:layout_constraintStart_toStartOf="@+id/home_steps_distance"
                         app:layout_constraintTop_toBottomOf="@+id/home_steps_distance" />
+
+                    <TextView
+                        android:id="@+id/home_steps_calorie_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
+                        app:layout_constraintBottom_toBottomOf="@+id/calorie_circle"
+                        app:layout_constraintEnd_toEndOf="@+id/calorie_circle"
+                        app:layout_constraintStart_toStartOf="@+id/calorie_circle"
+                        app:layout_constraintTop_toTopOf="@+id/calorie_circle" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -125,13 +166,16 @@
                 android:id="@+id/home_heart_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:onClick="goToHeartRate"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
                 app:cardBackgroundColor="#FFFFFFFF"
-                app:cardCornerRadius="6dp">
+                app:cardCornerRadius="6dp"
+                android:animateLayoutChanges="true">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
@@ -139,13 +183,12 @@
 
                     <ImageView
                         android:id="@+id/home_heart_image"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_heart"
                         app:layout_constraintBottom_toTopOf="@+id/home_heart_bpm_label"
                         app:layout_constraintEnd_toEndOf="@+id/home_heart_bpm_label"
-                        app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="@+id/home_heart_bpm_label"
                         app:layout_constraintTop_toTopOf="@+id/home_heart_last_measurement"
                         app:layout_constraintVertical_chainStyle="packed" />
@@ -183,24 +226,91 @@
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="8dp"
                         android:textSize="32sp"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
+                        android:text="@string/home_heart_rate_label"
                         app:layout_constraintBottom_toTopOf="@+id/home_heart_last_measurement_date"
                         app:layout_constraintEnd_toStartOf="@+id/home_heart_last_measurement"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintHorizontal_chainStyle="spread_inside"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="General" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/home_heart_last_measurement_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
+                        android:text="@string/home_heart_measure_label"
                         android:textColor="@color/colorPrimaryDark"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/home_heart_last_measurement_type"
                         app:layout_constraintTop_toBottomOf="@+id/home_heart_last_measurement_type"
                         tools:text="04/12/2018" />
+
+                </android.support.constraint.ConstraintLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/home_exercise_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:onClick="goToExerciseSelection"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="#FFFFFFFF"
+                app:cardCornerRadius="6dp">
+
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:shadowColor="@color/grey"
+                        android:shadowDx="4"
+                        android:shadowDy="4"
+                        android:shadowRadius="5"
+                        android:text="Exercise"
+                        android:textSize="32sp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/home_exercise_image"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/home_exercise"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/home_heart_measure_label"
+                        android:textColor="@color/colorPrimaryDark"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/textView3"
+                        app:layout_constraintTop_toBottomOf="@+id/textView3"
+                        tools:text="Tap to measure" />
 
                 </android.support.constraint.ConstraintLayout>
 

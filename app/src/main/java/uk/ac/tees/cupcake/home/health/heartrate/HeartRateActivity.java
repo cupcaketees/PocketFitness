@@ -3,7 +3,6 @@ package uk.ac.tees.cupcake.home.health.heartrate;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -24,7 +23,7 @@ public class HeartRateActivity extends AppCompatActivity {
     
     private HeartRateSensorEventListener eventListener;
     
-    private SensorAdapter sensorAdapter = new SensorAdapter(this, Sensor.TYPE_HEART_RATE);
+    private SensorAdapter sensorAdapter;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,18 +38,8 @@ public class HeartRateActivity extends AppCompatActivity {
         TextView heartRateAverage = findViewById(R.id.heart_rate_text);
         heartRateAverage.setText(getString(R.string.heart_rate_text, 0));
     
-        eventListener = new HeartRateSensorEventListener(this);
-        
-        sensorAdapter.setupSensors();
-    }
-    
-    public void registerSensor(int delay, int sensorType, SensorEventListener eventListener) {
-        sensorAdapter.addSensor(sensorType);
-        sensorAdapter.registerListener(delay, sensorType, eventListener);
-    }
-    
-    public void deregisterSensor(int sensorType, SensorEventListener eventListener) {
-        sensorAdapter.unregisterListener(sensorType, eventListener);
+        sensorAdapter = new SensorAdapter(HeartRateActivity.this);
+        eventListener = new HeartRateSensorEventListener(HeartRateActivity.this);
     }
     
     @Override
@@ -58,7 +47,7 @@ public class HeartRateActivity extends AppCompatActivity {
         super.onPause();
     
         eventListener.clearMeasurements();
-        deregisterSensor(Sensor.TYPE_HEART_RATE, eventListener);
+        sensorAdapter.unregisterListener(Sensor.TYPE_HEART_RATE);
     }
     
     @Override
@@ -66,7 +55,7 @@ public class HeartRateActivity extends AppCompatActivity {
         super.onResume();
     
         eventListener.clearMeasurements();
-        registerSensor(SensorManager.SENSOR_DELAY_NORMAL, Sensor.TYPE_HEART_RATE, eventListener);
+        sensorAdapter.addSensorWithListener(Sensor.TYPE_HEART_RATE, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
     }
     
 }

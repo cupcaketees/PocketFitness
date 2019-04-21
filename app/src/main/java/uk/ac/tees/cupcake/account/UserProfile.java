@@ -9,7 +9,9 @@ import uk.ac.tees.cupcake.home.health.Sex;
  * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
 public class UserProfile implements Serializable {
-    
+
+    private String uid;
+
     private String firstName;
     private String lastName;
     
@@ -27,7 +29,8 @@ public class UserProfile implements Serializable {
         // required empty constructor for fire base reflection.
     }
 
-    public UserProfile(String firstName, String lastName, String profilePictureUrl, String accountCreated){
+    public UserProfile(String uid, String firstName, String lastName, String profilePictureUrl, String accountCreated) {
+        this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePictureUrl = profilePictureUrl;
@@ -54,27 +57,32 @@ public class UserProfile implements Serializable {
         return accountCreated;
     }
     
-    public void setHeight(int height) {
-        this.height = height;
-    }
-    
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-    
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-    
     public int getHeight() {
         return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
     
     public int getWeight() {
         return weight;
     }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
     
     public Sex getSex() {
         return sex;
     }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
 }

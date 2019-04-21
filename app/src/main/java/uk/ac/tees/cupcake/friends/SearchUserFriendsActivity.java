@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import java.util.Arrays;
 
@@ -19,8 +18,6 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,7 +25,6 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
 
         mViewPager = findViewById(R.id.userFriendsViewPager);
         setupFragments();
-
     }
 
     private void setupFragments(){
@@ -55,8 +51,5 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
 
         tabLayout.getTabAt(0).setText("Following: " + getIntent().getStringExtra("Following"));
         tabLayout.getTabAt(1).setText("Followers: " + getIntent().getStringExtra("Followers"));
-
-
     }
-
 }

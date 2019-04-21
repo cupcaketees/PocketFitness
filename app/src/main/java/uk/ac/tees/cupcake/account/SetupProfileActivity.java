@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -109,8 +108,8 @@ public class SetupProfileActivity extends AppCompatActivity {
         }
     
         String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Calendar.getInstance().getTime());
-    
-        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
+
+        UserProfile profile = new UserProfile(mAuth.getCurrentUser().getUid(), firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
     
         startActivity(new Intent(SetupProfileActivity.this, HealthStatsSetupActivity.class)
                 .putExtra("user_profile", profile));

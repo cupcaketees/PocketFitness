@@ -12,9 +12,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.health.Sex;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.home.health.Sex;
 import uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup;
 import uk.ac.tees.cupcake.utils.views.OneSelectedOnCheckStrategy;
 import uk.ac.tees.cupcake.utils.views.ScaleValuePickerView;
@@ -23,68 +23,68 @@ import uk.ac.tees.cupcake.utils.views.ScaleValuePickerView;
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
 public class HealthStatsSetupActivity extends AppCompatActivity {
-    
+
+    private static final int MIN_HEIGHT = 100;
+    private static final int MAX_HEIGHT = 220;
+    private static final int MIN_WEIGHT = 40;
+    private static final int MAX_WEIGHT = 200;
     private boolean recordHeight;
-    
     private boolean recordWeight;
-    
     private CheckableLinearViewGroup checkableGroup;
-    
     private ScaleValuePickerView heightPicker;
-    
     private ScaleValuePickerView weightPicker;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_health_stats_setup);
-    
+
         heightPicker = findViewById(R.id.health_stats_height_picker);
         weightPicker = findViewById(R.id.health_stats_weight_picker);
-        
+
         checkableGroup = findViewById(R.id.health_stats_setup_content_sex_group);
         checkableGroup.addOnCheckStrategy(new OneSelectedOnCheckStrategy());
-        
+
         addHeightPicker();
         addWeightPicker();
     }
     
     public void onClickSkip(View view) {
         UserProfile profile = (UserProfile) getIntent().getSerializableExtra("user_profile");
-        
+
         persistProfile(profile);
     }
     
     public void onClickFinish(View view) {
         UserProfile profile = (UserProfile) getIntent().getSerializableExtra("user_profile");
-        
+
         if (!checkableGroup.getChecked().isEmpty()) {
             String resName = getResources().getResourceEntryName(checkableGroup.getChecked().get(0));
-            
+
             profile.setSex(Sex.get(resName));
         }
-        
+
         if (recordHeight) {
             profile.setHeight((int) heightPicker.getCurrentValue());
         }
-        
+
         if (recordWeight) {
             profile.setWeight((int) weightPicker.getCurrentValue());
         }
-    
+
         persistProfile(profile);
     }
     
     private void persistProfile(UserProfile profile) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    
+
         if (user == null) {
             throw new NullPointerException("User doesn't exist");
         }
-        
+
         FirebaseFirestore.getInstance()
                 .collection("Users")
-                .document(user.getUid())
+                .document(profile.getUid())
                 .set(profile)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(HealthStatsSetupActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
@@ -101,13 +101,9 @@ public class HealthStatsSetupActivity extends AppCompatActivity {
         recordWeight = !recordWeight;
     }
     
-    private static final int MIN_HEIGHT = 100;
-    
-    private static final int MAX_HEIGHT = 220;
-    
     private void addHeightPicker() {
         TextView height = findViewById(R.id.health_stats_setup_height_label);
-    
+
         ScaleValuePickerView heightPicker = findViewById(R.id.health_stats_height_picker);
         heightPicker.setMinValue(MIN_HEIGHT);
         heightPicker.setMaxValue(MAX_HEIGHT);
@@ -115,15 +111,11 @@ public class HealthStatsSetupActivity extends AppCompatActivity {
         heightPicker.setScaleDivisionStep(5);
         heightPicker.setDerivedScaleWidth(4);
         heightPicker.setInitialValue(100);
-    
+
         height.setText((int) heightPicker.getInitialValue() + "cm");
-    
+
         heightPicker.setOnValueChangedListener(newValue -> height.setText((int) newValue + "cm"));
     }
-    
-    private static final int MIN_WEIGHT = 40;
-    
-    private static final int MAX_WEIGHT = 200;
     
     private void addWeightPicker() {
         TextView weight = findViewById(R.id.health_stats_setup_weight_label);

@@ -14,8 +14,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.SearchFriendsAdapter;
-import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
 public class SearchFriendsActivity extends NavigationBarActivity {
@@ -30,17 +30,15 @@ public class SearchFriendsActivity extends NavigationBarActivity {
     @Override
     public void setup() {
 
-        ArrayList<Post> profiles = new ArrayList<>();
+        ArrayList<UserProfile> profiles = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("Users").get().addOnSuccessListener(documentSnapshots -> {
 
             for (DocumentSnapshot imageSnapShots : documentSnapshots) {
-                Post profile = imageSnapShots.toObject(Post.class);
-                profile.setUserUid(imageSnapShots.getId());
-                profiles.add(profile);
+                profiles.add(imageSnapShots.toObject(UserProfile.class));
                 adapter.notifyDataSetChanged();
             }
         });
-        adapter = new SearchFriendsAdapter(profiles, SearchFriendsActivity.this);
+        adapter = new SearchFriendsAdapter(profiles);
 
         RecyclerView recyclerView = findViewById(R.id.myRecycleView);
         recyclerView.setHasFixedSize(true);

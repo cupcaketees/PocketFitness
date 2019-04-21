@@ -21,14 +21,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
@@ -133,8 +131,8 @@ public class ProfileFragment extends Fragment {
                 emailAddressTextView.setText(mCurrentUser.getEmail());
                 dateJoinedTextView.setText(dateJoined);
 
-                CollectionReference followingPath = FirebaseFirestore.getInstance().collection("Users/" + mCurrentUser.getUid() + "/User Following/");
-                CollectionReference followerPath = FirebaseFirestore.getInstance().collection("Users/" + mCurrentUser.getUid() + "/User Followers/");
+                CollectionReference followingPath = FirebaseFirestore.getInstance().collection("Users/" + mCurrentUser.getUid() + "/Following/");
+                CollectionReference followerPath = FirebaseFirestore.getInstance().collection("Users/" + mCurrentUser.getUid() + "/Followers/");
 
                 followingPath.addSnapshotListener(((documentSnapshots, t) -> {
                     if (documentSnapshots == null || documentSnapshots.isEmpty()) {
@@ -143,7 +141,6 @@ public class ProfileFragment extends Fragment {
                         textFollowing.setText(String.valueOf(documentSnapshots.size()));
                     }
                 }));
-
 
                 followerPath.addSnapshotListener(((documentSnapshots, t) -> {
                     if (documentSnapshots == null || documentSnapshots.isEmpty()) {
@@ -154,11 +151,8 @@ public class ProfileFragment extends Fragment {
 
                 }));
 
-
-
                 numberFollowers.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",textFollowers.getText().toString(),"Following",textFollowing.getText().toString(),"intent","1"));
                 numberFollowing.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",textFollowers.getText().toString(),"Following",textFollowing.getText().toString(), "intent","0"));
-
             }
         });
     }
@@ -171,6 +165,4 @@ public class ProfileFragment extends Fragment {
         super.onStop();
         profileListener.remove();
     }
-
-
 }

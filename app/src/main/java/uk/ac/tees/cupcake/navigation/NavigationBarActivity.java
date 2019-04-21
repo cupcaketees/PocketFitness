@@ -1,7 +1,6 @@
 package uk.ac.tees.cupcake.navigation;
 
 import android.app.Activity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -19,14 +18,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
@@ -38,7 +35,7 @@ import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.maps.GymMapActivity;
 import uk.ac.tees.cupcake.navigation.navitemactions.NavigationItemOnClickAction;
 import uk.ac.tees.cupcake.navigation.navitemactions.StartIntentNavigationItemAction;
-import uk.ac.tees.cupcake.posts.PostActivity;
+import uk.ac.tees.cupcake.posts.CreatePostActivity;
 import uk.ac.tees.cupcake.recipes.SearchRecipesActivity;
 import uk.ac.tees.cupcake.videoplayer.VideoListActivity;
 import uk.ac.tees.cupcake.workouts.BodybuildingListActivity;
@@ -60,6 +57,9 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mFirestore;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    
+    private TextView profileNameTextView;
+    private CircleImageView profilePictureImageView;
 
     static {
         NAV_BAR_ACTIONS.put(R.id.nav_home, new StartIntentNavigationItemAction(MainActivity.class));
@@ -70,7 +70,7 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
 
         NAV_BAR_ACTIONS.put(R.id.news_list_view, new StartIntentNavigationItemAction(NewsActivity.class));
 
-        NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(PostActivity.class));
+        NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(CreatePostActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_30diet, new StartIntentNavigationItemAction(DietActivity.class));
 
@@ -112,12 +112,15 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
         stub = findViewById(R.id.layout_stub);
         navigationView = findViewById(R.id.nav_view);
         drawerLayout = findViewById(R.id.drawer_layout);
-
-        addNavigationView();
+    
+        View headerLayout = navigationView.getHeaderView(0);
+        profileNameTextView = headerLayout.findViewById(R.id.nav_bar_name_text_view);
+        profilePictureImageView = headerLayout.findViewById(R.id.nav_bar_profile_picture_image_view);
 
         stub.setLayoutResource(layoutResource());
         stub.inflate();
-
+    
+        addNavigationView();
         setup();
 
         mAuth = FirebaseAuth.getInstance();
@@ -132,7 +135,7 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
                 }
             }
         };
-
+        
         setNameAndImage();
     }
     /**
@@ -147,8 +150,6 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
                   .addOnSuccessListener(documentSnapshot -> {
                       if(documentSnapshot.exists()){
                           // Initialise
-                          TextView profileNameTextView = findViewById(R.id.nav_bar_name_text_view);
-                          CircleImageView profilePictureImageView = findViewById(R.id.nav_bar_profile_picture_image_view);
 
                           // Get Values
                           UserProfile profile = documentSnapshot.toObject(UserProfile.class);

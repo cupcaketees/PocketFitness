@@ -6,11 +6,12 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -21,7 +22,7 @@ import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.account.healthstats.HealthStatsSetupActivity;
 
 /**
  * Setup Profile Activity
@@ -30,13 +31,10 @@ import uk.ac.tees.cupcake.home.MainActivity;
 public class SetupProfileActivity extends AppCompatActivity {
 
     private CircleImageView mProfilePictureImageView;
-    private EditText mFirstNameEditText;
-    private EditText mLastNameEditText;
     private String mProfileImageUrl;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage mStorage;
-    private FirebaseFirestore mFireStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +43,8 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        mFireStore = FirebaseFirestore.getInstance();
 
         mProfilePictureImageView = findViewById(R.id.setup_profile_profile_picture_image_view);
-        mFirstNameEditText = findViewById(R.id.setup_profile_first_name_edit_text);
-        mLastNameEditText = findViewById(R.id.setup_profile_last_name_edit_text);
     }
 
     public void addPhotoOnClick(View view){
@@ -63,6 +58,10 @@ public class SetupProfileActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        ProgressBar progressBar = findViewById(R.id.setup_profile_loading_view);
+        progressBar.setVisibility(View.VISIBLE);
+        mProfilePictureImageView.setVisibility(View.INVISIBLE);
+
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
@@ -74,6 +73,11 @@ public class SetupProfileActivity extends AppCompatActivity {
                                                               .child(mAuth.getCurrentUser().getUid());
                 profilePicturesRef.putFile(resultUri)
                                   .addOnSuccessListener(taskSnapshot -> {
+                                      progressBar.setVisibility(View.GONE);
+                                      mProfilePictureImageView.setVisibility(View.VISIBLE);
+                                      AlphaAnimation alphaAnim = new AlphaAnimation(0, 1);
+                                      alphaAnim.setDuration(1000);
+                                      mProfilePictureImageView.startAnimation(alphaAnim);
                                       mProfilePictureImageView.setImageURI(resultUri);
                                       mProfileImageUrl = taskSnapshot.getDownloadUrl().toString();
                                       Toast.makeText(SetupProfileActivity.this, "Your profile picture has been saved successfully.", Toast.LENGTH_SHORT).show();
@@ -86,13 +90,15 @@ public class SetupProfileActivity extends AppCompatActivity {
         }
     }
 
-    public void finishSetupOnClick(View view){
-        saveData();
-    }
+    /**
+     * Invoked upon clicking the next button.
+     */
+    public void nextOnClick(View view) {
+        EditText firstName = findViewById(R.id.setup_profile_first_name_edit_text);
+        EditText lastName = findViewById(R.id.setup_profile_last_name_edit_text);
 
-    private void saveData(){
-        String firstNameUserInput = mFirstNameEditText.getText().toString().trim();
-        String lastNameUserInput = mLastNameEditText.getText().toString().trim();
+        String firstNameUserInput = firstName.getText().toString().trim();
+        String lastNameUserInput = lastName.getText().toString().trim();
 
         String result = validateUserInput(firstNameUserInput, lastNameUserInput);
 
@@ -101,20 +107,12 @@ public class SetupProfileActivity extends AppCompatActivity {
             return;
         }
 
-        Calendar calendar = Calendar.getInstance();
-        String currentDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(calendar.getTime());
+        String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Calendar.getInstance().getTime());
 
-        UserProfile profile = new UserProfile(firstNameUserInput, lastNameUserInput, mProfileImageUrl, currentDate, mAuth.getCurrentUser().getEmail());
+        UserProfile profile = new UserProfile(mAuth.getCurrentUser().getUid(), firstNameUserInput, lastNameUserInput, mProfileImageUrl, date, mAuth.getCurrentUser().getEmail());
 
-        mFireStore.collection("Users")
-                  .document(mAuth.getCurrentUser().getUid())
-                  .set(profile)
-                  .addOnSuccessListener(aVoid -> {
-                      Toast.makeText(SetupProfileActivity.this, "Profile information saved successfully", Toast.LENGTH_SHORT).show();
-                      startActivity(new Intent(SetupProfileActivity.this, MainActivity.class));
-                      finish();
-                  })
-                  .addOnFailureListener(e -> Toast.makeText(SetupProfileActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
+        startActivity(new Intent(SetupProfileActivity.this, HealthStatsSetupActivity.class)
+                .putExtra("user_profile", profile));
     }
 
     /**

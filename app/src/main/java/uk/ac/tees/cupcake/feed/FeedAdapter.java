@@ -15,7 +15,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -72,6 +71,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         long now = System.currentTimeMillis();
         CharSequence ago = DateUtils.getRelativeTimeSpanString(time,now , DateUtils.SECOND_IN_MILLIS);
 
+        // Set values
         FirebaseFirestore.getInstance()
                          .collection("Users")
                          .document(post.getUserUid())
@@ -87,9 +87,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                                         .load(profile.getProfilePictureUrl())
                                         .into(holder.postProfilePictureImageView);
                              }
-
                          });
-
 
         // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
@@ -282,7 +280,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                              .addOnSuccessListener(aVoid -> Toast.makeText(context, "Post has been removed.", Toast.LENGTH_SHORT).show())
                              .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
         }
-
 
         private void reportPost(String postId){
             Map<String, Object> reportTimeStamp = new HashMap<>();

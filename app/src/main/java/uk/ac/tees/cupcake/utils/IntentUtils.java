@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Parcelable;
 import android.net.Uri;
+import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -27,6 +27,15 @@ public class IntentUtils {
         Map<String, String> extras = new HashMap<>();
         extras.put(title, extra);
         
+        invokeViewWithExtras(context, selectedClass, extras);
+    }
+
+    public static void invokeFollowers(Context context, Class<?> selectedClass, String title, String extra,String title2, String extra2, String title3, String intent) {
+        Map<String, String> extras = new HashMap<>();
+        extras.put(title, extra);
+        extras.put(title2,extra2);
+        extras.put(title3, intent);
+
         invokeViewWithExtras(context, selectedClass, extras);
     }
 

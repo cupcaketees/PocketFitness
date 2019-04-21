@@ -33,6 +33,7 @@ import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
+import uk.ac.tees.cupcake.friends.SearchUserFriendsActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class ProfileFragment extends Fragment {
@@ -125,6 +126,9 @@ public class ProfileFragment extends Fragment {
                     String output = "Following " + documentSnapshots.size();
                     followingCountTextView.setText(output);
                 });
+
+        followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "",followerCountTextView.getText().toString(),"",followingCountTextView.getText().toString(),"intent","1"));
+        followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "",followerCountTextView.getText().toString(),"",followingCountTextView.getText().toString(), "intent","0"));
     }
 
     private void initAndSetProfileData(UserProfile profile){

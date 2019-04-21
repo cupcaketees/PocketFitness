@@ -8,7 +8,6 @@
     tools:context="uk.ac.tees.cupcake.account.SetupProfileActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/setup_profile_profile_picture_image_view"
         android:layout_width="0dp"
         android:layout_height="120dp"
@@ -22,6 +21,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setup_profile_header_text_view" />
+
+    <ProgressBar
+        android:id="@+id/setup_profile_loading_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:indeterminate="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/setup_profile_add_photo_button"
+        app:layout_constraintEnd_toEndOf="@+id/setup_profile_profile_picture_image_view"
+        app:layout_constraintStart_toStartOf="@+id/setup_profile_profile_picture_image_view"
+        app:layout_constraintTop_toTopOf="@+id/setup_profile_profile_picture_image_view" />
 
     <TextView
         android:id="@+id/setup_profile_header_text_view"
@@ -92,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:text="@string/setup_profile_title_text_view_text"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -110,8 +124,8 @@
         android:layout_marginStart="64dp"
         android:background="@drawable/login_button_shape"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:onClick="finishSetupOnClick"
-        android:text="@string/setup_profile_finish_setup_button_text"
+        android:onClick="nextOnClick"
+        android:text="@string/setup_profile_next_setup_button_text"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

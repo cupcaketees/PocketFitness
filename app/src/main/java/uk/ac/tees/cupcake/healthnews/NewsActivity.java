@@ -3,6 +3,7 @@ package uk.ac.tees.cupcake.healthnews;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -25,13 +26,13 @@ import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
  * @author Hugo Tomas <s6006225@tees.ac.uk> - News API
  */
 public class NewsActivity extends NavigationBarActivity {
+    
     private static final String TAG = "NewsActivity";
     private ArrayList<NewsArticle> newsArticles = new ArrayList<>();
     private ProgressBar mProgressBar;
     private TextView mCheckNewsRecieved;
     private SwipeRefreshLayout swipeRefreshLayout;
-
-
+    
     @Override
     protected int layoutResource() {
         return R.layout.news_list_view;
@@ -53,9 +54,6 @@ public class NewsActivity extends NavigationBarActivity {
         swipeRefreshLayout = findViewById(R.id.swiperefresh);
         swipeRefreshLayout.setOnRefreshListener(this::setupNews);
         setupNews();
-
-
-
     }
 
     private void setupNews() {

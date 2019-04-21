@@ -1,9 +1,10 @@
 package uk.ac.tees.cupcake.dietplan;
 
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import java.util.ArrayList;
+
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.DietListAdapter;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
@@ -20,7 +21,7 @@ public class DietActivity extends NavigationBarActivity {
 
     @Override
     protected int layoutResource() {
-        return R.layout.activity_video_list;
+        return R.layout.activity_recycler_view;
     }
 
     @Override

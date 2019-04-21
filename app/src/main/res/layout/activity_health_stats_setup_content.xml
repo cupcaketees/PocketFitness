@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup
+        android:id="@+id/health_stats_setup_content_sex_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_sex_text">
+
+        <uk.ac.tees.cupcake.account.healthstats.HealthStatsSexCheckable
+            android:id="@+id/health_stats_sex_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            app:checkable_image_src="@drawable/health_stats_sex_male" />
+
+        <uk.ac.tees.cupcake.account.healthstats.HealthStatsSexCheckable
+            android:id="@+id/health_stats_sex_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:checkable_image_src="@drawable/health_stats_sex_female" />
+
+    </uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup>
+
+    <TextView
+        android:id="@+id/health_stats_setup_height_text"
+        android:layout_width="wrap_content"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/health_stats_setup_height_label"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_content_sex_group" />
+
+    <TextView
+        android:id="@+id/health_stats_setup_height_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/health_stats_height_picker"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <uk.ac.tees.cupcake.utils.views.ScaleValuePickerView
+        android:id="@+id/health_stats_height_picker"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        android:clickable="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_height_text"
+        app:scale_color="@color/colorPrimaryDark" />
+
+    <TextView
+        android:id="@+id/health_stats_setup_weight_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/health_stats_setup_weight_label"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_height_checkbox" />
+
+    <TextView
+        android:id="@+id/health_stats_setup_weight_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/health_stats_weight_picker"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <uk.ac.tees.cupcake.utils.views.ScaleValuePickerView
+        android:id="@+id/health_stats_weight_picker"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:background="#00000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_setup_weight_text"
+        app:scale_color="@color/colorPrimaryDark" />
+
+    <CheckBox
+        android:id="@+id/health_stats_height_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:onClick="onHeightCheckBoxClick"
+        android:text="@string/health_stats_height_check_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_height_picker" />
+
+    <CheckBox
+        android:id="@+id/health_stats_weight_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/colorPrimaryDark"
+        android:onClick="onWeightCheckBoxClick"
+        android:text="@string/health_stats_weight_check_text"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/health_stats_weight_picker" />
+
+    <TextView
+        android:id="@+id/health_stats_setup_sex_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/health_stats_sex_label"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

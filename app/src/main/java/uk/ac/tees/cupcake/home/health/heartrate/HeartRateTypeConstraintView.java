@@ -12,32 +12,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.utils.ColourUtility;
 import uk.ac.tees.cupcake.utils.views.CheckableConstraintView;
+import uk.ac.tees.cupcake.utils.views.CheckableImageConstraintView;
 
 /**
- * An implementation of {@link CheckableConstraintView} specifically for heart rate measurement selection.
+ * An implementation of {@link CheckableImageConstraintView} specifically for heart rate measurement selection.
  *
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public class HeartRateTypeConstraintView extends CheckableConstraintView {
-    
-    /**
-     * The {@CircleImageView} part of the layout.
-     */
-    private CircleImageView imageView;
-    
-    /**
-     * A reference of {@link CheckableConstraintView.OnCheckedListener} called when this view is checked.
-     */
-    private final OnCheckedListener checkedListener = new HeartRateTypeCheckedListener();
-    
-    public HeartRateTypeConstraintView(Context context) {
-        super(context);
-        addOnCheckListener(checkedListener);
-    }
+public class HeartRateTypeConstraintView extends CheckableImageConstraintView<CircleImageView> {
     
     public HeartRateTypeConstraintView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        addOnCheckListener(checkedListener);
+        addOnCheckListener(new HeartRateTypeCheckedListener());
     
         applyAttributes(attrs);
     }
@@ -63,7 +49,6 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
     
         try {
             label.setText(a.getString(R.styleable.HeartRateTypeConstraintViewAttrs_label_text));
-            imageView.setImageDrawable(a.getDrawable(R.styleable.HeartRateTypeConstraintViewAttrs_image_src));
         } finally {
             a.recycle();
         }
@@ -78,7 +63,7 @@ public class HeartRateTypeConstraintView extends CheckableConstraintView {
         @Override
         public void onChecked(boolean isChecked) {
             int colour = isChecked ?
-                    ColourUtility.setAlpha(0xF0, getResources().getColor(R.color.colorPrimary))
+                    ColourUtility.setAlpha(0xF0, getResources().getColor(R.color.colorPrimaryDark))
                     : 0xFFD0D0D0;
             
             imageView.setCircleBackgroundColor(colour);

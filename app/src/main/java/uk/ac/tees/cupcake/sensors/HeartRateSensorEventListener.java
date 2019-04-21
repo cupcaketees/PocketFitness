@@ -39,12 +39,9 @@ public class HeartRateSensorEventListener implements SensorEventListener {
      */
     private final ArrayList<Float> measurements = new ArrayList<>(SAMPLE_SIZE);
     
-    /**
-     * The heart rate monitor view.
-     */
-    private final HeartRateActivity heartRateActivity;
-    
     private final View heartRateView;
+    
+    private boolean fingerOnSensor = true;
     
     private TextView bpm;
     private TextView label;
@@ -55,7 +52,6 @@ public class HeartRateSensorEventListener implements SensorEventListener {
      * Constructs a new {@link HeartRateSensorEventListener}
      */
     public HeartRateSensorEventListener(HeartRateActivity heartRateActivity) {
-        this.heartRateActivity = heartRateActivity;
         this.heartRateView = heartRateActivity.findViewById(R.id.heart_rate_view);
         this.bpm = heartRateActivity.findViewById(R.id.heart_rate_bpm);
         this.label = heartRateActivity.findViewById(R.id.heart_rate_label);
@@ -67,6 +63,11 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         measurements.clear();
     }
     
+    /**
+     * Calculates the average of the measurements taken.
+     *
+     * @return average heart rate of {@link #measurements}.
+     */
     private int getAverageMeasurement() {
         float totalBpm = 0;
         
@@ -76,8 +77,6 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         
         return Math.round(totalBpm / measurements.size());
     }
-    
-    private volatile boolean fingerOnSensor = true;
     
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -104,13 +103,13 @@ public class HeartRateSensorEventListener implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         if (accuracy > SensorManager.SENSOR_STATUS_UNRELIABLE) {
-            // start measuring
             heartRateView.postDelayed(measurementCallback, 0);
-        } else {
-            reset();
         }
     }
-
+    
+    /**
+     * Resets the view to a state where the finger is not on the sensor.
+     */
     private void reset() {
         heartRateView.removeCallbacks(measurementCallback);
         pulseView.finishPulse();
@@ -127,6 +126,9 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         heartRateText.setTextColor(colour);
     }
     
+    /**
+     * Finishes the heart rate measurement process and moves to the measurement saving activity.
+     */
     private void finish() {
         heartRateView.removeCallbacks(measurementCallback);
         pulseView.finishPulse();
@@ -139,6 +141,9 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         IntentUtils.invokeViewWithExtras(heartRateView.getContext(), SaveHeartRateActivity.class, extras);
     }
     
+    /**
+     * Runnable to be invoked repeatedly where there are more measurements to be taken.
+     */
     private final Runnable measurementCallback = new Runnable() {
         
         @Override

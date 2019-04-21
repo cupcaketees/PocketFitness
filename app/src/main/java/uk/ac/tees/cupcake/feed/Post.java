@@ -1,37 +1,40 @@
 package uk.ac.tees.cupcake.feed;
 
-import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.ServerTimestamp;
 import java.util.Date;
 
 public class Post  {
 
-    private String image;
-    private String description;
-    private String userUid;
+    private String imageUrl;
 
-    @Exclude
-    private String postId;
+    private String description;
+
+    private String userUid;
 
     @ServerTimestamp
     private Date timeStamp;
+
+    private String postId;
 
     public Post() {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String userUid, String image, String description){
+    public Post(String userUid, String description){
         this.userUid = userUid;
-        this.image = image;
         this.description = description;
     }
 
-    public String getUserUid() { return userUid; }
-
-    public String getPostId() { return postId; }
+    public String getUserUid() {
+        return userUid;
+    }
 
     public String getImage() {
-        return image;
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl){
+        this.imageUrl = imageUrl;
     }
 
     public String getDescription() {
@@ -42,12 +45,15 @@ public class Post  {
         return timeStamp;
     }
 
-    public void setId(String id) {
-        this.postId = id;
-    }
-
     public void setTimeStamp(Date timeStamp){
         this.timeStamp = timeStamp;
     }
 
+    public void setPostId(String postId) {
+        this.postId = postId;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
 }

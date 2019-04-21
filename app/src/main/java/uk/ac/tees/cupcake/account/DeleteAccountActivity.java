@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -66,13 +68,13 @@ public class DeleteAccountActivity extends AppCompatActivity {
     }
 
     /**
-     * Requires re authentication by user. Google acc / email pw
-     *
-     * Deletes all images; this includes profile pictures, cover photos, todo/ images used on posts from storage.
-     * Deletes all posts made by user; includes record of all likes from each post.
-     * User account will be removed from previous followers list, and record of all users followers will be deleted.
-     * Deletes user account.
-     * On success takes user to login activity, On failure prompts user with appropriate message.
+     * Deletes users
+     * - Profile pictures, cover photos from cloud storage todo/ images used on posts from storage.
+     * - All stored information associated with the account
+     * - all posts made by user ; including all record of likes from each post
+     * - Account from all users followers and following colletions.
+     * - Deletes user account.
+     * On success sends user to login activity, On failure prompts user with appropriate message.
      */
     public void deleteAccount(View view){
 
@@ -80,69 +82,6 @@ public class DeleteAccountActivity extends AppCompatActivity {
         DocumentReference documentReference = FirebaseFirestore.getInstance()
                                                                .collection("Users")
                                                                .document(mCurrentUser.getUid());
-
-        // Deletes users posts including each posts like collection.
-        documentReference.collection("User Posts")
-                         .get()
-                         .addOnSuccessListener(documentSnapshots -> {
-                             // Iterate through current user posts documents.
-                             for(DocumentSnapshot documentSnapshot : documentSnapshots){
-
-                                 // Iterate through Likes collection in each user post document and deletes each document.
-                                 documentSnapshot.getReference()
-                                                 .collection("Likes")
-                                                 .get()
-                                                 .addOnSuccessListener(documentSnapshots1 -> {
-                                                     for(DocumentSnapshot documentSnapshot1 : documentSnapshots1){
-                                                         documentSnapshot1.getReference().delete();
-                                                     }
-                                                 });
-
-                                 // Deletes each document in the current user posts collection.
-                                 documentSnapshot.getReference().delete();
-                             }
-                         });
-
-        // Storage ref
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-
-        // Delete user profile picture from storage
-        storageReference.child("profile pictures/" + mCurrentUser.getUid())
-                .delete();
-
-        // Delete cover photo image from storage
-        storageReference.child("cover photos/" + mCurrentUser.getUid())
-                .delete();
-
-        // Deletes all images used in posts from user
-        // TODO
-
-        // Delete current users followers collection
-        documentReference.collection("Followers")
-                         .get()
-                         .addOnSuccessListener(documentSnapshots -> {
-                             // Iterate through each follower document and deletes.
-                             for(DocumentSnapshot documentSnapshot : documentSnapshots){
-                                 documentSnapshot.getReference().delete();
-                             }
-                         });
-
-        // Delete current users following collection
-        documentReference.collection("Following")
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-                    // Iterate through each following document and deletes.
-                    for(DocumentSnapshot documentSnapshot : documentSnapshots){
-                        documentSnapshot.getReference().delete();
-                    }
-                });
-
-        // Deletes current user database document
-        documentReference.delete()
-                         .addOnSuccessListener(aVoid -> Toast.makeText(DeleteAccountActivity.this, "User information has been deleted successfully", Toast.LENGTH_SHORT).show())
-                         .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-
-
         AuthCredential credential = null;
 
         switch(mProvider){
@@ -151,11 +90,11 @@ public class DeleteAccountActivity extends AppCompatActivity {
                 if(account != null){
                     credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                 }else{
-                    //todo re auth user - not required atm.
+                    //todo
                     return;
                 }
-
                 break;
+
             case "password":
                 String userInputCurrentPassword = mPasswordEditText.getText().toString().trim();
 
@@ -170,17 +109,112 @@ public class DeleteAccountActivity extends AppCompatActivity {
                 break;
         }
 
-        // Authenticate user,  on success deletes their account.
+        // Authenticate user
         mCurrentUser.reauthenticate(credential)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            mCurrentUser.delete()
-                                        .addOnSuccessListener(aVoid1 -> Toast.makeText(DeleteAccountActivity.this, "Your account has been deleted.", Toast.LENGTH_SHORT).show())
-                                        .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
-                        }
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        // Deletes users posts including each posts like collection.
+
+                        documentReference.collection("User Posts")
+                                         .get()
+                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                             @Override
+                                             public void onSuccess(QuerySnapshot documentSnapshots) {
+
+                                                 for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                                                     // Iterate through Likes collection in each user post document and deletes each document.
+                                                     documentSnapshot.getReference()
+                                                                     .collection("Likes")
+                                                                     .get()
+                                                                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                                         @Override
+                                                                         public void onSuccess(QuerySnapshot documentSnapshots) {
+                                                                             for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                                                                                 documentSnapshot.getReference().delete();
+                                                                             }
+                                                                         }
+                                                                     });
+
+                                                     // Deletes each document in the current user posts collection.
+                                                     documentSnapshot.getReference().delete();
+                                                 }
+                                             }
+                                         });
+
+                        // Storage ref
+                        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+                        // Delete user profile picture from storage
+                        storageReference.child("profile pictures/" + mCurrentUser.getUid())
+                                        .delete();
+
+                        // Delete cover photo image from storage
+                        storageReference.child("cover photos/" + mCurrentUser.getUid())
+                                        .delete();
+
+                        // Delete current user from users follower collections
+                        documentReference.collection("Followers")
+                                         .get()
+                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                             @Override
+                                             public void onSuccess(QuerySnapshot documentSnapshots) {
+
+                                                 for(DocumentSnapshot documentSnapshot : documentSnapshots) {
+
+                                                     // Deletes current user from all users following collections.
+                                                     FirebaseFirestore.getInstance()
+                                                                      .collection("Users/" + documentSnapshot.getId() + "/Following/")
+                                                                      .document(mCurrentUser.getUid())
+                                                                      .get()
+                                                                      .addOnSuccessListener(documentSnapshot12 -> documentSnapshot12.getReference().delete());
+
+                                                     documentSnapshot.getReference().delete();
+                                                 }
+                                             }
+                                         });
+
+                        // Delete current user from users following collections
+                        documentReference.collection("Following")
+                                         .get()
+                                         .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                             @Override
+                                             public void onSuccess(QuerySnapshot documentSnapshots) {
+
+                                                 for(DocumentSnapshot documentSnapshot : documentSnapshots) {
+
+                                                     // Deletes current user from all users followers collections.
+                                                     FirebaseFirestore.getInstance()
+                                                                      .collection("Users/" + documentSnapshot.getId() + "/Followers/")
+                                                                      .document(mCurrentUser.getUid())
+                                                                      .get()
+                                                                      .addOnSuccessListener(documentSnapshot12 -> documentSnapshot12.getReference().delete());
+
+                                                     documentSnapshot.getReference().delete();
+                                                 }
+                                             }
+                                         });
+
+                        // Deletes user document from user collection
+                        documentReference.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(DeleteAccountActivity.this, "User information has been deleted successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        mCurrentUser.delete()
+                                .addOnSuccessListener(aVoid1 -> Toast.makeText(DeleteAccountActivity.this, "Your account has been deleted.", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
+                    }
+                })
+                .addOnFailureListener(e -> Toast.makeText(DeleteAccountActivity.this, e.getMessage(), Toast.LENGTH_LONG).show());
     }
 
     /**

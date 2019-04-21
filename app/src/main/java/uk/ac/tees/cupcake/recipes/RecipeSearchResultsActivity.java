@@ -38,6 +38,7 @@ public class RecipeSearchResultsActivity extends AppCompatActivity {
 
         rvRecipes = findViewById(R.id.rvRecipes);
 
+
         Bundle extras = getIntent().getExtras();
 
         if(extras != null){

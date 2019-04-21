@@ -49,7 +49,7 @@
     <string name="account_change_email_button_text">Change Email Address</string>
 
     <string name="delete_account_delete_button_text">Delete My Account</string>
-    <string name="delete_account_header_text_view_text">We\'re sorry to hear you\'d like to delete your account. We just need your current password.</string>
+    <string name="delete_account_header_text_view_text">We\'re sorry to hear you\'d like to delete your account.</string>
 
     <string name="change_email_header_text_view_text">We just need your new email address and current password to change your email address.</string>
     <string name="change_email_email_edit_text_hint">Enter your new email address</string>
@@ -65,11 +65,9 @@
     <string name="account_settings_verified_email">Your email address is verified</string>
     <string name="account_settings_not_verified_email">Your email address is not verified</string>
 
-    <string name="profile_followers_title_text_view_text">Followers</string>
     <string name="profile_followers_count_temp_value_text_view_text">99</string>
     <string name="profile_following_count_temp_value_text_view_text">99</string>
     <string name="profile_bio_temp_value_text_view_text">Wubba lubba dub dub friends!</string>
-    <string name="profile_following_title_text_view_text">Following</string>
     <string name="profile_edit_profile_button_text">Edit Profile</string>
     <string name="profile_basic_info_header_text_view_text">Basic Info</string>
 
@@ -177,4 +175,17 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA7E0Z77NDwUTFXhl9trUE7s9XhGWXuZjk</string>
     <string name="google_places_key">"AIzaSyBWGQQuG0IGIcdnBjr1DdcM_23LeFTXOSc"</string>
     <string name="title_activity_user_post_location">Map</string>
+
+    <string name="view_profile_follow_button_text">Follow</string>
+    <string name="delete_account_info_text_view_text">- Your profile pictures, cover photos and images from our storage.\n- All stored information associated with your account.\n- All posts made by your account.\n- Your account from all users followers and following colletions.</string>
+    <string name="delete_account_title_text_view_text">By deleting your account permanentely you will delete:</string>
+    <string name="delete_account_warning_text_view_text">Deletion of your accout is final you will not be able to recover your deleted account or data.\n </string>
+    <string name="recipe_item_diet_label_header_text_view_text">Diet Labels</string>
+    <string name="recipe_item_health_label_header_text_view_text">Health Labels</string>
+    <string name="recipe_item_ingredients_header_text_view">Ingredients</string>
+    <string name="recipe_item_no_ingredients_text">No ingredients available</string>
+    <string name="recipe_item_no_health_labels_text">No Health labels</string>
+    <string name="recipe_item_no_diet_labels_text">No Diet labels</string>
+    <string name="recipe_item_information_header_text">Information</string>
+    <string name="recipe_item_servings_header_text">Servings</string>
 </resources>

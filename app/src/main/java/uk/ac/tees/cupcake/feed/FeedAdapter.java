@@ -1,6 +1,7 @@
 package uk.ac.tees.cupcake.feed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -24,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -31,6 +33,9 @@ import java.util.List;
 import java.util.Map;
 
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.account.ViewProfileActivity;
+import uk.ac.tees.cupcake.home.MainActivity;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
@@ -67,12 +72,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         CharSequence ago = DateUtils.getRelativeTimeSpanString(time,now , DateUtils.SECOND_IN_MILLIS);
 
         // Set values
+        FirebaseFirestore.getInstance()
+                         .collection("Users")
+                         .document(post.getUserUid())
+                         .get()
+                         .addOnSuccessListener(documentSnapshot -> {
+                             UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+
+                             String profileName = profile.getFirstName() + " " + profile.getLastName();
+                             holder.postProfileNameTextView.setText(profileName);
+
+                             if(profile.getProfilePictureUrl() != null){
+                                 Picasso.with(holder.itemView.getContext())
+                                        .load(profile.getProfilePictureUrl())
+                                        .into(holder.postProfilePictureImageView);
+                             }
+                         });
+
+        // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
 
-        if(post.getImageUrl() != null) {
+        if(post.getImage() != null) {
             Picasso.with(holder.itemView.getContext())
-                   .load(post.getImageUrl())
+                   .load(post.getImage())
                    .into(holder.postImageImageView);
         }
 
@@ -171,6 +194,21 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                 e.printStackTrace();
             }
         });
+
+        holder.postProfileNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // User selects their own post in feed. Send to main activity
+                if(post.getUserUid().equalsIgnoreCase(holder.mCurrentUser.getUid())){
+                    MainActivity mainActivity = (MainActivity) v.getContext();
+                    mainActivity.setPage(2);
+                }else{
+                    Intent intent = new Intent(v.getContext(), ViewProfileActivity.class);
+                    intent.putExtra("profileId", post.getUserUid());
+                    v.getContext().startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -242,7 +280,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                              .addOnSuccessListener(aVoid -> Toast.makeText(context, "Post has been removed.", Toast.LENGTH_SHORT).show())
                              .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show());
         }
-
 
         private void reportPost(String postId){
             Map<String, Object> reportTimeStamp = new HashMap<>();

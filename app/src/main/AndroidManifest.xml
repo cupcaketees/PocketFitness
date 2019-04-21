@@ -121,7 +121,10 @@
             android:name=".home.health.heartrate.SaveHeartRateActivity"
             android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-        <activity android:name=".home.MainActivity" />
+
+        <activity android:name=".home.MainActivity"
+            android:launchMode="singleTop" />
+
         <activity android:name=".healthnews.NewsActivity" />
         <activity android:name=".dietplan.DietActivity" />
         <activity
@@ -153,9 +156,13 @@
             android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-      
-        <activity android:name=".recipes.SearchRecipesActivity" />
-      
+
+        <activity android:name=".recipes.SearchRecipesActivity"
+            android:configChanges="orientation"
+            android:parentActivityName=".recipes.SearchRecipesActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
         <activity
             android:name=".recipes.RecipeSearchResultsActivity"
             android:configChanges="orientation"
@@ -167,18 +174,22 @@
             android:configChanges="orientation"
             android:parentActivityName=".recipes.RecipeSearchResultsActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BasicActionBar" />
+
+        <activity android:name=".account.ViewProfileActivity"
+            android:parentActivityName=".home.MainActivity"
             android:theme="@style/AppTheme.BasicActionBar"/>
 
         <activity android:name=".friends.SearchFriendsActivity" />
         <activity android:name=".friends.SearchUserFriendsActivity" />
 
         <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
-        <activity 
+        <activity
             android:name=".home.health.ExerciseSelectionActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
 
-        <activity 
+        <activity
             android:name=".posts.CreatePostActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />

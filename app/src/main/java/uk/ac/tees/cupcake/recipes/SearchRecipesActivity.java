@@ -38,6 +38,7 @@ public class SearchRecipesActivity extends AppCompatActivity {
         // Initialise
         mRefineSearchConstraintLayout = findViewById(R.id.refine_search_constraint_layout);
         mSearchBarEditText = findViewById(R.id.search_recipe_edit_text);
+        setTitle("Search for a recipe");
 
         // Set value
         mRefineSearchConstraintLayout.setVisibility(View.INVISIBLE);
@@ -71,7 +72,11 @@ public class SearchRecipesActivity extends AppCompatActivity {
      * @param view
      */
     public void buildString(View view){
+        mRefineSearchConstraintLayout.setVisibility(View.INVISIBLE);
         String searchInput = mSearchBarEditText.getText().toString().trim();
+        EditText caloriesFromEditText = findViewById(R.id.refine_search_calories_from_edit_text);
+        EditText caloriesToEditText = findViewById(R.id.refine_search_calories_to_edit_text);
+
         StringBuilder bldr = new StringBuilder("https://api.edamam.com/search?q=");
 
         if(TextUtils.isEmpty(searchInput)){
@@ -85,6 +90,17 @@ public class SearchRecipesActivity extends AppCompatActivity {
 
             bldr.append(searchInput)
                 .append("&app_id=09d06045&app_key=dd8b097670ff8e9fd118eb3dd8e2d0cb&from=0&to=50");
+
+            // if calories edit text are not empty append values to url
+            if(!TextUtils.isEmpty(caloriesFromEditText.getText().toString()) && !TextUtils.isEmpty(caloriesToEditText.getText().toString())){
+                int caloriesFromInput = Integer.parseInt(caloriesFromEditText.getText().toString());
+                int caloriesToInput = Integer.parseInt(caloriesToEditText.getText().toString());
+
+                bldr.append("&calories=")
+                    .append(caloriesFromInput)
+                    .append("-")
+                    .append(caloriesToInput);
+            }
 
             //Iterates map to get added filter types and api parameters
             for (Map.Entry<String, Boolean> e : mFilterOptions.entrySet()) {

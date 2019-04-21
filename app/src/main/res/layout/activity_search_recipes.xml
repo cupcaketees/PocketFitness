@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/search_recipe_edit_text"
         app:layout_constraintEnd_toEndOf="@+id/search_recipe_edit_text"
         app:layout_constraintTop_toTopOf="@+id/search_recipe_edit_text"
-        app:srcCompat="@drawable/ic_search_icon" />
+        app:srcCompat="@drawable/ic_search_icon_white" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/refine_search_constraint_layout"
@@ -81,7 +81,7 @@
             android:id="@+id/refine_search_diet_text_view"
             android:layout_width="33dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
             android:text="@string/refine_search_diet_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/colorPrimaryDark"
@@ -94,20 +94,20 @@
             android:id="@+id/refine_search_diet_balanced"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:buttonTint="@android:color/black"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
             android:text="@string/refine_search_diet_balanced_check_box_text"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_text_view" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_health_vegan"
+            app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
         <CheckBox
             android:id="@+id/refine_search_diet_high-fiber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_diet_high_fiber_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_diet_high_fiber_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_balanced" />
 
@@ -115,9 +115,10 @@
             android:id="@+id/refine_search_diet_high-protein"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_diet_high_protein_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_diet_high_protein_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_high-fiber" />
 
@@ -125,29 +126,31 @@
             android:id="@+id/refine_search_diet_low-carb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_diet_low_carb_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/refine_search_diet_low_carb_check_box_text"
+            app:layout_constraintStart_toStartOf="@+id/guideline4"
+            app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_high-protein" />
 
         <CheckBox
             android:id="@+id/refine_search_diet_low-fat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_diet_low_fat_check_box_text"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_low-carb" />
+            android:text="@string/refine_search_diet_low_fat_check_box_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_health_gluten-free"
+            app:layout_constraintStart_toStartOf="@+id/guideline5" />
 
         <CheckBox
             android:id="@+id/refine_search_diet_low-sodium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_diet_low_sodium_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_diet_low_sodium_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_low-fat" />
 
@@ -161,15 +164,15 @@
             android:textColor="@color/colorPrimaryDark"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_calories_text_view"
+            app:layout_constraintStart_toStartOf="@+id/guideline6" />
 
         <CheckBox
             android:id="@+id/refine_search_health_gluten-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:buttonTint="@android:color/black"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
             android:text="@string/refine_search_health_gluten_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
@@ -179,9 +182,10 @@
             android:id="@+id/refine_search_health_fish-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_fish_free_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_fish_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_gluten-free" />
 
@@ -189,9 +193,10 @@
             android:id="@+id/refine_search_health_egg-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_eggs_free_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_eggs_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_fish-free" />
 
@@ -199,9 +204,10 @@
             android:id="@+id/refine_search_health_dairy-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_dairy_free_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_dairy_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_egg-free" />
 
@@ -209,9 +215,10 @@
             android:id="@+id/refine_search_health_peanut-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_peanuts_free_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_peanuts_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_dairy-free" />
 
@@ -219,9 +226,10 @@
             android:id="@+id/refine_search_health_soy-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_soy_free_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_soy_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_peanut-free" />
 
@@ -229,9 +237,10 @@
             android:id="@+id/refine_search_health_vegetarian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_vegetarian_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_vegetarian_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_low-sodium" />
 
@@ -239,9 +248,10 @@
             android:id="@+id/refine_search_health_vegan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_vegan_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_vegan_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_vegetarian" />
 
@@ -249,9 +259,10 @@
             android:id="@+id/refine_search_health_paleo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_paleo_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_paleo_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_vegan" />
 
@@ -260,6 +271,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
             android:text="@string/refine_search_calories_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/colorPrimaryDark"
@@ -272,9 +284,10 @@
             android:id="@+id/refine_search_health_alcohol-free"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_alcohol_free_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_alcohol_free_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_paleo" />
 
@@ -282,9 +295,10 @@
             android:id="@+id/refine_search_health_kosher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@android:color/black"
-            android:text="@string/refine_search_health_kosher_check_box_text"
+            android:layout_marginTop="8dp"
+            android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
+            android:text="@string/refine_search_health_kosher_check_box_text"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_health_alcohol-free" />
 
@@ -293,10 +307,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="16dp"
             android:text="@string/refine_search_calories_from_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
             app:layout_constraintTop_toBottomOf="@+id/refine_search_calories_text_view" />
@@ -306,21 +320,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="16dp"
             android:text="@string/refine_search_calories_to_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/refine_search_calories_in_edit_text" />
+            app:layout_constraintTop_toBottomOf="@+id/refine_search_calories_from_edit_text" />
 
         <EditText
-            android:id="@+id/refine_search_calories_in_edit_text"
+            android:id="@+id/refine_search_calories_from_edit_text"
             android:layout_width="40dp"
             android:layout_height="35dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/refine_search_edit_text_background"
             android:ems="10"
+            android:paddingLeft="2dp"
             android:inputType="number"
             android:textCursorDrawable="@drawable/black_cursor"
             app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_calories_from_text_view"
@@ -332,28 +347,11 @@
             android:layout_height="35dp"
             android:background="@drawable/refine_search_edit_text_background"
             android:ems="10"
+            android:paddingLeft="2dp"
             android:inputType="number"
             android:textCursorDrawable="@drawable/black_cursor"
             app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_calories_to_text_view"
-            app:layout_constraintEnd_toEndOf="@+id/refine_search_calories_in_edit_text" />
-
-        <Button
-            android:id="@+id/refine_search_done_button"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_background"
-            android:backgroundTint="?attr/colorPrimaryDark"
-            android:text="@string/refine_search_done_button_text"
-            android:textAllCaps="true"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@android:color/background_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/refine_search_health_soy-free"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintEnd_toEndOf="@+id/refine_search_calories_from_edit_text" />
 
     </android.support.constraint.ConstraintLayout>
 

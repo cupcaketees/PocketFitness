@@ -11,30 +11,30 @@ import uk.ac.tees.cupcake.home.health.Sex;
 public class UserProfile implements Serializable {
 
     private String uid;
-
     private String firstName;
     private String lastName;
-    
     private String profilePictureUrl;
     private String coverPhotoUrl;
-    
     private String accountCreated;
     private String bio;
-    
+    private String emailAddress;
+
     private int height;
     private int weight;
+
     private Sex sex;
 
     public UserProfile(){
         // required empty constructor for fire base reflection.
     }
 
-    public UserProfile(String uid, String firstName, String lastName, String profilePictureUrl, String accountCreated) {
+    public UserProfile(String uid, String firstName, String lastName, String profilePictureUrl, String accountCreated, String email){
         this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
+        this.emailAddress = email;
     }
 
     public String getBio() { return bio; }
@@ -47,6 +47,10 @@ public class UserProfile implements Serializable {
         return lastName.substring(0,1).toUpperCase() + lastName.substring(1);
     }
 
+    public String getEmailAddress(){
+        return emailAddress;
+    }
+
     public String getProfilePictureUrl(){
         return profilePictureUrl;
     }
@@ -56,7 +60,7 @@ public class UserProfile implements Serializable {
     public String getAccountCreated() {
         return accountCreated;
     }
-    
+
     public int getHeight() {
         return height;
     }
@@ -64,7 +68,7 @@ public class UserProfile implements Serializable {
     public void setHeight(int height) {
         this.height = height;
     }
-    
+
     public int getWeight() {
         return weight;
     }
@@ -72,7 +76,7 @@ public class UserProfile implements Serializable {
     public void setWeight(int weight) {
         this.weight = weight;
     }
-    
+
     public Sex getSex() {
         return sex;
     }
@@ -84,5 +88,4 @@ public class UserProfile implements Serializable {
     public String getUid() {
         return uid;
     }
-
 }

@@ -43,7 +43,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mStorage = FirebaseStorage.getInstance();
-        
+
         mProfilePictureImageView = findViewById(R.id.setup_profile_profile_picture_image_view);
     }
 
@@ -57,11 +57,11 @@ public class SetupProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-    
+
         ProgressBar progressBar = findViewById(R.id.setup_profile_loading_view);
         progressBar.setVisibility(View.VISIBLE);
         mProfilePictureImageView.setVisibility(View.INVISIBLE);
-        
+
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
 
@@ -89,28 +89,28 @@ public class SetupProfileActivity extends AppCompatActivity {
             }
         }
     }
-    
+
     /**
      * Invoked upon clicking the next button.
      */
     public void nextOnClick(View view) {
         EditText firstName = findViewById(R.id.setup_profile_first_name_edit_text);
         EditText lastName = findViewById(R.id.setup_profile_last_name_edit_text);
-        
+
         String firstNameUserInput = firstName.getText().toString().trim();
         String lastNameUserInput = lastName.getText().toString().trim();
-    
+
         String result = validateUserInput(firstNameUserInput, lastNameUserInput);
 
         if(!result.isEmpty()){
             Toast.makeText(SetupProfileActivity.this, result, Toast.LENGTH_SHORT).show();
             return;
         }
-    
+
         String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Calendar.getInstance().getTime());
 
-        UserProfile profile = new UserProfile(mAuth.getCurrentUser().getUid(), firstNameUserInput, lastNameUserInput, mProfileImageUrl, date);
-    
+        UserProfile profile = new UserProfile(mAuth.getCurrentUser().getUid(), firstNameUserInput, lastNameUserInput, mProfileImageUrl, date, mAuth.getCurrentUser().getEmail());
+
         startActivity(new Intent(SetupProfileActivity.this, HealthStatsSetupActivity.class)
                 .putExtra("user_profile", profile));
     }

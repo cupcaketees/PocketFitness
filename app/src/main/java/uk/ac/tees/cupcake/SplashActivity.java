@@ -48,7 +48,13 @@ public class SplashActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
-
+    
+        StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
+        SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
+    
+        sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
+        scheduleStepCounterResetJob();
+        
         // Checks users current auth state and directs to them to appropriate activity.
         if(currentUser == null){
             // not logged in
@@ -74,17 +80,8 @@ public class SplashActivity extends AppCompatActivity {
                                  }
                              });
         }
-
-        SystemClock.sleep(1000);
-
-        StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
-        SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
-
-        sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
-        scheduleStepCounterResetJob();
         
         SystemClock.sleep(1000);
-        finish();
         Log.d(TAG, "onCreate: onEnd");
     }
     

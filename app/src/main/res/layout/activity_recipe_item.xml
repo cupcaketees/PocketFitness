@@ -9,7 +9,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context="uk.ac.tees.cupcake.recipes.RecipeItemActivity">
 
         <ImageView
@@ -119,7 +119,6 @@
             android:drawableEnd="@drawable/ic_open_in_browser"
             android:gravity="center"
             android:onClick="browseSourceOnClick"
-            android:text="TextView"
             android:textAlignment="center"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -153,7 +152,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@color/colorPrimaryDark"
-            android:text="Overall Statistics"
+            android:text="@string/recipe_item_information_header_text"
             android:textAlignment="center"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/white"
@@ -221,21 +220,13 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="Servings"
+            android:text="@string/recipe_item_servings_header_text"
             android:textAlignment="center"
             app:layout_constraintEnd_toStartOf="@+id/guideline3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_item_stats_header_text_view" />
 
     </android.support.constraint.ConstraintLayout>
-
-
-
-
-
-
-
-
 
 </ScrollView>
 

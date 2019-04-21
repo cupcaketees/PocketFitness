@@ -66,10 +66,6 @@ public class SearchRecipesActivity extends AppCompatActivity {
          mRefineSearchConstraintLayout.setVisibility(value);
     }
 
-    public void refineSearchFinishOnClick(View view){
-        mRefineSearchConstraintLayout.setVisibility(View.INVISIBLE);
-    }
-
     /**
      * OnClick that will build string for edamam get request.
      * @param view

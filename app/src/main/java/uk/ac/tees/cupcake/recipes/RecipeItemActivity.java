@@ -31,7 +31,6 @@ public class RecipeItemActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_item);
 
         // Initialise
-
         TextView recipeNameTextView = findViewById(R.id.recipe_item_name_text_view);
         ImageView recipeImageImageView = findViewById(R.id.recipe_item_image_image_view);
         TextView recipeHealthLabelsTextView = findViewById(R.id.recipe_item_health_label_results_text_view);
@@ -46,7 +45,7 @@ public class RecipeItemActivity extends AppCompatActivity {
         // Get
         Recipe recipe = (Recipe) getIntent().getSerializableExtra("recipe");
 
-        // Set
+        // Setters
 
         // Title
         setTitle(recipe.getLabel());
@@ -56,37 +55,36 @@ public class RecipeItemActivity extends AppCompatActivity {
         String[] healthLabels = recipe.getHealthLabels();
 
         if(healthLabels.length == 0){
-            recipeHealthLabelsTextView.setText("No Health labels");
+            recipeHealthLabelsTextView.setText(R.string.recipe_item_no_health_labels_text);
         }
 
-        for(int i = 0 ; i < healthLabels.length ; i++){
-            recipeHealthLabelsTextView.append(healthLabels[i].toString() + "\n");
+        for (String healthLabel : healthLabels) {
+            recipeHealthLabelsTextView.append(healthLabel + "\n");
         }
 
         // Diet labels
-
         String[] dietLabels = recipe.getDietLabels();
 
-        for(int i = 0 ; i < dietLabels.length ; i++){
-            recipeDietLabelsTextView.append(healthLabels[i].toString() + "\n");
+        if(dietLabels.length == 0){
+            recipeDietLabelsTextView.setText(R.string.recipe_item_no_diet_labels_text);
         }
 
-        if(dietLabels.length == 0){
-            recipeDietLabelsTextView.setText("No Diet labels");
+        for(String dietLabel : dietLabels){
+            recipeDietLabelsTextView.append(dietLabel + "\n");
         }
 
         // Ingredients
         Map<String,Double> ingredients = recipe.getIngredients();
 
         if(ingredients.size() == 0){
-            recipeIngredientsTextView.setText("No ingredients available");
+            recipeIngredientsTextView.setText(R.string.recipe_item_no_ingredients_text);
         }
 
         Iterator ingredientIt = ingredients.keySet().iterator();
 
         while(ingredientIt.hasNext()){
             String key = (String) ingredientIt.next();
-            recipeIngredientsTextView.append(key + " - " + ingredients.get(key) + " g\n\n" );
+            recipeIngredientsTextView.append(key + " - " + ingredients.get(key).intValue() + " g\n\n" );
         }
 
         // Url and Source
@@ -98,19 +96,17 @@ public class RecipeItemActivity extends AppCompatActivity {
         Picasso.with(RecipeItemActivity.this).load(recipe.getImageUrl()).into(recipeImageImageView);
 
         // Statistics
-        recipeCaloriesTextView.setText("Calories " + recipe.getTotalCalories().intValue() + " kcal");
+        String caloriesText = "Calories " + recipe.getTotalCalories().intValue() + " kcal";
+        recipeCaloriesTextView.setText(caloriesText);
 
-        recipeWeightTextView.setText("Weight " + recipe.getTotalWeight() + " g");
+        String weightText = "Weight " + recipe.getTotalWeight().intValue() + " g";
+        recipeWeightTextView.setText(weightText);
 
-        recipeServingsTextView.setText("Servings " + recipe.getYield());
+        String servingsText = "Servings " + recipe.getYield();
+        recipeServingsTextView.setText(servingsText);
 
-        recipeTimeTextView.setText("Time " + recipe.getTotalTime() + " minutes");
-
-        if(recipe.getTotalTime() == 0){
-            recipeTimeTextView.setText("Time N/A");
-        }
-
-
+        String timeText = recipe.getTotalTime() != 0 ? "Time " + recipe.getTotalTime() + " minutes" : "Time N/A";
+        recipeTimeTextView.setText(timeText);
     }
 
     public void browseSourceOnClick(View view){

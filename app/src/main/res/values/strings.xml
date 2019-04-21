@@ -171,4 +171,9 @@
     <string name="recipe_item_diet_label_header_text_view_text">Diet Labels</string>
     <string name="recipe_item_health_label_header_text_view_text">Health Labels</string>
     <string name="recipe_item_ingredients_header_text_view">Ingredients</string>
+    <string name="recipe_item_no_ingredients_text">No ingredients available</string>
+    <string name="recipe_item_no_health_labels_text">No Health labels</string>
+    <string name="recipe_item_no_diet_labels_text">No Diet labels</string>
+    <string name="recipe_item_information_header_text">Information</string>
+    <string name="recipe_item_servings_header_text">Servings</string>
 </resources>

@@ -72,9 +72,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View recipeView = inflater.inflate(R.layout.recipe_row_rv, parent, false);
-        ViewHolder viewHolder = new ViewHolder(recipeView, mListener);
 
-        return viewHolder;
+        return new ViewHolder(recipeView, mListener);
     }
 
     @Override

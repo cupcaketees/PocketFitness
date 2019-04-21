@@ -47,23 +47,33 @@ public class Recipe implements Serializable {
     public String getLabel() {
         return label;
     }
+
     public String getImageUrl() {
         return imageUrl;
     }
+
     public String getSource() {
         return source;
     }
+
     public Double getTotalCalories() {
         return totalCalories;
     }
+
     public int getYield() {
         return yield;
     }
+
     public String[] getHealthLabels() { return healthLabels; }
+
     public String[] getDietLabels() { return dietLabels; }
+
     public String getUrl() { return url; }
+
     public Map<String,Double>  getIngredients() { return ingredients; }
+
     public Double getTotalWeight() { return totalWeight; }
+
     public int getTotalTime() { return totalTime; }
 
     public static ArrayList<Recipe> fromJSONArray(JSONObject obj){

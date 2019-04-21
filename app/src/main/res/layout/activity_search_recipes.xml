@@ -94,12 +94,11 @@
             android:id="@+id/refine_search_diet_balanced"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
             android:text="@string/refine_search_diet_balanced_check_box_text"
-            app:layout_constraintStart_toStartOf="@+id/guideline4"
-            app:layout_constraintTop_toBottomOf="@+id/refine_search_diet_text_view" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_health_vegan"
+            app:layout_constraintStart_toStartOf="@+id/guideline4" />
 
         <CheckBox
             android:id="@+id/refine_search_diet_high-fiber"
@@ -141,8 +140,8 @@
             android:buttonTint="@color/colorPrimaryDark"
             android:onClick="onCheckBoxClicked"
             android:text="@string/refine_search_diet_low_fat_check_box_text"
-            app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_health_gluten-free"
+            app:layout_constraintStart_toStartOf="@+id/guideline5" />
 
         <CheckBox
             android:id="@+id/refine_search_diet_low-sodium"
@@ -272,6 +271,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
             android:text="@string/refine_search_calories_text_view_text"
             android:textAppearance="@android:style/TextAppearance.Material"
             android:textColor="@color/colorPrimaryDark"
@@ -352,26 +352,6 @@
             android:textCursorDrawable="@drawable/black_cursor"
             app:layout_constraintBaseline_toBaselineOf="@+id/refine_search_calories_to_text_view"
             app:layout_constraintEnd_toEndOf="@+id/refine_search_calories_from_edit_text" />
-
-        <Button
-            android:id="@+id/refine_search_done_button"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_background"
-            android:backgroundTint="?attr/colorPrimaryDark"
-            android:onClick="refineSearchFinishOnClick"
-            android:text="@string/refine_search_done_button_text"
-            android:textAllCaps="true"
-            android:textAppearance="@android:style/TextAppearance.Material"
-            android:textColor="@android:color/background_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline6"
-            app:layout_constraintTop_toBottomOf="@+id/refine_search_health_soy-free" />
 
     </android.support.constraint.ConstraintLayout>
 

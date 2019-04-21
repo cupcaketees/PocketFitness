@@ -40,21 +40,21 @@ public class PostActivity extends AppCompatActivity {
      * Creates a tab layout on the bottom that can navigate to the three fragments.
      */
     private void setupFragments() {
-        Log.d(TAG, "setupFragments: started");
-
-        SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(new GalleryFragment(), new CameraFragment(), new TextFragment()));
-
-        Toolbar toolbar = findViewById(R.id.postToolbar);
-        setSupportActionBar(toolbar);
-
-        mViewPager.setAdapter(postPagerAdapter);
-
-        TabLayout tabLayout = findViewById(R.id.bottom_tab);
-        tabLayout.setupWithViewPager(mViewPager);
-        tabLayout.getTabAt(0).setText("GALLERY");
-        tabLayout.getTabAt(1).setText("PHOTO");
-        tabLayout.getTabAt(2).setText("TEXT");
+//        Log.d(TAG, "setupFragments: started");
+//
+//        SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+//                Arrays.asList(new GalleryFragment(), new CameraFragment(), new TextFragment()));
+//
+//        Toolbar toolbar = findViewById(R.id.postToolbar);
+//        setSupportActionBar(toolbar);
+//
+//        mViewPager.setAdapter(postPagerAdapter);
+//
+//        TabLayout tabLayout = findViewById(R.id.bottom_tab);
+//        tabLayout.setupWithViewPager(mViewPager);
+//        tabLayout.getTabAt(0).setText("GALLERY");
+//        tabLayout.getTabAt(1).setText("PHOTO");
+//        tabLayout.getTabAt(2).setText("TEXT");
 
     }
 

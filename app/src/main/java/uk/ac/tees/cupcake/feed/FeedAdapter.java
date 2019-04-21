@@ -93,9 +93,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
 
-        if(post.getImage() != null) {
+        if(post.getImageUrl() != null) {
             Picasso.with(holder.itemView.getContext())
-                   .load(post.getImage())
+                   .load(post.getImageUrl())
                    .into(holder.postImageImageView);
         }
 

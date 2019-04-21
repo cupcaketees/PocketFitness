@@ -49,7 +49,7 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayoutFriends);
         tabLayout.setupWithViewPager(mViewPager);
 
-        tabLayout.getTabAt(0).setText("Following: " + getIntent().getStringExtra("Following"));
-        tabLayout.getTabAt(1).setText("Followers: " + getIntent().getStringExtra("Followers"));
+        tabLayout.getTabAt(0).setText(getIntent().getStringExtra("Following"));
+        tabLayout.getTabAt(1).setText(getIntent().getStringExtra("Followers"));
     }
 }

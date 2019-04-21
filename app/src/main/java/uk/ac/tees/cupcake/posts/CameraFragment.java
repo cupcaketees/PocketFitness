@@ -108,7 +108,7 @@ public class CameraFragment extends Fragment {
         if(resultCode == 0) {
             IntentUtils.invokeBaseView(getActivity(), PostActivity.class);
         } else if (requestCode == GALLERY_FRAGMENT_NUM) {
-            IntentUtils.invokePhotoView(getActivity(),FinalisePost.class, imageUri);
+           // IntentUtils.invokePhotoView(getActivity(),FinalisePost.class, imageUri);
         } else {
             Toast.makeText(getActivity(), "Random Error has occurred", Toast.LENGTH_SHORT).show();
         }

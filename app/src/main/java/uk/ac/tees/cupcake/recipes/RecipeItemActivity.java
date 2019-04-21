@@ -84,7 +84,7 @@ public class RecipeItemActivity extends AppCompatActivity {
 
         while(ingredientIt.hasNext()){
             String key = (String) ingredientIt.next();
-            recipeIngredientsTextView.append(key + " - " + ingredients.get(key).intValue() + " g\n\n" );
+            recipeIngredientsTextView.append(key + " - " + ingredients.get(key).intValue() + "g\n\n" );
         }
 
         // Url and Source
@@ -99,7 +99,7 @@ public class RecipeItemActivity extends AppCompatActivity {
         String caloriesText = "Calories " + recipe.getTotalCalories().intValue() + " kcal";
         recipeCaloriesTextView.setText(caloriesText);
 
-        String weightText = "Weight " + recipe.getTotalWeight().intValue() + " g";
+        String weightText = "Weight " + recipe.getTotalWeight().intValue() + "g";
         recipeWeightTextView.setText(weightText);
 
         String servingsText = "Servings " + recipe.getYield();

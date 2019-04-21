@@ -20,6 +20,8 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.friends.SearchUserFriendsActivity;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 
 public class ViewProfileActivity extends AppCompatActivity {
@@ -96,6 +98,9 @@ public class ViewProfileActivity extends AppCompatActivity {
                                String followButtonValue = documentSnapshot.exists() ? "Unfollow" : "Follow";
                                mFollowButton.setText(followButtonValue);
                            });
+
+        followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(ViewProfileActivity.this, SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(),"intent","1"));
+        followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(ViewProfileActivity.this, SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(), "intent","0"));
     }
 
     private void followButton(){

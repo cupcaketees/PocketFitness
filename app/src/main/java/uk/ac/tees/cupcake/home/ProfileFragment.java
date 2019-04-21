@@ -127,8 +127,8 @@ public class ProfileFragment extends Fragment {
                     followingCountTextView.setText(output);
                 });
 
-        followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "",followerCountTextView.getText().toString(),"",followingCountTextView.getText().toString(),"intent","1"));
-        followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "",followerCountTextView.getText().toString(),"",followingCountTextView.getText().toString(), "intent","0"));
+        followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(),"intent","1"));
+        followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(), "intent","0"));
     }
 
     private void initAndSetProfileData(UserProfile profile){

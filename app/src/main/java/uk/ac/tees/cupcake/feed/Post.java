@@ -29,7 +29,7 @@ public class Post  {
         return userUid;
     }
 
-    public String getImage() {
+    public String getImageUrl() {
         return imageUrl;
     }
 

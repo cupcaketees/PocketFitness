@@ -74,7 +74,7 @@ public class GalleryFragment extends Fragment {
         TextView nextFragment = view.findViewById(R.id.postNext);
         nextFragment.setOnClickListener(v -> {
             Log.d(TAG, "initialiseView: navigate to finalise post");
-            IntentUtils.invokeVideoView(getActivity(), FinalisePost.class, "Selected_image",mSelectedImage);
+           // IntentUtils.invokeVideoView(getActivity(), FinalisePost.class, "Selected_image",mSelectedImage);
         });
     }
 

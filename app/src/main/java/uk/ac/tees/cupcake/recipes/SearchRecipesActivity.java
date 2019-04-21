@@ -38,6 +38,7 @@ public class SearchRecipesActivity extends AppCompatActivity {
         // Initialise
         mRefineSearchConstraintLayout = findViewById(R.id.refine_search_constraint_layout);
         mSearchBarEditText = findViewById(R.id.search_recipe_edit_text);
+        setTitle("Search for a recipe");
 
         // Set value
         mRefineSearchConstraintLayout.setVisibility(View.INVISIBLE);

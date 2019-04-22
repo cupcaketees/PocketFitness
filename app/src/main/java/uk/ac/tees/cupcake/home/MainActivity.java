@@ -6,20 +6,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.Arrays;
 
-import uk.ac.tees.cupcake.home.health.ExerciseSelectionActivity;
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
+import uk.ac.tees.cupcake.home.health.exercise.ExerciseSelectionActivity;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
-import uk.ac.tees.cupcake.login.LoginActivity;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
-import uk.ac.tees.cupcake.utils.IntentUtils;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
 
@@ -102,12 +97,10 @@ public class MainActivity extends NavigationBarActivity {
 
     public void goToHeartRate(View view) {
         startActivity(new Intent(view.getContext(), HeartRateActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-        finish();
     }
     
     public void goToExerciseSelection(View view) {
         startActivity(new Intent(view.getContext(), ExerciseSelectionActivity.class));
-        finish();
     }
 
 }

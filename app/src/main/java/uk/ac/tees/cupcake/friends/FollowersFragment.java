@@ -20,57 +20,11 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.SearchFriendsAdapter;
 
-public class FollowersFragment extends Fragment {
+public class FollowersFragment extends SearchFriends {
 
-    private View view;
 
-    private SearchFriendsAdapter adapter;
-
-    private String mCurrentUserUid;
-
-    private CollectionReference usersCollection;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_recycler_view, container, false);
-
-        usersCollection = FirebaseFirestore.getInstance().collection("Users");
-        mCurrentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        initialise();
-
-        return view;
-    }
-
-    private void initialise() {
-        ArrayList<UserProfile> profiles = new ArrayList<>();
-        adapter = new SearchFriendsAdapter(profiles);
-
-        usersCollection.document(mCurrentUserUid)
-                .collection("Followers")
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-                    for (DocumentSnapshot documentSnapshot : documentSnapshots) {
-                        if (!documentSnapshot.exists()) {
-                            return;
-                        }
-
-                        String id = documentSnapshot.getId();
-
-                        usersCollection.document(id)
-                                .get()
-                                .addOnSuccessListener(otherProfileDoc -> {
-                                    profiles.add(otherProfileDoc.toObject(UserProfile.class));
-
-                                    adapter.notifyDataSetChanged();
-                                });
-                    }
-
-                    RecyclerView recyclerView = view.findViewById(R.id.myRecycleView);
-                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                    recyclerView.setLayoutManager(mLayoutManager);
-                    recyclerView.setAdapter(adapter);
-                });
+    public void initialise(String friendType) {
+        super.initialise("Followers");
     }
 }

@@ -36,6 +36,7 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.account.ViewProfileActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
 
@@ -203,9 +204,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                     MainActivity mainActivity = (MainActivity) v.getContext();
                     mainActivity.setPage(2);
                 }else{
-                    Intent intent = new Intent(v.getContext(), ViewProfileActivity.class);
-                    intent.putExtra("profileId", post.getUserUid());
-                    v.getContext().startActivity(intent);
+                    IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId",post.getUserUid());
                 }
             }
         });

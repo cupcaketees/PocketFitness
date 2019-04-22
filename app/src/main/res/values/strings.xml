@@ -188,4 +188,5 @@
     <string name="recipe_item_no_diet_labels_text">No Diet labels</string>
     <string name="recipe_item_information_header_text">Information</string>
     <string name="recipe_item_servings_header_text">Servings</string>
+    <string name="navbar_item_search_friends">Find Friends</string>
 </resources>

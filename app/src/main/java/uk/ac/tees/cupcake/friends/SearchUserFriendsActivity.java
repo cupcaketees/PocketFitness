@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.Arrays;
 
 import uk.ac.tees.cupcake.R;
@@ -27,7 +30,7 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         setupFragments();
     }
 
-    private void setupFragments(){
+    private void setupFragments() {
 
         ImageView backArrow = findViewById(R.id.backArrow);
         TextView shareButton = findViewById(R.id.postFinalise);
@@ -40,7 +43,7 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         backArrow.setOnClickListener(v -> finish());
 
         SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(new FollowingFragment(),new FollowersFragment()));
+                Arrays.asList(new FollowingFragment(), new FollowersFragment(), new FollowerRequestsFragment()));
 
         mViewPager.setAdapter(postPagerAdapter);
 
@@ -49,7 +52,17 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayoutFriends);
         tabLayout.setupWithViewPager(mViewPager);
 
+        FirebaseFirestore.getInstance().collection("Users/" + FirebaseAuth.getInstance().getCurrentUser() + "/Following/").addSnapshotListener((documentSnapshots, e) -> {
+            if (documentSnapshots == null || documentSnapshots.isEmpty()) {
+                tabLayout.getTabAt(2).setText("Follow Requests: 0");
+            } else {
+                tabLayout.getTabAt(2).setText("Follow Requests: " + String.valueOf(documentSnapshots.size()));
+            }
+        });
+
         tabLayout.getTabAt(0).setText(getIntent().getStringExtra("Following"));
         tabLayout.getTabAt(1).setText(getIntent().getStringExtra("Followers"));
+
+
     }
 }

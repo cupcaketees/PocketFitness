@@ -16,6 +16,8 @@ import java.util.ArrayList;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.account.ViewProfileActivity;
+import uk.ac.tees.cupcake.utils.IntentUtils;
 
 public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdapter.ViewHolder> implements Filterable {
 
@@ -79,8 +81,8 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         }
 
         holder.mName.setOnClickListener(v -> {
+            IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId",profile.getUid());
 
-//          IntentUtils.invokeVideoView(context, FriendsProfileActivity.class, "User ID" , profile.getUserUid());
         });
 
         for (UserProfile profileCheck : profiles) {

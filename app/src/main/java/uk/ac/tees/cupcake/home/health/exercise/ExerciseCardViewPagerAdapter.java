@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.utils.views;
+package uk.ac.tees.cupcake.home.health.exercise;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import uk.ac.tees.cupcake.home.health.exercise.ExerciseMapActivity;
 /**
  * @author Sam-Hammersley <q5315908@tees.ac.uk>
  */
-public final class CardViewPagerAdapter extends PagerAdapter {
+public final class ExerciseCardViewPagerAdapter extends PagerAdapter {
 
     private final Exercise[] exercises = Exercise.values();
     

@@ -66,6 +66,7 @@ public final class CreatePostActivity extends AppCompatActivity {
         editText = findViewById(R.id.create_post_edit_text);
         addImageButton = findViewById(R.id.create_post_add_image);
         addLocationButton = findViewById(R.id.create_post_add_location);
+        imageView = findViewById(R.id.create_post_post_image);
         
         removeImageButton = findViewById(R.id.create_post_remove_image_button);
         fabProgressCircle = findViewById(R.id.create_post_fab_progress_circle);
@@ -74,6 +75,37 @@ public final class CreatePostActivity extends AppCompatActivity {
             intent.putExtra("index", 1);
             startActivity(intent);
         });
+    
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String uriString = bundle.getString("create_post_image_uri");
+            
+            if (uriString != null) {
+                localImageUri = Uri.parse(uriString);
+                imageView.setImageURI(localImageUri);
+                
+                displayImage();
+            }
+            
+            String description = bundle.getString("create_post_description");
+            if (description != null) {
+                editText.setText(description);
+            }
+        }
+    }
+    
+    private void displayImage() {
+        imageView.setVisibility(View.VISIBLE);
+        removeImageButton.setVisibility(View.VISIBLE);
+    
+        Animation animation = new ScaleAnimation(
+                1.2f, 1f, 1.2f, 1f,
+                ScaleAnimation.RELATIVE_TO_SELF, .5f,
+                ScaleAnimation.RELATIVE_TO_SELF, .5f);
+        animation.setInterpolator(t -> (float) -(Math.pow(Math.E, -t*5) * Math.cos(20 * t)) + 1);
+        animation.setDuration(1500);
+    
+        imageView.startAnimation(animation);
     }
     
     @Override
@@ -84,22 +116,11 @@ public final class CreatePostActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             
             if (requestCode == ApplicationConstants.CREATE_POST_ADD_IMAGE_REQUEST_CODE) {
-                imageView = findViewById(R.id.create_post_post_image);
 
                 localImageUri = result.getUri();
                 imageView.setImageURI(localImageUri);
                 
-                imageView.setVisibility(View.VISIBLE);
-                removeImageButton.setVisibility(View.VISIBLE);
-                
-                Animation animation = new ScaleAnimation(
-                        1.2f, 1f, 1.2f, 1f,
-                        ScaleAnimation.RELATIVE_TO_SELF, .5f,
-                        ScaleAnimation.RELATIVE_TO_SELF, .5f);
-                animation.setInterpolator(t -> (float) -(Math.pow(Math.E, -t*5) * Math.cos(20 * t)) + 1);
-                animation.setDuration(1500);
-    
-                imageView.startAnimation(animation);
+                displayImage();
                 
             } else if (requestCode == ApplicationConstants.CREATE_POST_ADD_LOCATION_REQUEST_CODE) {
                 String location = data.getStringExtra("Location");
@@ -144,7 +165,7 @@ public final class CreatePostActivity extends AppCompatActivity {
     private void insertPost(Post post) {
         DocumentReference userPostsDocument = FirebaseFirestore
                 .getInstance()
-                .collection("Users/" + currentUser.getUid() + "/User Posts/")
+                .collection("Users/" + post.getUserUid() + "/User Posts/")
                 .document();
     
         post.setPostId(userPostsDocument.getId());
@@ -156,7 +177,7 @@ public final class CreatePostActivity extends AppCompatActivity {
                     intent.putExtra("index", 1);
                     startActivity(intent);
                 })
-                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> Toast.makeText(CreatePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
     
     /**

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:src="@drawable/exercise_selection_background"
-    tools:context="uk.ac.tees.cupcake.home.health.ExerciseSelectionActivity">
+    tools:context="uk.ac.tees.cupcake.home.health.exercise.ExerciseSelectionActivity">
 
     <HorizontalScrollView
         android:id="@+id/exercise_selection_background_scroll_view"
@@ -24,24 +24,21 @@
 
     </HorizontalScrollView>
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent=".4" />
-
     <android.support.v4.view.ViewPager
         android:id="@+id/exercise_selection_view_pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:paddingEnd="60dp"
-        android:paddingStart="60dp"
+        android:paddingEnd="45dp"
+        android:paddingStart="45dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guideline" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

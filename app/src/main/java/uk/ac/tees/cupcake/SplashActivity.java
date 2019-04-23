@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
@@ -51,8 +52,8 @@ public class SplashActivity extends AppCompatActivity {
     
         StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
         SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
-    
         sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
+        
         scheduleStepCounterResetJob();
         
         // Checks users current auth state and directs to them to appropriate activity.
@@ -87,8 +88,8 @@ public class SplashActivity extends AppCompatActivity {
     
     private void scheduleStepCounterResetJob() {
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 23);
-        c.set(Calendar.MINUTE, 59);
+        c.set(Calendar.HOUR_OF_DAY, 5);
+        c.set(Calendar.MINUTE, 30);
         c.set(Calendar.SECOND, 0);
     
         final long initialDelay = c.getTimeInMillis() - System.currentTimeMillis();
@@ -99,7 +100,7 @@ public class SplashActivity extends AppCompatActivity {
         JobInfo.Builder builder = new JobInfo.Builder(ApplicationConstants.STEP_COUNT_RESET_STARTER_JOB_ID, componentName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
                 .setMinimumLatency(initialDelay)
-                .setOverrideDeadline((int) (initialDelay * 1.01));
+                .setOverrideDeadline(initialDelay + TimeUnit.SECONDS.toMillis(59));
         
         jobScheduler.schedule(builder.build());
     }

@@ -38,7 +38,7 @@ public class SearchFriendsActivity extends NavigationBarActivity {
                 adapter.notifyDataSetChanged();
             }
         });
-        adapter = new SearchFriendsAdapter(profiles);
+        adapter = new SearchFriendsAdapter(profiles,"");
 
         RecyclerView recyclerView = findViewById(R.id.myRecycleView);
         recyclerView.setHasFixedSize(true);

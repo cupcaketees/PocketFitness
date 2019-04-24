@@ -164,4 +164,13 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Save changes" />
 
+    <CheckBox
+        android:id="@+id/edit_profile_private_profile_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Private Profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_profile_bio_edit_text" />
+
 </android.support.constraint.ConstraintLayout>

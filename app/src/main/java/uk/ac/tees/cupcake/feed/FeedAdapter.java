@@ -196,16 +196,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             }
         });
 
-        holder.postProfileNameTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // User selects their own post in feed. Send to main activity
-                if(post.getUserUid().equalsIgnoreCase(holder.mCurrentUser.getUid())){
-                    MainActivity mainActivity = (MainActivity) v.getContext();
-                    mainActivity.setPage(2);
-                }else{
-                    IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId",post.getUserUid());
-                }
+        holder.postProfileNameTextView.setOnClickListener(v -> {
+            // User selects their own post in feed. Send to main activity
+            if(post.getUserUid().equalsIgnoreCase(holder.mCurrentUser.getUid())){
+                MainActivity mainActivity = (MainActivity) v.getContext();
+                mainActivity.setPage(2);
+            }else{
+                IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId",post.getUserUid());
             }
         });
     }

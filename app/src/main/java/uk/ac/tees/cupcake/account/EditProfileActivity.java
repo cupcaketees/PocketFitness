@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -32,12 +34,13 @@ import uk.ac.tees.cupcake.R;
  * @author Bradley Hunter <s6263464@live.tees.ac.uk>
  */
 public class EditProfileActivity extends AppCompatActivity {
-
+    private static final String TAG = "EditProfileActivity";
     private CircleImageView mProfilePictureImageView;
     private ImageView mCoverPhotoImageView;
     private EditText mFirstNameEditText;
     private EditText mLastNameEditText;
     private EditText mBioEditText;
+    private CheckBox mPrivateProfileCheckBox;
 
     private FirebaseStorage mStorage;
     private FirebaseAuth mAuth;
@@ -64,6 +67,7 @@ public class EditProfileActivity extends AppCompatActivity {
         mFirstNameEditText = findViewById(R.id.edit_profile_first_name_edit_text);
         mLastNameEditText = findViewById(R.id.edit_profile_last_name_edit_text);
         mBioEditText = findViewById(R.id.edit_profile_bio_edit_text);
+        mPrivateProfileCheckBox = findViewById(R.id.edit_profile_private_profile_button);
 
         setValues();
     }
@@ -102,6 +106,7 @@ public class EditProfileActivity extends AppCompatActivity {
         String firstNameUserInput = mFirstNameEditText.getText().toString().trim();
         String lastNameUserInput = mLastNameEditText.getText().toString().trim();
         String bioUserInput = mBioEditText.getText().toString().trim();
+        boolean checkboxValue = mPrivateProfileCheckBox.isChecked();
 
         String result = validateUserInput(firstNameUserInput, lastNameUserInput, bioUserInput);
 
@@ -114,6 +119,8 @@ public class EditProfileActivity extends AppCompatActivity {
         value.put("firstName" , firstNameUserInput);
         value.put("lastName", lastNameUserInput);
         value.put("bio", bioUserInput);
+        value.put("privateProfile",checkboxValue);
+
 
         mFireStore.collection("Users")
                   .document(mAuth.getCurrentUser().getUid())
@@ -136,6 +143,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         mFirstNameEditText.setText(profile.getFirstName());
                         mLastNameEditText.setText(profile.getLastName());
                         mBioEditText.setText(R.string.profile_bio_temp_value_text_view_text);
+                        mPrivateProfileCheckBox.setChecked(profile.isPrivateProfile());
 
                         if(profile.getBio() != null){
                             mBioEditText.setText(profile.getBio());

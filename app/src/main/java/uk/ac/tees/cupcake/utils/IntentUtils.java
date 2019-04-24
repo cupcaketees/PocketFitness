@@ -30,11 +30,12 @@ public class IntentUtils {
         invokeViewWithExtras(context, selectedClass, extras);
     }
 
-    public static void invokeFollowers(Context context, Class<?> selectedClass, String title, String extra,String title2, String extra2, String title3, String intent) {
+    public static void invokeFollowers(Context context, Class<?> selectedClass, String title, String extra,String title2, String extra2, String title3, String intent, String title4,  String id) {
         Map<String, String> extras = new HashMap<>();
         extras.put(title, extra);
         extras.put(title2,extra2);
         extras.put(title3, intent);
+        extras.put(title4, id);
 
         invokeViewWithExtras(context, selectedClass, extras);
     }

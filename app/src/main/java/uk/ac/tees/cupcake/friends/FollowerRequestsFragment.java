@@ -6,6 +6,6 @@ public class FollowerRequestsFragment extends SearchFriends {
 
     @Override
     public void initialise(String friendType) {
-        super.initialise("Follow Requests");
+        super.initialise("FollowerRequests");
     }
 }

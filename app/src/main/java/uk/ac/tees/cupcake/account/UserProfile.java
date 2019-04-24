@@ -18,6 +18,7 @@ public class UserProfile implements Serializable {
     private String accountCreated;
     private String bio;
     private String emailAddress;
+    private boolean privateProfile;
 
     private int height;
     private int weight;
@@ -35,6 +36,7 @@ public class UserProfile implements Serializable {
         this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
         this.emailAddress = email;
+        this.privateProfile = false;
     }
 
     public String getBio() { return bio; }
@@ -87,5 +89,13 @@ public class UserProfile implements Serializable {
 
     public String getUid() {
         return uid;
+    }
+
+    public boolean isPrivateProfile() {
+        return privateProfile;
+    }
+
+    public void setPrivateProfile(boolean privateProfile) {
+        this.privateProfile = privateProfile;
     }
 }

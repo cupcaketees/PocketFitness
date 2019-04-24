@@ -52,7 +52,7 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayoutFriends);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FirebaseFirestore.getInstance().collection("Users/" + FirebaseAuth.getInstance().getCurrentUser() + "/Following/").addSnapshotListener((documentSnapshots, e) -> {
+        FirebaseFirestore.getInstance().collection("Users/" + getIntent().getStringExtra("id")+ "/FollowerRequests/").addSnapshotListener((documentSnapshots, e) -> {
             if (documentSnapshots == null || documentSnapshots.isEmpty()) {
                 tabLayout.getTabAt(2).setText("Follow Requests: 0");
             } else {

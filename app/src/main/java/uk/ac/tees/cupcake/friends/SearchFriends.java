@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,11 @@ import uk.ac.tees.cupcake.adapters.SearchFriendsAdapter;
 public abstract class SearchFriends extends Fragment {
     private View view;
 
-
+    private static final String TAG = "SearchFriends";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.activity_recycler_view, container, false);
-
         initialise("");
         return view;
     }
@@ -41,9 +41,8 @@ public abstract class SearchFriends extends Fragment {
 
         ArrayList<UserProfile> profiles = new ArrayList<>();
 
-        SearchFriendsAdapter adapter =new SearchFriendsAdapter(profiles);
-
-        FirebaseFirestore.getInstance().collection("Users").document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+        SearchFriendsAdapter adapter =new SearchFriendsAdapter(profiles,friendType);
+        FirebaseFirestore.getInstance().collection("Users").document(getActivity().getIntent().getStringExtra("id"))
                 .collection(friendType)
                 .get()
                 .addOnSuccessListener(documentSnapshots -> {

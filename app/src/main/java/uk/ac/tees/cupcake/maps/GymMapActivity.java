@@ -167,12 +167,13 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
     private void findGyms() {
         Object transferData[] = new Object[2];
 
-
+        getCloseGyms = new GetCloseGyms();
         String url = showData();
         transferData[0] = mMap;
         transferData[1] = url;
 
         getCloseGyms.execute(transferData);
+
         Toast.makeText(this, "Showing nearby gyms", Toast.LENGTH_SHORT).show();
     }
 

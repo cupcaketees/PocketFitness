@@ -41,7 +41,7 @@ public class ViewProfileActivity extends AppCompatActivity {
         Bundle extra = getIntent().getExtras();
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-        collectionReference = FirebaseFirestore.getInstance().collection("Users");
+        collectionReference = FirebaseFirestore.getInstance().collection("Users/");
         mFollowButton = findViewById(R.id.profile_edit_profile_button);
 
 
@@ -126,7 +126,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         UserProfile currentProfile = documentSnapshot.toObject(UserProfile.class);
-                        collectionReference.document(mProfilePageUid + "/FolloweRequests/" + mCurrentUser.getUid())
+                        collectionReference.document(mProfilePageUid + "/FollowerRequests/" + mCurrentUser.getUid())
                                 .get()
                                 .addOnSuccessListener(d -> {
                                     if (d.exists()) {
@@ -159,224 +159,78 @@ public class ViewProfileActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         UserProfile profile = documentSnapshot.toObject(UserProfile.class);
 
-                        if (mFollowButton.getText().toString().equals("Following")) {
-
-                            collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
-                                    .get()
-                                    .addOnSuccessListener(documentSnapshotT -> {
-
-                                        if (documentSnapshotT.exists()) {
-
-                                            // Deletes current user from viewed profile followers collection.
-                                            documentSnapshotT.getReference()
-                                                    .delete()
-                                                    .addOnSuccessListener(aVoid -> {
-                                                        Toast.makeText(ViewProfileActivity.this, "You have stopped following", Toast.LENGTH_SHORT).show();
-
-                                                        // Deletes viewed profile uid from current user followers collection.
-                                                        collectionReference.document(mCurrentUser.getUid() + "/Following/" + mProfilePageUid)
-                                                                .delete();
-
-                                                        mFollowButton.setText("Follow");
-                                                    })
-                                                    .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                                        }
-                                    });
-                        } else if (mFollowButton.getText().toString().equals("Follow Requested")) {
-                            collectionReference.document(mProfilePageUid + "/FollowerRequest/" + mCurrentUser.getUid())
-                                    .get()
-                                    .addOnSuccessListener(documentSnapshotT -> {
-
-                                        if (documentSnapshotT.exists()) {
-
-                                            // Deletes current user from viewed profile followers collection.
-                                            documentSnapshotT.getReference()
-                                                    .delete()
-                                                    .addOnSuccessListener(aVoid -> {
-                                                        Toast.makeText(ViewProfileActivity.this, "You have stopped following", Toast.LENGTH_SHORT).show();
-
-                                                        // Deletes viewed profile uid from current user followers collection.
-                                                        collectionReference.document(mCurrentUser.getUid() + "/FollowingRequest/" + mProfilePageUid)
-                                                                .delete();
-
-                                                        mFollowButton.setText("Follow");
-                                                    })
-                                                    .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                                        }
-                                    });
-                        } else {
-                            if (profile.isPrivateProfile()) {
-                                Map<String, Object> followTimeStamp = new HashMap<>();
-                                followTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-                                collectionReference.document(mProfilePageUid + "/FollowerRequests/" + mCurrentUser.getUid())
-                                        .get()
-                                        .addOnSuccessListener(documentSnapshotU -> {
-
-                                            if (!documentSnapshotU.exists()) {
-                                                documentSnapshotU.getReference()
-                                                        .set(followTimeStamp)
-                                                        .addOnSuccessListener(aVoid -> {
-                                                            Log.d(TAG, "followButton: ");
+                        switch (mFollowButton.getText().toString()) {
+                            case "Following":
+                                getDatabaseInfo("/Followers/", "/Following/");
+                                break;
+                            case "Follow Requested":
+                                getDatabaseInfo("/FollowerRequests/", "/FollowingRequests/");
+                                break;
+                            case "Follow":
+                                if (profile.isPrivateProfile()) {
+                                    addDbInfo("/FollowerRequests/", "/FollowingRequests/", "Follow Requested");
+                                    break;
+                                }
+                                addDbInfo("/Followers/", "/Following/", "Following");
+                                break;
+                            default:
+                                Toast.makeText(this, "Error With this Request", Toast.LENGTH_SHORT).show();
 
 
-                                                            Toast.makeText(ViewProfileActivity.this, "Request has been sent", Toast.LENGTH_SHORT).show();
-
-                                                            // Adds viewed profile uid to current users following collection
-                                                            collectionReference.document(mCurrentUser.getUid() + "/FollowingRequests/" + mProfilePageUid)
-                                                                    .set(followTimeStamp);
-
-                                                            mFollowButton.setText("Follow Requested");
-                                                        })
-                                                        .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                                            }
-                                        });
-                            } else {
-                                collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
-                                        .get()
-                                        .addOnSuccessListener(documentSnapshotT -> {
-
-                                            if (documentSnapshotT.exists()) {
-                                                Log.d(TAG, "followButton: hello" );
-
-                                                // Deletes current user from viewed profile followers collection.
-                                                documentSnapshotT.getReference()
-                                                        .delete()
-                                                        .addOnSuccessListener(aVoid -> {
-                                                            Toast.makeText(ViewProfileActivity.this, "You have stopped following", Toast.LENGTH_SHORT).show();
-
-                                                            // Deletes viewed profile uid from current user followers collection.
-                                                            collectionReference.document(mCurrentUser.getUid() + "/Following/" + mProfilePageUid)
-                                                                    .delete();
-
-                                                            mFollowButton.setText("Follow");
-                                                        })
-                                                        .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-
-                                            } else {
-                                                Log.d(TAG, "followButton: hello2");
-                                                // Adds current user to viewed profile followers collection.
-                                                Map<String, Object> followTimeStamp = new HashMap<>();
-                                                followTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-
-                                                documentSnapshotT.getReference()
-                                                        .set(followTimeStamp)
-                                                        .addOnSuccessListener(aVoid -> {
-                                                            Log.d(TAG, "followButton: ");
-
-
-                                                            Toast.makeText(ViewProfileActivity.this, "You are now following", Toast.LENGTH_SHORT).show();
-
-                                                            // Adds viewed profile uid to current users following collection
-                                                            collectionReference.document(mCurrentUser.getUid() + "/Following/" + mProfilePageUid)
-                                                                    .set(followTimeStamp);
-
-                                                            mFollowButton.setText("Unfollow");
-                                                        })
-                                                        .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-                                            }
-                                        });
-                            }
                         }
 
                     }
-
-//                    if (documentSnapshotT.exists()) {
-//                        UserProfile profile = documentSnapshotT.toObject(UserProfile.class);
-//
-//                        if (profile.isPrivateProfile()) {
-//                            collectionReference.document(mProfilePageUid + "/FollowerRequests/" + mCurrentUser.getUid())
-//                                    .get()
-//                                    .addOnSuccessListener(documentSnapshotU -> {
-//
-//                                        if (documentSnapshotU.exists()) {
-//                                            // Deletes current user from viewed profile followers collection.
-//                                            documentSnapshotU.getReference()
-//                                                    .delete()
-//                                                    .addOnSuccessListener(aVoid -> {
-//                                                        Toast.makeText(ViewProfileActivity.this, "Follow Request cancelled", Toast.LENGTH_SHORT).show();
-//
-//                                                        // Deletes viewed profile uid from current user followers collection.
-//                                                        collectionReference.document(mCurrentUser.getUid() + "/FollowingRequests/" + mProfilePageUid)
-//                                                                .delete();
-//
-//                                                        mFollowButton.setText("Follow");
-//                                                    })
-//                                                    .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-//
-//                                        }
-//                                        else {
-//                                            // Adds current user to viewed profile followers collection.
-//                                            Map<String, Object> followTimeStamp = new HashMap<>();
-//                                            followTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-//
-//                                            documentSnapshotU.getReference()
-//                                                    .set(followTimeStamp)
-//                                                    .addOnSuccessListener(aVoid -> {
-//                                                        Log.d(TAG, "followButton: ");
-//
-//
-//                                                        Toast.makeText(ViewProfileActivity.this, "Request has been sent", Toast.LENGTH_SHORT).show();
-//
-//                                                        // Adds viewed profile uid to current users following collection
-//                                                        collectionReference.document(mCurrentUser.getUid() + "/FollowingRequests/" + mProfilePageUid)
-//                                                                .set(followTimeStamp);
-//
-//                                                        mFollowButton.setText("Follow Requested");
-//                                                    })
-//                                                    .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-//                                        }
-//                                    });
-//
-//
-//                        } else {
-//                            collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
-//                                    .get()
-//                                    .addOnSuccessListener(documentSnapshot -> {
-//
-//                                        if (documentSnapshot.exists()) {
-//
-//                                            // Deletes current user from viewed profile followers collection.
-//                                            documentSnapshot.getReference()
-//                                                    .delete()
-//                                                    .addOnSuccessListener(aVoid -> {
-//                                                        Toast.makeText(ViewProfileActivity.this, "You have stopped following", Toast.LENGTH_SHORT).show();
-//
-//                                                        // Deletes viewed profile uid from current user followers collection.
-//                                                        collectionReference.document(mCurrentUser.getUid() + "/Following/" + mProfilePageUid)
-//                                                                .delete();
-//
-//                                                        mFollowButton.setText("Follow");
-//                                                    })
-//                                                    .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-//
-//                                        } else {
-//                                            // Adds current user to viewed profile followers collection.
-//                                            Map<String, Object> followTimeStamp = new HashMap<>();
-//                                            followTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-//
-//                                            documentSnapshot.getReference()
-//                                                    .set(followTimeStamp)
-//                                                    .addOnSuccessListener(aVoid -> {
-//                                                        Log.d(TAG, "followButton: ");
-//
-//
-//                                                        Toast.makeText(ViewProfileActivity.this, "You are now following", Toast.LENGTH_SHORT).show();
-//
-//                                                        // Adds viewed profile uid to current users following collection
-//                                                        collectionReference.document(mCurrentUser.getUid() + "/Following/" + mProfilePageUid)
-//                                                                .set(followTimeStamp);
-//
-//                                                        mFollowButton.setText("Unfollow");
-//                                                    })
-//                                                    .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
-//                                        }
-//                                    });
-//                        }
-//                    }
-//                });
-
                 });
     }
+
+    private void getDatabaseInfo(String followerType, String followingType) {
+        collectionReference.document(mProfilePageUid + followerType + mCurrentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshotT -> {
+
+                    if (documentSnapshotT.exists()) {
+
+                        documentSnapshotT.getReference()
+                                .delete()
+                                .addOnSuccessListener(aVoid -> {
+
+                                    Toast.makeText(ViewProfileActivity.this, "You have stopped following", Toast.LENGTH_SHORT).show();
+                                    collectionReference.document(mCurrentUser.getUid() + followingType + mProfilePageUid)
+                                            .delete();
+                                    mFollowButton.setText("Follow");
+
+                                })
+                                .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+
+                    }
+                });
+    }
+
+    private void addDbInfo(String followerType, String followingType, String message) {
+
+        Map<String, Object> followTimeStamp = new HashMap<>();
+        followTimeStamp.put("timestamp", FieldValue.serverTimestamp());
+
+        collectionReference.document(mProfilePageUid + followerType + mCurrentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshotU -> {
+
+                    if (!documentSnapshotU.exists()) {
+                        documentSnapshotU.getReference()
+                                .set(followTimeStamp)
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "addDbInfo: hello world");
+                                    Toast.makeText(ViewProfileActivity.this, "Request has been sent", Toast.LENGTH_SHORT).show();
+                                    collectionReference.document(mCurrentUser.getUid() + followingType + mProfilePageUid)
+                                            .set(followTimeStamp);
+
+                                    mFollowButton.setText(message);
+                                })
+                                .addOnFailureListener(e -> Toast.makeText(ViewProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                    }
+                });
+    }
+
 
     private void initAndSetProfileValues(UserProfile profile) {
         // Initialise

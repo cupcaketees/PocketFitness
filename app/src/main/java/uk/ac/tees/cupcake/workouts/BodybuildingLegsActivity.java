@@ -27,13 +27,13 @@ public class BodybuildingLegsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
 
-        workouts.add(new Workout("Leg Press", "In the leg press machine position your feet shoulder-width apart on the platform and raise until your legs are outstretched without locking your knees. Slowly lower the platform until your knees are at 90 degrees to the floor, then push back to the start position through your heels.", "http://www.makeoverfitness.com/images/stories/curvy-women-leg-exercises.gif", "Easy"));
+        workouts.add(new Workout("Leg Press", "Instructions: \n" + "In the leg press machine position your feet shoulder-width apart on the platform and raise until your legs are outstretched without locking your knees. Slowly lower the platform until your knees are at 90 degrees to the floor, then push back to the start position through your heels.", "http://www.makeoverfitness.com/images/stories/curvy-women-leg-exercises.gif", "Difficulty: Easy"));
 
-        workouts.add(new Workout("Barbell Squat", "Position a barbell on the back of the shoulders and grasp bar to the sides. Put your feet at shoulder width with your toes and knees slightly pointed outwards. Descend until knees and hips are fully bent. Extend knees and hips until legs are straight. Return and repeat. ",  "http://www.makeoverfitness.com/images/barbell-squats.gif", "Medium"));
+        workouts.add(new Workout("Barbell Squat", "Instructions: \n" + "Position a barbell on the back of the shoulders and grasp bar to the sides. Put your feet at shoulder width with your toes and knees slightly pointed outwards. Descend until knees and hips are fully bent. Extend knees and hips until legs are straight. Return and repeat. ",  "http://www.makeoverfitness.com/images/barbell-squats.gif", "Difficulty: Medium"));
 
-        workouts.add(new Workout("Leg Extensions", "Sit in a leg extension machine with your ankles against the lower pad. Use your quad to push forward and straighten your leg in front of you, then return to the start position and repeat on the other side.", "http://www.makeoverfitness.com/images/leg-extensions.gif", "Easy"));
+        workouts.add(new Workout("Leg Extensions", "Instructions: \n" + "Sit in a leg extension machine with your ankles against the lower pad. Use your quad to push forward and straighten your leg in front of you, then return to the start position and repeat on the other side.", "http://www.makeoverfitness.com/images/leg-extensions.gif", "Difficulty: Easy"));
 
-        workouts.add(new Workout("Lying Leg Curl", "Lie face down on the leg curl machine with the pad resting just under your calves. Grab the side handles and keep your body flat to the bench as you curl your legs up as far as possible. Lower and repeat.", "http://www.makeoverfitness.com/images/curvy-leg-curls.gif", "Easy"));
+        workouts.add(new Workout("Lying Leg Curl", "Instructions: \n" + "Lie face down on the leg curl machine with the pad resting just under your calves. Grab the side handles and keep your body flat to the bench as you curl your legs up as far as possible. Lower and repeat.", "http://www.makeoverfitness.com/images/curvy-leg-curls.gif", "Difficulty: Easy"));
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

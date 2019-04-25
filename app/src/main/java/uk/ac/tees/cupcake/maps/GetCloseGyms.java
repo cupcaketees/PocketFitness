@@ -36,9 +36,15 @@ public class GetCloseGyms extends AsyncTask<Object, String, String> implements G
         mMap = (GoogleMap) objects[0];
         String url = (String) objects[1];
 
+
         DownloadURL downloadUrl = new DownloadURL();
         try {
-            googlePlaceData = downloadUrl.ReadURL(url);
+            if(isCancelled()) {
+                return "";
+            } else {
+                googlePlaceData = downloadUrl.ReadURL(url);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }

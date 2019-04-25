@@ -25,7 +25,9 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -70,18 +72,21 @@ public class ProfileFragment extends Fragment {
 
     private void getPosts() {
         List<Post> posts = new ArrayList<>();
+        TreeMap<Date, Post> allPosts = new TreeMap<>();
         FeedAdapter feedAdapter = new FeedAdapter(posts);
         recyclerView.setAdapter(feedAdapter);
 
         mDocumentRef.collection("User Posts")
-                    .orderBy("timeStamp", Query.Direction.DESCENDING).limit(100)
                     .get()
                     .addOnSuccessListener(documentSnapshots -> {
                         for(DocumentSnapshot documentSnapshot : documentSnapshots){
                             Post currentItem = documentSnapshot.toObject(Post.class);
-                            posts.add(currentItem);
-                            feedAdapter.notifyDataSetChanged();
+                            allPosts.put(currentItem.getTimeStamp(),currentItem);
                         }
+                        posts.clear();
+                        posts.addAll(allPosts.descendingMap().values());
+                        feedAdapter.notifyDataSetChanged();
+
                     });
     }
 

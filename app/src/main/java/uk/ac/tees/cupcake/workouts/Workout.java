@@ -7,7 +7,6 @@ public class Workout {
 
     private String name;
     private String desc;
-    private int image;
     private String url;
     private String difficulty;
 
@@ -16,16 +15,14 @@ public class Workout {
      *
      * @param name  - Workout Name
      * @param desc  - Workout Description
-     * @param image - Workout Image
      * @param url   - Firebase URL
      * @param difficulty - Workout Difficulty Rating
      */
 
-    public Workout(String name, String desc, int image, String url, String difficulty) {
+    public Workout(String name, String desc, String url, String difficulty) {
 
         this.name = name;
         this.desc = desc;
-        this.image = image;
         this.url = url;
         this.difficulty = difficulty;
 
@@ -45,14 +42,6 @@ public class Workout {
 
     public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
     }
 
     public String getUrl() {

@@ -1,11 +1,14 @@
 package uk.ac.tees.cupcake.workouts;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -18,10 +21,12 @@ import uk.ac.tees.cupcake.R;
  */
 public class BodybuildingWorkoutAdapter extends RecyclerView.Adapter<BodybuildingWorkoutAdapter.ViewHolder> {
 
-     final ArrayList<Workout> mWorkout;
+     private final ArrayList<Workout> mWorkout;
+     private Context context;
 
-    public BodybuildingWorkoutAdapter(ArrayList<Workout> mWorkout) {
+    public BodybuildingWorkoutAdapter(ArrayList<Workout> mWorkout, Context context) {
         this.mWorkout = mWorkout;
+        this.context = context;
     }
 
     @Override
@@ -35,7 +40,9 @@ public class BodybuildingWorkoutAdapter extends RecyclerView.Adapter<Bodybuildin
 
         holder.mName.setText(mWorkout.get(position).getName());
         holder.mDescription.setText(mWorkout.get(position).getDesc());
-        holder.mImageView.setImageResource(mWorkout.get(position).getImage());
+        Glide.with(context)
+                .load(mWorkout.get(position).getUrl())
+                .into(holder.mImageView);
         holder.mDifficulty.setText(mWorkout.get(position).getDifficulty());
     }
 

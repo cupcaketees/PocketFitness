@@ -22,24 +22,22 @@ public class BodybuildingChestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bodybuilding_bodyparts_list);
 
-        setTitle("chest Workouts");
+        setTitle("Chest Workouts");
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
 
-        workouts.add(new Workout("Barbell Bench Press", "Lie back on a flat bench holding a barbell in the rack above you with a shoulder-width, overhand grip. Lift the bar off the rack and position it above your chest with arms fully extended. From the starting position, breathe in and lower the bar slowly until it skims the middle of your chest.", R.drawable.temp_man_running, "3", "Hard"));
+        workouts.add(new Workout("Barbell Bench Press", "Instructions: \n" + "Lie back on a flat bench holding a barbell in the rack above you with a shoulder-width, overhand grip. Lift the bar off the rack and position it above your chest with arms fully extended. From the starting position, breathe in and lower the bar slowly until it skims the middle of your chest.", "http://www.makeoverfitness.com/images/flat-bench-press.gif", "Difficulty: Hard"));
 
-        workouts.add(new Workout("Flat Bench Dumbbell Press", "Lie on a flat bench and hold a dumbbell in one hand, extending your arm until it's straight and the weight is in line with your shoulder. Slowly bend your arm and lower the weight towards the side of your chest. Return to starting position and repeat.", R.drawable.temp_man_running, "5", "Easy"));
+        workouts.add(new Workout("Flat Bench Dumbbell Press", "Instructions: \n" + "Lie on a flat bench and hold a dumbbell in one hand, extending your arm until it's straight and the weight is in line with your shoulder. Slowly bend your arm and lower the weight towards the side of your chest. Return to starting position and repeat.", "http://www.makeoverfitness.com/images/dumbbell-bench-press.gif", "Difficulty: Easy"));
 
-        workouts.add(new Workout("Incline Dumbbell Press", "Sit on the incline bench holding the dumbbells in each hand. Press up with both hands, just as you would in a standard incline press. Pause and hold the weights above your chest. Lower the weight in one hand down slowly, counting for 2 beats until its about 2 inches away from your chest.", R.drawable.temp_man_running, "1", "Medium"));
+        workouts.add(new Workout("Push Ups", "Instructions: \n" + "Kneel down and place hands slightly wider than shoulder width. Keeping legs straight, push body up. Keep abs tight and back straight. Keep arms extended and in line with the chest. Shoulders can be slightly squeezed together (retracted). Throughout motion, shoulders form 90 degree angle to body. In a controlled motion, start lowering body until upper arms are approximately parallel to floor. Elbows must remain over hands. While maintaining the controlled motion, push body up to starting position without locking out elbows. Do not allow muscles to relax before next repetition.",  "http://www.makeoverfitness.com/images/push-ups.gif", "Difficulty: Medium"));
 
-        workouts.add(new Workout("Bar Dip", "Grab the bars of a dip station with your palms facing inward and your arms straight. Slowly lower until your elbows are at right angles, ensuring they stay tucked against your body and don't flare out. Drive yourself back up to the top and repeat.", R.drawable.temp_man_running, "5", "Hard"));
-
-        workouts.add(new Workout("Incline Dumbbell Fly", "Hold a dumbbell in each hand and lie on an incline bench. Start with your arms extended directly above you and then slowly lower them out to the side, keeping a slight bend at the elbow.", R.drawable.temp_man_running, "5", "Easy"));
+        workouts.add(new Workout("Close Grip Push Ups", "Instructions: \n" + "Keeping body straight, lower body to floor by bending arms. Push body up until arms are extended. Repeat. ",  "http://www.makeoverfitness.com/images/narrow-grip-push-ups.gif", "Difficulty: Hard"));
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerView.Adapter adapter = new BodybuildingWorkoutAdapter(workouts);
+        RecyclerView.Adapter adapter = new BodybuildingWorkoutAdapter(workouts, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
     }

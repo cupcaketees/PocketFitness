@@ -27,19 +27,21 @@ public class BodybuildingArmsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
 
-        workouts.add(new Workout("Cocentration Curl", "Sit down on bench and rest your right arm against your right leg, letting the weight hang down. Curl the weight up, pause, then lower. Repeat with the other arm.", R.drawable.temp_man_running, "3", "Medium"));
+        workouts.add(new Workout("Cocentration Curl", "Sit down on bench and rest your right arm against your right leg, letting the weight hang down. Curl the weight up, pause, then lower. Repeat with the other arm.",  "http://www.makeoverfitness.com/images/concentration-curls.gif", "Medium"));
 
-        workouts.add(new Workout("EZ-Bar Curl", "Hold the EZ bar in front of your thighs with an underhand, shoulder-width grip. As you breathe in, curl the bar until your hands are at your shoulders. Squeeze your bicep, then lower under control.", R.drawable.temp_man_running, "5", "Easy"));
+        workouts.add(new Workout("Standing Cable Curls", "Stand, facing cable, in good body alignment (abs tight, chest up, back straight) with feet in comfortable position. Keeping arms at side, grip bar (palms forward) slightly wider than shoulder width. In a controlled motion, keeping upper arm perpendicular to the floor, curl bar up. Contract biceps fully, without compromising form. While maintaining the controlled motion, return bar to starting position.", "http://www.makeoverfitness.com/images/cable-curls.gif", "Easy"));
 
-        workouts.add(new Workout("Crossbody Hammer Curl", "Stand up straight with a dumbbell in each hand. Your hands should be down at your side with your palms facing in. While keeping your palms facing in and without twisting your arm, curl the dumbbell of the right arm up towards your left shoulder as you exhale.", R.drawable.temp_man_running, "1", "Easy"));
+        workouts.add(new Workout("Barbell Preacher Curl", " Sit on preacher bench placing back of arms on pad. The seat should be adjusted to allow the arm pit to rest near the top of the pad. Grasp curl bar with shoulder width underhand grip. Raise the bar until forearms are perpendicular to floor with the back of the upper arm remaining on the pad. Lower the barbell until arm is fully extended.", "http://www.makeoverfitness.com/images/preacher-curls-barbell.gif", "Easy"));
 
-        workouts.add(new Workout("Cable Rope Pushdown", "Attach a rope handle to the high pulley of a cable station. Keeping your elbows tucked in at your sides grab the handle, tense your core, and bring your hands down until your arms are fully extended, then return to the starting position. Only your forearms should move.", R.drawable.temp_man_running, "5", "Easy"));
+        workouts.add(new Workout("Cable Rope Pushdown", "Attach a rope handle to the high pulley of a cable station. Keeping your elbows tucked in at your sides grab the handle, tense your core, and bring your hands down until your arms are fully extended, then return to the starting position. Only your forearms should move.", "http://www.makeoverfitness.com/images/curvy-pushdowns.gif", "Easy"));
 
-        workouts.add(new Workout("Skullcrusher", "Load an EZ bar and grab it with your hands turned in toward each other. Lie back on a bench with your arms straight and perpendicular to your torso. (You can also start with your upper arms angled back slightly toward your head, which stretches the triceps even more.) Set your feet on the floor. Bend your elbows and slowly lower the bar toward your forehead, stopping just short of catastrophe. Straighten your arms and repeat.", R.drawable.temp_man_running, "5", "Hard"));
+        workouts.add(new Workout("Machine Tricep Extension", "Extend your arms straight out moving only your forearms and hands. Hold, and slightly squeeze your triceps. Return the weight back to the starting point and repeat.", "http://www.makeoverfitness.com/images/machine-tricep-extensions.gif", "Easy"));
+
+        workouts.add(new Workout("Barbell Overhead Tricep Extension", "Grasp an barbell and press it overhead. Keeping your upper arms as close to your head as possible, lower the bar until it almost touches the base of your neck. Press back up until your arms are conpletely straight.", "http://www.makeoverfitness.com/images/standing-barbell-tricep-extensions.gif", "Hard"));
 
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        RecyclerView.Adapter adapter = new BodybuildingWorkoutAdapter(workouts);
+        RecyclerView.Adapter adapter = new BodybuildingWorkoutAdapter(workouts, this);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 

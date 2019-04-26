@@ -57,6 +57,7 @@ public abstract class SearchFriends extends Fragment {
                                 .get()
                                 .addOnSuccessListener(otherProfileDoc -> {
                                     if(otherProfileDoc.exists()) {
+
                                         profiles.add(otherProfileDoc.toObject(UserProfile.class));
                                         adapter.notifyDataSetChanged();
                                     }

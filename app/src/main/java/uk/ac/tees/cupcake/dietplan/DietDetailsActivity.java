@@ -2,7 +2,10 @@ package uk.ac.tees.cupcake.dietplan;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import uk.ac.tees.cupcake.R;
@@ -20,6 +23,13 @@ public class DietDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_description);
+
+        ImageView button = findViewById(R.id.exitDiet);
+
+        button.setOnClickListener(v -> {
+            finish();
+        });
+
         setTitle("30 Day Diet");
         populateView();
 

@@ -40,7 +40,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:enabled="true" />
 
-        <service android:name=".home.steps.StepCounterService" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -111,7 +110,6 @@
             android:name=".account.EditProfileActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".posts.PostActivity" />
-        <activity android:name=".posts.FinalisePost" />
         <activity android:name=".account.SetupProfileActivity" />
         <activity
             android:name=".food.SearchFoodActivity"
@@ -128,9 +126,7 @@
         <activity android:name=".healthnews.NewsActivity" />
         <activity android:name=".dietplan.DietActivity" />
         <activity
-            android:name=".dietplan.DietDetailsActivity"
-            android:parentActivityName=".dietplan.DietActivity"
-            android:theme="@style/AppTheme.BasicActionBar" />
+            android:name=".dietplan.DietDetailsActivity" />
         <activity android:name=".workouts.BodybuildingListActivity" />
         <activity
             android:name=".workouts.BodybuildingArmsActivity"
@@ -193,5 +189,6 @@
             android:name=".posts.CreatePostActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+        <activity android:name=".dietplan.DietTypeActivity" />
     </application>
 </manifest>

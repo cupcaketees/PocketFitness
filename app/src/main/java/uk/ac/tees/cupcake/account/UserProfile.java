@@ -39,6 +39,8 @@ public class UserProfile implements Serializable {
         this.privateProfile = false;
     }
 
+
+
     public String getBio() { return bio; }
 
     public String getFirstName() {

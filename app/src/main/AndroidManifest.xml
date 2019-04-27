@@ -65,7 +65,7 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -121,7 +121,8 @@
             android:theme="@style/AppTheme.BasicActionBar" />
 
         <activity android:name=".home.MainActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".healthnews.NewsActivity" />
         <activity android:name=".dietplan.DietActivity" />

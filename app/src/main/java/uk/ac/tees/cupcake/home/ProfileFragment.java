@@ -34,6 +34,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.adapters.ProfileAdapter;
 import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.friends.SearchUserFriendsActivity;
@@ -73,7 +74,7 @@ public class ProfileFragment extends Fragment {
     private void getPosts() {
         List<Post> posts = new ArrayList<>();
         TreeMap<Date, Post> allPosts = new TreeMap<>();
-        FeedAdapter feedAdapter = new FeedAdapter(posts);
+        ProfileAdapter feedAdapter = new ProfileAdapter(posts);
         recyclerView.setAdapter(feedAdapter);
 
         mDocumentRef.collection("User Posts")

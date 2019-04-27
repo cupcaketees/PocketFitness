@@ -37,32 +37,36 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         TextView toolbarTitle = findViewById(R.id.toolbar_title);
 
         toolbarTitle.setText("Friends");
-
+        TabLayout tabLayout = findViewById(R.id.tabLayoutFriends);
+        tabLayout.setupWithViewPager(mViewPager);
         shareButton.setVisibility(View.GONE);
-
+        SectionsPagerAdapter postPagerAdapter;
         backArrow.setOnClickListener(v -> finish());
-
-        SectionsPagerAdapter postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
-                Arrays.asList(new FollowingFragment(), new FollowersFragment(), new FollowerRequestsFragment()));
-
+        if( getIntent().getStringExtra("id").equals( FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+                    Arrays.asList(new FollowingFragment(), new FollowersFragment(), new FollowerRequestsFragment()));
+            FirebaseFirestore.getInstance().collection("Users/" + getIntent().getStringExtra("id")+ "/FollowerRequests/").addSnapshotListener((documentSnapshots, e) -> {
+                if (documentSnapshots == null || documentSnapshots.isEmpty()) {
+                    tabLayout.getTabAt(2).setText("Follow Requests: 0");
+                } else {
+                    tabLayout.getTabAt(2).setText("Follow Requests: " + String.valueOf(documentSnapshots.size()));
+                }
+            });
+        } else {
+            postPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
+                    Arrays.asList(new FollowingFragment(), new FollowersFragment()));
+        }
         mViewPager.setAdapter(postPagerAdapter);
 
         mViewPager.setCurrentItem(Integer.parseInt(getIntent().getStringExtra("intent")));
 
-        TabLayout tabLayout = findViewById(R.id.tabLayoutFriends);
-        tabLayout.setupWithViewPager(mViewPager);
-
-        FirebaseFirestore.getInstance().collection("Users/" + getIntent().getStringExtra("id")+ "/FollowerRequests/").addSnapshotListener((documentSnapshots, e) -> {
-            if (documentSnapshots == null || documentSnapshots.isEmpty()) {
-                tabLayout.getTabAt(2).setText("Follow Requests: 0");
-            } else {
-                tabLayout.getTabAt(2).setText("Follow Requests: " + String.valueOf(documentSnapshots.size()));
-            }
-        });
-
         tabLayout.getTabAt(0).setText(getIntent().getStringExtra("Following"));
         tabLayout.getTabAt(1).setText(getIntent().getStringExtra("Followers"));
 
+
+    }
+
+    private void setupViewPager() {
 
     }
 }

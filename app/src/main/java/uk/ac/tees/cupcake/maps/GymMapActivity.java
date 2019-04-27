@@ -92,14 +92,20 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
         }
     }
 
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        getCloseGyms.cancel(true);
+//        finish();
+//    }
+
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    protected void onStop() {
+        super.onStop();
         getCloseGyms.cancel(true);
         finish();
     }
-
-
 
     /**
      * Gets API Key and setups the client to be used within methods.

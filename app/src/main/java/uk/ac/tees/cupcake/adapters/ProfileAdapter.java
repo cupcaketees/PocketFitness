@@ -1,4 +1,4 @@
-package uk.ac.tees.cupcake.feed;
+package uk.ac.tees.cupcake.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -41,31 +41,32 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.account.ViewProfileActivity;
 import uk.ac.tees.cupcake.adapters.CommentAdapter;
+import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.friends.Comments;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
-public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder> {
+public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileViewHolder> {
     private final List<Post> posts;
     private PopupWindow mDropdown;
     private static final String TAG = "FeedAdapter";
     private CommentAdapter commentAdapter;
 
-    public FeedAdapter(List<Post> posts) {
+    public ProfileAdapter(List<Post> posts) {
         this.posts = posts;
         setHasStableIds(true);
     }
 
     @Override
-    public FeedAdapter.FeedViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ProfileAdapter.ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View postView = inflater.inflate(R.layout.post_row, parent, false);
-        return new FeedViewHolder(postView);
+        View postView = inflater.inflate(R.layout.post_row2, parent, false);
+        return new ProfileViewHolder(postView);
     }
 
     @Override
-    public void onBindViewHolder(FeedViewHolder holder, int position) {
+    public void onBindViewHolder(ProfileViewHolder holder, int position) {
         Post post = posts.get(position);
 
         String currentUserUid = FirebaseAuth.getInstance()
@@ -109,48 +110,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                     .into(holder.postImageImageView);
         }
 
-        // Set like button to correct value
-        collectionRef.document(currentUserUid)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    boolean value = documentSnapshot.exists();
-                    holder.postLikeButton.setLiked(value);
-                });
 
-
-        holder.postLikeButton.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                // Creates new document entry "like" with server timestamp if a document does not already exist.
-                Map<String, Object> likeTimeStamp = new HashMap<>();
-                likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-
-                collectionRef.document(currentUserUid)
-                        .set(likeTimeStamp)
-                        .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-            }
-
-            @Override
-            public void unLiked(LikeButton likeButton) {
-                // Deletes document removing like
-                collectionRef.document(currentUserUid)
-                        .delete()
-                        .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-            }
-        });
-
-        // Updates Like button Text
-        collectionRef.document(currentUserUid)
-                .addSnapshotListener((documentSnapshot, e) -> {
-                    if (documentSnapshot == null) {
-                        return;
-                    }
-
-                    String likeValue = documentSnapshot.exists() ? "Unlike" : "Like";
-                    holder.postLikeButtonTextView.setText(likeValue);
-                });
 
         // Gets total amount of likes
         collectionRef.addSnapshotListener((documentSnapshots, e) -> {
@@ -206,89 +166,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             }
         });
 
-        TreeMap<Date, Comments> allPosts = new TreeMap<>();
-        ArrayList<Comments> mPosts = new ArrayList<>();
-
-
-        holder.postCommentButton.setOnClickListener(v -> {
-            if (holder.submitCommentButton.getVisibility() == View.GONE) {
-                holder.submitCommentButton.setVisibility(View.VISIBLE);
-                holder.postCommentRecyclerView.setVisibility(View.VISIBLE);
-                holder.postCommentEditText.setVisibility(View.VISIBLE);
-
-
-                // Initialise
-                RecyclerView recyclerView = holder.postCommentRecyclerView;
-                //Layout
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(holder.itemView.getContext());
-
-                //Setup
-                recyclerView.setLayoutManager(layoutManager);
-
-                commentAdapter = new CommentAdapter(mPosts);
-                recyclerView.setAdapter(commentAdapter);
-
-
-
-                collectionRefComment
-                        .get()
-                        .addOnSuccessListener(documentSnapshots -> {
-
-                            for (DocumentSnapshot documentSnapshot : documentSnapshots) {
-                                if(documentSnapshot.exists()) {
-                                    Comments comment = new Comments(documentSnapshot.get("description").toString(),documentSnapshot.get("id").toString(), (Date) documentSnapshot.get("timestamp"));
-                                    allPosts.put(comment.getPostTime(), comment);
-                                }
-                            }
-
-                            mPosts.clear();
-                            mPosts.addAll(allPosts.descendingMap().values());
-
-                            commentAdapter.notifyDataSetChanged();
-                        });
-
-
-
-            } else {
-                holder.submitCommentButton.setVisibility(View.GONE);
-                holder.postCommentRecyclerView.setVisibility(View.GONE);
-                holder.postCommentEditText.setVisibility(View.GONE);
-            }
-        });
-
-
-        holder.submitCommentButton.setOnClickListener(v -> {
-            if (!holder.postCommentEditText.getText().toString().isEmpty()) {
-                Map<String, Object> commentTimeStamp = new HashMap<>();
-                commentTimeStamp.put("timestamp", FieldValue.serverTimestamp());
-                commentTimeStamp.put("description", holder.postCommentEditText.getText().toString());
-                commentTimeStamp.put("id", post.getUserUid());
-                collectionRefComment
-                        .document()
-                        .set(commentTimeStamp)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(holder.itemView.getContext(), "Comment added", Toast.LENGTH_SHORT).show();
-                            collectionRefComment
-                                    .get()
-                                    .addOnSuccessListener(documentSnapshots -> {
-
-                                        for (DocumentSnapshot documentSnapshot : documentSnapshots) {
-                                            if(documentSnapshot.exists()) {
-                                                Comments comment = new Comments(documentSnapshot.get("description").toString(),documentSnapshot.get("id").toString(), (Date) documentSnapshot.get("timestamp"));
-                                                allPosts.put(comment.getPostTime(), comment);
-                                            }
-                                        }
-                                        holder.postCommentEditText.setText("");
-                                        mPosts.clear();
-                                        mPosts.addAll(allPosts.descendingMap().values());
-
-                                        commentAdapter.notifyDataSetChanged();
-                                    });
-                        })
-//                        .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "Comment added", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-            }
-        });
 
         holder.postProfileNameTextView.setOnClickListener(v -> {
             // User selects their own post in feed. Send to main activity
@@ -306,22 +183,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         return posts.size();
     }
 
-    public class FeedViewHolder extends RecyclerView.ViewHolder {
+    public class ProfileViewHolder extends RecyclerView.ViewHolder {
 
         private TextView postDescriptionTextView;
         private TextView postDateTextView;
         private TextView postProfileNameTextView;
         private TextView postLikesCountTextView;
-        private TextView postLikeButtonTextView;
-
-        private EditText postCommentEditText;
-
-        private RecyclerView postCommentRecyclerView;
-
         private Context context;
-
-        private Button postCommentButton;
-        private Button submitCommentButton;
 
 
         private ImageView postImageImageView;
@@ -332,20 +200,13 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         private FirebaseUser mCurrentUser;
 
-        public FeedViewHolder(View postView) {
+        public ProfileViewHolder(View postView) {
             super(postView);
 
             postProfileNameTextView = postView.findViewById(R.id.feed_post_username_text_view);
             postDescriptionTextView = postView.findViewById(R.id.feed_post_description_text_view);
             postDateTextView = postView.findViewById(R.id.feed_post_time_posted_text_view);
             postLikesCountTextView = postView.findViewById(R.id.feed_post_likes_count_text_view);
-            postLikeButtonTextView = postView.findViewById(R.id.feed_post_like_button_text_view);
-            postCommentEditText = postView.findViewById(R.id.feed_post_comment_edittext);
-
-            postCommentRecyclerView = postView.findViewById(R.id.feed_post_comment_recyclerview);
-
-            postCommentButton = postView.findViewById(R.id.feed_post_comment_button);
-            submitCommentButton = postView.findViewById(R.id.feed_post_comment_area_button);
 
             postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
             postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);

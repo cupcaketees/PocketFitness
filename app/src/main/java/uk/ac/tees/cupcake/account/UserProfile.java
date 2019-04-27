@@ -97,7 +97,4 @@ public class UserProfile implements Serializable {
         return privateProfile;
     }
 
-    public void setPrivateProfile(boolean privateProfile) {
-        this.privateProfile = privateProfile;
-    }
 }

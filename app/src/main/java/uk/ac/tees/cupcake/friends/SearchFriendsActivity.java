@@ -19,6 +19,9 @@ import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.SearchFriendsAdapter;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class SearchFriendsActivity extends NavigationBarActivity {
     private static final String TAG = "SearchFriendsActivity";
 
@@ -31,6 +34,14 @@ public class SearchFriendsActivity extends NavigationBarActivity {
 
     @Override
     public void setup() {
+
+    initialiseRecyclerView();
+ }
+
+    /**
+     * Search through all users adding them to a recycler view {@link SearchFriendsAdapter}
+     */
+    private void initialiseRecyclerView() {
 
         ArrayList<UserProfile> profiles = new ArrayList<>();
         FirebaseFirestore.getInstance().collection("Users").get().addOnSuccessListener(documentSnapshots -> {
@@ -49,9 +60,13 @@ public class SearchFriendsActivity extends NavigationBarActivity {
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(adapter);
+
     }
 
 
+    /**
+     * Search for specific users using a search bar.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

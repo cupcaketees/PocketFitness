@@ -26,6 +26,9 @@ import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.friends.Comments;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
 
     private final List<Comments> comments;
@@ -37,7 +40,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     }
 
-
+    /**
+     * @param parent - the current view. it will inflate the card layout on top.
+     * @return view with card layout
+     */
     @Override
     public CommentAdapter.CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -46,6 +52,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return new CommentAdapter.CommentViewHolder(postView);
     }
 
+    /**
+     * @param holder   - the view with all the variables to be able to change them for each item.
+     * @param position - the current position similar to looping.
+     */
     @Override
     public void onBindViewHolder(CommentAdapter.CommentViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: " + comments.get(position).getId());
@@ -71,11 +81,18 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     }
 
+    /**
+     *
+     * @return - size of list
+     */
     @Override
     public int getItemCount() {
         return comments.size();
     }
 
+    /**
+     * Initialises all the variables in the View.
+     */
     public class CommentViewHolder extends RecyclerView.ViewHolder {
 
         private TextView comment_user_name;

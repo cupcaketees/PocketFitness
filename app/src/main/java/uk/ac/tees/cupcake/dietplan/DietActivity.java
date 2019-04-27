@@ -14,7 +14,6 @@ import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
  *
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
  */
-
 public class DietActivity extends NavigationBarActivity {
 
     private static final String TAG = "DietActivity";

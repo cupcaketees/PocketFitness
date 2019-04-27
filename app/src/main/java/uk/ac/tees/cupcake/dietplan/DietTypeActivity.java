@@ -9,6 +9,9 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.DietTypeAdapter;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class DietTypeActivity extends NavigationBarActivity {
 
     @Override
@@ -22,6 +25,10 @@ public class DietTypeActivity extends NavigationBarActivity {
     }
 
 
+    /**
+     * Description of 4 Different Diet types.
+     * In a recycler view to then when clicked move to {@link DietDetailsActivity} with the selected diet type.
+     */
     private void setupDietTypes() {
         RecyclerView mRecyclerView = findViewById(R.id.myRecycleView);
         ArrayList<Diet> mDiets = new ArrayList<>();

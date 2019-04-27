@@ -29,12 +29,11 @@ public class NewsFeedFragment extends Fragment {
     private FeedAdapter mFeedAdapter;
     private CollectionReference collectionReference;
     private ArrayList<Post> mPosts = new ArrayList<>();
-    private View view;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_newsfeed, container, false);
+        View view = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 
         // Initialise
         RecyclerView recyclerView = view.findViewById(R.id.feed_recycler_view);

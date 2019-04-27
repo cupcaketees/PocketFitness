@@ -21,7 +21,9 @@ import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.adapters.SearchFriendsAdapter;
 
-
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public abstract class SearchFriends extends Fragment {
     private View view;
 
@@ -35,7 +37,11 @@ public abstract class SearchFriends extends Fragment {
     }
 
 
-
+    /**
+     * Used to initialise all the follower types in the viewpager showing then in a recyclerview.
+     * @param friendType - Type of friend (followers, following or follower requests)
+     *                   - Used to search the database with the specific follow type.
+     */
     public void initialise(String friendType) {
         CollectionReference usersCollection = FirebaseFirestore.getInstance().collection("Users");
 
@@ -53,6 +59,8 @@ public abstract class SearchFriends extends Fragment {
 
                         String id = documentSnapshot.getId();
 
+                        Log.d(TAG, "User id: " + documentSnapshot.getId());
+
                         usersCollection.document(id)
                                 .get()
                                 .addOnSuccessListener(otherProfileDoc -> {
@@ -64,6 +72,8 @@ public abstract class SearchFriends extends Fragment {
 
                                 });
                     }
+
+                    Log.d(TAG, "Profile List: " + profiles.toString());
 
                     RecyclerView recyclerView = view.findViewById(R.id.myRecycleView);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

@@ -6,6 +6,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class Comments {
 
     private String id;

@@ -14,6 +14,9 @@ import uk.ac.tees.cupcake.dietplan.Diet;
 import uk.ac.tees.cupcake.dietplan.DietActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class DietTypeAdapter extends RecyclerView.Adapter<DietTypeAdapter.ViewHolder> {
 
     private ArrayList<Diet> mDiets;

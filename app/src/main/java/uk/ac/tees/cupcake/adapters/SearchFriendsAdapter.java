@@ -26,6 +26,9 @@ import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.account.ViewProfileActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
+/**
+ * @author Hugo Tomas <s6006225@live.tees.ac.uk>
+ */
 public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdapter.ViewHolder> implements Filterable {
     private static final String TAG = "SearchFriendsAdapter";
     private final ArrayList<UserProfile> profiles;
@@ -76,6 +79,10 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         return new ViewHolder(view);
     }
 
+
+    /**
+     * Initialises all the card views with the information from the arraylist of user profiles.
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         UserProfile profile = profiles.get(position);
@@ -166,6 +173,12 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         }
     }
 
+    /**
+     *
+     * @param uId - Id of the person attempting to follow
+     * @param pos - the current card
+     * When user confirms or denies a friend request it gets deleted and removed from the list.
+     */
     private void deleteRequest(String uId, int pos) {
         Log.d(TAG, "deleteRequest: " + uId);
         FirebaseFirestore.getInstance().collection("Users/").document(FirebaseAuth.getInstance().getUid() + "/FollowerRequests/" + uId )

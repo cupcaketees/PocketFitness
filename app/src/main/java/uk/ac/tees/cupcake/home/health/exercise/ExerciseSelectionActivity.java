@@ -7,7 +7,6 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 
 import uk.ac.tees.cupcake.R;
-import uk.ac.tees.cupcake.utils.views.CardViewPagerAdapter;
 
 public class ExerciseSelectionActivity extends AppCompatActivity {
     
@@ -25,7 +24,7 @@ public class ExerciseSelectionActivity extends AppCompatActivity {
         backgroundImage.invalidate();
         
         ViewPager viewPager = findViewById(R.id.exercise_selection_view_pager);
-        viewPager.setAdapter(new CardViewPagerAdapter());
+        viewPager.setAdapter(new ExerciseCardViewPagerAdapter());
         viewPager.setPageMargin(margin);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             

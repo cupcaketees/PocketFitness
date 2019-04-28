@@ -177,4 +177,6 @@
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyA7E0Z77NDwUTFXhl9trUE7s9XhGWXuZjk</string>
     <string name="google_places_key">"AIzaSyBWGQQuG0IGIcdnBjr1DdcM_23LeFTXOSc"</string>
     <string name="title_activity_user_post_location">Map</string>
+    <string name="title_activity_exercise_map">Start exercise</string>
+
 </resources>

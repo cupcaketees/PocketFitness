@@ -8,6 +8,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import uk.ac.tees.cupcake.R;
 
 /**
@@ -29,8 +31,6 @@ public class DietDetailsActivity extends AppCompatActivity {
         button.setOnClickListener(v -> {
             finish();
         });
-
-        setTitle("30 Day Diet");
         populateView();
 
     }
@@ -39,9 +39,11 @@ public class DietDetailsActivity extends AppCompatActivity {
      * Populate the view in the details page showing all Diet information.
      */
     public void populateView() {
+        TextView title = findViewById(R.id.food_detail_title);
         Diet mDiets = getIntent().getParcelableExtra("DIET");
         Log.d(TAG, "populateView: Stored Diet" + mDiets.toString());
-        TextView mDay = findViewById(R.id.foodDay);
+        title.setText(mDiets.getDay());
+
         TextView mStarter = findViewById(R.id.foodStarter);
         TextView mStarterDesc = findViewById(R.id.foodStarterDesc);
         TextView mStarterTime = findViewById(R.id.foodStarter_time);
@@ -52,7 +54,6 @@ public class DietDetailsActivity extends AppCompatActivity {
         TextView mDinnerDesc = findViewById(R.id.foodDinnerDesc);
         TextView mDinnerTime = findViewById(R.id.foodDinner_time);
 
-        mDay.setText(mDiets.getDay());
         mStarter.setText(mDiets.getStarter());
         mStarterDesc.setText(mDiets.getStarterDisc());
         mStarterTime.setText(mDiets.getStarterTime());

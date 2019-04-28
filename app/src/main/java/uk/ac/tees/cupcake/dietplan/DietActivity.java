@@ -1,5 +1,8 @@
 package uk.ac.tees.cupcake.dietplan;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -14,17 +17,14 @@ import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
  *
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
  */
-public class DietActivity extends NavigationBarActivity {
+public class DietActivity extends AppCompatActivity {
 
     private static final String TAG = "DietActivity";
 
     @Override
-    protected int layoutResource() {
-        return R.layout.activity_recycler_view;
-    }
-
-    @Override
-    public void setup() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recycler_view);
         setupDays();
     }
 
@@ -40,6 +40,7 @@ public class DietActivity extends NavigationBarActivity {
 
         switch (val) {
             case "0":
+                setTitle("High Calorie Diet");
                 mDiets.add(new Diet("Day: 1", "Mushroom barley soup", "kcal: 174", "70 Minutes", "Mexican penne with avocado", "kcal: 495", "30 Minutes", "Lean turkey burger with sweet potato wedges", "kcal: 428", "40 Minutes"));
                 mDiets.add(new Diet("Day: 2", "Tomato soup with pasta", "kcal: 187", "40 Minutes", "Moroccan chicken stew", "kcal: 348", "55 Minutes", "Silvana's Mediterranean & basil pasta", "kcal: 452", "35 Minutes"));
                 mDiets.add(new Diet("Day: 3", "Store-cupboard pasta salad", "kcal: 189", "5 Minutes", "Herb & garlic baked cod", "kcal: 409", "30 Minutes", "Ratatouille pasta salad with rocket", "kcal: 301", "13 Minutes"));
@@ -49,6 +50,7 @@ public class DietActivity extends NavigationBarActivity {
                 mDiets.add(new Diet("Day: 7", "Hot pasta salad", "kcal: 476", "20 Minutes", "Pomegranate chicken with almond couscous", "kcal: 590", "25 Minutes", "Vitality veggie pasta", "kcal: 377", "25 Minutes"));
                 break;
             case "1":
+                setTitle("Low Calorie Diet");
                 mDiets.add(new Diet("Day: 1", "Pasta shells with broccoli & anchovies", "kcal: 426", "20 Minutes", "Duck ragu with pappardelle & swede", "kcal: 471", "110 Minutes", "Tomato & aubergine pasta", "kcal: 459", "30 Minutes"));
                 mDiets.add(new Diet("Day: 2", "Pesto & Parmesan spaghetti", "kcal: 336", "5 Minutes", "Slow cooker lasagne", "kcal: 448", "255 Minutes", "Courgette, broccoli & gremolata pasta", "kcal: 390", "30 Minutes"));
                 mDiets.add(new Diet("Day: 3", "10-minute tortellini", "kcal: 482", "10 Minutes", "Garlicky mushroom penne", "kcal: 436", "35 Minutes", "Spicy tuna pasta", "kcal: 552", "25 Minutes"));
@@ -58,6 +60,7 @@ public class DietActivity extends NavigationBarActivity {
                 mDiets.add(new Diet("Day: 7", "Green bean minestrone", "kcal: 260", "50 Minutes", "Lentil kofta with orzo & feta", "kcal: 598", "55 Minutes", "Pea pesto with pasta shapes", "kcal: 103", "15 Minutes"));
                 break;
             case "2":
+                setTitle("Balanced Diet");
                 mDiets.add(new Diet("Day: 1", "Mushroom barley soup", "kcal: 174", "70 Minutes", "Super smoky bacon & tomato spaghetti", "kcal: 500", "25 Minutes", "Broccoli pasta salad with salmon & sunflower seeds", "kcal: 590", "20 Minutes"));
                 mDiets.add(new Diet("Day: 2", "Hot pasta salad", "kcal: 476", "20 Minutes", "Tuna pasta with rocket & parsley pesto", "kcal: 494", "25 Minutes", "Pasta salad with tuna, capers & balsamic dressing", "kcal: 527", "20 Minutes"));
                 mDiets.add(new Diet("Day: 3", "Mushroom barley soup", "kcal: 174", "70 Minutes", "Roasted red pepper & parsley pesto with penne", "kcal: 495", "15 Minutes", "Broad bean, pea & orzo salad", "kcal: 334", "20 Minutes"));
@@ -67,6 +70,7 @@ public class DietActivity extends NavigationBarActivity {
                 mDiets.add(new Diet("Day: 7", "Chunky minestrone soup", "kcal: 420", "45 Minutes", "Crab linguine with chilli & parsley", "kcal: 546", "30 Minutes", "Crab & asparagus pappardelle", "kcal: 576", "25 Minutes"));
                 break;
             case "3":
+                setTitle("Vegetarian Diet");
                 mDiets.add(new Diet("Day: 1", "Tortellini & pesto minestrone", "kcal: 493", "10 Minutes", "Tofu & spinach cannelloni", "kcal: 284", "85 Minutes", "Spaghetti with lemon, Parmesan & peas", "kcal: 420", "30 Minutes"));
                 mDiets.add(new Diet("Day: 2", "Noodle bowl salad", "kcal: 476", "20 Minutes", "Homemade pappardelle with crab & broad beans", "kcal: 416", "75 Minutes", "Squash & spinach fusilli with pecans", "kcal: 353", "50 Minutes"));
                 mDiets.add(new Diet("Day: 3", "Tomato soup with pasta", "kcal: 187", "40 Minutes", "Rigatoni with spiced prawns, tomatoes & chorizo", "kcal: 462", "45 Minutes", "Linguine with asparagus & egg", "kcal: 500", "35 Minutes"));

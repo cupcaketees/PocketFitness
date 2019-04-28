@@ -125,7 +125,10 @@
             android:windowSoftInputMode="adjustPan"/>
 
         <activity android:name=".healthnews.NewsActivity" />
-        <activity android:name=".dietplan.DietActivity" />
+        <activity android:name=".dietplan.DietActivity"
+            android:parentActivityName=".home.MainActivity"
+            android:theme="@style/AppTheme.BasicActionBar">
+        </activity>
         <activity
             android:name=".dietplan.DietDetailsActivity" />
         <activity android:name=".workouts.BodybuildingListActivity" />

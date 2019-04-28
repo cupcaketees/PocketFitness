@@ -34,9 +34,9 @@ public class SearchFriendsActivity extends NavigationBarActivity {
 
     @Override
     public void setup() {
-
-    initialiseRecyclerView();
- }
+        setTitle("Find Friends");
+        initialiseRecyclerView();
+    }
 
     /**
      * Search through all users adding them to a recycler view {@link SearchFriendsAdapter}
@@ -62,7 +62,6 @@ public class SearchFriendsActivity extends NavigationBarActivity {
         recyclerView.setAdapter(adapter);
 
     }
-
 
     /**
      * Search for specific users using a search bar.

@@ -13,7 +13,6 @@ public class Comments {
 
     private String id;
 
-
     private String description;
 
     @ServerTimestamp

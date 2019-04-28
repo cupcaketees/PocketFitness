@@ -76,7 +76,6 @@ public class SearchUserFriendsActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setText(getIntent().getStringExtra("Following"));
         tabLayout.getTabAt(1).setText(getIntent().getStringExtra("Followers"));
 
-
     }
 
 }

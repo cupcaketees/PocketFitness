@@ -2,15 +2,11 @@ package uk.ac.tees.cupcake.adapters;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -26,23 +22,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.like.LikeButton;
-import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
 import uk.ac.tees.cupcake.account.ViewProfileActivity;
-import uk.ac.tees.cupcake.adapters.CommentAdapter;
 import uk.ac.tees.cupcake.feed.Post;
-import uk.ac.tees.cupcake.friends.Comments;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
@@ -61,7 +50,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
     public ProfileAdapter.ProfileViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View postView = inflater.inflate(R.layout.post_row2, parent, false);
+        View postView = inflater.inflate(R.layout.post_row_profile, parent, false);
         return new ProfileViewHolder(postView);
     }
 
@@ -109,7 +98,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.ProfileV
                     .load(post.getImageUrl())
                     .into(holder.postImageImageView);
         }
-
 
 
         // Gets total amount of likes

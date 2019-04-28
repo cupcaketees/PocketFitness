@@ -45,7 +45,7 @@ public class NewsActivity extends NavigationBarActivity {
      */
     @Override
     public void setup() {
-
+        setTitle("News Articles");
         mProgressBar = findViewById(R.id.news_progressbar);
         mCheckNewsRecieved = findViewById(R.id.news_availability);
 

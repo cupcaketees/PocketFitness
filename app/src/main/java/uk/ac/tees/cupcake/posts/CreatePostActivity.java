@@ -56,7 +56,7 @@ public final class CreatePostActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
-        
+        setTitle("Create Post");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         
         if (currentUser == null) {

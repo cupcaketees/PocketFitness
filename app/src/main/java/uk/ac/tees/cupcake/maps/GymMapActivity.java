@@ -69,12 +69,15 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
      * Initialises XML variables and their onClickListeners
      */
     private void initialise() {
+        ImageView button = findViewById(R.id.exitDiet);
+
+        button.setOnClickListener(v -> {
+            finish();
+        });
+        TextView title = findViewById(R.id.food_detail_title);
+        title.setText("Nearby Gyms");
         getCloseGyms = new GetCloseGyms();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        ImageView backButton = findViewById(R.id.backArrow);
-        TextView shareText = findViewById(R.id.postFinalise);
-        shareText.setVisibility(View.GONE);
-        backButton.setOnClickListener(v -> IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class));
     }
 
 

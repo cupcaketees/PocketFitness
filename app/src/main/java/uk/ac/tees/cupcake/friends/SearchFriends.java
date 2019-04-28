@@ -28,6 +28,7 @@ public abstract class SearchFriends extends Fragment {
     private View view;
 
     private static final String TAG = "SearchFriends";
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -36,9 +37,9 @@ public abstract class SearchFriends extends Fragment {
         return view;
     }
 
-
     /**
      * Used to initialise all the follower types in the viewpager showing then in a recyclerview.
+     *
      * @param friendType - Type of friend (followers, following or follower requests)
      *                   - Used to search the database with the specific follow type.
      */
@@ -47,7 +48,7 @@ public abstract class SearchFriends extends Fragment {
 
         ArrayList<UserProfile> profiles = new ArrayList<>();
 
-        SearchFriendsAdapter adapter =new SearchFriendsAdapter(profiles,friendType);
+        SearchFriendsAdapter adapter = new SearchFriendsAdapter(profiles, friendType);
         FirebaseFirestore.getInstance().collection("Users").document(getActivity().getIntent().getStringExtra("id"))
                 .collection(friendType)
                 .get()
@@ -64,7 +65,7 @@ public abstract class SearchFriends extends Fragment {
                         usersCollection.document(id)
                                 .get()
                                 .addOnSuccessListener(otherProfileDoc -> {
-                                    if(otherProfileDoc.exists()) {
+                                    if (otherProfileDoc.exists()) {
 
                                         profiles.add(otherProfileDoc.toObject(UserProfile.class));
                                         adapter.notifyDataSetChanged();

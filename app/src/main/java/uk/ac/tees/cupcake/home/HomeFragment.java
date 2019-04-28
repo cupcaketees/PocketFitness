@@ -38,10 +38,10 @@ import java.util.Locale;
 import uk.ac.tees.cupcake.ApplicationConstants;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.UserProfile;
-import uk.ac.tees.cupcake.home.health.MetsWalkingBracket;
 import uk.ac.tees.cupcake.home.health.Sex;
 import uk.ac.tees.cupcake.home.health.heartrate.HeartRateMeasurement;
 import uk.ac.tees.cupcake.home.steps.StepCountMeasurement;
+import uk.ac.tees.cupcake.utils.HealthUtility;
 
 public final class HomeFragment extends OnChangeFragment {
     
@@ -91,7 +91,7 @@ public final class HomeFragment extends OnChangeFragment {
     @Override
     public void onStart() {
         super.onStart();
-        
+
         IntentFilter intentFilter = new IntentFilter(ApplicationConstants.STEP_COUNT_BROADCAST_INTENT_ACTION);
         getActivity().registerReceiver(updateStepCountBroadcastReceiver, intentFilter);
     
@@ -103,7 +103,8 @@ public final class HomeFragment extends OnChangeFragment {
         FirebaseFirestore.getInstance()
                 .collection("Users")
                 .document(auth.getCurrentUser().getUid())
-                .addSnapshotListener(getActivity(), (documentSnapshot, e) -> {
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         userProfile = documentSnapshot.toObject(UserProfile.class);
                     }
@@ -253,27 +254,13 @@ public final class HomeFragment extends OnChangeFragment {
         TextView distanceTextView = stepsCard.findViewById(R.id.home_steps_distance);
         distanceTextView.setText(dist);
         
-        float bmr = calculateBmr(weight, height, sex);
-        int calories = calculateCaloriesBurned(bmr, distance, storedTime);
+        float bmr = HealthUtility.calculateBmr(weight, height, sex, 22);
+        preferences.edit().putFloat("user_bmr", bmr).apply();
+
+        int calories = HealthUtility.calculateCaloriesBurnedMovement(bmr, distance, storedTime);
 
         TextView calorieTextView = stepsCard.findViewById(R.id.home_steps_calorie_label);
         calorieTextView.setText(calories + " kcal");
-    }
-
-    private int calculateCaloriesBurned(float bmr, float distance, long time) {
-        long seconds = time / 1000;
-        float averagePace = (distance / 100) / seconds;
-        MetsWalkingBracket walkingBracket = MetsWalkingBracket.getBracket(averagePace);
-        
-        return Math.round(bmr * (walkingBracket.getMetabolicEquivalent() / 24) * seconds / 60 / 60);
-    }
-    
-    private float calculateBmr(float weight, float height, Sex sex) {
-        if (sex == Sex.MALE) {
-            return (float) (66.47 + (13.7 * weight) + (5 * height) - (6.8 * 23));
-        } else {
-            return (float) (655.1 + (9.6 * weight) + (1.8 * height) - (4.7 * 23));
-        }
     }
     
 }

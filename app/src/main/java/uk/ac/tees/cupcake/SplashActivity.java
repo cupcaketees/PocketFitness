@@ -49,13 +49,13 @@ public class SplashActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
-    
+
         StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
         SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
         sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
-        
+
         scheduleStepCounterResetJob();
-        
+
         // Checks users current auth state and directs to them to appropriate activity.
         if(currentUser == null){
             // not logged in
@@ -72,24 +72,22 @@ public class SplashActivity extends AppCompatActivity {
                                      if(!documentSnapshot.exists()){
                                          // new account not setup.
                                          startActivity(new Intent(SplashActivity.this, SetupProfileActivity.class));
-                                         finish();
                                      }else {
                                          // already setup account.
                                          startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                                         finish();
                                      }
+                                     finish();
                                  }
                              });
         }
         
-        SystemClock.sleep(1000);
         Log.d(TAG, "onCreate: onEnd");
     }
     
     private void scheduleStepCounterResetJob() {
         Calendar c = Calendar.getInstance();
-        c.set(Calendar.HOUR_OF_DAY, 5);
-        c.set(Calendar.MINUTE, 30);
+        c.set(Calendar.HOUR_OF_DAY, 23);
+        c.set(Calendar.MINUTE, 59);
         c.set(Calendar.SECOND, 0);
     
         final long initialDelay = c.getTimeInMillis() - System.currentTimeMillis();

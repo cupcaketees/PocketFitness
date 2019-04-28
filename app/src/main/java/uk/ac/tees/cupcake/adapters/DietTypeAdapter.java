@@ -11,18 +11,18 @@ import java.util.ArrayList;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.dietplan.Diet;
-import uk.ac.tees.cupcake.dietplan.DietDetailsActivity;
+import uk.ac.tees.cupcake.dietplan.DietActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
 /**
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
  */
-public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHolder> {
+public class DietTypeAdapter extends RecyclerView.Adapter<DietTypeAdapter.ViewHolder> {
 
     private ArrayList<Diet> mDiets;
     private final Context mContext;
 
-    public DietListAdapter(ArrayList<Diet> mDiets, Context context) {
+    public DietTypeAdapter( ArrayList<Diet> mDiets, Context context) {
         this.mDiets = mDiets;
         this.mContext = context;
     }
@@ -32,9 +32,9 @@ public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHo
      * @return view with card layout
      */
     @Override
-    public DietListAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_food_days, parent, false);
-        return new DietListAdapter.ViewHolder(view);
+    public DietTypeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_food_diet_type, parent, false);
+        return new DietTypeAdapter.ViewHolder(view);
     }
 
     /**
@@ -42,10 +42,12 @@ public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHo
      * @param position - the current position similar to looping.
      */
     @Override
-    public void onBindViewHolder(DietListAdapter.ViewHolder holder, int position) {
-        holder.mDay.setText(mDiets.get(position).getDay());
+    public void onBindViewHolder(DietTypeAdapter.ViewHolder holder, int position) {
 
-        holder.itemView.setOnClickListener(v -> IntentUtils.invokeDietPlan(mContext, DietDetailsActivity.class, "DIET", mDiets.get(position)));
+        holder.mName.setText(mDiets.get(position).getDietName());
+        holder.mDescription.setText(mDiets.get(position).getDietDescription());
+
+        holder.itemView.setOnClickListener(v -> IntentUtils.invokeVideoView(mContext, DietActivity.class, "DIET", Integer.toString(position)));
     }
 
     /**
@@ -62,11 +64,14 @@ public class DietListAdapter extends RecyclerView.Adapter<DietListAdapter.ViewHo
      */
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView mDay;
+        private TextView mName;
+        private TextView mDescription;
 
         ViewHolder(View itemView) {
             super(itemView);
-            mDay = itemView.findViewById(R.id.foodDayPage);
+            mName = itemView.findViewById(R.id.diet_title);
+            mDescription = itemView.findViewById(R.id.diet_desc);
+
         }
     }
 }

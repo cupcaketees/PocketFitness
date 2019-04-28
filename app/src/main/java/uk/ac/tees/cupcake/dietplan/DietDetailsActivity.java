@@ -2,8 +2,13 @@ package uk.ac.tees.cupcake.dietplan;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import uk.ac.tees.cupcake.R;
 
@@ -20,7 +25,12 @@ public class DietDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_description);
-        setTitle("30 Day Diet");
+
+        ImageView button = findViewById(R.id.exitDiet);
+
+        button.setOnClickListener(v -> {
+            finish();
+        });
         populateView();
 
     }
@@ -29,9 +39,11 @@ public class DietDetailsActivity extends AppCompatActivity {
      * Populate the view in the details page showing all Diet information.
      */
     public void populateView() {
+        TextView title = findViewById(R.id.food_detail_title);
         Diet mDiets = getIntent().getParcelableExtra("DIET");
         Log.d(TAG, "populateView: Stored Diet" + mDiets.toString());
-        TextView mDay = findViewById(R.id.foodDay);
+        title.setText(mDiets.getDay());
+
         TextView mStarter = findViewById(R.id.foodStarter);
         TextView mStarterDesc = findViewById(R.id.foodStarterDesc);
         TextView mStarterTime = findViewById(R.id.foodStarter_time);
@@ -42,7 +54,6 @@ public class DietDetailsActivity extends AppCompatActivity {
         TextView mDinnerDesc = findViewById(R.id.foodDinnerDesc);
         TextView mDinnerTime = findViewById(R.id.foodDinner_time);
 
-        mDay.setText(mDiets.getDay());
         mStarter.setText(mDiets.getStarter());
         mStarterDesc.setText(mDiets.getStarterDisc());
         mStarterTime.setText(mDiets.getStarterTime());

@@ -73,6 +73,7 @@ public class NewsFeedFragment extends Fragment {
                                                        // TreeMap with TimeStamp as Key and Post as value.
                                                        for(DocumentSnapshot documentSnapshot1 : documentSnapshots1){
                                                            Post currentDoc = documentSnapshot1.toObject(Post.class);
+
                                                            allPosts.put(currentDoc.getTimeStamp(), currentDoc);
                                                        }
 
@@ -87,55 +88,3 @@ public class NewsFeedFragment extends Fragment {
     }
 
 }
-
-//        TreeMap<Date, Post> allPosts = new TreeMap<>();
-//
-//        collectionReference.get()
-//                .addOnSuccessListener(documentSnapshots -> {
-//                    // Iterates "Users" collection
-//                    for(DocumentSnapshot documentSnapshot : documentSnapshots){
-//                        //Users to "User Posts"
-//                        listener = documentSnapshot.getReference()
-//                                .collection("User Posts")
-//                                // Add snapshot listener to each user posts document, listener detaches when user leaves activity.
-//                                .addSnapshotListener((documentSnapshots1, e) -> {
-//                                    if(e != null){
-//                                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-//                                        return;
-//                                    }
-//                                    // Iterates through only the changed documents.
-//                                    for(DocumentChange documentChange : documentSnapshots1.getDocumentChanges()){
-//
-//                                        DocumentSnapshot currentDoc = documentChange.getDocument();
-//                                        Post post = currentDoc.toObject(Post.class);
-//
-//                                        // Switch to determine the change to the document
-//                                        switch(documentChange.getType()){
-//                                            case ADDED:
-//                                                Toast.makeText(getContext(), "Post add", Toast.LENGTH_SHORT).show();
-//                                                allPosts.put(post.getTimeStamp(), post);
-//                                                break;
-//                                            case MODIFIED:
-//                                                Toast.makeText(getContext(), "Post modified", Toast.LENGTH_SHORT).show();
-//                                                allPosts.put(post.getTimeStamp(), post);
-//                                                break;
-//                                            case REMOVED:
-//                                                Toast.makeText(getContext(), "Post deleted", Toast.LENGTH_SHORT).show();
-//                                                allPosts.remove(post.getTimeStamp());
-//                                                break;
-//                                        }
-//
-//                                        mPosts.addAll(allPosts.descendingMap().values());
-//                                        mFeedAdapter.notifyDataSetChanged();
-//
-//                                    }
-//
-//                                    //mPosts.clear();
-//                                    //mPosts.addAll(allPosts.descendingMap().values());
-//                                    //mFeedAdapter.notifyDataSetChanged();
-
-//                                });
-//
-//                    }
-//
-//                });

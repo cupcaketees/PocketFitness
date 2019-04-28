@@ -156,7 +156,7 @@
 
     <string name="navbar_item_search_recipe_text">Search Recipes</string>
     <string name="navbar_item_search_food_text">Search Food</string>
-    <string name="navbar_item_30_day_diet_text">30 Day Diet</string>
+    <string name="navbar_item_30_day_diet_text">Diet Plans</string>
     <string name="navbar_item_posts_text">Posts</string>
     <string name="navbar_item_home_text">Home</string>
     <string name="navbar_item_settings_text">Settings</string>
@@ -188,4 +188,5 @@
     <string name="recipe_item_no_diet_labels_text">No Diet labels</string>
     <string name="recipe_item_information_header_text">Information</string>
     <string name="recipe_item_servings_header_text">Servings</string>
+    <string name="navbar_item_search_friends">Find Friends</string>
 </resources>

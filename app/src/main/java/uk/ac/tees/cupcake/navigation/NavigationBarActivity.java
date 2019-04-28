@@ -27,8 +27,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.SettingsActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.dietplan.DietTypeActivity;
 import uk.ac.tees.cupcake.food.SearchFoodActivity;
 import uk.ac.tees.cupcake.dietplan.DietActivity;
+import uk.ac.tees.cupcake.friends.SearchFriendsActivity;
 import uk.ac.tees.cupcake.healthnews.NewsActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.login.LoginActivity;
@@ -68,11 +70,13 @@ public abstract class NavigationBarActivity extends AppCompatActivity {
 
         NAV_BAR_ACTIONS.put(R.id.nav_bodybuilding, new StartIntentNavigationItemAction(BodybuildingListActivity.class));
 
+        NAV_BAR_ACTIONS.put(R.id.nav_search_friends, new StartIntentNavigationItemAction(SearchFriendsActivity.class));
+
         NAV_BAR_ACTIONS.put(R.id.news_list_view, new StartIntentNavigationItemAction(NewsActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_post, new StartIntentNavigationItemAction(CreatePostActivity.class));
 
-        NAV_BAR_ACTIONS.put(R.id.nav_30diet, new StartIntentNavigationItemAction(DietActivity.class));
+        NAV_BAR_ACTIONS.put(R.id.nav_30diet, new StartIntentNavigationItemAction(DietTypeActivity.class));
 
         NAV_BAR_ACTIONS.put(R.id.nav_search_recipe, new StartIntentNavigationItemAction(SearchRecipesActivity.class));
 

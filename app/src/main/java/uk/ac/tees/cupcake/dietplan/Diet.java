@@ -7,23 +7,28 @@ import android.os.Parcelable;
 /**
  * Diet Class
  * Parcelable object so can be passed through PutExtraParcelable and read.
+ *
  * @author Hugo Tomas <s6006225@live.tees.ac.uk>
  */
 
 public class Diet implements Parcelable {
 
-    private final String day;
-    private final String starter;
-    private final String starterDisc;
-    private final String starterTime;
-    private final String lunch;
-    private final String lunchDesc;
-    private final String lunchTime;
-    private final String dinner;
-    private final String dinnerDesc;
-    private final String dinnerTime;
+    private String dietName;
+    private String dietDescription;
 
-    public Diet(String day, String starter, String starterDisc, String starterTime, String lunch, String lunchDesc, String lunchTime, String dinner, String dinnerDesc, String dinnerTime) {
+    private String day;
+    private String starter;
+    private String starterDisc;
+    private String starterTime;
+    private String lunch;
+    private String lunchDesc;
+    private String lunchTime;
+    private String dinner;
+    private String dinnerDesc;
+    private String dinnerTime;
+
+
+    Diet(String day, String starter, String starterDisc, String starterTime, String lunch, String lunchDesc, String lunchTime, String dinner, String dinnerDesc, String dinnerTime) {
         this.day = day;
         this.starter = starter;
         this.starterDisc = starterDisc;
@@ -36,13 +41,17 @@ public class Diet implements Parcelable {
         this.dinnerTime = dinnerTime;
     }
 
+    Diet(String dietName, String dietDescription) {
+        this.dietName = dietName;
+        this.dietDescription = dietDescription;
+    }
+
     /**
      * This is what the object is stored in as a Parcel.
-     * @param in
      */
-    public Diet(Parcel in) {
-        day = in.readString();
-        starter = in.readString();
+    private Diet(Parcel in) {
+        this.day = in.readString();
+        this.starter = in.readString();
         this.starterDisc = in.readString();
         this.starterTime = in.readString();
         this.lunch = in.readString();
@@ -53,50 +62,11 @@ public class Diet implements Parcelable {
         this.dinnerTime = in.readString();
     }
 
-    public String getStarterTime() {
-        return starterTime;
-    }
-
-    public String getLunchTime() {
-        return lunchTime;
-    }
-
-    public String getDinnerTime() {
-        return dinnerTime;
-    }
-
-    public String getDay() {
-        return day;
-    }
-
-    public String getStarter() {
-        return starter;
-    }
-
-    public String getStarterDisc() {
-        return starterDisc;
-    }
-
-    public String getLunch() {
-        return lunch;
-    }
-
-    public String getLunchDesc() {
-        return lunchDesc;
-    }
-
-    public String getDinner() {
-        return dinner;
-    }
-
-    public String getDinnerDesc() {
-        return dinnerDesc;
-    }
 
     /**
      * Converts it from a Parcel to a Object.
      */
-    public static final Creator<Diet> CREATOR = new Creator<Diet>(){
+    public static final Creator<Diet> CREATOR = new Creator<Diet>() {
         public Diet createFromParcel(Parcel in) {
             return new Diet(in);
         }
@@ -113,6 +83,7 @@ public class Diet implements Parcelable {
 
     /**
      * Writing to Parcel
+     *
      * @param dest - Passes through every variable in the object to be stored.
      */
     @Override
@@ -129,7 +100,55 @@ public class Diet implements Parcelable {
         dest.writeString(getDinnerTime());
 
 
+    }
 
+
+    public String getDietName() {
+        return dietName;
+    }
+
+    public String getDietDescription() {
+        return dietDescription;
+    }
+
+    String getStarterTime() {
+        return starterTime;
+    }
+
+    String getLunchTime() {
+        return lunchTime;
+    }
+
+    String getDinnerTime() {
+        return dinnerTime;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    String getStarter() {
+        return starter;
+    }
+
+    String getStarterDisc() {
+        return starterDisc;
+    }
+
+    String getLunch() {
+        return lunch;
+    }
+
+    String getLunchDesc() {
+        return lunchDesc;
+    }
+
+    String getDinner() {
+        return dinner;
+    }
+
+    String getDinnerDesc() {
+        return dinnerDesc;
     }
 
     /**

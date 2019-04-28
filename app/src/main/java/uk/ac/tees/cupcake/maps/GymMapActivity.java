@@ -48,16 +48,16 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
     private LocationManager mLocationManager;
     private Marker currentUserLocationMarker;
     private double lat, lng;
-
+    GetCloseGyms getCloseGyms;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gym_map);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            checkUserLocationPermission();
-        }
+
+        checkUserLocationPermission();
+
         initialise();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -69,11 +69,15 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
      * Initialises XML variables and their onClickListeners
      */
     private void initialise() {
+        ImageView button = findViewById(R.id.exitDiet);
+
+        button.setOnClickListener(v -> {
+            finish();
+        });
+        TextView title = findViewById(R.id.food_detail_title);
+        title.setText("Nearby Gyms");
+        getCloseGyms = new GetCloseGyms();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        ImageView backButton = findViewById(R.id.backArrow);
-        TextView shareText = findViewById(R.id.postFinalise);
-        shareText.setVisibility(View.GONE);
-        backButton.setOnClickListener(v -> IntentUtils.invokeBaseView(getApplicationContext(), MainActivity.class));
     }
 
 
@@ -89,6 +93,21 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 99);
             }
         }
+    }
+
+
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        getCloseGyms.cancel(true);
+//        finish();
+//    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        getCloseGyms.cancel(true);
+        finish();
     }
 
     /**
@@ -156,13 +175,14 @@ public class GymMapActivity extends FragmentActivity implements OnMapReadyCallba
      */
     private void findGyms() {
         Object transferData[] = new Object[2];
-        GetCloseGyms getCloseGyms = new GetCloseGyms();
 
+        getCloseGyms = new GetCloseGyms();
         String url = showData();
         transferData[0] = mMap;
         transferData[1] = url;
 
         getCloseGyms.execute(transferData);
+
         Toast.makeText(this, "Showing nearby gyms", Toast.LENGTH_SHORT).show();
     }
 

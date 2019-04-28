@@ -16,13 +16,16 @@ public class Post  {
 
     private String postId;
 
+    private String locationName;
+
     public Post() {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String userUid, String description){
+    public Post(String userUid, String description, String locationName){
         this.userUid = userUid;
         this.description = description;
+        this.locationName = locationName;
     }
 
     public String getUserUid() {
@@ -43,6 +46,14 @@ public class Post  {
 
     public Date getTimeStamp(){
         return timeStamp;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
     }
 
     public void setTimeStamp(Date timeStamp){

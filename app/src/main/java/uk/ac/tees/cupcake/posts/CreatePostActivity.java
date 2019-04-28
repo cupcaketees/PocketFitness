@@ -51,18 +51,19 @@ public final class CreatePostActivity extends AppCompatActivity {
     private ImageView addImageButton;
     private ImageView addLocationButton;
     private ImageView imageView;
-    
+    private String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_post);
-        
+        setTitle("Create Post");
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         
         if (currentUser == null) {
             throw new RuntimeException();
         }
-        
+        location = "";
+
         editText = findViewById(R.id.create_post_edit_text);
         addImageButton = findViewById(R.id.create_post_add_image);
         addLocationButton = findViewById(R.id.create_post_add_location);
@@ -102,7 +103,7 @@ public final class CreatePostActivity extends AppCompatActivity {
                 imageView.startAnimation(animation);
                 
             } else if (requestCode == ApplicationConstants.CREATE_POST_ADD_LOCATION_REQUEST_CODE) {
-                String location = data.getStringExtra("Location");
+                location = data.getStringExtra("Location");
                 System.out.println(location);
             }
             
@@ -117,8 +118,8 @@ public final class CreatePostActivity extends AppCompatActivity {
      */
     public void postButtonOnClick(View view) {
         fabProgressCircle.show();
-    
-        Post post = new Post(currentUser.getUid(), editText.getText().toString());
+
+        Post post = new Post(currentUser.getUid(), editText.getText().toString(),location);
     
         if (localImageUri != null) {
             String uriString = localImageUri.toString();

@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,13 +25,16 @@ import com.google.firebase.firestore.Query;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.account.EditProfileActivity;
 import uk.ac.tees.cupcake.account.UserProfile;
+import uk.ac.tees.cupcake.adapters.ProfileAdapter;
 import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.friends.SearchUserFriendsActivity;
@@ -69,18 +73,21 @@ public class ProfileFragment extends Fragment {
 
     private void getPosts() {
         List<Post> posts = new ArrayList<>();
-        FeedAdapter feedAdapter = new FeedAdapter(posts);
+        TreeMap<Date, Post> allPosts = new TreeMap<>();
+        ProfileAdapter feedAdapter = new ProfileAdapter(posts);
         recyclerView.setAdapter(feedAdapter);
 
         mDocumentRef.collection("User Posts")
-                    .orderBy("timeStamp", Query.Direction.DESCENDING).limit(100)
                     .get()
                     .addOnSuccessListener(documentSnapshots -> {
                         for(DocumentSnapshot documentSnapshot : documentSnapshots){
                             Post currentItem = documentSnapshot.toObject(Post.class);
-                            posts.add(currentItem);
-                            feedAdapter.notifyDataSetChanged();
+                            allPosts.put(currentItem.getTimeStamp(),currentItem);
                         }
+                        posts.clear();
+                        posts.addAll(allPosts.descendingMap().values());
+                        feedAdapter.notifyDataSetChanged();
+
                     });
     }
 
@@ -127,8 +134,8 @@ public class ProfileFragment extends Fragment {
                     followingCountTextView.setText(output);
                 });
 
-        followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(),"intent","1"));
-        followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(), "intent","0"));
+        followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(),"intent","1","id",mCurrentUser.getUid()));
+        followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(getContext(), SearchUserFriendsActivity.class, "Followers",followerCountTextView.getText().toString(),"Following",followingCountTextView.getText().toString(), "intent","0","id",mCurrentUser.getUid()));
     }
 
     private void initAndSetProfileData(UserProfile profile){
@@ -162,4 +169,5 @@ public class ProfileFragment extends Fragment {
         emailAddressTextView.setText(profile.getEmailAddress());
         dateJoinedTextView.setText(dateJoined);
     }
+
 }

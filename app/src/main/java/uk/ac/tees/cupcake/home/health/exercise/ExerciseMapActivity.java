@@ -8,6 +8,9 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import uk.ac.tees.cupcake.ApplicationConstants;
 import uk.ac.tees.cupcake.R;
@@ -96,7 +100,7 @@ public class ExerciseMapActivity extends AppCompatActivity implements OnMapReady
     
         userBmr = getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE).getFloat("user_bmr", 0);
     
-        startChronometer(0);
+        startCountdownAnimation();
         
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.exercise_map_map);
         mapFragment.getMapAsync(ExerciseMapActivity.this);
@@ -190,6 +194,49 @@ public class ExerciseMapActivity extends AppCompatActivity implements OnMapReady
                 .setInterval(interval)
                 .setPriority(accuracy)
                 .setSmallestDisplacement(0);
+    }
+    
+    private Animation countdownAnimation(TextView view, AtomicInteger countDown) {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(1000);
+        fadeIn.setRepeatCount(3);
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+            
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.GONE);
+                
+                View overlay = findViewById(R.id.exercise_map_countdown_overlay);
+                AlphaAnimation fadeOut = new AlphaAnimation(1, 0);
+                fadeOut.setDuration(1000);
+                fadeOut.setFillAfter(true);
+                overlay.startAnimation(fadeOut);
+                
+                startChronometer(0);
+            }
+            
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                if (countDown.get() == 1) {
+                    view.setText("Go!");
+                    
+                } else {
+                    
+                    view.setText(countDown.decrementAndGet() + "");
+                }
+            }
+        });
+        
+        return fadeIn;
+    }
+    
+    private void startCountdownAnimation() {
+        AtomicInteger countDownValue = new AtomicInteger(3);
+        TextView countDownText = findViewById(R.id.exercise_map_countdown);
+        countDownText.startAnimation(countdownAnimation(countDownText, countDownValue));
     }
     
 }

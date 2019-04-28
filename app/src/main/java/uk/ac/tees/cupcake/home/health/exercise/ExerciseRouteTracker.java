@@ -53,6 +53,11 @@ public final class ExerciseRouteTracker extends LocationCallback {
      */
     private Circle currentPosition;
     
+    /**
+     * Filters the locations to produce a smoother route.
+     */
+    private final KalmanFilter filter = new KalmanFilter();
+    
     public ExerciseRouteTracker(GoogleMap googleMap, int maxDisplacement) {
         this.googleMap = googleMap;
         this.maxDisplacement = maxDisplacement;
@@ -65,8 +70,8 @@ public final class ExerciseRouteTracker extends LocationCallback {
         if (location == null) {
             return;
         }
-        
-        LatLng coordinates = new LatLng(location.getLatitude(), location.getLongitude());
+    
+        LatLng coordinates = filter.apply(location);
         visitedCoordinates.add(coordinates);
         
         if (visitedCoordinates.size() == 1) {

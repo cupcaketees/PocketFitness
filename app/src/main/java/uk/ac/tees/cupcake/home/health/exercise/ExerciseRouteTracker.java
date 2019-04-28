@@ -128,4 +128,8 @@ public final class ExerciseRouteTracker extends LocationCallback {
         return distanceTravelled;
     }
     
+    public List<LatLng> getVisitedCoordinates() {
+        return visitedCoordinates;
+    }
+    
 }

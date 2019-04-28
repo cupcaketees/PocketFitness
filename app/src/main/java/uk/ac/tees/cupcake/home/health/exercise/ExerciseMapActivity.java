@@ -2,12 +2,16 @@ package uk.ac.tees.cupcake.home.health.exercise;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -22,13 +26,18 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import uk.ac.tees.cupcake.ApplicationConstants;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.posts.CreatePostActivity;
 import uk.ac.tees.cupcake.utils.HealthUtility;
 
 public class ExerciseMapActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -237,6 +246,45 @@ public class ExerciseMapActivity extends AppCompatActivity implements OnMapReady
         AtomicInteger countDownValue = new AtomicInteger(3);
         TextView countDownText = findViewById(R.id.exercise_map_countdown);
         countDownText.startAnimation(countdownAnimation(countDownText, countDownValue));
+    }
+    
+    /**
+     * Called upon pressing finish. Stops the timer and stops receiving location updates.
+     */
+    public void finishButtonOnClick(View view) {
+        chronometer.stop();
+        locationProviderClient.removeLocationUpdates(exerciseRouteTracker);
+        
+        LatLngBounds.Builder bldr = LatLngBounds.builder();
+        for (LatLng coordinates : exerciseRouteTracker.getVisitedCoordinates()) {
+            bldr.include(coordinates);
+        }
+        
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bldr.build(), 150));
+        
+        googleMap.setOnMapLoadedCallback(() -> googleMap.snapshot(bitmap -> {
+            
+            Intent intent = new Intent(ExerciseMapActivity.this, CreatePostActivity.class);
+            long elapsed = SystemClock.elapsedRealtime() - chronometer.getBase();
+            
+            intent.putExtra("create_post_description", "I walked "
+                    + (float) (exerciseRouteTracker.getDistanceTravelled() / 1000) + "km in "
+                    + DateUtils.formatElapsedTime(elapsed) + " and burned " + caloriesBurned);
+            
+            try {
+                File outputFile = File.createTempFile(System.nanoTime() + "", ".jpg", getCacheDir());
+                try (FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+                }
+                
+                intent.putExtra("create_post_image_uri", Uri.fromFile(outputFile).toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            startActivity(intent);
+            finish();
+        }));
     }
     
 }

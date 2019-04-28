@@ -10,11 +10,14 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
 
@@ -37,6 +40,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import uk.ac.tees.cupcake.ApplicationConstants;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.posts.CreatePostActivity;
 import uk.ac.tees.cupcake.utils.HealthUtility;
 
@@ -45,6 +49,13 @@ public class ExerciseMapActivity extends AppCompatActivity implements OnMapReady
     private static final int LOCATION_UPDATE_INTERVAL = 100;
     
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    
+    /**
+     * How long without movement to trigger warning
+     */
+    private static final int NO_MOVEMENT_TIME_THRESHOLD = 30;
+    
+    private static final int NO_MOVEMENT_DISTANCE_THRESHOLD = 5;
     
     /**
      * The {@link GoogleMap} to display route and current location.
@@ -75,6 +86,16 @@ public class ExerciseMapActivity extends AppCompatActivity implements OnMapReady
      * Chronometer used for timing the workout.
      */
     private Chronometer chronometer;
+    
+    /**
+     * Distance travelled at the last 30 second mark.
+     */
+    private float periodDistance;
+    
+    /**
+     * The timestamp at which the activity was paused.
+     */
+    private long lastPausedAt;
     
     private TextView paceTextView;
     private TextView caloriesTextView;
@@ -146,9 +167,63 @@ public class ExerciseMapActivity extends AppCompatActivity implements OnMapReady
             caloriesTextView.setText("Calories burned: " + caloriesBurned + " kcal");
         
             exerciseTextView.setText(currentExercise.getName() + " for " + distance / 1000 + "km");
+    
+            // if hasn't moved more than 5 metres in 30 seconds, ask to continue
+            if (seconds % NO_MOVEMENT_TIME_THRESHOLD == 0 && seconds > 0) {
+        
+                if ((distance - periodDistance) <= NO_MOVEMENT_DISTANCE_THRESHOLD) {
+                    pauseExercise();
+                }
+        
+                periodDistance = distance;
+            }
         });
         
         chronometer.start();
+    }
+    
+    private void pauseExercise() {
+        lastPausedAt = SystemClock.elapsedRealtime() - chronometer.getBase();
+        
+        chronometer.stop();
+        
+        locationProviderClient.flushLocations();
+        locationProviderClient.removeLocationUpdates(exerciseRouteTracker);
+    
+        showNoMovementDialog();
+    }
+    
+    private void showNoMovementDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ExerciseMapActivity.this);
+        
+        builder.setCancelable(false);
+        builder.setTitle("You haven't moved in 30 seconds!");
+        
+        View view = LayoutInflater.from(this).inflate(R.layout.exercise_map_alert_layout, null);
+        builder.setView(view);
+        
+        AlertDialog dialog = builder.create();
+        
+        TextView subtitle = view.findViewById(R.id.exercise_map_alert_subtitle);
+        subtitle.setText("Do you want to continue " + currentExercise.getName() + "?");
+        
+        Button confirm = view.findViewById(R.id.exercise_map_alert_confirm);
+        confirm.setText("Continue");
+        confirm.setOnClickListener(v -> {
+            dialog.cancel();
+            
+            requestLocationUpdates();
+            startChronometer(-(lastPausedAt + 1000));
+        });
+        
+        Button cancel = view.findViewById(R.id.exercise_map_alert_cancel);
+        cancel.setText("Cancel");
+        cancel.setOnClickListener(v -> {
+            startActivity(new Intent(ExerciseMapActivity.this, MainActivity.class));
+            finish();
+        });
+        
+        dialog.show();
     }
     
     @Override

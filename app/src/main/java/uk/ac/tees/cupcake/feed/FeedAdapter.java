@@ -103,6 +103,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
 
+        if(post.getLocationName() != null) {
+            if(!post.getLocationName().equals("")) {
+                holder.postLocationTextView.setText(post.getLocationName());
+            }
+        }
+
         if (post.getImageUrl() != null) {
             Picasso.with(holder.itemView.getContext())
                     .load(post.getImageUrl())
@@ -313,6 +319,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private TextView postProfileNameTextView;
         private TextView postLikesCountTextView;
         private TextView postLikeButtonTextView;
+        private TextView postLocationTextView;
 
         private EditText postCommentEditText;
 
@@ -323,7 +330,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         private Button postCommentButton;
         private Button submitCommentButton;
 
-
+        private ImageView postLocationImageView;
         private ImageView postImageImageView;
         private ImageView postProfilePictureImageView;
 
@@ -340,6 +347,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             postDateTextView = postView.findViewById(R.id.feed_post_time_posted_text_view);
             postLikesCountTextView = postView.findViewById(R.id.feed_post_likes_count_text_view);
             postLikeButtonTextView = postView.findViewById(R.id.feed_post_like_button_text_view);
+            postLocationTextView = postView.findViewById(R.id.locationName);
             postCommentEditText = postView.findViewById(R.id.feed_post_comment_edittext);
 
             postCommentRecyclerView = postView.findViewById(R.id.feed_post_comment_recyclerview);
@@ -347,6 +355,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             postCommentButton = postView.findViewById(R.id.feed_post_comment_button);
             submitCommentButton = postView.findViewById(R.id.feed_post_comment_area_button);
 
+            postLocationImageView = postView.findViewById(R.id.locationImage);
             postImageImageView = postView.findViewById(R.id.feed_post_image_image_view);
             postProfilePictureImageView = postView.findViewById(R.id.feed_post_profile_picture_image_view);
 

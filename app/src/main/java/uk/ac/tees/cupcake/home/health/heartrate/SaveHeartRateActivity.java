@@ -53,16 +53,6 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
      */
     private CheckableLinearViewGroup measurementTypes;
     
-    /**
-     * A linechart to graph previous measurements.
-     */
-    private LineChart graph;
-    
-    /**
-     * Stores data retrieved from the database; mapping a measurement type name to a set of data.
-     */
-    private final Map<String, List<Entry>> cachedGraphingData = new HashMap<>();
-    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.save_heart_rate_action_bar_menu, menu);
@@ -83,75 +73,16 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_save_heart_rate);
-    
-        graph = findViewById(R.id.heart_rate_chart);
-        GraphViewUtility.setupLineChart(graph);
-    
+
         TextView measurementTextView = findViewById(R.id.save_heart_rate_bpm);
         HeartRateMeasurement measurement = (HeartRateMeasurement) getIntent().getSerializableExtra("heart_rate_measurement");
         measurementTextView.setText(Integer.toString(measurement.getBpm()));
-    
+        
         measurementTypes = findViewById(R.id.measurement_types);
         Animation bounce = AnimationUtils.loadAnimation(this, R.anim.bounce_anim);
         measurementTypes.startAnimation(bounce);
-        getData().addOnCompleteListener(e -> measurementTypes.childClicked(R.id.general_measurement_type));
         measurementTypes.addOnCheckStrategy(new OneSelectedOnCheckStrategy());
-        measurementTypes.addOnCheckStrategy((id, v) -> {
-            String resourceId = getResources().getResourceName(id);
-            String typeName = resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_"));
-            applyGraphData(cachedGraphingData.get(typeName));
-        });
-    }
-    
-    /**
-     * Takes the average of the given data set and then sets the text value of the appropriate {@link TextView}.
-     */
-    private void applyGraphData(List<Entry> entries) {
-        TextView graphText = findViewById(R.id.graph_heart_rate);
-        
-        float average = 0;
-        for (int index = 0; index < entries.size(); index++) {
-            Entry e = entries.get(index);
-            average += e.getY();
-        }
-        
-        String averageValue = Integer.toString(Math.round(average / entries.size()));
-        graphText.setText(averageValue);
-    
-        GraphViewUtility.setChartData(graph, Color.RED, entries);
-        
-        Animation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setDuration(1000);
-        graph.startAnimation(fadeIn);
-    }
-    
-    /**
-     * Gets the heart rate data to plot in the graph of previous heart rate measurementTypes.
-     *
-     * @return a {@link List} of {@link Entry} to be plot in a graph.
-     */
-    private Task<QuerySnapshot> getData() {
-        return firestore.collection("UserStats")
-                .document(auth.getCurrentUser().getUid())
-                .collection("HeartRates")
-                .get()
-                .addOnSuccessListener(documentSnapshots -> {
-                    final int childCount = measurementTypes.getChildCount();
-                    for (int i = 0; i < childCount; i++) {
-                        int type = measurementTypes.getChildAt(i).getId();
-                        
-                        String resourceId = getResources().getResourceName(type);
-                        String typeName = resourceId.substring(resourceId.indexOf("/") + 1, resourceId.indexOf("_"));
-                        cachedGraphingData.put(typeName, new ArrayList<>());
-                    }
-                    
-                    List<HeartRateMeasurement> measurements = documentSnapshots.toObjects(HeartRateMeasurement.class);
-                    for (int i = 0; i < measurements.size(); i++) {
-                        List<Entry> entries = cachedGraphingData.get(measurements.get(i).getMeasurementType());
-                        entries.add(new Entry(i, measurements.get(i).getBpm()));
-                    }
-                })
-                .addOnFailureListener(e -> Toast.makeText(SaveHeartRateActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+        measurementTypes.childClicked(R.id.general_measurement_type);
     }
     
     /**
@@ -169,7 +100,7 @@ public final class SaveHeartRateActivity extends AppCompatActivity {
                 .collection("HeartRates")
                 .add(measurement)
                 .addOnSuccessListener(doc -> {
-                    IntentUtils.invokeBaseView(SaveHeartRateActivity.this, MainActivity.class);
+                    IntentUtils.invokeBaseView(SaveHeartRateActivity.this, HeartRateGeneralActivity.class);
                     finish();
                 })
                 .addOnFailureListener(doc -> Toast.makeText(SaveHeartRateActivity.this, doc.getMessage(), Toast.LENGTH_SHORT).show());

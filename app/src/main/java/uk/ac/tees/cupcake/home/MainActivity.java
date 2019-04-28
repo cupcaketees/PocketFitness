@@ -10,10 +10,10 @@ import com.ittianyu.bottomnavigationviewex.BottomNavigationViewEx;
 
 import java.util.Arrays;
 
+import uk.ac.tees.cupcake.home.health.heartrate.HeartRateGeneralActivity;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.adapters.SectionsPagerAdapter;
 import uk.ac.tees.cupcake.home.health.exercise.ExerciseSelectionActivity;
-import uk.ac.tees.cupcake.home.health.heartrate.HeartRateActivity;
 import uk.ac.tees.cupcake.navigation.NavigationBarActivity;
 import uk.ac.tees.cupcake.utils.PermissionCheck;
 import uk.ac.tees.cupcake.utils.Permissions;
@@ -96,7 +96,7 @@ public class MainActivity extends NavigationBarActivity {
     }
 
     public void goToHeartRate(View view) {
-        startActivity(new Intent(view.getContext(), HeartRateActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+        startActivity(new Intent(view.getContext(), HeartRateGeneralActivity.class));
     }
     
     public void goToExerciseSelection(View view) {

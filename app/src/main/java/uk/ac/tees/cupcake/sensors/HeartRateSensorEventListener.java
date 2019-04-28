@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.sensors;
 
+import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -139,6 +140,8 @@ public class HeartRateSensorEventListener implements SensorEventListener {
         extras.put("heart_rate_measurement", measurement);
         
         IntentUtils.invokeViewWithExtras(heartRateView.getContext(), SaveHeartRateActivity.class, extras);
+        
+        ((Activity) heartRateView.getContext()).finish();
     }
     
     /**

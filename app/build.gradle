@@ -52,7 +52,6 @@ dependencies {
     implementation 'com.github.KwabenBerko:News-API-Java:1.0.0'
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
-    implementation 'jp.wasabeef:blurry:2.1.1'
     implementation 'com.github.jorgecastilloprz:fabprogresscircle:1.01@aar'
     implementation 'com.github.bumptech.glide:glide:4.0.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0'

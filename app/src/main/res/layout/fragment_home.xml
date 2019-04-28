@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="56dp"
     android:background="#FFD0D0D0">
 
     <ScrollView
@@ -261,6 +262,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:onClick="goToExerciseSelection"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"

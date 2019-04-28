@@ -19,7 +19,7 @@ import uk.ac.tees.cupcake.utils.ColourUtility;
  */
 public class GraphViewUtility {
     
-    private static final int GRADIENT_START_ALPHA = 0x50;
+    private static final int GRADIENT_START_ALPHA = 0x90;
     
     public static void setupLineChart(LineChart chart) {
         chart.getDescription().setEnabled(false);

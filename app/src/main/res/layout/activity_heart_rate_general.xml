@@ -1,68 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/save_heart_rate_bpm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textSize="72sp"
-        app:layout_constraintBottom_toTopOf="@+id/horizontal_scroll_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/login_signup_button_text_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="60" />
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="42dp"
-        app:layout_constraintBottom_toBottomOf="@+id/save_heart_rate_bpm"
-        app:layout_constraintEnd_toEndOf="@+id/login_signup_button_text_view"
-        app:layout_constraintStart_toStartOf="@+id/login_signup_button_text_view"
-        app:srcCompat="@drawable/ic_heart" />
-
-    <TextView
-        android:id="@+id/login_signup_button_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:layout_marginStart="4dp"
-        android:text="@string/bpm_label"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="@+id/save_heart_rate_bpm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/save_heart_rate_bpm" />
+    android:layout_height="match_parent"
+    tools:context="uk.ac.tees.cupcake.home.health.heartrate.HeartRateGeneralActivity">
 
     <HorizontalScrollView
         android:id="@+id/horizontal_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="10dp"
         android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup
-            android:id="@+id/measurement_types"
+            android:id="@+id/heart_rate_general_measurement_types"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
-                android:id="@+id/general_measurement_type"
+                android:id="@+id/heart_rate_general_all_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:layout_marginStart="10dp"
+                app:label_text="All"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
+                android:id="@+id/heart_rate_general_general_measurement_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:checkable_image_src="@drawable/ic_heart_rate_general"
                 app:label_text="General"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -70,10 +43,9 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
-                android:id="@+id/resting_measurement_type"
+                android:id="@+id/heart_rate_general_resting_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 app:checkable_image_src="@drawable/ic_heart_rate_resting"
                 app:label_text="Resting"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -81,7 +53,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
-                android:id="@+id/before_exercise_measurement_type"
+                android:id="@+id/heart_rate_general_before_exercise_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:checkable_image_src="@drawable/ic_heart_rate_before_exercise"
@@ -91,7 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <uk.ac.tees.cupcake.home.health.heartrate.HeartRateTypeConstraintView
-                android:id="@+id/after_exercise_measurement_type"
+                android:id="@+id/heart_rate_general_after_exercise_measurement_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -104,5 +76,33 @@
         </uk.ac.tees.cupcake.utils.views.CheckableLinearViewGroup>
 
     </HorizontalScrollView>
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/heart_rate_general_chart"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="60dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_scroll_view" />
+
+    <Button
+        android:id="@+id/heart_rate_general_measure"
+        android:layout_width="0dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:background="@drawable/button_border"
+        android:text="Measure my heart rate"
+        android:onClick="measureOnClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heart_rate_general_chart" />
 
 </android.support.constraint.ConstraintLayout>

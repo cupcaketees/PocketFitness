@@ -37,9 +37,8 @@
 
         <service
             android:name=".home.steps.StepCounterResetJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"
-            android:enabled="true" />
-
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -47,9 +46,7 @@
 
         <activity
             android:name=".maps.UserPostLocationActivity"
-            android:label="@string/title_activity_user_post_location"
-            >
-        </activity>
+            android:label="@string/title_activity_user_post_location"></activity>
         <activity
             android:name=".maps.GymMapActivity"
             android:screenOrientation="portrait" />
@@ -114,7 +111,7 @@
         <activity
             android:name=".food.SearchFoodActivity"
             android:parentActivityName=".home.MainActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity
             android:name=".home.health.heartrate.SaveHeartRateActivity"
             android:parentActivityName=".home.MainActivity"
@@ -135,23 +132,19 @@
         <activity
             android:name=".workouts.BodybuildingArmsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity
             android:name=".workouts.BodybuildingBackActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity
             android:name=".workouts.BodybuildingChestActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity
             android:name=".workouts.BodybuildingLegsActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
-            android:theme="@style/AppTheme.BasicActionBar"/>
-
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity
             android:name=".workouts.BodybuildingShouldersActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
@@ -182,17 +175,23 @@
 
         <activity android:name=".friends.SearchFriendsActivity" />
         <activity android:name=".friends.SearchUserFriendsActivity" />
-
         <activity android:name=".account.healthstats.HealthStatsSetupActivity" />
         <activity
-            android:name=".home.health.ExerciseSelectionActivity"
+            android:name=".home.health.exercise.ExerciseSelectionActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
-
         <activity
             android:name=".posts.CreatePostActivity"
             android:parentActivityName=".workouts.BodybuildingListActivity"
             android:theme="@style/AppTheme.BasicActionBar" />
+        <activity
+            android:name=".home.health.exercise.ExerciseMapActivity"
+            android:label="@string/title_activity_exercise_map"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".home.health.heartrate.HeartRateGeneralActivity"
+            android:parentActivityName=".home.MainActivity"
+            android:theme="@style/AppTheme.BasicActionBar" />
         <activity android:name=".dietplan.DietTypeActivity" />
     </application>
+
 </manifest>

@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
 
 import uk.ac.tees.cupcake.account.SetupProfileActivity;
 import uk.ac.tees.cupcake.home.MainActivity;
@@ -48,13 +49,13 @@ public class SplashActivity extends AppCompatActivity {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
-    
+
         StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
         SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
-    
         sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
+
         scheduleStepCounterResetJob();
-        
+
         // Checks users current auth state and directs to them to appropriate activity.
         if(currentUser == null){
             // not logged in
@@ -71,17 +72,15 @@ public class SplashActivity extends AppCompatActivity {
                                      if(!documentSnapshot.exists()){
                                          // new account not setup.
                                          startActivity(new Intent(SplashActivity.this, SetupProfileActivity.class));
-                                         finish();
                                      }else {
                                          // already setup account.
                                          startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                                         finish();
                                      }
+                                     finish();
                                  }
                              });
         }
         
-        SystemClock.sleep(1000);
         Log.d(TAG, "onCreate: onEnd");
     }
     
@@ -99,7 +98,7 @@ public class SplashActivity extends AppCompatActivity {
         JobInfo.Builder builder = new JobInfo.Builder(ApplicationConstants.STEP_COUNT_RESET_STARTER_JOB_ID, componentName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_NONE)
                 .setMinimumLatency(initialDelay)
-                .setOverrideDeadline((int) (initialDelay * 1.01));
+                .setOverrideDeadline(initialDelay + TimeUnit.SECONDS.toMillis(59));
         
         jobScheduler.schedule(builder.build());
     }

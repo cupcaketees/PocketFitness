@@ -7,7 +7,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="green">#a4c639</color>
-    <color name="heart_rate_measure">#FFD21F1F</color>
+    <color name="heart_rate_measure">#FFDF0000</color>
     <color name="heart_rate_empty">#FFF0F0F0</color>
     <color name="darker_grey2">#565656</color>
 </resources>

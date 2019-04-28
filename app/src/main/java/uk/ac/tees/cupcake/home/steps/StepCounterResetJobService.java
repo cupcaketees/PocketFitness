@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import uk.ac.tees.cupcake.ApplicationConstants;
 
@@ -29,10 +30,7 @@ public class StepCounterResetJobService extends JobService {
         SharedPreferences preferences = getSharedPreferences(ApplicationConstants.PREFERENCES_NAME, Context.MODE_PRIVATE);
     
         final int steps = preferences.getInt(ApplicationConstants.STEPS_PREFERENCE_KEY, 0);
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -1);
-    
+        
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     
         if (user != null) {
@@ -40,7 +38,7 @@ public class StepCounterResetJobService extends JobService {
                     .collection("UserStats")
                     .document(user.getUid())
                     .collection("StepCounts")
-                    .add(new StepCountMeasurement(calendar.getTime(), steps))
+                    .add(new StepCountMeasurement(new Date(System.currentTimeMillis()), steps))
                     .addOnFailureListener(x -> Log.e("StepCounterResetReceive", "onReceive: Failed to add step count to database", x));
         }
     

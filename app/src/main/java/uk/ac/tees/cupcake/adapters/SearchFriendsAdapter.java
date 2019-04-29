@@ -128,8 +128,9 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         }
 
         holder.mName.setOnClickListener(v -> {
-            IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId", profile.getUid());
-
+            if(!profile.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId", profile.getUid());
+            }
         });
 
         for (UserProfile profileCheck : profiles) {

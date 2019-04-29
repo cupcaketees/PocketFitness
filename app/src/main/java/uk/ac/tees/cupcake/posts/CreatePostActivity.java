@@ -55,7 +55,7 @@ public final class CreatePostActivity extends AppCompatActivity implements Adapt
     private ImageView addLocationButton;
     private ImageView imageView;
     private String location;
-    private String privacyLevel;
+    private int privacyLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -436,11 +436,24 @@ public final class CreatePostActivity extends AppCompatActivity implements Adapt
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        privacyLevel = parent.getItemAtPosition(position).toString();
+
+        String text = parent.getItemAtPosition(position).toString();
+
+        if(text.equalsIgnoreCase("Public")){
+            privacyLevel = 2;
+        }
+
+        if(text.equalsIgnoreCase("Followers")){
+            privacyLevel = 1;
+        }
+
+        if(text.equalsIgnoreCase("Only me")){
+            privacyLevel = 0;
+        }
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        privacyLevel = "Public";
+        privacyLevel = 2;
     }
 }

@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.workouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class BodybuildingShouldersActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         workouts.add(new Workout("Smith Machine Shoulder Press", "Instructions: \n" + "Position body so bar is in front and sit in good body alignment (abs tight, chest up, back straight). Grip bar so hands remain over elbow joints during exercise. Just before execution, rotate bar to release from latch and press (palms forward) over head, with elbows bent and upper arms vertical. In a controlled motion, lower bar toward chest, bending elbows as far as possible without compromising form. Hands should be over the elbow joints. While maintaining the controlled motion, press to starting position. Do not allow muscles to relax before next repetition.",  "http://www.makeoverfitness.com/images/seated-machine-press.gif", "Difficulty: Easy"));
 

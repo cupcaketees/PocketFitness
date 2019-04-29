@@ -29,14 +29,14 @@ public class UserProfile implements Serializable {
         // required empty constructor for fire base reflection.
     }
 
-    public UserProfile(String uid, String firstName, String lastName, String profilePictureUrl, String accountCreated, String email){
+    public UserProfile(String uid, String firstName, String lastName, String profilePictureUrl, String accountCreated, String email, boolean privateProfile){
         this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
         this.profilePictureUrl = profilePictureUrl;
         this.accountCreated = accountCreated;
         this.emailAddress = email;
-        this.privateProfile = false;
+        this.privateProfile = privateProfile;
     }
 
 

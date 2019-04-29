@@ -13,7 +13,7 @@
         android:layout_height="120dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:src="@drawable/profile_picture_placeholder"
         app:civ_border_color="@color/colorPrimaryDark"
         app:civ_border_width="2dp"
@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="@string/setup_profile_first_name_edit_text_hint"
@@ -81,6 +81,7 @@
         android:textAlignment="viewStart"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setup_profile_add_photo_button" />
 
@@ -90,13 +91,14 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorPrimaryDark"
         android:ems="10"
         android:hint="@string/setup_profile_last_name_edit_text_hint"
         android:inputType="textPersonName"
         android:textColorLink="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/setup_profile_first_name_edit_text" />
 
@@ -131,5 +133,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/private_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Private Profile"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/setup_profile_last_name_edit_text"
+        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setup_profile_last_name_edit_text" />
 
 </android.support.constraint.ConstraintLayout>

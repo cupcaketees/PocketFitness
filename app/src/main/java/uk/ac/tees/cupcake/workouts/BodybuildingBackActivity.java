@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.workouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class BodybuildingBackActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         workouts.add(new Workout("Bent Over Row", "Instructions: \n" + "Grab a barbell with an overhand grip that's just beyond shoulder-width and hold it at arm's length. Stand with your feet shoulder-width apart and knees slightly bent. Bend at the hips, lowering your torso about 45 degrees, and let the bar hang straight down from your shoulders. Pull the bar up to your torso, pause, then slowly lower it.  ", "http://www.makeoverfitness.com/images/bent-over-row.gif", "Difficulty: Hard"));
 

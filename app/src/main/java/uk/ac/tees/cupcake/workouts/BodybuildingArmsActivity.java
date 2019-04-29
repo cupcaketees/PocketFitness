@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.workouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class BodybuildingArmsActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         workouts.add(new Workout("Cocentration Curl", "Instructions: \n" + "Sit down on bench and rest your right arm against your right leg, letting the weight hang down. Curl the weight up, pause, then lower. Repeat with the other arm.",  "http://www.makeoverfitness.com/images/concentration-curls.gif", "Difficulty: Medium"));
 

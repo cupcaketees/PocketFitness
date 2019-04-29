@@ -167,6 +167,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                 getDatabaseInfo("/FollowerRequests/", "/FollowingRequests/");
                                 break;
                             case "Follow":
+                                Log.d(TAG, "followButton: " + profile.isPrivateProfile());
                                 if (profile.isPrivateProfile()) {
                                     addDbInfo("/FollowerRequests/", "/FollowingRequests/", "Follow Requested");
                                     break;

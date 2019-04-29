@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_food_row_layout"
     android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp"
 
-    android:layout_height="wrap_content">
+    android:background="@android:color/darker_gray">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="15dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="5dp">
+        app:cardCornerRadius="7dp">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/search_food_row_category_value_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginStart="8dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="category_text" />
 
@@ -35,37 +34,57 @@
                 android:id="@+id/search_food_row_label_value_text_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="32dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/search_food_row_category_value_text_view"
+                android:textAlignment="center"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_food_row_category_value_text_view"
                 tools:text="label_value" />
 
             <TextView
-                android:id="@+id/seach_food_row_nutrition_label_left_text_view"
+                android:id="@+id/search_food_row_nutrition_label_left_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/search_food_row_nutrition_label_right_text_view"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/search_food_row_label_value_text_view"
                 tools:text="nutrition_left" />
 
             <TextView
-                android:id="@+id/seach_food_row_nutrition_label_right_text_view"
+                android:id="@+id/search_food_row_nutrition_label_right_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/seach_food_row_nutrition_label_left_text_view"
-                app:layout_constraintStart_toEndOf="@+id/seach_food_row_nutrition_label_left_text_view"
+                android:layout_marginEnd="8dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/search_food_row_nutrition_label_left_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/search_food_row_label_value_text_view"
                 tools:text="nutrition_right" />
+
+            <TextView
+                android:id="@+id/search_food_add_meal_button"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:drawableStart="@drawable/ic_add"
+                android:gravity="center"
+                android:padding="2dp"
+                android:text="@string/search_food_add_meal_button"
+                android:textAppearance="@android:style/TextAppearance.Material"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_food_row_nutrition_label_right_text_view" />
 
 
         </android.support.constraint.ConstraintLayout>

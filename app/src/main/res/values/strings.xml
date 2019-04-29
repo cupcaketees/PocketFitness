@@ -192,6 +192,7 @@
     <string name="title_activity_exercise_map">Start exercise</string>
     <string name="feed_fragment_filter_text_view_text">Filter Feed</string>
     <string name="feed_fragment_create_post_text_view_text">Create Post</string>
+    <string name="search_food_add_meal_button">Add to meal plan</string>
 
     <string-array name="privacyPostOptions">
         <item>Public</item>

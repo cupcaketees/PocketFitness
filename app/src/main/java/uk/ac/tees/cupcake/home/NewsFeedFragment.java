@@ -171,8 +171,6 @@ public class NewsFeedFragment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
 
-        Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
-
         if(text.equalsIgnoreCase("Public Feed")){
             getAllPublicPosts();
         }

@@ -72,8 +72,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
             super(itemView);
             mFoodLabel = itemView.findViewById(R.id.search_food_row_label_value_text_view);
             mFoodCategory = itemView.findViewById(R.id.search_food_row_category_value_text_view);
-            mFoodNutritionLeft = itemView.findViewById(R.id.seach_food_row_nutrition_label_left_text_view);
-            mFoodNutritionRight = itemView.findViewById(R.id.seach_food_row_nutrition_label_right_text_view);
+            mFoodNutritionLeft = itemView.findViewById(R.id.search_food_row_nutrition_label_left_text_view);
+            mFoodNutritionRight = itemView.findViewById(R.id.search_food_row_nutrition_label_right_text_view);
         }
     }
 }

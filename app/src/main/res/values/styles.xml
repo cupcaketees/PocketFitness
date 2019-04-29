@@ -16,8 +16,4 @@
         <item name="android:textColorSecondary">@color/grey</item> -->
     </style>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/background</item>
-    </style>
-  
 </resources>

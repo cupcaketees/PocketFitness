@@ -30,8 +30,8 @@ public class SearchFoodActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private List<Food> foods = new ArrayList<>();
+    private FoodAdapter mAdapter;
 
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_food);
@@ -44,7 +44,6 @@ public class SearchFoodActivity extends AppCompatActivity {
 
         // setup recycler view
         mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(new FoodAdapter(foods));
     }
 
     public void searchFood(View view){
@@ -61,7 +60,6 @@ public class SearchFoodActivity extends AppCompatActivity {
         try{
             String input = URLEncoder.encode(userInput, "utf-8");
 
-            //todo app key should be hidden
             String url = "https://api.edamam.com/api/food-database/parser?ingr=" + input + "&app_id=824ccde8&app_key=df089d0c12a5a75b413a7a21a0a5a9e2";
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
@@ -71,7 +69,17 @@ public class SearchFoodActivity extends AppCompatActivity {
                     Toast.makeText(SearchFoodActivity.this, "No search results found", Toast.LENGTH_SHORT).show();
                 }
 
-                mRecyclerView.setAdapter(new FoodAdapter(foods));
+                mAdapter = new FoodAdapter(foods);
+
+                mRecyclerView.setAdapter(mAdapter);
+
+                mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
+                    @Override
+                    public void onAddMealClick(int position) {
+                        //todo
+                    }
+                });
+
             }, error -> Toast.makeText(SearchFoodActivity.this, error.getMessage(), Toast.LENGTH_LONG).show());
 
             queue.add(stringRequest);

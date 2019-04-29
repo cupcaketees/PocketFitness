@@ -20,6 +20,15 @@ import uk.ac.tees.cupcake.R;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
 
     private final List<Food> foods;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener{
+        void onAddMealClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
 
     public FoodAdapter(List<Food> foods){
         this.foods = foods;
@@ -28,7 +37,7 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
     @Override
     public FoodAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_search_food_row, parent, false);
-        return new ViewHolder(v);
+        return new ViewHolder(v, mListener);
     }
 
     @Override
@@ -67,13 +76,30 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.ViewHolder> {
         private TextView mFoodCategory;
         private TextView mFoodNutritionLeft;
         private TextView mFoodNutritionRight;
+        private TextView mAddMealTextView;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
             mFoodLabel = itemView.findViewById(R.id.search_food_row_label_value_text_view);
             mFoodCategory = itemView.findViewById(R.id.search_food_row_category_value_text_view);
             mFoodNutritionLeft = itemView.findViewById(R.id.search_food_row_nutrition_label_left_text_view);
             mFoodNutritionRight = itemView.findViewById(R.id.search_food_row_nutrition_label_right_text_view);
+            mAddMealTextView = itemView.findViewById(R.id.search_food_add_meal_button);
+
+            mAddMealTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(listener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION){
+                            listener.onAddMealClick(position);
+                        }
+                    }
+
+                }
+            });
         }
+
+
     }
 }

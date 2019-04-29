@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -108,7 +109,18 @@ public class RecipeItemActivity extends AppCompatActivity {
         String timeText = recipe.getTotalTime() != 0 ? "Time " + recipe.getTotalTime() + " minutes" : "Time N/A";
         recipeTimeTextView.setText(timeText);
     }
-
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                super.onBackPressed();
+                
+                break;
+        }
+        return true;
+    }
+    
     public void browseSourceOnClick(View view){
         try{
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mUrl));

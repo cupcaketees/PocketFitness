@@ -46,11 +46,9 @@
 
             <TextView
                 android:id="@+id/feed_post_time_posted_text_view"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
                 app:layout_constraintStart_toStartOf="@+id/feed_post_username_text_view"
                 app:layout_constraintTop_toTopOf="@+id/feed_post_username_text_view"
                 tools:text="22 hours ago" />
@@ -225,26 +223,23 @@
 
             <TextView
                 android:id="@+id/locationName"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="8dp"
-                android:text="None"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toTopOf="@+id/feed_post_image_image_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/feed_post_description_text_view" />
+                android:layout_marginStart="2dp"
+                android:textAppearance="@android:style/TextAppearance.Material.Small"
+                app:layout_constraintBaseline_toBaselineOf="@+id/feed_post_time_posted_text_view"
+                app:layout_constraintEnd_toStartOf="@+id/guideline2"
+                app:layout_constraintStart_toEndOf="@+id/locationImage"
+                tools:text="Not Set" />
 
             <ImageView
                 android:id="@+id/locationImage"
                 android:layout_width="20sp"
                 android:layout_height="16sp"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/feed_post_image_image_view"
-                app:layout_constraintEnd_toStartOf="@+id/locationName"
-                app:layout_constraintTop_toBottomOf="@+id/feed_post_description_text_view"
+                android:layout_marginStart="8dp"
+                app:layout_constraintStart_toEndOf="@+id/feed_post_time_posted_text_view"
+                app:layout_constraintTop_toBottomOf="@+id/feed_post_username_text_view"
                 app:srcCompat="@drawable/ic_create_post_add_location" />
             
         </android.support.constraint.ConstraintLayout>

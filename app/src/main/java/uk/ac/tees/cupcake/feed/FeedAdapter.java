@@ -69,8 +69,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         Post post = posts.get(position);
 
         String currentUserUid = FirebaseAuth.getInstance()
-                .getCurrentUser()
-                .getUid();
+                                            .getCurrentUser()
+                                            .getUid();
 
         // Reference to current post likes collection
         CollectionReference collectionRef = FirebaseFirestore.getInstance().collection("Users/" + post.getUserUid() + "/User Posts/" + post.getPostId() + "/Likes");
@@ -83,45 +83,42 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
         // Set values
         FirebaseFirestore.getInstance()
-                .collection("Users")
-                .document(post.getUserUid())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+                         .collection("Users")
+                         .document(post.getUserUid())
+                         .get()
+                         .addOnSuccessListener(documentSnapshot -> {
+                             UserProfile profile = documentSnapshot.toObject(UserProfile.class);
 
-                    String profileName = profile.getFirstName() + " " + profile.getLastName();
-                    holder.postProfileNameTextView.setText(profileName);
+                             String profileName = profile.getFirstName() + " " + profile.getLastName();
+                             holder.postProfileNameTextView.setText(profileName);
 
-                    if (profile.getProfilePictureUrl() != null) {
-                        Picasso.with(holder.itemView.getContext())
-                                .load(profile.getProfilePictureUrl())
-                                .into(holder.postProfilePictureImageView);
-                    }
-                });
+                             if (profile.getProfilePictureUrl() != null) {
+                                 Picasso.with(holder.itemView.getContext())
+                                        .load(profile.getProfilePictureUrl())
+                                        .into(holder.postProfilePictureImageView);
+                             }
+                         });
 
         // Set values
         holder.postDescriptionTextView.setText(post.getDescription());
         holder.postDateTextView.setText(ago);
 
-        if(post.getLocationName() != null) {
-            if(!post.getLocationName().equals("")) {
-                holder.postLocationTextView.setText(post.getLocationName());
-            }
-        }
+        String locationText = post.getLocationName().isEmpty() ? "Not Set" : post.getLocationName();
+        holder.postLocationTextView.setText(locationText);
 
         if (post.getImageUrl() != null) {
             Picasso.with(holder.itemView.getContext())
-                    .load(post.getImageUrl())
-                    .into(holder.postImageImageView);
+                   .load(post.getImageUrl())
+                   .into(holder.postImageImageView);
         }
 
         // Set like button to correct value
         collectionRef.document(currentUserUid)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    boolean value = documentSnapshot.exists();
-                    holder.postLikeButton.setLiked(value);
-                });
+                     .get()
+                     .addOnSuccessListener(documentSnapshot -> {
+                         boolean value = documentSnapshot.exists();
+                         holder.postLikeButton.setLiked(value);
+                     });
 
 
         holder.postLikeButton.setOnLikeListener(new OnLikeListener() {
@@ -132,31 +129,31 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                 likeTimeStamp.put("timestamp", FieldValue.serverTimestamp());
 
                 collectionRef.document(currentUserUid)
-                        .set(likeTimeStamp)
-                        .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
-            }
+                             .set(likeTimeStamp)
+                             .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You liked the post", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+                }
 
             @Override
             public void unLiked(LikeButton likeButton) {
                 // Deletes document removing like
                 collectionRef.document(currentUserUid)
-                        .delete()
-                        .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
+                             .delete()
+                             .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "You removed your like", Toast.LENGTH_SHORT).show())
+                             .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
 
         // Updates Like button Text
         collectionRef.document(currentUserUid)
-                .addSnapshotListener((documentSnapshot, e) -> {
-                    if (documentSnapshot == null) {
-                        return;
-                    }
+                     .addSnapshotListener((documentSnapshot, e) -> {
+                         if (documentSnapshot == null) {
+                             return;
+                         }
 
-                    String likeValue = documentSnapshot.exists() ? "Unlike" : "Like";
-                    holder.postLikeButtonTextView.setText(likeValue);
-                });
+                         String likeValue = documentSnapshot.exists() ? "Unlike" : "Like";
+                        holder.postLikeButtonTextView.setText(likeValue);
+                     });
 
         // Gets total amount of likes
         collectionRef.addSnapshotListener((documentSnapshots, e) -> {
@@ -215,13 +212,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
         TreeMap<Date, Comments> allPosts = new TreeMap<>();
         ArrayList<Comments> mPosts = new ArrayList<>();
 
-
         holder.postCommentButton.setOnClickListener(v -> {
             if (holder.submitCommentButton.getVisibility() == View.GONE) {
                 holder.submitCommentButton.setVisibility(View.VISIBLE);
                 holder.postCommentRecyclerView.setVisibility(View.VISIBLE);
                 holder.postCommentEditText.setVisibility(View.VISIBLE);
-
 
                 // Initialise
                 RecyclerView recyclerView = holder.postCommentRecyclerView;
@@ -233,8 +228,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
                 commentAdapter = new CommentAdapter(mPosts);
                 recyclerView.setAdapter(commentAdapter);
-
-
 
                 collectionRefComment
                         .get()
@@ -253,15 +246,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                             commentAdapter.notifyDataSetChanged();
                         });
 
-
-
             } else {
                 holder.submitCommentButton.setVisibility(View.GONE);
                 holder.postCommentRecyclerView.setVisibility(View.GONE);
                 holder.postCommentEditText.setVisibility(View.GONE);
             }
         });
-
 
         holder.submitCommentButton.setOnClickListener(v -> {
             if (!holder.postCommentEditText.getText().toString().isEmpty()) {

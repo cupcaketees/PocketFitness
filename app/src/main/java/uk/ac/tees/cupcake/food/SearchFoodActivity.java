@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.food;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,10 +15,17 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.mealplan.Meal;
+import uk.ac.tees.cupcake.mealplan.MealPlanner;
+
 import java.util.List;
 
 /**
@@ -76,7 +84,24 @@ public class SearchFoodActivity extends AppCompatActivity {
                 mAdapter.setOnItemClickListener(new FoodAdapter.OnItemClickListener() {
                     @Override
                     public void onAddMealClick(int position) {
-                        //todo
+
+                        String currentUserUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                        String name = foods.get(position).getLabel();
+                        Double kcal = foods.get(position).getNutritionalValues().get("ENERC_KCAL");
+
+                        Meal meal = new Meal(name, kcal);
+
+                        DocumentReference ref = FirebaseFirestore.getInstance().collection("Users/" + currentUserUid + "/Meal Planner/").document();
+
+                        meal.setId(ref.getId());
+
+                        ref.set(meal).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(SearchFoodActivity.this, "Meal added", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
 

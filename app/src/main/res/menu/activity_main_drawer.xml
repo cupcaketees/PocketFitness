@@ -46,6 +46,11 @@
         <item android:id="@+id/nav_localGyms"
             android:icon="@drawable/ic_add_location_black_24dp"
             android:title="Local Gyms"/>
+
+        <item android:id="@+id/nav_foodPlanner"
+            android:icon="@drawable/ic_add_location_black_24dp"
+            android:title="Meal Tracker"/>
+
     </group>
   
     <item android:title="@string/navbar_item_communicate_text">

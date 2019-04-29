@@ -19,8 +19,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.github.jorgecastilloprz.FABProgressCircle;
@@ -38,7 +41,7 @@ import uk.ac.tees.cupcake.home.MainActivity;
 import uk.ac.tees.cupcake.maps.UserPostLocationActivity;
 import uk.ac.tees.cupcake.utils.FirebaseStorageImageUtils;
 
-public final class CreatePostActivity extends AppCompatActivity {
+public final class CreatePostActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     
     private FirebaseUser currentUser;
     
@@ -52,6 +55,8 @@ public final class CreatePostActivity extends AppCompatActivity {
     private ImageView addLocationButton;
     private ImageView imageView;
     private String location;
+    private String privacyLevel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +81,7 @@ public final class CreatePostActivity extends AppCompatActivity {
             intent.putExtra("index", 1);
             startActivity(intent);
         });
-    
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             String uriString = bundle.getString("create_post_image_uri");
@@ -93,6 +98,12 @@ public final class CreatePostActivity extends AppCompatActivity {
                 editText.setText(description);
             }
         }
+
+        Spinner privacySettingsSpinner = findViewById(R.id.privacy_setting_spinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.privacyPostOptions, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        privacySettingsSpinner.setAdapter(adapter);
+        privacySettingsSpinner.setOnItemSelectedListener(this);
     }
     
     private void displayImage() {
@@ -140,7 +151,7 @@ public final class CreatePostActivity extends AppCompatActivity {
     public void postButtonOnClick(View view) {
         fabProgressCircle.show();
 
-        Post post = new Post(currentUser.getUid(), editText.getText().toString(),location);
+        Post post = new Post(currentUser.getUid(), editText.getText().toString(),location,privacyLevel);
     
         if (localImageUri != null) {
             String uriString = localImageUri.toString();
@@ -179,6 +190,7 @@ public final class CreatePostActivity extends AppCompatActivity {
                     startActivity(intent);
                 })
                 .addOnFailureListener(e -> Toast.makeText(CreatePostActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+
     }
     
     /**
@@ -421,5 +433,14 @@ public final class CreatePostActivity extends AppCompatActivity {
             currentAnimator = set1;
         });
     }
-    
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        privacyLevel = parent.getItemAtPosition(position).toString();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        privacyLevel = "Public";
+    }
 }

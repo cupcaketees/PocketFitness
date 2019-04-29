@@ -18,14 +18,21 @@ public class Post  {
 
     private String locationName;
 
+    private String privacyLevel;
+
     public Post() {
         // required empty constructor for fire base reflection.
     }
 
-    public Post(String userUid, String description, String locationName){
+    public Post(String userUid, String description, String locationName, String privacyLevel){
         this.userUid = userUid;
         this.description = description;
         this.locationName = locationName;
+        this.privacyLevel = privacyLevel;
+    }
+
+    public String getPrivacyLevel() {
+        return privacyLevel;
     }
 
     public String getUserUid() {

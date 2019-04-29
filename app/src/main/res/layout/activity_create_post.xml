@@ -31,6 +31,15 @@
                 android:clipChildren="false"
                 android:clipToPadding="false">
 
+                <Spinner
+                    android:id="@+id/privacy_setting_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/create_post_add_image"
+                    app:layout_constraintTop_toTopOf="@+id/create_post_add_image" />
+
                 <EditText
                     android:id="@+id/create_post_edit_text"
                     android:layout_width="match_parent"
@@ -168,8 +177,10 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -191,4 +191,11 @@
     <string name="navbar_item_search_friends">Find Friends</string>
     <string name="title_activity_exercise_map">Start exercise</string>
 
+
+    <string-array name="privacyPostOptions">
+        <item>Public</item>
+        <item>Followers</item>
+        <item>Only me</item>
+    </string-array>
+
 </resources>

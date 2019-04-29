@@ -6,6 +6,7 @@ android {
         applicationId "uk.ac.tees.cupcake"
         minSdkVersion 21
         targetSdkVersion 26
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -39,7 +40,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:11.8.0'
     implementation 'com.google.firebase:firebase-core:11.8.0'
     implementation 'com.google.android.exoplayer:exoplayer:r2.5.1'
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'q.rorbin:badgeview:1.1.0'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0-alpha'

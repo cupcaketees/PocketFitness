@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/feed_recycler_view"
@@ -12,6 +14,35 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feed_fragment_create_post_text_view">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Spinner
+        android:id="@+id/feed_fragment_filter_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:dropDownVerticalOffset="28dp"
+        android:dropDownWidth="match_parent"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/feed_fragment_create_post_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:drawableStart="@drawable/ic_add"
+        android:gravity="center"
+        android:padding="2dp"
+        android:text="@string/feed_fragment_create_post_text_view_text"
+        android:textAppearance="@android:style/TextAppearance.Material"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Create Post" />
 
 </android.support.constraint.ConstraintLayout>

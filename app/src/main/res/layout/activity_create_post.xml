@@ -37,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:dropDownVerticalOffset="28dp"
                     app:layout_constraintStart_toEndOf="@+id/create_post_add_image"
                     app:layout_constraintTop_toTopOf="@+id/create_post_add_image" />
 

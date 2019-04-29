@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,6 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,12 +30,16 @@ import java.util.Comparator;
 import uk.ac.tees.cupcake.R;
 import uk.ac.tees.cupcake.feed.FeedAdapter;
 import uk.ac.tees.cupcake.feed.Post;
+import uk.ac.tees.cupcake.posts.CreatePostActivity;
 
-public class NewsFeedFragment extends Fragment {
+public class NewsFeedFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private FeedAdapter mFeedAdapter;
     private CollectionReference collectionReference;
     private ArrayList<Post> mPosts = new ArrayList<>();
+
+    private TextView createPostTextView;
+    private Spinner feedFilterSpinner;
 
     @Nullable
     @Override
@@ -39,6 +49,21 @@ public class NewsFeedFragment extends Fragment {
         // Initialise
         RecyclerView recyclerView = view.findViewById(R.id.feed_recycler_view);
         collectionReference = FirebaseFirestore.getInstance().collection("Users");
+        feedFilterSpinner = view.findViewById(R.id.feed_fragment_filter_spinner);
+        createPostTextView = view.findViewById(R.id.feed_fragment_create_post_text_view);
+
+        // setup spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),R.array.feedFilter, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        feedFilterSpinner.setAdapter(adapter);
+        feedFilterSpinner.setOnItemSelectedListener(this);
+
+        createPostTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), CreatePostActivity.class));
+            }
+        });
 
         //Layout
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -48,10 +73,6 @@ public class NewsFeedFragment extends Fragment {
 
         mFeedAdapter = new FeedAdapter(mPosts);
         recyclerView.setAdapter(mFeedAdapter);
-
-        //getAllPublicPosts();
-
-        getFollowersOnlyPosts();
 
         return view;
     }
@@ -102,7 +123,7 @@ public class NewsFeedFragment extends Fragment {
      */
     private void getFollowersOnlyPosts(){
 
-        //mPosts.clear();
+        mPosts.clear();
         String currentUserUid = FirebaseAuth.getInstance()
                                             .getCurrentUser()
                                             .getUid();
@@ -146,4 +167,23 @@ public class NewsFeedFragment extends Fragment {
 
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String text = parent.getItemAtPosition(position).toString();
+
+        Toast.makeText(getContext(), "hello", Toast.LENGTH_SHORT).show();
+
+        if(text.equalsIgnoreCase("Public Feed")){
+            getAllPublicPosts();
+        }
+
+        if(text.equalsIgnoreCase("Following Feed")){
+            getFollowersOnlyPosts();
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

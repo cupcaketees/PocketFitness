@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -96,9 +97,10 @@ public class SetupProfileActivity extends AppCompatActivity {
     public void nextOnClick(View view) {
         EditText firstName = findViewById(R.id.setup_profile_first_name_edit_text);
         EditText lastName = findViewById(R.id.setup_profile_last_name_edit_text);
-
+        CheckBox privateAccount = findViewById(R.id.private_profile);
         String firstNameUserInput = firstName.getText().toString().trim();
         String lastNameUserInput = lastName.getText().toString().trim();
+        boolean isPrivateProfile = privateAccount.isChecked();
 
         String result = validateUserInput(firstNameUserInput, lastNameUserInput);
 
@@ -109,7 +111,7 @@ public class SetupProfileActivity extends AppCompatActivity {
 
         String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(Calendar.getInstance().getTime());
 
-        UserProfile profile = new UserProfile(mAuth.getCurrentUser().getUid(), firstNameUserInput, lastNameUserInput, mProfileImageUrl, date, mAuth.getCurrentUser().getEmail());
+        UserProfile profile = new UserProfile(mAuth.getCurrentUser().getUid(), firstNameUserInput, lastNameUserInput, mProfileImageUrl, date, mAuth.getCurrentUser().getEmail(),isPrivateProfile);
 
         startActivity(new Intent(SetupProfileActivity.this, HealthStatsSetupActivity.class)
                 .putExtra("user_profile", profile));

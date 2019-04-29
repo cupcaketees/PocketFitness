@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -46,15 +47,19 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: onStart");
         super.onCreate(savedInstanceState);
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
-
+        setContentView(R.layout.activity_splashscreen);
         StepCounterSensorListener eventListener = new StepCounterSensorListener(getApplicationContext());
         SensorAdapter sensorAdapter = new SensorAdapter(getApplicationContext());
         sensorAdapter.addSensorWithListener(Sensor.TYPE_STEP_COUNTER, SensorManager.SENSOR_DELAY_NORMAL, eventListener);
 
+
         scheduleStepCounterResetJob();
+        (new Handler()).postDelayed(this::checkLoggedIn, 2000);
+    }
+
+    private void checkLoggedIn() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
 
         // Checks users current auth state and directs to them to appropriate activity.
         if(currentUser == null){
@@ -63,25 +68,25 @@ public class SplashActivity extends AppCompatActivity {
             finish();
         }else{
             FirebaseFirestore.getInstance()
-                             .collection("Users")
-                             .document(currentUser.getUid())
-                             .get()
-                             .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                 @Override
-                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                     if(!documentSnapshot.exists()){
-                                         // new account not setup.
-                                         startActivity(new Intent(SplashActivity.this, SetupProfileActivity.class));
-                                     }else {
-                                         // already setup account.
-                                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                                     }
-                                     finish();
-                                 }
-                             });
+                    .collection("Users")
+                    .document(currentUser.getUid())
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(!documentSnapshot.exists()){
+                                // new account not setup.
+
+                                startActivity(new Intent(SplashActivity.this, SetupProfileActivity.class));
+                            }else {
+                                // already setup account.
+                                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                            }
+                            finish();
+                        }
+                    });
         }
-        
-        Log.d(TAG, "onCreate: onEnd");
+
     }
     
     private void scheduleStepCounterResetJob() {

@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.workouts;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -27,6 +28,7 @@ public class BodybuildingListActivity extends NavigationBarActivity {
         setTitle("Bodybuilding Workouts");
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         bodyparts.add(new Bodypart("Arm Workouts", "Biceps: This large muscle of the upper arm is formally known as the biceps brachii muscle, and rests on top of the humerus bone. It rotates the forearm and also flexes the elbow.\n"+ "Triceps: This large muscle in the back of the upper arm helps straighten the arm. It is formally known as the triceps brachii muscle.", R.drawable.arms, BodybuildingArmsActivity.class));
 

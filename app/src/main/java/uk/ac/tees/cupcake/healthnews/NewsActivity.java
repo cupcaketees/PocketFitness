@@ -1,5 +1,6 @@
 package uk.ac.tees.cupcake.healthnews;
 
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,6 +83,8 @@ public class NewsActivity extends NavigationBarActivity {
 
                             RecyclerView newsRecycler = findViewById(R.id.news_articles_list);
                             Log.d(TAG, "setup: " + newsArticles.size());
+                            ViewCompat.setNestedScrollingEnabled(newsRecycler, false);
+
                             newsRecycler.setHasFixedSize(true);
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                             RecyclerView.Adapter adapter = new NewsAdapter(newsArticles, getApplicationContext());

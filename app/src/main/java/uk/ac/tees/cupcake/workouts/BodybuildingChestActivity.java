@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.workouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class BodybuildingChestActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         workouts.add(new Workout("Barbell Bench Press", "Instructions: \n" + "Lie back on a flat bench holding a barbell in the rack above you with a shoulder-width, overhand grip. Lift the bar off the rack and position it above your chest with arms fully extended. From the starting position, breathe in and lower the bar slowly until it skims the middle of your chest.", "http://www.makeoverfitness.com/images/flat-bench-press.gif", "Difficulty: Hard"));
 

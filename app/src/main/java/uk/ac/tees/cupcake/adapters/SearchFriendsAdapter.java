@@ -87,11 +87,6 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
     public void onBindViewHolder(ViewHolder holder, int position) {
         UserProfile profile = profiles.get(position);
 
-        if(profile.getUid().equals(FirebaseAuth.getInstance().getUid())) {
-            holder.itemView.setVisibility(View.GONE);
-
-        }
-
         String name = profile.getFirstName() + " " + profile.getLastName();
         holder.mName.setText(name);
         if (searchLocation.equals("FollowerRequests")) {
@@ -133,8 +128,9 @@ public class SearchFriendsAdapter extends RecyclerView.Adapter<SearchFriendsAdap
         }
 
         holder.mName.setOnClickListener(v -> {
-            IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId", profile.getUid());
-
+            if(!profile.getUid().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+                IntentUtils.invokeVideoView(v.getContext(), ViewProfileActivity.class, "profileId", profile.getUid());
+            }
         });
 
         for (UserProfile profileCheck : profiles) {

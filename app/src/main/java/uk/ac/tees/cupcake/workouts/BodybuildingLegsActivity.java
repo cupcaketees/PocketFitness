@@ -2,6 +2,7 @@ package uk.ac.tees.cupcake.workouts;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,6 +27,7 @@ public class BodybuildingLegsActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.bodyparts_view);
         ArrayList<Workout> workouts = new ArrayList<>();
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
 
         workouts.add(new Workout("Leg Press", "Instructions: \n" + "In the leg press machine position your feet shoulder-width apart on the platform and raise until your legs are outstretched without locking your knees. Slowly lower the platform until your knees are at 90 degrees to the floor, then push back to the start position through your heels.", "http://www.makeoverfitness.com/images/stories/curvy-women-leg-exercises.gif", "Difficulty: Easy"));
 

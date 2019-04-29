@@ -1,7 +1,10 @@
 package uk.ac.tees.cupcake.account;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -11,15 +14,22 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.ac.tees.cupcake.R;
+import uk.ac.tees.cupcake.adapters.ProfileAdapter;
+import uk.ac.tees.cupcake.feed.Post;
 import uk.ac.tees.cupcake.friends.SearchUserFriendsActivity;
 import uk.ac.tees.cupcake.utils.IntentUtils;
 
@@ -50,6 +60,8 @@ public class ViewProfileActivity extends AppCompatActivity {
         }
 
         mFollowButton.setOnClickListener(v -> followButton());
+
+        addPosts();
     }
 
 
@@ -167,6 +179,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                 getDatabaseInfo("/FollowerRequests/", "/FollowingRequests/");
                                 break;
                             case "Follow":
+                                Log.d(TAG, "followButton: " + profile.isPrivateProfile());
                                 if (profile.isPrivateProfile()) {
                                     addDbInfo("/FollowerRequests/", "/FollowingRequests/", "Follow Requested");
                                     break;
@@ -220,7 +233,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                 .set(followTimeStamp)
                                 .addOnSuccessListener(aVoid -> {
                                     Log.d(TAG, "addDbInfo: hello world");
-                                    Toast.makeText(ViewProfileActivity.this, "Request has been sent", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(ViewProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                                     collectionReference.document(mCurrentUser.getUid() + followingType + mProfilePageUid)
                                             .set(followTimeStamp);
 
@@ -231,6 +244,32 @@ public class ViewProfileActivity extends AppCompatActivity {
                 });
     }
 
+
+    private void addPosts() {
+        RecyclerView recyclerView = findViewById(R.id.my_profile_recycler_view);
+        recyclerView.setHasFixedSize(true);
+        ViewCompat.setNestedScrollingEnabled(recyclerView, false);
+
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        List<Post> posts = new ArrayList<>();
+        TreeMap<Date, Post> allPosts = new TreeMap<>();
+        ProfileAdapter feedAdapter = new ProfileAdapter(posts);
+        recyclerView.setAdapter(feedAdapter);
+
+        FirebaseFirestore.getInstance().collection("Users/").document(mProfilePageUid).collection("User Posts")
+                .get()
+                .addOnSuccessListener(documentSnapshots -> {
+                    for(DocumentSnapshot documentSnapshot : documentSnapshots){
+                        Post currentItem = documentSnapshot.toObject(Post.class);
+                        allPosts.put(currentItem.getTimeStamp(),currentItem);
+                    }
+                    posts.clear();
+                    posts.addAll(allPosts.descendingMap().values());
+                    feedAdapter.notifyDataSetChanged();
+
+                });
+    }
 
     private void initAndSetProfileValues(UserProfile profile) {
         // Initialise

@@ -54,14 +54,14 @@ public class SplashActivity extends AppCompatActivity {
 
 
         scheduleStepCounterResetJob();
-        // Checks users current auth state and directs to them to appropriate activity.
-        (new Handler()).postDelayed(this::checkLoggedIn, 1000);
+        (new Handler()).postDelayed(this::checkLoggedIn, 2000);
     }
 
     private void checkLoggedIn() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
 
+        // Checks users current auth state and directs to them to appropriate activity.
         if(currentUser == null){
             // not logged in
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));

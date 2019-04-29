@@ -5,41 +5,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_attempt"
-   >
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/splash_bg"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/splash_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_pocket_fitness_logo2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/splash_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="256dp"
         android:text="Pocket Fitness"
         android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="54dp"
+        android:textColor="@color/darker_grey2"
+        android:textStyle="bold"
+        android:textSize="54sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_image" />
 
     <com.github.ybq.android.spinkit.SpinKitView xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/spin_kit"
+        android:id="@+id/splash_loading_bar"
         style="@style/SpinKitView.Large.FadingCircle"
-        android:layout_width="134dp"
-        android:layout_height="125dp"
+        android:layout_width="135dp"
+        android:layout_height="129dp"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        app:SpinKit_Color="@color/white"
+        app:SpinKit_Color="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.314" />
+        app:layout_constraintTop_toBottomOf="@+id/splash_title"
+        app:layout_constraintVertical_bias="0.556" />
 
 </android.support.constraint.ConstraintLayout>

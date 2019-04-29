@@ -113,6 +113,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
             Picasso.with(holder.itemView.getContext())
                     .load(post.getImageUrl())
                     .into(holder.postImageImageView);
+        } else{
+            ViewGroup.LayoutParams params = holder.postImageImageView.getLayoutParams();
+            params.height = 0;
+            holder.postImageImageView.setLayoutParams(params);
         }
 
         // Set like button to correct value

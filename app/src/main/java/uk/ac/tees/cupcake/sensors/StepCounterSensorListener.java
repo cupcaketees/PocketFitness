@@ -68,7 +68,7 @@ public class StepCounterSensorListener implements SensorEventListener {
                     lastEventCount = 0;
                 }
 
-                preferences.edit().putInt("steps_time", storedTime + time).apply();
+                preferences.edit().putInt("steps_time", referenceTime > 0 ? storedTime + time : 0).apply();
             } else {
                 lastEventCount = delta;
             }

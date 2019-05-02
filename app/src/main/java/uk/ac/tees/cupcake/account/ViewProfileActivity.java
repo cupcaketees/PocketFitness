@@ -117,49 +117,31 @@ public class ViewProfileActivity extends AppCompatActivity {
                                     .addOnSuccessListener(documentSnapshotE -> {
                                         if (documentSnapshotE.exists()) {
                                             mFollowButton.setText("Follow Requested");
+                                        } else {
+                                            checkFollowing();
                                         }
                                     });
                         } else {
-                            collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
-                                    .get()
-                                    .addOnSuccessListener(documentSnapshotE -> {
-                                        if (documentSnapshotE.exists()) {
-                                            mFollowButton.setText(documentSnapshotE.exists() ? "Unfollow" : "Follow");
-                                        }
-                                    });
+                            checkFollowing();
                         }
 
                     }
                 });
 
-        FirebaseFirestore.getInstance().collection("Users")
-                .document(mProfilePageUid)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        UserProfile currentProfile = documentSnapshot.toObject(UserProfile.class);
-                        collectionReference.document(mProfilePageUid + "/FollowerRequests/" + mCurrentUser.getUid())
-                                .get()
-                                .addOnSuccessListener(d -> {
-                                    if (d.exists()) {
-                                        mFollowButton.setText("Follow Requested");
-                                    }
-                                });
-
-                        collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
-                                .get()
-                                .addOnSuccessListener(documentSnapshotE -> {
-                                    if (documentSnapshotE.exists()) {
-                                        mFollowButton.setText("Following");
-                                    } else {
-                                        mFollowButton.setText("Follow");
-                                    }
-                                });
-                    }
-                });
-
         followerCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(ViewProfileActivity.this, SearchUserFriendsActivity.class, "Followers", followerCountTextView.getText().toString(), "Following", followingCountTextView.getText().toString(), "intent", "1", "id", mProfilePageUid));
         followingCountTextView.setOnClickListener(v -> IntentUtils.invokeFollowers(ViewProfileActivity.this, SearchUserFriendsActivity.class, "Followers", followerCountTextView.getText().toString(), "Following", followingCountTextView.getText().toString(), "intent", "0", "id", mProfilePageUid));
+    }
+
+    private void checkFollowing() {
+        collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
+                .get()
+                .addOnSuccessListener(documentSnapshotT -> {
+                    if (documentSnapshotT.exists()) {
+                        mFollowButton.setText("Following");
+                    } else {
+                        mFollowButton.setText("Follow");
+                    }
+                });
     }
 
     private void followButton() {

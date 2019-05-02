@@ -34,7 +34,7 @@ public class SearchFriendsActivity extends NavigationBarActivity {
 
     @Override
     public void setup() {
-        setTitle("Find Friends");
+        setTitle("Search Friends");
         initialiseRecyclerView();
     }
 

@@ -53,7 +53,7 @@
 
     <string name="profile_followers_count_temp_value_text_view_text">99</string>
     <string name="profile_following_count_temp_value_text_view_text">99</string>
-    <string name="profile_bio_temp_value_text_view_text">Wubba lubba dub dub friends!</string>
+    <string name="profile_bio_temp_value_text_view_text">I love Pocket Fitness!</string>
     <string name="profile_edit_profile_button_text">Edit Profile</string>
     <string name="profile_basic_info_header_text_view_text">Basic Info</string>
 
@@ -72,7 +72,7 @@
 
     <string name="save_text">Save</string>
 
-    <string name="search_food_search_edit_text_hint">e.g. sausage, cheese, egg</string>
+    <string name="search_food_search_edit_text_hint">e.g. Coffee, Salad, Hot Dog</string>
 
     <string name="home_steps_label_text">steps</string>
     <string name="home_steps_distance_label_text">km</string>
@@ -128,7 +128,7 @@
     <string name="refine_search_health_kosher_check_box_text">Kosher</string>
 
     <string name="navbar_item_search_recipe_text">Search Recipes</string>
-    <string name="navbar_item_search_food_text">Search Food</string>
+    <string name="navbar_item_search_food_text">Search Food &amp; Drink</string>
     <string name="navbar_item_30_day_diet_text">Diet Plans</string>
     <string name="navbar_item_posts_text">Posts</string>
     <string name="navbar_item_home_text">Home</string>

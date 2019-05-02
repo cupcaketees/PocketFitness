@@ -43,7 +43,7 @@ public class SearchFoodActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_food);
-        setTitle("SearchFood");
+        setTitle("Search Food & Drink");
 
         mRecyclerView = findViewById(R.id.search_food_recycler_view);
 

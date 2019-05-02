@@ -61,7 +61,26 @@ public class ViewProfileActivity extends AppCompatActivity {
 
         mFollowButton.setOnClickListener(v -> followButton());
 
-        addPosts();
+        FirebaseFirestore.getInstance().collection("Users")
+                .document(mProfilePageUid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                            if (documentSnapshot.exists()) {
+                                UserProfile profile = documentSnapshot.toObject(UserProfile.class);
+                                if (profile.isPrivateProfile()) {
+                                    collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
+                                            .get()
+                                            .addOnSuccessListener(documentSnapshotT -> {
+                                                if (documentSnapshotT.exists()) {
+                                                    addPosts();
+                                                }
+                                            });
+                                } else {
+                                    addPosts();
+                                }
+                            }
+                        });
+
     }
 
 

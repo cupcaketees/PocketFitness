@@ -120,6 +120,7 @@ public class ViewProfileActivity extends AppCompatActivity {
                                         }
                                     });
                         } else {
+
                             collectionReference.document(mProfilePageUid + "/Followers/" + mCurrentUser.getUid())
                                     .get()
                                     .addOnSuccessListener(documentSnapshotE -> {

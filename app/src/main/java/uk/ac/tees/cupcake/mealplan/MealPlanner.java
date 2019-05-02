@@ -78,6 +78,7 @@ public class MealPlanner extends AppCompatActivity {
             }
 
         });
+
     }
 
     private void totalCalories(){
@@ -88,7 +89,7 @@ public class MealPlanner extends AppCompatActivity {
         }
 
         TextView totalCalories = findViewById(R.id.mt_total_calories_text_view);
-        totalCalories.setText("Total calories = " + caloriesTotal);
+        totalCalories.setText("Total calories = " + (int) caloriesTotal + " kcal");
 
     }
 
@@ -110,9 +111,10 @@ public class MealPlanner extends AppCompatActivity {
 
                     switch(dc.getType()){
                         case ADDED:
+
                             meals.add(meal);
-                            mAdapter.notifyItemInserted(dc.getNewIndex());
                             mAdapter.notifyItemRangeInserted(dc.getNewIndex(), meals.size());
+
                             totalCalories();
                             break;
 

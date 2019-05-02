@@ -4,66 +4,98 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home"
             android:title="@string/navbar_item_home_text" />
-        <item
-            android:id="@+id/nav_post"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/navbar_item_posts_text" />
-        <item
-            android:id="@+id/nav_30diet"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/navbar_item_30_day_diet_text" />
-        <item
-            android:id="@+id/nav_search_food"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/navbar_item_search_food_text" />
-        <item
-            android:id="@+id/nav_search_friends"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/navbar_item_search_friends" />
-        <item
-            android:id="@+id/nav_search_recipe"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/navbar_item_search_recipe_text" />
-        <item
-            android:id="@+id/nav_workout_videos"
-            android:icon="@drawable/ic_workout_videos"
-            android:title="@string/navbar_item_workout_videos_text" />
 
-        <item
-            android:id="@+id/news_list_view"
-            android:icon="@drawable/ic_workout_videos"
-            android:title="@string/navbar_item_news_articles_text" />
-
-        <item
-            android:id="@+id/nav_bodybuilding"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/navbar_item_body_building_text" />
-
-        <item android:id="@+id/nav_localGyms"
-            android:icon="@drawable/ic_add_location_black_24dp"
-            android:title="Local Gyms"/>
-
-        <item android:id="@+id/nav_foodPlanner"
-            android:icon="@drawable/ic_add_location_black_24dp"
-            android:title="Meal Tracker"/>
-
-    </group>
-  
-    <item android:title="@string/navbar_item_communicate_text">
+    <item android:title="Social">
         <menu>
+
             <item
-                android:id="@+id/nav_settings"
-                android:icon="@drawable/ic_nav_settings"
-                android:title="@string/navbar_item_settings_text"/>
+                android:id="@+id/nav_post"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="@string/navbar_item_posts_text" />
+
             <item
-                android:id="@+id/nav_signout"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/navbar_item_log_out_text" />
+                android:id="@+id/nav_search_friends"
+                android:icon="@drawable/ic_search_friends"
+                android:title="@string/navbar_item_search_friends" />>
         </menu>
     </item>
+
+
+        <item android:title="Nutrition">
+            <menu>
+
+
+                <item
+                    android:id="@+id/nav_search_food"
+                    android:icon="@drawable/ic_diets"
+                    android:title="@string/navbar_item_search_food_text" />
+
+                <item
+                    android:id="@+id/nav_search_recipe"
+                    android:icon="@drawable/ic_grocery"
+                    android:title="@string/navbar_item_search_recipe_text" />
+
+                <item
+                    android:id="@+id/nav_30diet"
+                    android:icon="@drawable/ic_calander"
+                    android:title="@string/navbar_item_30_day_diet_text" />
+
+                <item android:id="@+id/nav_foodPlanner"
+                    android:icon="@drawable/ic_calander"
+                    android:title="Meal Tracker"/>
+
+            </menu>
+        </item>
+
+        <item android:title="Fitness">
+            <menu>
+
+                <item
+                    android:id="@+id/nav_workout_videos"
+                    android:icon="@drawable/ic_workout_videos"
+                    android:title="@string/navbar_item_workout_videos_text" />
+
+
+                <item
+                    android:id="@+id/nav_bodybuilding"
+                    android:icon="@drawable/ic_fitness"
+                    android:title="@string/navbar_item_body_building_text" />
+
+
+                <item android:id="@+id/nav_localGyms"
+                    android:icon="@drawable/ic_add_location_black_24dp"
+                    android:title="Local Gyms"/>
+
+                <item
+                    android:id="@+id/news_list_view"
+                    android:icon="@drawable/ic_book"
+                    android:title="@string/navbar_item_news_articles_text" />
+
+            </menu>
+        </item>
+
+        <item android:title="Account">
+            <menu>
+
+
+                <item
+                    android:id="@+id/nav_settings"
+                    android:icon="@drawable/ic_nav_settings"
+                    android:title="@string/navbar_item_settings_text"/>
+                <item
+                    android:id="@+id/nav_signout"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/navbar_item_log_out_text" />
+            </menu>
+        </item>
+
+
+    </group>
+
 
 </menu>

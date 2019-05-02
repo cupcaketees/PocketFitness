@@ -70,7 +70,7 @@ public class MealAdapter extends RecyclerView.Adapter<MealAdapter.MealViewHolder
 
         holder.mName.setText(meal.getName());
 
-        String kcal = meal.getCalories() + " kcal";
+        String kcal = meal.getCalories().intValue() + " kcal";
         holder.mKcal.setText(kcal);
     }
 

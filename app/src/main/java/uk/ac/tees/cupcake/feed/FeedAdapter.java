@@ -260,7 +260,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                 Map<String, Object> commentTimeStamp = new HashMap<>();
                 commentTimeStamp.put("timestamp", FieldValue.serverTimestamp());
                 commentTimeStamp.put("description", holder.postCommentEditText.getText().toString());
-                commentTimeStamp.put("id", post.getUserUid());
+                commentTimeStamp.put("id", currentUserUid);
                 collectionRefComment
                         .document()
                         .set(commentTimeStamp)
@@ -272,7 +272,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
 
                                         for (DocumentSnapshot documentSnapshot : documentSnapshots) {
                                             if(documentSnapshot.exists()) {
-                                                Comments comment = new Comments(documentSnapshot.get("description").toString(),documentSnapshot.get("id").toString(), (Date) documentSnapshot.get("timestamp"));
+                                                Comments comment = new Comments(documentSnapshot.getString("description"), documentSnapshot.getString("id"), (Date) documentSnapshot.get("timestamp"));
                                                 allPosts.put(comment.getPostTime(), comment);
                                             }
                                         }
@@ -281,9 +281,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedViewHolder
                                         mPosts.addAll(allPosts.descendingMap().values());
 
                                         commentAdapter.notifyDataSetChanged();
+                                        Toast.makeText(holder.itemView.getContext(), "Comment added", Toast.LENGTH_SHORT).show();
+
                                     });
                         })
-//                        .addOnSuccessListener(aVoid -> Toast.makeText(holder.itemView.getContext(), "Comment added", Toast.LENGTH_SHORT).show())
                         .addOnFailureListener(e -> Toast.makeText(holder.itemView.getContext(), e.getMessage(), Toast.LENGTH_LONG).show());
             }
         });
